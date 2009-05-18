@@ -44,9 +44,10 @@
     text-decoration: none;
     white-space: nowrap; /* @ IE 6 */
     outline: 0; /* @ Firefox, prevent dotted border after click */
-	background-color: #EAF3FA;
+	/*background-color:#EAF3FA;*/
+	background-color:#F1F1F1;
     /* border */
-	border-color: #C6D9E9 #C6D9E9 #FFFFFF;
+	border-color: #DFDFDF #DFDFDF #FFFFFF;
 	border-style:solid;
 	border-width:1px;
 	-moz-border-radius-topleft: 3px;
@@ -81,8 +82,9 @@
     height: 27px;
     background-position: 0 -23px;
     line-height: 27px;
-	color: #D54E21;
+	color:#333;
 	background-color: #FFF;
+	font-weight:bold;
 }
 .ui-tabs-nav .ui-tabs-selected a:link, .ui-tabs-nav .ui-tabs-selected a:visited,
 .ui-tabs-nav .ui-tabs-disabled a:link, .ui-tabs-nav .ui-tabs-disabled a:visited { /* @ Opera, use pseudo classes otherwise it confuses cursor... */
@@ -90,8 +92,8 @@
 }
 .ui-tabs-nav a:hover, .ui-tabs-nav a:focus, .ui-tabs-nav a:active, .ui-tabs-nav a:hover span,
 .ui-tabs-nav .ui-tabs-unselect a:hover, .ui-tabs-nav .ui-tabs-unselect a:focus, .ui-tabs-nav .ui-tabs-unselect a:active { /* @ Opera, we need to be explicit again here now... */
-    cursor: pointer;
-	color: #D54E21;
+    cursor:pointer;
+	color:#333333;
 }
 .ui-tabs-disabled {
     opacity: .4;
@@ -101,7 +103,7 @@
     color: #000;
 }
 .ui-tabs-panel {
-    border: 1px solid #519e2d;
+    border: 1px solid #dfdfdf !important;
     padding: 10px;
     background: #fff; /* declare background color for container to avoid distorted fonts in IE while fading */
 }
