@@ -267,11 +267,11 @@ if (!class_exists('pw_new_user_approve')) {
 				$class = ($row % 2) ? '' : ' class="alternate"';
 				$avatar = get_avatar( $user->user_email, 32 );
 				if ($approve) {
-					$approve_link = '/wp-admin/users.php?page='.basename(__FILE__).'&user='.$user->ID.'&status=approve';
+					$approve_link = get_settings('siteurl').'/wp-admin/users.php?page='.basename(__FILE__).'&user='.$user->ID.'&status=approve';
 					$approve_link = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($approve_link, 'plugin-name-action_' . get_class($this)) : $approve_link;
 				}
 				if ($deny) {
-					$deny_link = '/wp-admin/users.php?page='.basename(__FILE__).'&user='.$user->ID.'&status=deny';
+					$deny_link = get_settings('siteurl').'/wp-admin/users.php?page='.basename(__FILE__).'&user='.$user->ID.'&status=deny';
 					$deny_link = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($deny_link, 'plugin-name-action_' . get_class($this)) : $deny_link;
 				}
 				?><tr <?php echo $class; ?>>
@@ -345,7 +345,7 @@ if (!class_exists('pw_new_user_approve')) {
 			$user_email = stripslashes($user->user_email);
 			
 			// format the message
-			$message  = sprintf(__('You have been approved to access %s \r\n'), get_settings('blogname'));
+			$message  = sprintf(__('You have been approved to access %s '."\r\n"), get_settings('blogname'));
 			$message .= sprintf(__('Username: %s'), $user_login) . "\r\n";
 			$message .= sprintf(__('Password: %s'), $new_pass) . "\r\n";
 			$message .= get_settings('siteurl') . "/wp-login.php\r\n";
