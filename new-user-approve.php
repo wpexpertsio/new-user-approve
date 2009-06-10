@@ -189,6 +189,8 @@ if (!class_exists('pw_new_user_approve')) {
 		 * @desc create the view for the admin interface
 		 */
 		function approve_admin() {
+			global $current_user;
+			
 			// Query the users table
 			$wp_user_search = new PW_User_Search($_GET['usersearch'], $_GET['userspage']);
 			$user_status = array();
@@ -274,9 +276,20 @@ if (!class_exists('pw_new_user_approve')) {
 					$deny_link = get_settings('siteurl').'/wp-admin/users.php?page='.basename(__FILE__).'&user='.$user->ID.'&status=deny';
 					$deny_link = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($deny_link, 'plugin-name-action_' . get_class($this)) : $deny_link;
 				}
+				if ( current_user_can( 'edit_user', $user->ID ) ) {
+					if ($current_user->ID == $user->ID) {
+						$edit_link = 'profile.php';
+					} else {
+						$edit_link = esc_url( add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER['REQUEST_URI'] ) ) ), "user-edit.php?user_id=$user->ID" ) );
+					}
+					$edit = "<strong><a href=\"$edit_link\">$user->user_login</a></strong><br />";
+				} else {
+					$edit = '<strong>' . $user->user_login . '</strong>';
+				}
+	
 				?><tr <?php echo $class; ?>>
 					<td><?php echo $user->ID; ?></td>
-					<td><?php echo $avatar." ".$user->user_login; ?></td>
+					<td><?php echo $avatar." ".$edit; ?></td>
 					<td><?php echo $user->first_name." ".$user->last_name; ?></td>
 					<td><a href="mailto:<?php echo $user->user_email; ?>" title="email: <?php echo $user->user_email; ?>"><?php echo $user->user_email; ?></a></td>
 					<?php if ($approve) { ?>
