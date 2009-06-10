@@ -145,12 +145,15 @@ if (!class_exists('pw_new_user_approve')) {
 		}
 
 		function admin_scripts_footer() {
+			global $wp_db_version;
+			
 			if($_GET['page'] == basename(__FILE__)) {
+				$page_id = ($wp_db_version >= 10851) ? '#pw_approve_tabs' : '#pw_approve_tabs > ul';
 ?>
 <script type="text/javascript">
   //<![CDATA[
   jQuery(document).ready(function($) {
-        $('#pw_approve_tabs > ul').tabs({ fx: { opacity: 'toggle' } });
+        $('<?php echo $page_id; ?>').tabs({ fx: { opacity: 'toggle' } });
   });
   //]]>
 </script>
