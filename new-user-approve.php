@@ -272,11 +272,11 @@ if (!class_exists('pw_new_user_approve')) {
 				$class = ($row % 2) ? '' : ' class="alternate"';
 				$avatar = get_avatar( $user->user_email, 32 );
 				if ($approve) {
-					$approve_link = get_settings('siteurl').'/wp-admin/users.php?page='.basename(__FILE__).'&user='.$user->ID.'&status=approve';
+					$approve_link = get_option('siteurl').'/wp-admin/users.php?page='.basename(__FILE__).'&user='.$user->ID.'&status=approve';
 					$approve_link = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($approve_link, 'plugin-name-action_' . get_class($this)) : $approve_link;
 				}
 				if ($deny) {
-					$deny_link = get_settings('siteurl').'/wp-admin/users.php?page='.basename(__FILE__).'&user='.$user->ID.'&status=deny';
+					$deny_link = get_option('siteurl').'/wp-admin/users.php?page='.basename(__FILE__).'&user='.$user->ID.'&status=deny';
 					$deny_link = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($deny_link, 'plugin-name-action_' . get_class($this)) : $deny_link;
 				}
 				if ( current_user_can( 'edit_user', $user->ID ) ) {
@@ -324,13 +324,13 @@ if (!class_exists('pw_new_user_approve')) {
 					$errors->add('registration_required' , __("User name already exists"), 'message');
         		} else {
 					/* send email to admin for approval */
-					$message = __($user_login.' ('.$user_email.') has requested a username at '.get_settings('blogname')) . "\r\n\r\n";
+					$message = __($user_login.' ('.$user_email.') has requested a username at '.get_option('blogname')) . "\r\n\r\n";
 					$message .= get_option('siteurl') . "\r\n\r\n";
-					$message .= __('To approve or deny this user access to '.get_settings('blogname'). ' go to') . "\r\n\r\n";
-					$message .= get_settings('siteurl') . "/wp-admin/users.php?page=".basename(__FILE__)."\r\n";
+					$message .= __('To approve or deny this user access to '.get_option('blogname'). ' go to') . "\r\n\r\n";
+					$message .= get_option('siteurl') . "/wp-admin/users.php?page=".basename(__FILE__)."\r\n";
 				
 					// send the mail
-					@wp_mail(get_settings('admin_email'), sprintf(__('[%s] User Approval'), get_settings('blogname')), $message);
+					@wp_mail(get_option('admin_email'), sprintf(__('[%s] User Approval'), get_option('blogname')), $message);
 					
 					// create the user
 					$user_pass = wp_generate_password();
@@ -361,13 +361,13 @@ if (!class_exists('pw_new_user_approve')) {
 			$user_email = stripslashes($user->user_email);
 			
 			// format the message
-			$message  = sprintf(__('You have been approved to access %s '."\r\n"), get_settings('blogname'));
+			$message  = sprintf(__('You have been approved to access %s '."\r\n"), get_option('blogname'));
 			$message .= sprintf(__('Username: %s'), $user_login) . "\r\n";
 			$message .= sprintf(__('Password: %s'), $new_pass) . "\r\n";
-			$message .= get_settings('siteurl') . "/wp-login.php\r\n";
+			$message .= get_option('siteurl') . "/wp-login.php\r\n";
 		
 			// send the mail
-			@wp_mail($user_email, sprintf(__('[%s] Registration Approved'), get_settings('blogname')), $message);
+			@wp_mail($user_email, sprintf(__('[%s] Registration Approved'), get_option('blogname')), $message);
 			
 			// change usermeta tag in database to approved
 			update_usermeta($user->ID, 'pw_user_status', 'approved');
@@ -386,10 +386,10 @@ if (!class_exists('pw_new_user_approve')) {
 			$user_email = stripslashes($user->user_email);
 			
 			// format the message
-			$message = sprintf(__('You have been denied access to %s'), get_settings('blogname'));
+			$message = sprintf(__('You have been denied access to %s'), get_option('blogname'));
 		
 			// send the mail
-			@wp_mail($user_email, sprintf(__('[%s] Registration Denied'), get_settings('blogname')), $message);
+			@wp_mail($user_email, sprintf(__('[%s] Registration Denied'), get_option('blogname')), $message);
 			
 			// change usermeta tag in database to denied
 			update_usermeta($user->ID, 'pw_user_status', 'denied');
