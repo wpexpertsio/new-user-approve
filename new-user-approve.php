@@ -455,7 +455,7 @@ if (!class_exists('pw_new_user_approve')) {
 		
 		function welcome_user($message) {
 			if (!isset($_GET['action'])) {
-				$message .= '<p class="message">Welcome to the '.bloginfo('name').'. This site is accessible to approved users only. To be approved, you must first register.</p>';
+				$message .= '<p class="message">Welcome to '.get_option('blogname').'. This site is accessible to approved users only. To be approved, you must first register.</p>';
 			}
 			
 			if ($_GET['action'] == 'register' && !$_POST) {
