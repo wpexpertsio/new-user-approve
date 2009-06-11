@@ -436,8 +436,15 @@ if (!class_exists('pw_new_user_approve')) {
 		 * @desc only give a user their password if they have been approved
 		 */
 		function lost_password() {
-			$username = sanitize_user($_POST['user_login']);
-			$user_data = get_userdatabylogin(trim($username));
+			$is_email = strpos($_POST['user_login'], '@');
+			if ($is_email === false) {
+				$username = sanitize_user($_POST['user_login']);
+				$user_data = get_userdatabylogin(trim($username));
+			} else {
+				$email = is_email($_POST['user_login']);
+				$user_data = get_user_by_email($email);
+			}
+			 
 			if ($user_data->pw_user_status != 'approved') {
 				wp_redirect('wp-login.php');
 				exit();		
