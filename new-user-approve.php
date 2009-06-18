@@ -283,7 +283,7 @@ if (!class_exists('pw_new_user_approve')) {
 					if ($current_user->ID == $user->ID) {
 						$edit_link = 'profile.php';
 					} else {
-						$edit_link = esc_url( add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER['REQUEST_URI'] ) ) ), "user-edit.php?user_id=$user->ID" ) );
+						$edit_link = clean_url( add_query_arg( 'wp_http_referer', urlencode( clean_url( stripslashes( $_SERVER['REQUEST_URI'] ) ) ), "user-edit.php?user_id=$user->ID" ) );
 					}
 					$edit = "<strong><a href=\"$edit_link\">$user->user_login</a></strong><br />";
 				} else {
