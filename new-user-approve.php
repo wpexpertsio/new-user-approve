@@ -1,7 +1,7 @@
 <?php
 /*
  Plugin Name: New User Approve
- Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve
+ Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve-wordpress-plugin/
  Description: This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog.
  Author: Josh Harrison
  Version: 1.2
