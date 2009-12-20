@@ -4,7 +4,7 @@
  Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve
  Description: This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog.
  Author: Josh Harrison
- Version: 1.1.3
+ Version: 1.2
  Author URI: http://www.picklewagon.com/
  */
  
@@ -23,19 +23,6 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-
-/**
- * Guess the wp-content and plugin urls/paths
- */
-if ( !defined('WP_CONTENT_URL') )
-	define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content');
-if ( !defined('WP_CONTENT_DIR') )
-	define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
-
-if (!defined('PLUGIN_URL'))
-	define('PLUGIN_URL', WP_CONTENT_URL . '/plugins/');
-if (!defined('PLUGIN_PATH'))
-	define('PLUGIN_PATH', WP_CONTENT_DIR . '/plugins/');
 
 if (!class_exists('pw_new_user_approve')) {
 	class pw_new_user_approve {
@@ -75,15 +62,14 @@ if (!class_exists('pw_new_user_approve')) {
 		/**
 		 * PHP 5 Constructor
 		 */
-		function __construct(){
-			// Language Setup
-			$locale = get_locale();
-			$mo = dirname(__FILE__) . "/languages/" . $this->localizationName . "-".$locale.".mo";
-			load_textdomain($this->localizationDomain, $mo);
+		function __construct() {
+			// Load up the localization file if we're using WordPress in a different language
+			// Just drop it in this plugin's "localization" folder and name it "pw_new_user_approve-[value in wp-config].mo"
+			load_plugin_textdomain($this->localizationDomain, dirname(__FILE__) . '/localization');
 
 			// Constants setup
-			$this->pluginurl = PLUGIN_URL . dirname(plugin_basename(__FILE__)).'/';
-			$this->pluginpath = PLUGIN_PATH . dirname(plugin_basename(__FILE__)).'/';
+			$this->pluginurl  = WP_PLUGIN_URL . '/' . dirname(plugin_basename(__FILE__)).'/';
+			$this->pluginpath = WP_PLUGIN_DIR . '/' . dirname(plugin_basename(__FILE__)).'/';
 
 			// Initialize the options
 			$this->get_options();
@@ -92,7 +78,6 @@ if (!class_exists('pw_new_user_approve')) {
 			add_action('admin_menu', array(&$this, 'admin_menu_link'));
 			add_action('admin_footer', array(&$this, 'admin_scripts_footer'));
 			add_action('init', array(&$this, 'init'));
-			add_action('admin_head', array(&$this, 'add_admin_css'));
 			add_action('register_post', array(&$this, 'send_approval_email'), 10, 3);
 			add_action('init', array(&$this, 'process_input'));
 			add_action('lostpassword_post', array(&$this, 'lost_password'));
@@ -107,7 +92,9 @@ if (!class_exists('pw_new_user_approve')) {
 		function get_options() {
 			// Don't forget to set up the default options
 			if (!$theOptions = get_option($this->optionsName)) {
-				$theOptions = array('default'=>'options');
+				$theOptions = array(
+					'default' => 'options'
+				);
 				update_option($this->optionsName, $theOptions);
 			}
 			$this->options = $theOptions;
@@ -124,8 +111,8 @@ if (!class_exists('pw_new_user_approve')) {
 		 * @desc Adds the options subpanel
 		 */
 		function admin_menu_link() {
-			add_submenu_page('users.php', 'Approve New Users', 'Approve New Users', 'edit_users', basename(__FILE__), array(&$this, 'approve_admin'));
-			add_filter( 'plugin_action_links', array(&$this, 'filter_plugin_actions'), 10, 2 );
+			add_submenu_page('users.php', __('Approve New Users', $this->localizationDomain), __('Approve New Users', $this->localizationDomain), 'edit_users', basename(__FILE__), array(&$this, 'approve_admin'));
+			add_filter('plugin_action_links', array(&$this, 'filter_plugin_actions'), 10, 2);
 		}
 
 		/**
@@ -133,12 +120,12 @@ if (!class_exists('pw_new_user_approve')) {
 		 */
 		function filter_plugin_actions($links, $file) {
 			static $this_plugin;
-			if( ! $this_plugin ) {
+			if (!$this_plugin) {
 				$this_plugin = plugin_basename(__FILE__);	
 			}
 
-			if( $file == $this_plugin ){
-				$settings_link = '<a href="users.php?page=' . basename(__FILE__) . '">' . __('Settings') . '</a>';
+			if ($file == $this_plugin){
+				$settings_link = '<a href="users.php?page=' . basename(__FILE__) . '">' . __('Settings', $this->localizationDomain) . '</a>';
 				array_unshift( $links, $settings_link ); // before other links
 			}
 			return $links;
@@ -147,7 +134,7 @@ if (!class_exists('pw_new_user_approve')) {
 		function admin_scripts_footer() {
 			global $wp_db_version;
 			
-			if($_GET['page'] == basename(__FILE__)) {
+			if (WP_ADMIN && $_GET['page'] == basename(__FILE__)) {
 				$page_id = ($wp_db_version >= 10851) ? '#pw_approve_tabs' : '#pw_approve_tabs > ul';
 ?>
 <script type="text/javascript">
@@ -181,7 +168,7 @@ if (!class_exists('pw_new_user_approve')) {
 			}
 ?>
 			<div>
-				<p><span style="font-weight:bold;"><a href="users.php?page=<?php print basename(__FILE__) ?>">Users</a></span>: 
+				<p><span style="font-weight:bold;"><a href="users.php?page=<?php print basename(__FILE__) ?>"><?php _e('Users', $this->localizationDomain) ?></a></span>: 
 				<?php foreach($user_status as $status =>$count) print "$count $status&nbsp;&nbsp;"; ?>
 				</p>
 			</div>
@@ -217,18 +204,18 @@ if (!class_exists('pw_new_user_approve')) {
 			}
 			
 			if (isset($_GET['user']) && isset($_GET['status'])) {
-				echo '<div id="message" class="updated fade"><p>User successfully updated.</p></div>';
+				echo '<div id="message" class="updated fade"><p>'.__('User successfully updated.', $this->localizationDomain).'</p></div>';
 			}
 ?>
 			<div class="wrap">
-				<h2>User Registration Approval</h2>
+				<h2><?php _e('User Registration Approval', $this->localizationDomain) ?></h2>
 				
-				<h3>User Management</h3>
+				<h3><?php _e('User Management', $this->localizationDomain) ?></h3>
 				<div id="pw_approve_tabs">
 					<ul>
-						<li><a href="#pw_pending_users"><span>Users Pending Approval</span></a></li>
-						<li><a href="#pw_approved_users"><span>Approved Users</span></a></li>
-						<li><a href="#pw_denied_users"><span>Denied Users</span></a></li>
+						<li><a href="#pw_pending_users"><span><?php _e('Users Pending Approval', $this->localizationDomain) ?></span></a></li>
+						<li><a href="#pw_approved_users"><span><?php _e('Approved Users', $this->localizationDomain) ?></span></a></li>
+						<li><a href="#pw_denied_users"><span><?php _e('Denied Users', $this->localizationDomain) ?></span></a></li>
 					</ul>
 					<div id="pw_pending_users">
 						<?php $this->approve_table($user_status, 'pending', true, true); ?>
@@ -253,14 +240,14 @@ if (!class_exists('pw_new_user_approve')) {
 <table class="widefat">
 	<thead>
 		<tr class="thead">
-			<th><?php _e('ID') ?></th>
-			<th><?php _e('Username') ?></th>
-			<th><?php _e('Name') ?></th>
-			<th><?php _e('E-mail') ?></th>
+			<th><?php _e('ID', $this->localizationDomain) ?></th>
+			<th><?php _e('Username', $this->localizationDomain) ?></th>
+			<th><?php _e('Name', $this->localizationDomain) ?></th>
+			<th><?php _e('E-mail', $this->localizationDomain) ?></th>
 		<?php if ($approve && $deny) { ?>
-			<th colspan="2" style="text-align: center"><?php _e('Actions') ?></th>
+			<th colspan="2" style="text-align: center"><?php _e('Actions', $this->localizationDomain) ?></th>
 		<?php } else { ?>
-			<th style="text-align: center"><?php _e('Actions') ?></th>
+			<th style="text-align: center"><?php _e('Actions', $this->localizationDomain) ?></th>
 		<?php } ?>
 		</tr>
 	</thead>
@@ -285,7 +272,7 @@ if (!class_exists('pw_new_user_approve')) {
 					} else {
 						$edit_link = clean_url( add_query_arg( 'wp_http_referer', urlencode( clean_url( stripslashes( $_SERVER['REQUEST_URI'] ) ) ), "user-edit.php?user_id=$user->ID" ) );
 					}
-					$edit = "<strong><a href=\"$edit_link\">$user->user_login</a></strong><br />";
+					$edit = '<strong><a href="$edit_link">' . $user->user_login . '</a></strong><br />';
 				} else {
 					$edit = '<strong>' . $user->user_login . '</strong>';
 				}
@@ -294,12 +281,12 @@ if (!class_exists('pw_new_user_approve')) {
 					<td><?php echo $user->ID; ?></td>
 					<td><?php echo $avatar." ".$edit; ?></td>
 					<td><?php echo $user->first_name." ".$user->last_name; ?></td>
-					<td><a href="mailto:<?php echo $user->user_email; ?>" title="email: <?php echo $user->user_email; ?>"><?php echo $user->user_email; ?></a></td>
+					<td><a href="mailto:<?php echo $user->user_email; ?>" title="<?php _e('email:', $this->localizationDomain) ?> <?php echo $user->user_email; ?>"><?php echo $user->user_email; ?></a></td>
 					<?php if ($approve) { ?>
-					<td align="center"><a href="<?php echo $approve_link; ?>" title="Approve <?php echo $user->user_login; ?>"><?php _e('Approve') ?></a></td>
+					<td align="center"><a href="<?php echo $approve_link; ?>" title="<?php _e('Approve', $this->localizationDomain) ?> <?php echo $user->user_login; ?>"><?php _e('Approve', $this->localizationDomain) ?></a></td>
 					<?php } ?>
 					<?php if ($deny) { ?>
-					<td align="center"><a href="<?php echo $deny_link; ?>" title="Deny <?php echo $user->user_login; ?>"><?php _e('Deny') ?></a></td>
+					<td align="center"><a href="<?php echo $deny_link; ?>" title="<?php _e('Deny', $this->localizationDomain) ?> <?php echo $user->user_login; ?>"><?php _e('Deny', $this->localizationDomain) ?></a></td>
 					<?php } ?>
 				</tr><?php
 				$row++;
@@ -309,7 +296,16 @@ if (!class_exists('pw_new_user_approve')) {
 </table>
 		<?php
 			} else {
-				echo "<p>There are no users with a status of $status</p>";
+				$status_i18n = $status;
+				if ($status == 'approved') {
+					$status_i18n = __('approved', $this->localizationDomain);
+				} else if ($status == 'denied') {
+					$status_i18n = __('denied', $this->localizationDomain);
+				} else if ($status == 'pending') {
+					$status_i18n = __('pending', $this->localizationDomain);
+				}
+					
+				echo '<p>'.sprintf(__('There are no users with a status of %s', $this->localizationDomain), $status_i18n).'</p>';
 			}
 		}
 		
@@ -321,16 +317,16 @@ if (!class_exists('pw_new_user_approve')) {
 				/* check if already exists */
 				$user_data = get_userdatabylogin($user_login);
         		if (!empty($user_data)){
-					$errors->add('registration_required' , __("User name already exists"), 'message');
+					$errors->add('registration_required' , __('User name already exists', $this->localizationDomain), 'message');
         		} else {
 					/* send email to admin for approval */
-					$message = __($user_login.' ('.$user_email.') has requested a username at '.get_option('blogname')) . "\r\n\r\n";
+        			$message  = sprintf(__('%1$s (%2$s) has requested a username at %3$s', $this->localizationDomain), $user_login, $user_email, get_option('blogname')) . "\r\n\r\n";
 					$message .= get_option('siteurl') . "\r\n\r\n";
-					$message .= __('To approve or deny this user access to '.get_option('blogname'). ' go to') . "\r\n\r\n";
+					$message .= sprintf(__('To approve or deny this user access to %s go to', $this->localizationDomain), get_option('blogname')) . "\r\n\r\n";
 					$message .= get_option('siteurl') . "/wp-admin/users.php?page=".basename(__FILE__)."\r\n";
 				
 					// send the mail
-					@wp_mail(get_option('admin_email'), sprintf(__('[%s] User Approval'), get_option('blogname')), $message);
+					@wp_mail(get_option('admin_email'), sprintf(__('[%s] User Approval', $this->localizationDomain), get_option('blogname')), $message);
 					
 					// create the user
 					$user_pass = wp_generate_password();
@@ -350,9 +346,17 @@ if (!class_exists('pw_new_user_approve')) {
 			$query = $wpdb->prepare("SELECT * FROM $wpdb->users WHERE ID = %d", $_GET['user']);
 			$user = $wpdb->get_row($query);
 			
-			// reset password
-			$new_pass = substr(md5(uniqid(microtime())), 0, 7);
-			$wpdb->query("UPDATE $wpdb->users SET user_pass = MD5('$new_pass'), user_activation_key = '' WHERE ID = '$user->ID'");
+			// reset password to know what to send the user
+			$new_pass = wp_generate_password();
+			$data = array(
+				'user_pass' => md5($new_pass),
+				'user_activation_key' => '',
+			);
+			$where = array(
+				'ID' => $user->ID,
+			);
+			$wpdb->update($wpdb->users, $data, $where, array('%s', '%s'), array('%d'));
+			
 			wp_cache_delete($user->ID, 'users');
 			wp_cache_delete($user->user_login, 'userlogins');
 			
@@ -361,13 +365,13 @@ if (!class_exists('pw_new_user_approve')) {
 			$user_email = stripslashes($user->user_email);
 			
 			// format the message
-			$message  = sprintf(__('You have been approved to access %s '."\r\n"), get_option('blogname'));
-			$message .= sprintf(__('Username: %s'), $user_login) . "\r\n";
-			$message .= sprintf(__('Password: %s'), $new_pass) . "\r\n";
+			$message  = sprintf(__('You have been approved to access %s', $this->localizationDomain), get_option('blogname')) . "\r\n";
+			$message .= sprintf(__('Username: %s', $this->localizationDomain), $user_login) . "\r\n";
+			$message .= sprintf(__('Password: %s', $this->localizationDomain), $new_pass) . "\r\n";
 			$message .= get_option('siteurl') . "/wp-login.php\r\n";
 		
 			// send the mail
-			@wp_mail($user_email, sprintf(__('[%s] Registration Approved'), get_option('blogname')), $message);
+			@wp_mail($user_email, sprintf(__('[%s] Registration Approved', $this->localizationDomain), get_option('blogname')), $message);
 			
 			// change usermeta tag in database to approved
 			update_usermeta($user->ID, 'pw_user_status', 'approved');
@@ -386,10 +390,10 @@ if (!class_exists('pw_new_user_approve')) {
 			$user_email = stripslashes($user->user_email);
 			
 			// format the message
-			$message = sprintf(__('You have been denied access to %s'), get_option('blogname'));
+			$message = sprintf(__('You have been denied access to %s', $this->localizationDomain), get_option('blogname'));
 		
 			// send the mail
-			@wp_mail($user_email, sprintf(__('[%s] Registration Denied'), get_option('blogname')), $message);
+			@wp_mail($user_email, sprintf(__('[%s] Registration Denied', $this->localizationDomain), get_option('blogname')), $message);
 			
 			// change usermeta tag in database to denied
 			update_usermeta($user->ID, 'pw_user_status', 'denied');
@@ -402,12 +406,12 @@ if (!class_exists('pw_new_user_approve')) {
 			if ( $errors->get_error_code() )
 				return $errors;
 			
-			$message = "An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request.";
-			$message .= "You will receive an email with instructions on what you will need to do next. Thanks for your patience.";
+			$message  = sprintf(__('An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request.', $this->localizationDomain));
+			$message .= sprintf(__('You will receive an email with instructions on what you will need to do next. Thanks for your patience.', $this->localizationDomain));
 			
-			$errors->add('registration_required', __($message), 'message');
+			$errors->add('registration_required', $message, 'message');
 			
-			login_header(__('Pending Approval'), '<p class="message register">' . __("Registration successful.") . '</p>', $errors);
+			login_header(__('Pending Approval', $this->localizationDomain), '<p class="message register">' . __("Registration successful.", $this->localizationDomain) . '</p>', $errors);
 			
 			echo "<body></html>";
 			exit();
@@ -455,25 +459,22 @@ if (!class_exists('pw_new_user_approve')) {
 		
 		function welcome_user($message) {
 			if (!isset($_GET['action'])) {
-				$message .= '<p class="message">Welcome to '.get_option('blogname').'. This site is accessible to approved users only. To be approved, you must first register.</p>';
+				$inside = sprintf(__('Welcome to %s. This site is accessible to approved users only. To be approved, you must first register.', $this->localizationDomain), get_option('blogname'));
+				$message .= '<p class="message">' . $inside . '</p>';
 			}
 			
 			if ($_GET['action'] == 'register' && !$_POST) {
-				$message .= '<p class="message">After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions.</p>';
+				$inside = sprintf(__('After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions.', $this->localizationDomain));
+				$message .= '<p class="message">' . $inside . '</p>';
 			}
 			
 			return $message;
 		}
 		
 		function init() {
-			if($_GET['page'] == basename(__FILE__)) {
+			if (WP_ADMIN && $_GET['page'] == basename(__FILE__)) {
 				wp_enqueue_script('jquery-ui-tabs');
-			}
-		}
-		
-		function add_admin_css() {
-			if($_GET['page'] == basename(__FILE__)) {
-				echo '<link rel="stylesheet" href="'.$this->pluginurl.'ui.tabs.css'.'" type="text/css" />';
+				wp_enqueue_style('pw-admin-ui-tabs', $this->pluginurl.'ui.tabs.css');
 			}
 		}
 	} // End Class

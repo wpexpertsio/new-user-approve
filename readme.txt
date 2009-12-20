@@ -2,9 +2,9 @@
 Contributors: picklewagon
 Donate link: http://www.picklewagon.com/wordpress/
 Tags: users, registration
-Requires at least: 2.5
-Tested up to: 2.8
-Stable tag: 1.1.3
+Requires at least: 2.6
+Tested up to: 2.9
+Stable tag: 1.2
 
 New User Approve is a Wordpress plugin that allows a blog administrator to 
 approve a user before they are able to access and login to the blog.
@@ -26,13 +26,51 @@ user will not be able to login to the site.
 == Installation ==
 
 1. Upload new-user-approve to the wp-content/plugins directory
-2. Activate the plugin through the ‘Plugins’ menu in WordPress
+2. Activate the plugin through the Plugins menu in WordPress
 3. No configuration necessary.
 
 == Frequently Asked Questions ==
 
-No FAQ yet.
+= Why am I not getting the emails when a new user registers? =
+
+The New User Approve plugin uses the functions provided by WordPress to send
+email. Make sure your host is setup correctly to send email if this happens.
 
 == Screenshots ==
 
-No screenshots yet.
+1. The backend to manage approving and denying users.
+
+== Changelog ==
+
+= 1.2 =
+* add localization support
+* add a changelog to readme.txt
+* remove plugin constants that have been defined since 2.6
+* correct the use of db prepare statements/use prepare on all SQL statements
+* add wp_enqueue_style for the admin style sheet
+
+= 1.1.3 =
+* replace calls to esc_url() with clean_url() to make plugin compatible with versions less than 2.8
+ 
+= 1.1.2 =
+* fix the admin ui tab interface for 2.8
+* add a link to the users profile in the admin interface
+* fix bug when using email address to retrieve lost password
+* show blog title correctly on login screen
+* use get_option() instead of get_settings()
+ 
+= 1.1.1 =
+* fix approve/deny links
+* fix formatting issue with email to admin to approve user
+ 
+= 1.1 =
+* correctly display error message if registration is empty
+* add a link to the options page from the plugin dashboard
+* clean up code
+* style updates
+* if a user is created through the admin interface, set the status as approved instead of pending
+* add avatars to user management admin page
+* improvements to SQL used
+* verify the user does not already exist before the process is started
+* add nonces to approve and deny actions
+* temporary fix for pagination bug
