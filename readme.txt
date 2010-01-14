@@ -3,7 +3,7 @@ Contributors: picklewagon
 Donate link: http://www.picklewagon.com/wordpress/
 Tags: users, registration
 Requires at least: 2.6
-Tested up to: 2.9
+Tested up to: 2.9.1
 Stable tag: 1.2
 
 New User Approve is a Wordpress plugin that allows a blog administrator to 
@@ -42,6 +42,10 @@ email. Make sure your host is setup correctly to send email if this happens.
 
 == Changelog ==
 
+= 1.2.1 =
+* check for the existence of the login_header function to make compatible with functions that remove it
+* added "Other Notes" page in readme.txt with localization information.
+
 = 1.2 =
 * add localization support
 * add a changelog to readme.txt
@@ -74,3 +78,12 @@ email. Make sure your host is setup correctly to send email if this happens.
 * verify the user does not already exist before the process is started
 * add nonces to approve and deny actions
 * temporary fix for pagination bug
+
+== Other Notes ==
+
+= Translations =
+The plugin has been prepared to be translated. If you want to help to translate 
+the plugin to your language, please have a look at the sitemap.pot file which
+contains all defintions and may be used with a gettext editor like Poedit (Windows).
+
+* Belarusian translation by <a href="http://www.fatcow.com/">Fat Cow</a>
