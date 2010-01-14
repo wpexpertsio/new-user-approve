@@ -411,7 +411,9 @@ if (!class_exists('pw_new_user_approve')) {
 			
 			$errors->add('registration_required', $message, 'message');
 			
-			login_header(__('Pending Approval', $this->localizationDomain), '<p class="message register">' . __("Registration successful.", $this->localizationDomain) . '</p>', $errors);
+			if (function_exists('login_header')) {
+				login_header(__('Pending Approval', $this->localizationDomain), '<p class="message register">' . __("Registration successful.", $this->localizationDomain) . '</p>', $errors);
+			}
 			
 			echo "<body></html>";
 			exit();
