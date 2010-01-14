@@ -84,7 +84,7 @@ email. Make sure your host is setup correctly to send email if this happens.
 
 = Translations =
 The plugin has been prepared to be translated. If you want to help to translate 
-the plugin to your language, please have a look at the sitemap.pot file which
+the plugin to your language, please have a look at the localization/new-user-approve.pot file which
 contains all defintions and may be used with a gettext editor like Poedit (Windows).
 
 * Belarusian translation by <a href="http://www.fatcow.com/">Fat Cow</a>
