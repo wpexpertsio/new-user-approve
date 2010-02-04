@@ -34,7 +34,7 @@ if (!class_exists('pw_new_user_approve')) {
 		/**
 		 * @var string $localizationDomain Domain used for localization
 		 */
-		var $localizationDomain = "pw_new_user_approve";
+		var $localizationDomain = 'new-user-approve';
 
 		/**
 		 * @var string $pluginurl The url to this plugin
@@ -64,8 +64,8 @@ if (!class_exists('pw_new_user_approve')) {
 		 */
 		function __construct() {
 			// Load up the localization file if we're using WordPress in a different language
-			// Just drop it in this plugin's "localization" folder and name it "pw_new_user_approve-[value in wp-config].mo"
-			load_plugin_textdomain($this->localizationDomain, dirname(__FILE__) . '/localization');
+			// Just drop it in this plugin's "localization" folder and name it "new-user-approve-[value in wp-config].mo"
+			load_plugin_textdomain($this->localizationDomain, false, dirname(plugin_basename(__FILE__)) . '/localization');
 
 			// Constants setup
 			$this->pluginurl  = WP_PLUGIN_URL . '/' . dirname(plugin_basename(__FILE__)).'/';
