@@ -42,6 +42,9 @@ email. Make sure your host is setup correctly to send email if this happens.
 
 == Changelog ==
 
+= 1.2.3 =
+* add danish translation
+
 = 1.2.2 =
 * fix localization to work correctly
 * add polish translation

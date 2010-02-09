@@ -1,0 +1,182 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: New User Approve 1.0 in Danish / på dansk\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-07 18:14+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Team Blogos <wordpress@blogos.dk>\n"
+"Language-Team: Team Blogos <wordpress@blogos.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2;plural=n != 1;\n"
+"X-Poedit-Language: Danish\n"
+"X-Poedit-Country: DENMARK\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;__ngettext:1,2;__ngettext_noop:1,2;_nc:1,2;_nx:1,2;_n_noop:1,2;_nx_noop;_x;_c;esc_html__;esc_html_e;esc_html_x;esc_attr__;esc_attr_e;esc_attr_x\n"
+"X-Poedit-Basepath: d:\\wordpress\\plugins\\new-user-approve\n"
+"X-Poedit-SearchPath-0: d:\\wordpress\\plugins\\new-user-approve\n"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:114
+msgid "Approve New Users"
+msgstr "Godkend nye brugere"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:128
+msgid "Settings"
+msgstr "Indstillinger"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:171
+msgid "Users"
+msgstr "Brugere"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:207
+msgid "User successfully updated."
+msgstr "Bruger opdateret med succes."
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:211
+msgid "User Registration Approval"
+msgstr "Godkendelse af brugerregistrering"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:213
+msgid "User Management"
+msgstr "Brugerhåndtering"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:216
+msgid "Users Pending Approval"
+msgstr "Brugere, der afventer godkendelse"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:217
+msgid "Approved Users"
+msgstr "Godkendte brugere"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:218
+msgid "Denied Users"
+msgstr "Afviste brugere"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:243
+msgid "ID"
+msgstr "Id"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:244
+msgid "Username"
+msgstr "Brugernavn"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:245
+msgid "Name"
+msgstr "Navn"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:246
+msgid "E-mail"
+msgstr "E-amil"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:248
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:250
+msgid "Actions"
+msgstr "Handlinger"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:284
+msgid "email:"
+msgstr "e-mail:"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:286
+msgid "Approve"
+msgstr "Godkend"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:289
+msgid "Deny"
+msgstr "Afvis"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:301
+msgid "approved"
+msgstr "godkendt"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:303
+msgid "denied"
+msgstr "afvist"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:305
+msgid "pending"
+msgstr "afventer"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:308
+#, php-format
+msgid "There are no users with a status of %s"
+msgstr "Der er ingen brugere med status af %s"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:320
+msgid "User name already exists"
+msgstr "Brugernavn eksisterer allerede"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:323
+#, php-format
+msgid "%1$s (%2$s) has requested a username at %3$s"
+msgstr "%1$s (%2$s) har anmodet om en brugernavn på %3$s"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:325
+#, php-format
+msgid "To approve or deny this user access to %s go to"
+msgstr "For at godkende eller afvise denne brugers adgang til %s, gå til"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:329
+#, php-format
+msgid "[%s] User Approval"
+msgstr "[%s] Brugergodkendelse"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:368
+#, php-format
+msgid "You have been approved to access %s"
+msgstr "Du er godkendt til at få adgang til %s"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:369
+#, php-format
+msgid "Username: %s"
+msgstr "Brugernavn: %s"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:370
+#, php-format
+msgid "Password: %s"
+msgstr "Adgangskode: %s"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:374
+#, php-format
+msgid "[%s] Registration Approved"
+msgstr "[%s] Registrering godkendt"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:393
+#, php-format
+msgid "You have been denied access to %s"
+msgstr "Du har ikke fået adgang til %s"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:396
+#, php-format
+msgid "[%s] Registration Denied"
+msgstr "[%s] Registrering ikke godkendt"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:409
+msgid "An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request."
+msgstr "En e-mail er sendt til sitens administrator. Administratoren vil tjekke informationen, som du har indtastet, og enten godkende eller afvise din anmodning."
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:410
+msgid "You will receive an email with instructions on what you will need to do next. Thanks for your patience."
+msgstr "Du vil få en e-mail med instruktioner om, hvad du skal gøre som det næste. Tak for din tålmodighed."
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:415
+msgid "Pending Approval"
+msgstr "Afventer godkendelse"
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:415
+msgid "Registration successful."
+msgstr "Registrering gennemført."
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:464
+#, php-format
+msgid "Welcome to %s. This site is accessible to approved users only. To be approved, you must first register."
+msgstr "Velkommen til %s. Denne site kan kun bruges af godkendte brugere. For at blive godkendt skal du først registrere dig."
+
+#: d:\wordpress\plugins\new-user-approve/new-user-approve.php:469
+msgid "After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions."
+msgstr "Når du har registreret dig, vil din anmodning blive sendt til sitens administrator til godkendelse. Du vil derefter få en e-mail med de nødvendige instruktioner."
+
+#~ msgid " ("
+#~ msgstr "("
+
