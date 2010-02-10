@@ -95,4 +95,5 @@ the plugin to your language, please have a look at the localization/new-user-app
 contains all defintions and may be used with a gettext editor like Poedit (Windows).
 
 * Belarusian translation by <a href="http://www.fatcow.com/">Fat Cow</a>
-* Polish translation by <a href=http://wordpress.org/support/profile/1271256">pik256</a>
+* Polish translation by <a href="http://wordpress.org/support/profile/1271256">pik256</a>
+* Danish translation by <a href="http://wordpress.org/support/profile/2874976">GeorgWP</a>
