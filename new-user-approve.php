@@ -181,26 +181,29 @@ if (!class_exists('pw_new_user_approve')) {
 		function approve_admin() {
 			global $current_user;
 			
-			// Query the users table
-			$wp_user_search = new PW_User_Search($_GET['usersearch'], $_GET['userspage']);
 			$user_status = array();
-		
-			// Make the user objects
-			foreach ($wp_user_search->get_results() as $userid) {
-				$user = wp_cache_get($userid, 'pw_user_status_cache');
-				
-				if (!$user) {
-					$user = new WP_User($userid);
-					$status = get_usermeta($userid, 'pw_user_status');
-					if ($status == '') { // user was created in admin
-						update_usermeta($userid, 'pw_user_status', 'approved');
+			
+			// Query the users table
+			if (isset($_GET['usersearch']) && isset($_GET['userspage'])) {
+				$wp_user_search = new PW_User_Search($_GET['usersearch'], $_GET['userspage']);
+			
+				// Make the user objects
+				foreach ($wp_user_search->get_results() as $userid) {
+					$user = wp_cache_get($userid, 'pw_user_status_cache');
+					
+					if (!$user) {
+						$user = new WP_User($userid);
 						$status = get_usermeta($userid, 'pw_user_status');
+						if ($status == '') { // user was created in admin
+							update_usermeta($userid, 'pw_user_status', 'approved');
+							$status = get_usermeta($userid, 'pw_user_status');
+						}
+						$user->status = $status;
+						wp_cache_add($userid, $user, 'pw_user_status_cache');
 					}
-					$user->status = $status;
-					wp_cache_add($userid, $user, 'pw_user_status_cache');
+					
+					$user_status[$status][] = $user;
 				}
-				
-				$user_status[$status][] = $user;
 			}
 			
 			if (isset($_GET['user']) && isset($_GET['status'])) {
@@ -235,7 +238,7 @@ if (!class_exists('pw_new_user_approve')) {
 		 * @desc the table that shows the registered users grouped by status
 		 */
 		function approve_table($users, $status, $approve, $deny) {
-			if (count($users[$status]) > 0) {
+			if (isset($users[$status]) && count($users[$status]) > 0) {
 		?>
 <table class="widefat">
 	<thead>
@@ -423,7 +426,7 @@ if (!class_exists('pw_new_user_approve')) {
 		 * @desc accept input from admin to modify a user
 		 */
 		function process_input() {
-			if ($_GET['page'] == basename(__FILE__) && isset($_GET['status'])) {
+			if ((isset($_GET['page']) && $_GET['page'] == basename(__FILE__)) && isset($_GET['status'])) {
 				$valid_request = check_admin_referer('plugin-name-action_' . get_class($this));
 
 				if ($valid_request) {
@@ -474,7 +477,7 @@ if (!class_exists('pw_new_user_approve')) {
 		}
 		
 		function init() {
-			if (WP_ADMIN && $_GET['page'] == basename(__FILE__)) {
+			if (WP_ADMIN && isset($_GET['page']) && $_GET['page'] == basename(__FILE__)) {
 				wp_enqueue_script('jquery-ui-tabs');
 				wp_enqueue_style('pw-admin-ui-tabs', $this->pluginurl.'ui.tabs.css');
 			}

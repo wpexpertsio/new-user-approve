@@ -42,6 +42,9 @@ email. Make sure your host is setup correctly to send email if this happens.
 
 == Changelog ==
 
+= 1.3 =
+* get rid of plugin errors with WP_DEBUG set to true
+
 = 1.2.4 =
 * add greek translation
 
