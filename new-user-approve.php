@@ -75,14 +75,14 @@ if (!class_exists('pw_new_user_approve')) {
 			$this->get_options();
 
 			// Actions
-			add_action('admin_menu', array(&$this, 'admin_menu_link'));
-			add_action('admin_footer', array(&$this, 'admin_scripts_footer'));
-			add_action('init', array(&$this, 'init'));
-			add_action('register_post', array(&$this, 'send_approval_email'), 10, 3);
-			add_action('init', array(&$this, 'process_input'));
-			add_action('lostpassword_post', array(&$this, 'lost_password'));
+			add_action('admin_menu',          array(&$this, 'admin_menu_link'));
+			add_action('admin_footer',        array(&$this, 'admin_scripts_footer'));
+			add_action('init',                array(&$this, 'init'));
+			add_action('register_post',       array(&$this, 'send_approval_email'), 10, 3);
+			add_action('init',                array(&$this, 'process_input'));
+			add_action('lostpassword_post',   array(&$this, 'lost_password'));
 			add_filter('registration_errors', array(&$this, 'show_user_message'), 10, 1);
-			add_filter('login_message', array(&$this, 'welcome_user'));
+			add_filter('login_message',       array(&$this, 'welcome_user'));
 			//add_action('rightnow_end', array(&$this, 'dashboard_stats')); // still too slow
 		}
 
@@ -113,6 +113,8 @@ if (!class_exists('pw_new_user_approve')) {
 		function admin_menu_link() {
 			add_submenu_page('users.php', __('Approve New Users', $this->localizationDomain), __('Approve New Users', $this->localizationDomain), 'edit_users', basename(__FILE__), array(&$this, 'approve_admin'));
 			add_filter('plugin_action_links', array(&$this, 'filter_plugin_actions'), 10, 2);
+			
+			add_options_page(__('Approve New Users', $this->localizationDomain), __('Approve New Users', $this->localizationDomain), 'manage_options', $this->localizationDomain, array(&$this, 'options_page'));
 		}
 
 		/**
@@ -481,6 +483,9 @@ if (!class_exists('pw_new_user_approve')) {
 				wp_enqueue_script('jquery-ui-tabs');
 				wp_enqueue_style('pw-admin-ui-tabs', $this->pluginurl.'ui.tabs.css');
 			}
+		}
+		
+		function options_page() {
 		}
 	} // End Class
 } // End if class exists statement
