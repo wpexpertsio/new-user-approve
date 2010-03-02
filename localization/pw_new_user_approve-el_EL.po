@@ -1,0 +1,195 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: aprove\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
+"POT-Creation-Date: 2009-10-29 08:32+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Lefteris\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: el\n"
+"X-Poedit-Country: EL\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: new-user-approve.php:126
+msgid "Approve New Users"
+msgstr "Έγκριση νέων Χρηστών"
+
+#: new-user-approve.php:140
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+#: new-user-approve.php:183
+msgid "Users"
+msgstr "Χρήστες"
+
+#: new-user-approve.php:219
+msgid "User successfully updated."
+msgstr "Ο Χρήστης ενημερώθηκε επιτυχώς!"
+
+#: new-user-approve.php:223
+msgid "User Registration Approval"
+msgstr "Έγκριση εγγραφής Χρήστη"
+
+#: new-user-approve.php:225
+msgid "User Management"
+msgstr "Διαχείριση Χρηστών"
+
+#: new-user-approve.php:228
+msgid "Users Pending Approval"
+msgstr "Εκκρεμείς Εγγραφές Χρηστών"
+
+#: new-user-approve.php:229
+msgid "Approved Users"
+msgstr "Εγγεκριμένοι Χρήστες"
+
+#: new-user-approve.php:230
+msgid "Denied Users"
+msgstr "Χρήστες που Έφαγαν Πόρτα!"
+
+#: new-user-approve.php:255
+msgid "ID"
+msgstr ""
+
+#: new-user-approve.php:256
+msgid "Username"
+msgstr "Ψευδώνυμο"
+
+#: new-user-approve.php:257
+msgid "Name"
+msgstr "Όνομα"
+
+#: new-user-approve.php:258
+msgid "E-mail"
+msgstr ""
+
+#: new-user-approve.php:260
+#: new-user-approve.php:262
+msgid "Actions"
+msgstr "Ενέργειες"
+
+#: new-user-approve.php:296
+msgid "email:"
+msgstr ""
+
+#: new-user-approve.php:298
+msgid "Approve"
+msgstr "ΕΓΚΡΙΣΗ"
+
+#: new-user-approve.php:301
+msgid "Deny"
+msgstr "ΑΠΟΡΡΙΨΗ"
+
+#: new-user-approve.php:313
+msgid "approved"
+msgstr "εγκρίθηκε"
+
+#: new-user-approve.php:315
+msgid "denied"
+msgstr "απορρίφθηκε"
+
+#: new-user-approve.php:317
+msgid "pending"
+msgstr "εκκρεμεί"
+
+#: new-user-approve.php:320
+#, php-format
+msgid "There are no users with a status of %s"
+msgstr "Δεν υπάρχουν χρήστες σε κατάσταση %s "
+
+#: new-user-approve.php:332
+msgid "User name already exists"
+msgstr "Το ψευδώνυμο υπάρχει ήδη καταχωρημένο"
+
+#: new-user-approve.php:335
+#, php-format
+msgid "%1$s (%2$s) has requested a username at %3$s"
+msgstr "%1$s (%2$s) αιτήθηκε πρόσβαση ως μελος στο web site της %3$s"
+
+#: new-user-approve.php:337
+#, php-format
+msgid "To approve or deny this user access to %s go to"
+msgstr "Για έγκριση ή απόρριψη του Χρήστη στο %s πήγαινε στο "
+
+#: new-user-approve.php:341
+#, php-format
+msgid "[%s] User Approval"
+msgstr "[%s] Έγκριση Χρήστη l"
+
+#: new-user-approve.php:372
+#, php-format
+msgid "You have been approved to access %s"
+msgstr "Έχετε εγκριθεί για πρόσβαση στο %s"
+
+#: new-user-approve.php:373
+#, php-format
+msgid "Username: %s"
+msgstr "Ψευδώνυμο: %s"
+
+#: new-user-approve.php:374
+#, php-format
+msgid "Password: %s"
+msgstr "Κωδικός Πρόσβασης: %s"
+
+#: new-user-approve.php:378
+#, php-format
+msgid "[%s] Registration Approved"
+msgstr "[%s] Έγκριση εγγραφής"
+
+#: new-user-approve.php:397
+#, php-format
+msgid "You have been denied access to %s"
+msgstr "Η αίτηση σας για πρόσβαση στο  %s απορρίφθηκε"
+
+#: new-user-approve.php:400
+#, php-format
+msgid "[%s] Registration Denied"
+msgstr "[%s] η Εγγραφή σας απορρίφθηκε"
+
+#: new-user-approve.php:413
+msgid "An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request."
+msgstr "Στάλθηκε μήνυμα στο Διαχειριστή του website. Θα ενημερωθεί για τα στοιχεία σας και θα εγκρίνει ή θα απορρίψει στην εγγραφή σας."
+
+#: new-user-approve.php:414
+msgid "You will receive an email with instructions on what you will need to do next. Thanks for your patience."
+msgstr "Θα παραλάβετε σύντομα ένα μήνυμα με οδηγίες για τα επόμενα βήματα. Ευχαριστούμε για την υπομονή σας."
+
+#: new-user-approve.php:418
+msgid "Pending Approval"
+msgstr "Εκκρεμή η Έγκριση"
+
+#: new-user-approve.php:418
+msgid "Registration successful."
+msgstr "Η Εγγραφή πραγματοποιήθηκε επιτυχώς!"
+
+#: new-user-approve.php:466
+#, php-format
+msgid "Welcome to %s. This site is accessible to approved users only. To be approved, you must first register."
+msgstr "Καλως ήλθατε στο %s. Αυτό το web site είναι πλήρως προσβάσιμο μόνο στους εγγεκριμένους χρήστες. Για να εγκριθείτε, θα πρέπει πρώτα να εγγραφείτε. "
+
+#: new-user-approve.php:471
+msgid "After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions."
+msgstr "Μετά την εγγραφή σας, θα σταλεί αίτηση στο Διαχειριστή του web site για έγκριση. Θα σας αποστείλει αυτόματα οδηγίες για τα επόμενα βήματα. "
+
+#. Plugin Name of an extension
+msgid "New User Approve"
+msgstr "Έγκριση Νέου Χρήστη"
+
+#. Plugin URI of an extension
+msgid "http://www.picklewagon.com/wordpress/new-user-approve"
+msgstr ""
+
+#. Description of an extension
+msgid "This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog."
+msgstr ""
+
+#. Author of an extension
+msgid "Josh Harrison"
+msgstr ""
+
+#. Author URI of an extension
+msgid "http://www.picklewagon.com/"
+msgstr ""
+
