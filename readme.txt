@@ -103,5 +103,6 @@ contains all defintions and may be used with a gettext editor like Poedit (Windo
 
 * Belarusian translation by <a href="http://www.fatcow.com/">Fat Cow</a>
 * Danish translation by <a href="http://wordpress.org/support/profile/2874976">GeorgWP</a>
+* French translation by <a href="http://philippe.scoffoni.net">Philippe Scoffoni</a>
 * Greek translation by <a href="http://alt3rnet.info">Leftys</a>
 * Polish translation by <a href="http://wordpress.org/support/profile/1271256">pik256</a>

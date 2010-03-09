@@ -1,0 +1,193 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: New User Approve 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
+"POT-Creation-Date: 2009-10-29 08:32+0000\n"
+"PO-Revision-Date: 2010-03-09 01:00-0800\n"
+"Last-Translator: Josh Harrison <josh@picklewagon.com>\n"
+"Language-Team: Philippe Scoffoni <philippe@scoffoni.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+
+#: new-user-approve.php:126
+msgid "Approve New Users"
+msgstr "Approuver les utilisateurs"
+
+#: new-user-approve.php:140
+msgid "Settings"
+msgstr "ParamÃ¨tres"
+
+#: new-user-approve.php:183
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: new-user-approve.php:219
+msgid "User successfully updated."
+msgstr "Utilisateur mis Ã  jour avec succÃ¨s"
+
+#: new-user-approve.php:223
+msgid "User Registration Approval"
+msgstr "Approbation de l'inscription de l'utilisateur"
+
+#: new-user-approve.php:225
+msgid "User Management"
+msgstr "Gestion des utilisateurs"
+
+#: new-user-approve.php:228
+msgid "Users Pending Approval"
+msgstr "Utilisateurs en attente d'approbation"
+
+#: new-user-approve.php:229
+msgid "Approved Users"
+msgstr "Utilisateurs approuvÃ©s"
+
+#: new-user-approve.php:230
+msgid "Denied Users"
+msgstr "Utilisateurs refusÃ©s"
+
+#: new-user-approve.php:255
+msgid "ID"
+msgstr "ID"
+
+#: new-user-approve.php:256
+msgid "Username"
+msgstr "Nom de compte"
+
+#: new-user-approve.php:257
+msgid "Name"
+msgstr "Nom"
+
+#: new-user-approve.php:258
+msgid "E-mail"
+msgstr "E-mail"
+
+#: new-user-approve.php:260
+#: new-user-approve.php:262
+msgid "Actions"
+msgstr "Actions"
+
+#: new-user-approve.php:296
+msgid "email:"
+msgstr "email"
+
+#: new-user-approve.php:298
+msgid "Approve"
+msgstr "Approuver"
+
+#: new-user-approve.php:301
+msgid "Deny"
+msgstr "Refuser"
+
+#: new-user-approve.php:313
+msgid "approved"
+msgstr "approuvÃ©"
+
+#: new-user-approve.php:315
+msgid "denied"
+msgstr "refusÃ©"
+
+#: new-user-approve.php:317
+msgid "pending"
+msgstr "en attente"
+
+#: new-user-approve.php:320
+#, php-format
+msgid "There are no users with a status of %s"
+msgstr "il n'y a aucun utilisateur avec le status %s"
+
+#: new-user-approve.php:332
+msgid "User name already exists"
+msgstr "Nom d'utilisateur dÃ©jÃ  existant"
+
+#: new-user-approve.php:335
+#, php-format
+msgid "%1$s (%2$s) has requested a username at %3$s"
+msgstr "%1$s (%2$s) a demandÃ© l'approbation d'un compte sur %3$s"
+
+#: new-user-approve.php:337
+#, php-format
+msgid "To approve or deny this user access to %s go to"
+msgstr "Pour approuver ou refuser cet utilisateur, aller sur le site %s"
+
+#: new-user-approve.php:341
+#, php-format
+msgid "[%s] User Approval"
+msgstr "[%s] Demande d'approbation pour un utilisateur"
+
+#: new-user-approve.php:372
+#, php-format
+msgid "You have been approved to access %s"
+msgstr "Votre inscription a Ã©tÃ© acceptÃ©e pour accÃ©der au site %s"
+
+#: new-user-approve.php:373
+#, php-format
+msgid "Username: %s"
+msgstr "Nom de compte : %s"
+
+#: new-user-approve.php:374
+#, php-format
+msgid "Password: %s"
+msgstr "Mot de passe : %s"
+
+#: new-user-approve.php:378
+#, php-format
+msgid "[%s] Registration Approved"
+msgstr "[%s] Inscription approuvÃ©e"
+
+#: new-user-approve.php:397
+#, php-format
+msgid "You have been denied access to %s"
+msgstr "Votre inscription a Ã©tÃ© refusÃ©e pour accÃ©der au site %s"
+
+#: new-user-approve.php:400
+#, php-format
+msgid "[%s] Registration Denied"
+msgstr "[%s] Inscription refusÃ©e"
+
+#: new-user-approve.php:413
+msgid "An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request."
+msgstr "Un email a Ã©tÃ© envoyÃ© Ã  l'administrateur du site. Il va vÃ©rifier les informations que vous avez transmises et approuver ou refuser votre demande d'inscription. "
+
+#: new-user-approve.php:414
+msgid "You will receive an email with instructions on what you will need to do next. Thanks for your patience."
+msgstr "Vous allez recevoir un email avec les instructions sur ce que vous devez ensuite faire. Merci de votre patience."
+
+#: new-user-approve.php:418
+msgid "Pending Approval"
+msgstr "Approbation en attente"
+
+#: new-user-approve.php:418
+msgid "Registration successful."
+msgstr "Inscription rÃ©ussie"
+
+#: new-user-approve.php:466
+#, php-format
+msgid "Welcome to %s. This site is accessible to approved users only. To be approved, you must first register."
+msgstr "Bienvenue Ã  %s. Ce site est accessible aux utilisateurs approuvÃ©s. Pour Ãªtre approuvÃ©, vous devez d'abord vous inscrire."
+
+#: new-user-approve.php:471
+msgid "After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions."
+msgstr "AprÃ¨s l'inscription, votre demande sera envoyÃ©e Ã  l'administrateur pour approbation. Vous recevrez alors un email avec plus d'informations."
+
+#. Plugin Name of an extension
+msgid "New User Approve"
+msgstr "Nouvel utilisateur approuvÃ©"
+
+#. Plugin URI of an extension
+msgid "http://www.picklewagon.com/wordpress/new-user-approve"
+msgstr "http://www.picklewagon.com/wordpress/new-user-approve"
+
+#. Description of an extension
+msgid "This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog."
+msgstr "This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog."
+
+#. Author of an extension
+msgid "Josh Harrison"
+msgstr "Josh Harrison"
+
+#. Author URI of an extension
+msgid "http://www.picklewagon.com/"
+msgstr "http://www.picklewagon.com/"
+
