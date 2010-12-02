@@ -2,7 +2,7 @@
 Contributors: picklewagon
 Donate link: http://www.picklewagon.com/wordpress/
 Tags: users, registration
-Requires at least: 2.6
+Requires at least: 2.8.4
 Tested up to: 2.9.2
 Stable tag: 1.2.5
 
