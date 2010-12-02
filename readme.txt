@@ -42,6 +42,9 @@ email. Make sure your host is setup correctly to send email if this happens.
 
 == Changelog ==
 
+= 1.3 =
+* use the User API to retrieve a user instead of querying the db
+
 = 1.2.5 =
 * add french translation
 

@@ -81,6 +81,9 @@ if (!class_exists('pw_new_user_approve')) {
 			add_action('register_post', array(&$this, 'send_approval_email'), 10, 3);
 			add_action('init', array(&$this, 'process_input'));
 			add_action('lostpassword_post', array(&$this, 'lost_password'));
+			
+			// Filters
+			add_filter('plugin_action_links', array(&$this, 'filter_plugin_actions'), 10, 2);
 			add_filter('registration_errors', array(&$this, 'show_user_message'), 10, 1);
 			add_filter('login_message', array(&$this, 'welcome_user'));
 			//add_action('rightnow_end', array(&$this, 'dashboard_stats')); // still too slow
@@ -112,7 +115,6 @@ if (!class_exists('pw_new_user_approve')) {
 		 */
 		function admin_menu_link() {
 			add_submenu_page('users.php', __('Approve New Users', $this->localizationDomain), __('Approve New Users', $this->localizationDomain), 'edit_users', basename(__FILE__), array(&$this, 'approve_admin'));
-			add_filter('plugin_action_links', array(&$this, 'filter_plugin_actions'), 10, 2);
 		}
 
 		/**
@@ -343,8 +345,8 @@ if (!class_exists('pw_new_user_approve')) {
 		function approve_user() {
 			global $wpdb;
 			
-			$query = $wpdb->prepare("SELECT * FROM $wpdb->users WHERE ID = %d", $_GET['user']);
-			$user = $wpdb->get_row($query);
+			$user_id = (int) $_GET['user'];
+			$user = new WP_User( $user_id );
 			
 			// reset password to know what to send the user
 			$new_pass = wp_generate_password();
@@ -381,10 +383,8 @@ if (!class_exists('pw_new_user_approve')) {
 		 * @desc admin denial of user
 		 */
 		function deny_user() {
-			global $wpdb;
-			
-			$query = $wpdb->prepare("SELECT * FROM $wpdb->users WHERE ID = %d", $_GET['user']);
-			$user = $wpdb->get_row($query);
+			$user_id = (int) $_GET['user'];
+			$user = new WP_User( $user_id );
 			
 			// send email to user telling of denial
 			$user_email = stripslashes($user->user_email);
