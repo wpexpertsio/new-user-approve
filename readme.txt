@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: picklewagon
-Donate link: http://picklewagon.com/wordpress/new-user-approve-plugin/donate
+Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration
 Requires at least: 2.8.4
 Tested up to: 2.9.2
@@ -45,6 +45,7 @@ email. Make sure your host is setup correctly to send email if this happens.
 = 1.3 =
 * use the User API to retrieve a user instead of querying the db
 * require at least WordPress 2.8.4
+* add an options screen
 
 = 1.2.5 =
 * add french translation

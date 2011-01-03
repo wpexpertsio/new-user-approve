@@ -1,10 +1,10 @@
 <?php
 /*
  Plugin Name: New User Approve
- Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve-plugin/
+ Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve/
  Description: This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog.
  Author: Josh Harrison
- Version: 1.4
+ Version: 1.3
  Author URI: http://www.picklewagon.com/
  */
  
@@ -535,7 +535,7 @@ if (!class_exists('pw_new_user_approve')) {
 			$donate = __('I\'ve spent a lot of time programming and maintaining this plugin. If it helps you make money, please donate to show your appreciation.', $this->localizationDomain);
 			
 			echo '<p>'.$donate.'</p>';
-			echo '<p><a href="http://picklewagon.com/wordpress/new-user-approve-plugin/donate">'.__('Donate', $this->localizationDomain).'</a></p>';
+			echo '<p><a href="http://picklewagon.com/wordpress/new-user-approve/donate">'.__('Donate', $this->localizationDomain).'</a></p>';
 		}
 
 		function options_meta_box() {
