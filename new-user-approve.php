@@ -96,7 +96,8 @@ if (!class_exists('pw_new_user_approve')) {
 			global $wp_version;
 			
 			$min_wp_version = '2.8.4';
-			$exit_msg = __('New User Approve requires WordPress '.$min_wp_version.' or newer.', $this->localizationDomain);
+			$string = __('New User Approve requires WordPress %s or newer.', $this->localizationDomain);
+			$exit_msg = sprintf( $string, $min_wp_version );
 			if (version_compare($wp_version, $min_wp_version, '<=')) {
 				exit($exit_msg);
 			}
