@@ -589,7 +589,11 @@ if (!class_exists('pw_new_user_approve')) {
 } // End if class exists statement
 
 if (!class_exists('WP_User_Search')) {
-    require_once(ABSPATH . 'wp-admin/includes/user.php');
+	if (version_compare($wp_version, "3.1", '>=')) {
+    	require_once(ABSPATH . 'wp-admin/includes/deprecated.php');
+	} else {
+		require_once(ABSPATH . 'wp-admin/includes/user.php');
+	}
 }
 class PW_User_Search extends WP_User_Search {
 	var $users_per_page = 999999999;
