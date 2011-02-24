@@ -3,8 +3,8 @@ Contributors: picklewagon
 Donate link: http://www.picklewagon.com/wordpress/
 Tags: users, registration
 Requires at least: 2.6
-Tested up to: 2.9.2
-Stable tag: 1.2.5
+Tested up to: 3.1
+Stable tag: 1.2.6
 
 New User Approve is a Wordpress plugin that allows a blog administrator to 
 approve a user before they are able to access and login to the blog.
@@ -41,6 +41,9 @@ email. Make sure your host is setup correctly to send email if this happens.
 1. The backend to manage approving and denying users.
 
 == Changelog ==
+
+= 1.2.6 =
+* fix for 3.1 to include the deprecated code for user search
 
 = 1.2.5 =
 * add french translation
