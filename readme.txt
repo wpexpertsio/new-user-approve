@@ -3,7 +3,7 @@ Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration
 Requires at least: 2.8.4
-Tested up to: 2.9.2
+Tested up to: 3.1
 Stable tag: 1.2.6
 
 New User Approve is a Wordpress plugin that allows a blog administrator to 
