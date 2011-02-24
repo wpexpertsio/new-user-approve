@@ -48,7 +48,7 @@ email. Make sure your host is setup correctly to send email if this happens.
 * add an options screen
 
 = 1.2.6 =
-* fix for 3.1 to include the deprecated code for user search
+* fix to include the deprecated code for user search
 
 = 1.2.5 =
 * add french translation
