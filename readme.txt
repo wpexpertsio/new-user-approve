@@ -46,7 +46,9 @@ email. Make sure your host is setup correctly to send email if this happens.
 * use the User API to retrieve a user instead of querying the db
 * require at least WordPress 2.8.4
 * add an options screen
-* add a fix for the deprecated user search
+
+= 1.2.6 =
+* fix for 3.1 to include the deprecated code for user search
 
 = 1.2.5 =
 * add french translation
