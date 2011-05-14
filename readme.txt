@@ -15,7 +15,7 @@ In a normal Wordpress blog, once a new user registers, the user is created in
 the database. Then an email is sent to the new user with their login 
 credentials. Very simple. As it should be.
 
-The New User Approve plugin changes up the registration process. When a user 
+The New User Approve plugin modifies the registration process. When a user 
 registers for the blog, the user gets created and then an email gets sent to 
 the administrators of the site. An administrator then is expected to either 
 approve or deny the registration request. An email is then sent to the user 
