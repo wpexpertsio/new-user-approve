@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: picklewagon
-Donate link: http://www.picklewagon.com/wordpress/
+Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration
-Requires at least: 2.6
-Tested up to: 2.9.1
-Stable tag: 1.2.4
+Requires at least: 2.8.4
+Tested up to: 3.1
+Stable tag: 1.2.6
 
 New User Approve is a Wordpress plugin that allows a blog administrator to 
 approve a user before they are able to access and login to the blog.
@@ -15,7 +15,7 @@ In a normal Wordpress blog, once a new user registers, the user is created in
 the database. Then an email is sent to the new user with their login 
 credentials. Very simple. As it should be.
 
-The New User Approve plugin changes up the registration process. When a user 
+The New User Approve plugin modifies the registration process. When a user 
 registers for the blog, the user gets created and then an email gets sent to 
 the administrators of the site. An administrator then is expected to either 
 approve or deny the registration request. An email is then sent to the user 
@@ -45,6 +45,15 @@ email. Make sure your host is setup correctly to send email if this happens.
 = 1.3 =
 * get rid of plugin errors with WP_DEBUG set to true
 * add an options panel
+* use the User API to retrieve a user instead of querying the db
+* require at least WordPress 2.8.4
+* add german translation
+
+= 1.2.6 =
+* fix to include the deprecated code for user search
+
+= 1.2.5 =
+* add french translation
 
 = 1.2.4 =
 * add greek translation
@@ -105,6 +114,6 @@ information can be found on the <a href="http://codex.wordpress.org/Translating_
 * Belarusian translation by <a href="http://www.fatcow.com/">Fat Cow</a>
 * Danish translation by <a href="http://wordpress.org/support/profile/2874976">GeorgWP</a>
 * French translation by <a href="http://philippe.scoffoni.net">Philippe Scoffoni</a>
-* German translation by Christoph Ploedt
 * Greek translation by <a href="http://alt3rnet.info">Leftys</a>
 * Polish translation by <a href="http://wordpress.org/support/profile/1271256">pik256</a>
+* German translation by Christoph Ploedt

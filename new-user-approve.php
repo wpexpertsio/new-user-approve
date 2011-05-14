@@ -1,7 +1,7 @@
 <?php
 /*
  Plugin Name: New User Approve
- Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve-wordpress-plugin/
+ Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve/
  Description: This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog.
  Author: Josh Harrison
  Version: 1.3
@@ -74,6 +74,8 @@ if (!class_exists('pw_new_user_approve')) {
 			// Initialize the options
 			$this->get_options();
 
+			register_activation_hook(__FILE__, array(&$this, 'activation_check'));
+			
 			// Actions
 			add_action('admin_menu',          array(&$this, 'admin_menu_link'));
 			add_action('admin_footer',        array(&$this, 'admin_scripts_footer'));
@@ -85,6 +87,29 @@ if (!class_exists('pw_new_user_approve')) {
 			add_filter('registration_errors', array(&$this, 'show_user_message'), 10, 1);
 			add_filter('login_message',       array(&$this, 'welcome_user'));
 			//add_action('rightnow_end', array(&$this, 'dashboard_stats')); // still too slow
+			
+			// Filters
+			add_filter('plugin_action_links', array(&$this, 'filter_plugin_actions'), 10, 2);
+			add_filter('registration_errors', array(&$this, 'show_user_message'), 10, 1);
+			add_filter('login_message', array(&$this, 'welcome_user'));
+			add_filter('screen_layout_columns', array(&$this, 'screen_layout_columns'), 10, 2);
+		}
+		
+		function activation_check() {
+			global $wp_version;
+			
+			$min_wp_version = '2.8.4';
+			$exit_msg = sprintf( __('New User Approve requires WordPress %s or newer.', $this->localizationDomain), $min_wp_version );
+			if (version_compare($wp_version, $min_wp_version, '<=')) {
+				exit($exit_msg);
+			}
+		}
+		
+		function screen_layout_columns($columns, $screen) {
+			if ($screen == $this->option_page_hook) {
+				$columns[$screen] = 2;
+			}
+			return $columns;
 		}
 
 		/**
@@ -112,10 +137,12 @@ if (!class_exists('pw_new_user_approve')) {
 		 * @desc Adds the options subpanel
 		 */
 		function admin_menu_link() {
-			add_submenu_page('users.php', __('Approve New Users', $this->plugin_id), __('Approve New Users', $this->plugin_id), 'edit_users', basename(__FILE__), array(&$this, 'approve_admin'));
+			$this->user_page_hook = add_users_page( __('Approve New Users', $this->plugin_id), __('Approve New Users', $this->plugin_id), 'edit_users', basename(__FILE__), array(&$this, 'approve_admin'));
+			$this->option_page_hook = add_options_page(__('Approve New Users', $this->plugin_id), __('Approve New Users', $this->plugin_id), 'manage_options', 'approve-user-config', array(&$this, 'admin_options_page'));
+			
 			add_filter('plugin_action_links', array(&$this, 'filter_plugin_actions'), 10, 2);
 			
-			add_options_page(__('Approve New Users', $this->plugin_id), __('Approve New Users', $this->plugin_id), 'manage_options', $this->plugin_id, array(&$this, 'options_page'));
+			add_action('load-' . $this->option_page_hook, array(&$this, 'load_options_page'));
 		}
 
 		/**
@@ -363,8 +390,8 @@ if (!class_exists('pw_new_user_approve')) {
 		function approve_user() {
 			global $wpdb;
 			
-			$query = $wpdb->prepare("SELECT * FROM $wpdb->users WHERE ID = %d", $_GET['user']);
-			$user = $wpdb->get_row($query);
+			$user_id = (int) $_GET['user'];
+			$user = new WP_User( $user_id );
 			
 			// reset password to know what to send the user
 			$new_pass = wp_generate_password();
@@ -401,10 +428,8 @@ if (!class_exists('pw_new_user_approve')) {
 		 * @desc admin denial of user
 		 */
 		function deny_user() {
-			global $wpdb;
-			
-			$query = $wpdb->prepare("SELECT * FROM $wpdb->users WHERE ID = %d", $_GET['user']);
-			$user = $wpdb->get_row($query);
+			$user_id = (int) $_GET['user'];
+			$user = new WP_User( $user_id );
 			
 			// send email to user telling of denial
 			$user_email = stripslashes($user->user_email);
@@ -500,24 +525,99 @@ if (!class_exists('pw_new_user_approve')) {
 			}
 		}
 		
-		function options_page() {
+		public function load_options_page() {
+			wp_enqueue_script('post');
+			add_meta_box('new-user-approve-options-div', __('Options', $this->plugin_id), array(&$this, 'options_meta_box'), $this->option_page_hook, 'normal', 'high');
+			add_meta_box('new-user-approve-news-div', __('Latest News', $this->plugin_id), array(&$this, 'news_meta_box'), $this->option_page_hook, 'side', 'low');
+			add_meta_box('new-user-approve-share-div', __('Share', $this->plugin_id), array(&$this, 'share_meta_box'), $this->option_page_hook, 'side', 'low');
+			add_meta_box('new-user-approve-support-div', __('Support', $this->plugin_id), array(&$this, 'support_meta_box'), $this->option_page_hook, 'side', 'low');
+			add_meta_box('new-user-approve-donate-div', __('Donate', $this->plugin_id), array(&$this, 'donate_meta_box'), $this->option_page_hook, 'side', 'low');
+		}
+		
+		public function news_meta_box() {
 ?>
-<div class="wrap">
-	<h2>Approve New Users Options</h2>
-	<form action="options.php" method="post">
-	<?php settings_fields($this->options_name); ?>
-	<?php do_settings_sections($this->plugin_id); ?>
-	<input name="Submit" type="submit" value="<?php esc_attr_e('Save Changes'); ?>" />
-	</form>
-</div>
+			<ul>
+				<li><img src="<?php echo $this->pluginurl ?>images/rss.png" alt="" /> <a href="http://picklewagon.com/feed"><?php _e('Subscribe to Picklewagon', $this->plugin_id) ?></a></li>
+				<li><img src="<?php echo $this->pluginurl ?>images/rss.png" alt="" /> <a href="http://picklewagon.com/tag/new-user-approve/feed"><?php _e('Subscribe to updates specific to this plugin', $this->plugin_id) ?></a></li>
+			</ul>
+<?php
+		}
+		
+		public function share_meta_box() {
+?>
+			<p><a href="http://wordpress.org/extend/plugins/new-user-approve/">Rate this plugin on WordPress.org</a></p>
+			<p>If you are using this plugin in a production environment, <a href="mailto:newuserapproveplugin@picklewagon.com">let me know</a> so I can link to you.</p>
+<?php
+		}
+		
+		public function support_meta_box() {
+?>
+			<p><?php _e('If you have any problems with this plugin or good ideas for improvements or new features, please talk about them in the <a href="http://wordpress.org/tags/yahoo-boss">Support forums</a>.', $this->plugin_id) ?></p>
+<?php
+		}
+		
+		public function donate_meta_box() {
+			$donate = __('I\'ve spent a lot of time programming and maintaining this plugin. If it helps you make money, please donate to show your appreciation.', $this->plugin_id);
+			
+			echo '<p>'.$donate.'</p>';
+			echo '<p><a href="http://picklewagon.com/wordpress/new-user-approve/donate">'.__('Donate', $this->plugin_id).'</a></p>';
+		}
 
+		function options_meta_box() {
+?>
+			<table width="100%" cellspacing="2" cellpadding="5" class="form-table">
+				<tr valign="top">
+					<th scope="row"><label for="{plugin_slug}_path"><?php _e('Option 1:', $this->plugin_id); ?></label></th>
+					<td><input name="{plugin_slug}_path" type="text" id="{plugin_slug}_path" size="45" value="<?php echo $this->options['{plugin_slug}_path'] ;?>" /></td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><label for="{plugin_slug}_allowed_groups"><?php _e('Option 2:', $this->plugin_id); ?></th>
+					<td><input name="{plugin_slug}_allowed_groups" type="text" id="{plugin_slug}_allowed_groups" value="<?php echo $this->options['{plugin_slug}_allowed_groups'] ;?>" />
+					</td>
+				</tr>
+				<tr valign="top">
+					<th><label for="{plugin_slug}_enabled"><?php _e('CheckBox #1:', $this->plugin_id); ?></label></th>
+					<td><input type="checkbox" id="{plugin_slug}_enabled" name="{plugin_slug}_enabled" <?=($this->options['{plugin_slug}_enabled']==true)?'checked="checked"':''?>></td>
+				</tr>
+			</table>
+<?php
+		}
+		
+		function admin_options_page() {
+			global $screen_layout_columns;
+?>
+			<div class="wrap">
+				<?php screen_icon(); ?>
+				<h2>Approve New Users Settings</h2>
+				<?php if ( $this->message ) : ?>
+				<div id="message" class="updated"><p><?php echo $this->message; ?></p></div>
+				<?php endif; ?>
+				<form method="post" id="approve_new_users_options">
+				<input type="hidden" name="approve_new_users_options_nonce" id="approve_new_users_options_nonce" value="<?php echo wp_create_nonce('approv-new-users-options-edit') ?>" />
+				<div id="poststuff" class="metabox-holder<?php echo 2 == $screen_layout_columns ? ' has-right-sidebar' : ''; ?>">
+					<div id="side-info-column" class="inner-sidebar">
+						<?php do_meta_boxes( $this->option_page_hook, 'side', null ); ?>
+					</div>
+					<div id="post-body">
+						<div id="post-body-content">
+							<?php do_meta_boxes( $this->option_page_hook, 'normal', null ); ?>
+							<p class="submit"><input type="submit" class="button-primary" name="pw_search_save" value="<?php _e('Save Changes', 'pw_yahoo_boss') ?>" /></p>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
 <?php
 		}
 	} // End Class
 } // End if class exists statement
 
 if (!class_exists('WP_User_Search')) {
-    require_once(ABSPATH . 'wp-admin/includes/user.php');
+	if (version_compare($wp_version, "3.1", '>=')) {
+    	require_once(ABSPATH . 'wp-admin/includes/deprecated.php');
+	} else {
+		require_once(ABSPATH . 'wp-admin/includes/user.php');
+	}
 }
 class PW_User_Search extends WP_User_Search {
 	var $users_per_page = 999999999;
