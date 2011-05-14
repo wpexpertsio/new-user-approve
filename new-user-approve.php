@@ -74,25 +74,23 @@ if (!class_exists('pw_new_user_approve')) {
 			// Initialize the options
 			$this->get_options();
 
-			register_activation_hook(__FILE__, array(&$this, 'activation_check'));
+			register_activation_hook(__FILE__, array( $this, 'activation_check'));
 			
 			// Actions
-			add_action('admin_menu',          array(&$this, 'admin_menu_link'));
-			add_action('admin_footer',        array(&$this, 'admin_scripts_footer'));
-			add_action('admin_init',          array(&$this, 'admin_init'));
-			add_action('init',                array(&$this, 'init'));
-			add_action('register_post',       array(&$this, 'send_approval_email'), 10, 3);
-			add_action('init',                array(&$this, 'process_input'));
-			add_action('lostpassword_post',   array(&$this, 'lost_password'));
-			add_filter('registration_errors', array(&$this, 'show_user_message'), 10, 1);
-			add_filter('login_message',       array(&$this, 'welcome_user'));
-			//add_action('rightnow_end', array(&$this, 'dashboard_stats')); // still too slow
+			add_action('admin_menu',          array( $this, 'admin_menu_link'));
+			add_action('admin_footer',        array( $this, 'admin_scripts_footer'));
+			add_action('init',                array( $this, 'init'));
+			add_action('init',                array( $this, 'upgrade_plugin' ) );
+			add_action('init',                array( $this, 'process_input'));
+			add_action('register_post',       array( $this, 'send_approval_email'), 10, 3);
+			add_action('lostpassword_post',   array( $this, 'lost_password'));
+			//add_action('rightnow_end', array( $this, 'dashboard_stats')); // still too slow
 			
 			// Filters
-			add_filter('plugin_action_links', array(&$this, 'filter_plugin_actions'), 10, 2);
-			add_filter('registration_errors', array(&$this, 'show_user_message'), 10, 1);
-			add_filter('login_message', array(&$this, 'welcome_user'));
-			add_filter('screen_layout_columns', array(&$this, 'screen_layout_columns'), 10, 2);
+			add_filter('plugin_action_links', array( $this, 'filter_plugin_actions'), 10, 2);
+			add_filter('registration_errors', array( $this, 'show_user_message'), 10, 1);
+			add_filter('login_message', array( $this, 'welcome_user'));
+			add_filter('screen_layout_columns', array( $this, 'screen_layout_columns'), 10, 2);
 		}
 		
 		function activation_check() {
@@ -102,6 +100,15 @@ if (!class_exists('pw_new_user_approve')) {
 			$exit_msg = sprintf( __('New User Approve requires WordPress %s or newer.', $this->localizationDomain), $min_wp_version );
 			if (version_compare($wp_version, $min_wp_version, '<=')) {
 				exit($exit_msg);
+			}
+		}
+		
+		function upgrade_plugin() {
+			if ( !isset( $this->options['version'] ) ) {
+				$this->options = array(
+					'version'          => '1.3',
+					'legacy_interface' => false,
+				);
 			}
 		}
 		
@@ -116,14 +123,14 @@ if (!class_exists('pw_new_user_approve')) {
 		 * Retrieves the plugin options from the database.
 		 */
 		function get_options() {
-			// Don't forget to set up the default options
-			if (!$theOptions = get_option($this->options_name)) {
-				$theOptions = array(
-					'default' => 'options'
+			if (!$the_options = get_option($this->options_name)) {
+				$the_options = array(
+					'version'          => '1.3',
+					'legacy_interface' => false,
 				);
-				update_option($this->options_name, $theOptions);
+				update_option($this->options_name, $the_options);
 			}
-			$this->options = $theOptions;
+			$this->options = $the_options;
 		}
 		
 		/**
@@ -137,12 +144,13 @@ if (!class_exists('pw_new_user_approve')) {
 		 * @desc Adds the options subpanel
 		 */
 		function admin_menu_link() {
-			$this->user_page_hook = add_users_page( __('Approve New Users', $this->plugin_id), __('Approve New Users', $this->plugin_id), 'edit_users', basename(__FILE__), array(&$this, 'approve_admin'));
-			$this->option_page_hook = add_options_page(__('Approve New Users', $this->plugin_id), __('Approve New Users', $this->plugin_id), 'manage_options', 'approve-user-config', array(&$this, 'admin_options_page'));
+			if ( $this->options['legacy_interface'] ) {
+				$this->user_page_hook = add_users_page( __('Approve New Users', $this->plugin_id), __('Approve New Users', $this->plugin_id), 'edit_users', basename(__FILE__), array( $this, 'approve_admin'));
+			}
 			
-			add_filter('plugin_action_links', array(&$this, 'filter_plugin_actions'), 10, 2);
-			
-			add_action('load-' . $this->option_page_hook, array(&$this, 'load_options_page'));
+			$this->option_page_hook = add_options_page(__('Approve New Users', $this->plugin_id), __('Approve New Users', $this->plugin_id), 'manage_options', 'approve-user-config', array( $this, 'admin_options_page'));
+			add_action('load-' . $this->option_page_hook, array( $this, 'load_options_page'));
+			add_action('load-' . $this->option_page_hook, array( $this, 'save_options'));
 		}
 
 		/**
@@ -159,20 +167,6 @@ if (!class_exists('pw_new_user_approve')) {
 				array_unshift( $links, $settings_link ); // before other links
 			}
 			return $links;
-		}
-
-		function admin_init() {
-			register_setting($this->options_name, $this->plugin_id, array(&$this, 'options_validate'));
-			add_settings_section($this->plugin_id . 'main', 'Main Settings', array(&$this, 'main_section_text'), $this->plugin_id);
-			//add_settings_field('plugin_text_string', 'Plugin Text Input', 'plugin_setting_string', 'plugin', 'plugin_main');
-		}
-		
-		function options_validate() {
-			
-		}
-		
-		function main_section_text() {
-			
 		}
 		
 		function admin_scripts_footer() {
@@ -527,18 +521,18 @@ if (!class_exists('pw_new_user_approve')) {
 		
 		public function load_options_page() {
 			wp_enqueue_script('post');
-			add_meta_box('new-user-approve-options-div', __('Options', $this->plugin_id), array(&$this, 'options_meta_box'), $this->option_page_hook, 'normal', 'high');
-			add_meta_box('new-user-approve-news-div', __('Latest News', $this->plugin_id), array(&$this, 'news_meta_box'), $this->option_page_hook, 'side', 'low');
-			add_meta_box('new-user-approve-share-div', __('Share', $this->plugin_id), array(&$this, 'share_meta_box'), $this->option_page_hook, 'side', 'low');
-			add_meta_box('new-user-approve-support-div', __('Support', $this->plugin_id), array(&$this, 'support_meta_box'), $this->option_page_hook, 'side', 'low');
-			add_meta_box('new-user-approve-donate-div', __('Donate', $this->plugin_id), array(&$this, 'donate_meta_box'), $this->option_page_hook, 'side', 'low');
+			add_meta_box('new-user-approve-options-div', __('Options', $this->plugin_id), array( $this, 'options_meta_box'), $this->option_page_hook, 'normal', 'high');
+			add_meta_box('new-user-approve-news-div', __('Latest News', $this->plugin_id), array( $this, 'news_meta_box'), $this->option_page_hook, 'side', 'low');
+			add_meta_box('new-user-approve-share-div', __('Share', $this->plugin_id), array( $this, 'share_meta_box'), $this->option_page_hook, 'side', 'low');
+			add_meta_box('new-user-approve-support-div', __('Support', $this->plugin_id), array( $this, 'support_meta_box'), $this->option_page_hook, 'side', 'low');
+			add_meta_box('new-user-approve-donate-div', __('Donate', $this->plugin_id), array( $this, 'donate_meta_box'), $this->option_page_hook, 'side', 'low');
 		}
 		
 		public function news_meta_box() {
 ?>
 			<ul>
 				<li><img src="<?php echo $this->pluginurl ?>images/rss.png" alt="" /> <a href="http://picklewagon.com/feed"><?php _e('Subscribe to Picklewagon', $this->plugin_id) ?></a></li>
-				<li><img src="<?php echo $this->pluginurl ?>images/rss.png" alt="" /> <a href="http://picklewagon.com/tag/new-user-approve/feed"><?php _e('Subscribe to updates specific to this plugin', $this->plugin_id) ?></a></li>
+				<li><img src="<?php echo $this->pluginurl ?>images/rss.png" alt="" /> <a href="http://picklewagon.com/blog/tag/new-user-approve/feed"><?php _e('Subscribe to updates specific to this plugin', $this->plugin_id) ?></a></li>
 			</ul>
 <?php
 		}
@@ -567,24 +561,41 @@ if (!class_exists('pw_new_user_approve')) {
 ?>
 			<table width="100%" cellspacing="2" cellpadding="5" class="form-table">
 				<tr valign="top">
-					<th scope="row"><label for="{plugin_slug}_path"><?php _e('Option 1:', $this->plugin_id); ?></label></th>
-					<td><input name="{plugin_slug}_path" type="text" id="{plugin_slug}_path" size="45" value="<?php echo $this->options['{plugin_slug}_path'] ;?>" /></td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label for="{plugin_slug}_allowed_groups"><?php _e('Option 2:', $this->plugin_id); ?></th>
-					<td><input name="{plugin_slug}_allowed_groups" type="text" id="{plugin_slug}_allowed_groups" value="<?php echo $this->options['{plugin_slug}_allowed_groups'] ;?>" />
+					<th><label for="pw_new_user_approve_legacy_interface"><?php _e('Legacy Interface:', $this->plugin_id); ?></label></th>
+					<td>
+						<input type="checkbox" value="1" id="pw_new_user_approve_legacy_interface" name="pw_new_user_approve_legacy_interface" <?php checked( $this->options['legacy_interface'] ) ?>>
+						<span class="description"><?php _e( 'Using the legacy interface provides a separate page to approve new users. From this page, users can be either approved or denied.', $this->plugin_id ) ?></span><br />
+						<span class="description"><?php _e( 'The new interface only requires changing the user role to approve a new user. This can be done from the default user list.', $this->plugin_id ) ?></span>
 					</td>
-				</tr>
-				<tr valign="top">
-					<th><label for="{plugin_slug}_enabled"><?php _e('CheckBox #1:', $this->plugin_id); ?></label></th>
-					<td><input type="checkbox" id="{plugin_slug}_enabled" name="{plugin_slug}_enabled" <?=($this->options['{plugin_slug}_enabled']==true)?'checked="checked"':''?>></td>
 				</tr>
 			</table>
 <?php
 		}
 		
+		function save_options() {
+			$this->message = null;
+			
+			if ($_POST['pw_new_user_approve_save']){       
+				if (!wp_verify_nonce($_POST['pw_new_user_approve_options_nonce'], 'pw-new-user-approve-options-edit')) {
+	    			return;
+	  			}
+				
+				$this->options['legacy_interface'] = ( esc_attr( $_POST['pw_new_user_approve_legacy_interface'] ) );
+				
+				$this->save_admin_options();	
+				
+				$url = add_query_arg( array( 'message' => 1 ) );
+				wp_redirect( $url );
+				die;
+			}
+		}
+		
 		function admin_options_page() {
 			global $screen_layout_columns;
+			
+			if ( $_GET['message'] == 1 ) {
+				$this->message = __('Success! Your changes were sucessfully saved!', $this->plugin_id);
+			}
 ?>
 			<div class="wrap">
 				<?php screen_icon(); ?>
@@ -593,7 +604,7 @@ if (!class_exists('pw_new_user_approve')) {
 				<div id="message" class="updated"><p><?php echo $this->message; ?></p></div>
 				<?php endif; ?>
 				<form method="post" id="approve_new_users_options">
-				<input type="hidden" name="approve_new_users_options_nonce" id="approve_new_users_options_nonce" value="<?php echo wp_create_nonce('approv-new-users-options-edit') ?>" />
+				<input type="hidden" name="pw_new_user_approve_options_nonce" id="pw_new_user_approve_options_nonce" value="<?php echo wp_create_nonce('pw-new-user-approve-options-edit') ?>" />
 				<div id="poststuff" class="metabox-holder<?php echo 2 == $screen_layout_columns ? ' has-right-sidebar' : ''; ?>">
 					<div id="side-info-column" class="inner-sidebar">
 						<?php do_meta_boxes( $this->option_page_hook, 'side', null ); ?>
@@ -601,7 +612,7 @@ if (!class_exists('pw_new_user_approve')) {
 					<div id="post-body">
 						<div id="post-body-content">
 							<?php do_meta_boxes( $this->option_page_hook, 'normal', null ); ?>
-							<p class="submit"><input type="submit" class="button-primary" name="pw_search_save" value="<?php _e('Save Changes', 'pw_yahoo_boss') ?>" /></p>
+							<p class="submit"><input type="submit" class="button-primary" name="pw_new_user_approve_save" value="<?php _e('Save Changes', $this->plugin_id) ?>" /></p>
 						</div>
 					</div>
 				</div>
@@ -613,7 +624,7 @@ if (!class_exists('pw_new_user_approve')) {
 } // End if class exists statement
 
 if (!class_exists('WP_User_Search')) {
-	if (version_compare($wp_version, "3.1", '>=')) {
+	if (version_compare($wp_version, '3.1', '>=')) {
     	require_once(ABSPATH . 'wp-admin/includes/deprecated.php');
 	} else {
 		require_once(ABSPATH . 'wp-admin/includes/user.php');
