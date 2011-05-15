@@ -97,7 +97,7 @@ if (!class_exists('pw_new_user_approve')) {
 			global $wp_version;
 			
 			$min_wp_version = '2.8.4';
-			$exit_msg = sprintf( __('New User Approve requires WordPress %s or newer.', $this->localizationDomain), $min_wp_version );
+			$exit_msg = sprintf( __('New User Approve requires WordPress %s or newer.', $this->plugin_id), $min_wp_version );
 			if (version_compare($wp_version, $min_wp_version, '<=')) {
 				exit($exit_msg);
 			}
@@ -109,6 +109,7 @@ if (!class_exists('pw_new_user_approve')) {
 					'version'          => '1.3',
 					'legacy_interface' => false,
 				);
+				add_role( 'pw_unapproved', __( 'Unapproved' ), array() );
 			}
 		}
 		
@@ -138,6 +139,12 @@ if (!class_exists('pw_new_user_approve')) {
 		 */
 		function save_admin_options(){
 			update_option($this->options_name, $this->options);
+			
+			if ( $this->options['legacy_interface'] ) {
+				remove_role( 'pw_unapproved' );
+			} else {
+				add_role( 'pw_unapproved', __( 'Unapproved' ), array() );
+			}
 		}
 
 		/**
@@ -301,11 +308,11 @@ if (!class_exists('pw_new_user_approve')) {
 				$avatar = get_avatar( $user->user_email, 32 );
 				if ($approve) {
 					$approve_link = get_option('siteurl').'/wp-admin/users.php?page='.basename(__FILE__).'&user='.$user->ID.'&status=approve';
-					$approve_link = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($approve_link, 'plugin-name-action_' . get_class($this)) : $approve_link;
+					$approve_link = wp_nonce_url($approve_link, 'pw_new_user_approve_action_' . get_class($this));
 				}
 				if ($deny) {
 					$deny_link = get_option('siteurl').'/wp-admin/users.php?page='.basename(__FILE__).'&user='.$user->ID.'&status=deny';
-					$deny_link = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($deny_link, 'plugin-name-action_' . get_class($this)) : $deny_link;
+					$deny_link = wp_nonce_url($deny_link, 'pw_new_user_approve_action_' . get_class($this));
 				}
 				if ( current_user_can( 'edit_user', $user->ID ) ) {
 					if ($current_user->ID == $user->ID) {
@@ -463,7 +470,7 @@ if (!class_exists('pw_new_user_approve')) {
 		 */
 		function process_input() {
 			if ((isset($_GET['page']) && $_GET['page'] == basename(__FILE__)) && isset($_GET['status'])) {
-				$valid_request = check_admin_referer('plugin-name-action_' . get_class($this));
+				$valid_request = check_admin_referer('pw_new_user_approve_action_' . get_class($this));
 
 				if ($valid_request) {
 					if ($_GET['status'] == 'approve') {
@@ -513,7 +520,7 @@ if (!class_exists('pw_new_user_approve')) {
 		}
 		
 		function init() {
-			if (WP_ADMIN && isset($_GET['page']) && $_GET['page'] == basename(__FILE__)) {
+			if ( is_admin() && isset($_GET['page']) && $_GET['page'] == basename(__FILE__)) {
 				wp_enqueue_script('jquery-ui-tabs');
 				wp_enqueue_style('pw-admin-ui-tabs', $this->pluginurl.'ui.tabs.css');
 			}

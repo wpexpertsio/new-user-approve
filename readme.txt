@@ -48,6 +48,7 @@ email. Make sure your host is setup correctly to send email if this happens.
 * use the User API to retrieve a user instead of querying the db
 * require at least WordPress 2.8.4
 * add german translation
+* add a 'Unapproved' user role
 
 = 1.2.6 =
 * fix to include the deprecated code for user search
