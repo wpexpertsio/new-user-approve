@@ -50,6 +50,7 @@ email. Make sure your host is setup correctly to send email if this happens.
 * add german translation
 * add a 'Unapproved' user role
 * add spanish translation
+* fix greek translation
 
 = 1.2.6 =
 * fix to include the deprecated code for user search
