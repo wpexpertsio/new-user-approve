@@ -120,4 +120,4 @@ information can be found on the <a href="http://codex.wordpress.org/Translating_
 * Greek translation by <a href="http://alt3rnet.info">Leftys</a>
 * Polish translation by <a href="http://wordpress.org/support/profile/1271256">pik256</a>
 * German translation by Christoph Ploedt
-* Spanish translation by Eduardo Aranda
+* Spanish translation by <a href="http://sinetiks.com">Eduardo Aranda</a>
