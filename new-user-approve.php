@@ -170,7 +170,7 @@ class pw_new_user_approve {
 		}
 
 		if ($file == $this_plugin){
-			$settings_link = '<a href="users.php?page=' . basename(__FILE__) . '">' . __('Settings', $this->plugin_id) . '</a>';
+			$settings_link = '<a href="' . admin_url( 'options-general.php?page=approve-user-config' ) . '">' . __('Settings', $this->plugin_id) . '</a>';
 			array_unshift( $links, $settings_link ); // before other links
 		}
 		return $links;
