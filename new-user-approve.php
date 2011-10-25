@@ -570,9 +570,11 @@ if (!class_exists('pw_new_user_approve')) {
 				<tr valign="top">
 					<th><label for="pw_new_user_approve_legacy_interface"><?php _e('Legacy Interface:', $this->plugin_id); ?></label></th>
 					<td>
-						<input type="checkbox" value="1" id="pw_new_user_approve_legacy_interface" name="pw_new_user_approve_legacy_interface" <?php checked( $this->options['legacy_interface'] ) ?>>
-						<span class="description"><?php _e( 'Using the legacy interface provides a separate page to approve new users. From this page, users can be either approved or denied.', $this->plugin_id ) ?></span><br />
-						<span class="description"><?php _e( 'The new interface only requires changing the user role to approve a new user. This can be done from the default user list.', $this->plugin_id ) ?></span>
+						<input type="checkbox" value="1" id="pw_new_user_approve_legacy_interface" name="pw_new_user_approve_legacy_interface" <?php checked( $this->options['legacy_interface'] ) ?>> Use the legacy interface<br />
+						<span class="description">
+							<?php _e( 'Using the legacy interface provides a separate page to approve new users. From this page, users can be either approved or denied.', $this->plugin_id ) ?>
+							<?php _e( 'The new interface only requires changing the user role to approve a new user. This can be done from the default user list.', $this->plugin_id ) ?>
+						</span>
 					</td>
 				</tr>
 			</table>
@@ -582,7 +584,7 @@ if (!class_exists('pw_new_user_approve')) {
 		function save_options() {
 			$this->message = null;
 			
-			if ($_POST['pw_new_user_approve_save']){       
+			if ( isset( $_POST['pw_new_user_approve_save'] ) ) {       
 				if (!wp_verify_nonce($_POST['pw_new_user_approve_options_nonce'], 'pw-new-user-approve-options-edit')) {
 	    			return;
 	  			}
@@ -600,7 +602,7 @@ if (!class_exists('pw_new_user_approve')) {
 		function admin_options_page() {
 			global $screen_layout_columns;
 			
-			if ( $_GET['message'] == 1 ) {
+			if ( isset( $_GET['message'] ) && $_GET['message'] == 1 ) {
 				$this->message = __('Success! Your changes were sucessfully saved!', $this->plugin_id);
 			}
 ?>
