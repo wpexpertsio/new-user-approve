@@ -589,8 +589,12 @@ class pw_new_user_approve {
     			return;
   			}
 			
-			$this->options['legacy_interface'] = ( esc_attr( $_POST['pw_new_user_approve_legacy_interface'] ) );
-			
+  			if ( isset( $_POST['pw_new_user_approve_legacy_interface'] ) ) {
+				$this->options['legacy_interface'] = esc_attr( $_POST['pw_new_user_approve_legacy_interface'] );
+  			} else {
+  				$this->options['legacy_interface'] = false;
+  			}
+  			
 			$this->save_admin_options();	
 			
 			$url = add_query_arg( array( 'message' => 1 ) );
