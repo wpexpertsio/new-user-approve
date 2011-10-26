@@ -37,16 +37,6 @@ class pw_new_user_approve {
 	var $plugin_id = 'new-user-approve';
 
 	/**
-	 * @var string $pluginurl The url to this plugin
-	 */
-	var $pluginurl = '';
-	
-	/**
-	 * @var string $pluginpath The path to this plugin
-	 */
-	var $pluginpath = '';
-
-	/**
 	 * @var array $options Stores the options for this plugin
 	 */
 	var $options = array();
@@ -66,10 +56,6 @@ class pw_new_user_approve {
 		// Load up the localization file if we're using WordPress in a different language
 		// Just drop it in this plugin's "localization" folder and name it "new-user-approve-[value in wp-config].mo"
 		load_plugin_textdomain($this->plugin_id, false, dirname(plugin_basename(__FILE__)) . '/localization');
-
-		// Constants setup
-		$this->pluginurl  = WP_PLUGIN_URL . '/' . dirname(plugin_basename(__FILE__)).'/';
-		$this->pluginpath = WP_PLUGIN_DIR . '/' . dirname(plugin_basename(__FILE__)).'/';
 
 		// Initialize the options
 		$this->get_options();
@@ -520,9 +506,9 @@ class pw_new_user_approve {
 	}
 		
 	public function init() {
-		if ( is_admin() && isset($_GET['page']) && $_GET['page'] == basename(__FILE__)) {
+		if ( is_admin() && isset($_GET['page']) && $_GET['page'] == basename(__FILE__) ) {
 			wp_enqueue_script('jquery-ui-tabs');
-			wp_enqueue_style('pw-admin-ui-tabs', $this->pluginurl.'ui.tabs.css');
+			wp_enqueue_style('pw-admin-ui-tabs', plugins_url( 'ui.tabs.css', __FILE__ ) );
 		}
 	}
 		
