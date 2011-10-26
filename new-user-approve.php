@@ -511,7 +511,7 @@ class pw_new_user_approve {
 			$message .= '<p class="message">' . $inside . '</p>';
 		}
 		
-		if ($_GET['action'] == 'register' && !$_POST) {
+		if ( isset( $_GET['action'] ) && $_GET['action'] == 'register' && !$_POST ) {
 			$inside = sprintf(__('After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions.', $this->plugin_id));
 			$message .= '<p class="message">' . $inside . '</p>';
 		}
@@ -618,6 +618,7 @@ class pw_new_user_approve {
 				<?php endif; ?>
 				<form method="post" id="approve_new_users_options">
 				<input type="hidden" name="pw_new_user_approve_options_nonce" id="pw_new_user_approve_options_nonce" value="<?php echo wp_create_nonce('pw-new-user-approve-options-edit') ?>" />
+				<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ) ?>
 				<div id="poststuff" class="metabox-holder<?php echo 2 == $screen_layout_columns ? ' has-right-sidebar' : ''; ?>">
 					<div id="side-info-column" class="inner-sidebar">
 						<?php do_meta_boxes( $this->option_page_hook, 'side', null ); ?>
@@ -625,6 +626,9 @@ class pw_new_user_approve {
 					<div id="post-body">
 						<div id="post-body-content">
 							<?php do_meta_boxes( $this->option_page_hook, 'normal', null ); ?>
+							<?php if ( 1 == $screen_layout_columns ) {
+								do_meta_boxes( $this->option_page_hook, 'side', null );
+							}?>
 							<p class="submit"><input type="submit" class="button-primary" name="pw_new_user_approve_save" value="<?php _e('Save Changes', $this->plugin_id) ?>" /></p>
 						</div>
 					</div>

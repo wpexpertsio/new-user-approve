@@ -41,7 +41,7 @@ email. Make sure your host is setup correctly to send email if this happens.
 This is not a function of the plugin but of WordPress. WordPress provides the
 'wp_mail_from' and 'wp_mail_from_name' filters to allow you to customize this.
 There are also a number of plugins that provide a setting to change this to 
-your liking
+your liking.
 * <a href="http://wordpress.org/extend/plugins/wp-mailfrom/" target="_blank">wp mail from</a>
 * <a href="http://wordpress.org/extend/plugins/mail-from/" target="_blank">Mail From</a>
 
