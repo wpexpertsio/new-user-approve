@@ -605,6 +605,7 @@ class pw_new_user_approve {
 				<form method="post" id="approve_new_users_options">
 				<input type="hidden" name="pw_new_user_approve_options_nonce" id="pw_new_user_approve_options_nonce" value="<?php echo wp_create_nonce('pw-new-user-approve-options-edit') ?>" />
 				<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ) ?>
+				<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ) ?>
 				<div id="poststuff" class="metabox-holder<?php echo 2 == $screen_layout_columns ? ' has-right-sidebar' : ''; ?>">
 					<div id="side-info-column" class="inner-sidebar">
 						<?php do_meta_boxes( $this->option_page_hook, 'side', null ); ?>
