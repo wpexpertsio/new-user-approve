@@ -70,6 +70,7 @@ class pw_new_user_approve {
 		add_action('init',                array( $this, 'process_input'));
 		add_action('register_post',       array( $this, 'send_approval_email'), 10, 3);
 		add_action('lostpassword_post',   array( $this, 'lost_password'));
+		add_action('register_form',       array( $this, 'add_registration_fields' ) );
 		//add_action('rightnow_end', array( $this, 'dashboard_stats')); // still too slow
 		
 		// Filters
@@ -622,6 +623,12 @@ class pw_new_user_approve {
 				</div>
 				</form>
 			</div>
+<?php
+	}
+	
+	public function add_registration_fields() {
+?>
+		<input type="hidden" name="pw_user_status" value="pending" />
 <?php
 	}
 } // End Class

@@ -61,6 +61,7 @@ your liking.
 * add spanish translation
 * fix greek translation
 * miscellaneous bug fixes
+* add a hidden field to the registration form for integration with other plugins
 
 = 1.2.6 =
 * fix to include the deprecated code for user search
