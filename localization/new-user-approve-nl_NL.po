@@ -1,0 +1,200 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Josh Harrison
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: new user approve v1.2.6\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
+"POT-Creation-Date: 2009-10-29 08:32+0000\n"
+"PO-Revision-Date: 2011-11-26 23:12+0100\n"
+"Last-Translator: Ronald Moolenaar <m00lie@hotmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: NETHERLANDS\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+
+#: new-user-approve.php:126
+msgid "Approve New Users"
+msgstr "Goedkeuren nieuwe gebruikers"
+
+#: new-user-approve.php:140
+msgid "Settings"
+msgstr "Instellingen"
+
+#: new-user-approve.php:183
+msgid "Users"
+msgstr "Gebruikers"
+
+#: new-user-approve.php:219
+msgid "User successfully updated."
+msgstr "Gebruiker succesvol bijgewerkt."
+
+#: new-user-approve.php:223
+msgid "User Registration Approval"
+msgstr "Goedkeuring gebruikersregistratie"
+
+#: new-user-approve.php:225
+msgid "User Management"
+msgstr "Gebruikersbeheer"
+
+#: new-user-approve.php:228
+msgid "Users Pending Approval"
+msgstr "Gebruikers in behandeling"
+
+#: new-user-approve.php:229
+msgid "Approved Users"
+msgstr "Goedgekeurde gebruikers"
+
+#: new-user-approve.php:230
+msgid "Denied Users"
+msgstr "Geweigerde gebruikers"
+
+#: new-user-approve.php:255
+msgid "ID"
+msgstr "ID"
+
+#: new-user-approve.php:256
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+#: new-user-approve.php:257
+msgid "Name"
+msgstr "Naam"
+
+#: new-user-approve.php:258
+msgid "E-mail"
+msgstr "E-mail"
+
+#: new-user-approve.php:260
+#: new-user-approve.php:262
+msgid "Actions"
+msgstr "Acties"
+
+#: new-user-approve.php:296
+msgid "email:"
+msgstr "email:"
+
+#: new-user-approve.php:298
+msgid "Approve"
+msgstr "Goedkeuren"
+
+#: new-user-approve.php:301
+msgid "Deny"
+msgstr "Weigeren"
+
+#: new-user-approve.php:313
+msgid "approved"
+msgstr "goedgekeurd"
+
+#: new-user-approve.php:315
+msgid "denied"
+msgstr "geweigerd"
+
+#: new-user-approve.php:317
+msgid "pending"
+msgstr "in behandeling"
+
+#: new-user-approve.php:320
+#, php-format
+msgid "There are no users with a status of %s"
+msgstr "Er zijn geen gebruikers met de status %s"
+
+#: new-user-approve.php:332
+msgid "User name already exists"
+msgstr "Gebruikersnaam bestaat reeds"
+
+#: new-user-approve.php:335
+#, php-format
+msgid "%1$s (%2$s) has requested a username at %3$s"
+msgstr "%1$s (%2$s) heeft een gebruikersnaam aangevraagd om %3$s"
+
+#: new-user-approve.php:337
+#, php-format
+msgid "To approve or deny this user access to %s go to"
+msgstr "Om deze gebruiker wel of geen toegang te geven tot %s gaat u naar"
+
+#: new-user-approve.php:341
+#, php-format
+msgid "[%s] User Approval"
+msgstr "[%s] Goedkeuring gebruiker"
+
+#: new-user-approve.php:372
+#, php-format
+msgid "You have been approved to access %s"
+msgstr "Uw aanvraag voor toegang tot %s is goedgekeurd"
+
+#: new-user-approve.php:373
+#, php-format
+msgid "Username: %s"
+msgstr "Gebruikersnaam: %s"
+
+#: new-user-approve.php:374
+#, php-format
+msgid "Password: %s"
+msgstr "Wachtwoord: %s"
+
+#: new-user-approve.php:378
+#, php-format
+msgid "[%s] Registration Approved"
+msgstr "[%s] Registratie goedgekeurd"
+
+#: new-user-approve.php:397
+#, php-format
+msgid "You have been denied access to %s"
+msgstr "Uw aanvraag voor toegang tot %s is geweigerd"
+
+#: new-user-approve.php:400
+#, php-format
+msgid "[%s] Registration Denied"
+msgstr "[%s] Registratie geweigerd"
+
+#: new-user-approve.php:413
+msgid "An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request."
+msgstr "Er is een email gestuurd naar de beheerder van de website. De beheerder zal uw aanvraag beoordelen en deze goedkeuren of afwijzen."
+
+#: new-user-approve.php:414
+msgid "You will receive an email with instructions on what you will need to do next. Thanks for your patience."
+msgstr "U ontvangt een email met verdere instructies. Dank u voor uw geduld."
+
+#: new-user-approve.php:418
+msgid "Pending Approval"
+msgstr "Goedkeuring nog in behandeling"
+
+#: new-user-approve.php:418
+msgid "Registration successful."
+msgstr "Registratie succesvol"
+
+#: new-user-approve.php:466
+#, php-format
+msgid "Welcome to %s. This site is accessible to approved users only. To be approved, you must first register."
+msgstr "Welkom op %s. Deze website is alleen toegankelijk voor goedgekeurde gebruikers. Om goedgekeurd te worden moet u uwzelf eerst registreren."
+
+#: new-user-approve.php:471
+msgid "After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions."
+msgstr "Na registratie wordt uw aanvraag naar de beheerder van de website gestuurd ter goedkeuring. U ontvangt dan een email met verdere instructies."
+
+#. Plugin Name of an extension
+msgid "New User Approve"
+msgstr "Goedkeuring nieuwe gebruiker"
+
+#. Plugin URI of an extension
+msgid "http://www.picklewagon.com/wordpress/new-user-approve"
+msgstr "http://www.picklewagon.com/wordpress/new-user-approve"
+
+#. Description of an extension
+msgid "This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog."
+msgstr "Deze plugin stelt beheerders in staat om gebruikers goed te keuren na registratie. Alleen goedgekeurde gebruikers mogen het blog gebruiken."
+
+#. Author of an extension
+msgid "Josh Harrison"
+msgstr "Josh Harrison"
+
+#. Author URI of an extension
+msgid "http://www.picklewagon.com/"
+msgstr "http://www.picklewagon.com/"
+

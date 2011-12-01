@@ -62,6 +62,7 @@ your liking.
 * fix greek translation
 * miscellaneous bug fixes
 * add a hidden field to the registration form for integration with other plugins
+* add dutch translation
 
 = 1.2.6 =
 * fix to include the deprecated code for user search
@@ -132,3 +133,4 @@ information can be found on the <a href="http://codex.wordpress.org/Translating_
 * Polish translation by <a href="http://wordpress.org/support/profile/1271256">pik256</a>
 * German translation by Christoph Ploedt
 * Spanish translation by <a href="http://sinetiks.com">Eduardo Aranda</a>
+* Dutch translation by <a href="http://profiles.wordpress.org/users/moolie/">Ronald Moolenaar</a>
