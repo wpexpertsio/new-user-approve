@@ -56,13 +56,14 @@ your liking.
 * add an options panel
 * use the User API to retrieve a user instead of querying the db
 * require at least WordPress 2.8.4
-* add german translation
 * add a 'Unapproved' user role
-* add spanish translation
-* fix greek translation
 * miscellaneous bug fixes
 * add a hidden field to the registration form for integration with other plugins
+* add validate_user function to fix authentication problems
+* fix greek translation
 * add dutch translation
+* add spanish translation
+* add german translation
 
 = 1.2.6 =
 * fix to include the deprecated code for user search
