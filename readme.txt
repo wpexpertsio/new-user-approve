@@ -60,10 +60,7 @@ your liking.
 * miscellaneous bug fixes
 * add a hidden field to the registration form for integration with other plugins
 * add validate_user function to fix authentication problems
-* fix greek translation
-* add dutch translation
-* add spanish translation
-* add german translation
+* add more translations
 
 = 1.2.6 =
 * fix to include the deprecated code for user search
@@ -135,3 +132,4 @@ information can be found on the <a href="http://codex.wordpress.org/Translating_
 * German translation by Christoph Ploedt
 * Spanish translation by <a href="http://sinetiks.com">Eduardo Aranda</a>
 * Dutch translation by <a href="http://profiles.wordpress.org/users/moolie/">Ronald Moolenaar</a>
+* Italian translation by <a href="http://profiles.wordpress.org/users/pierinux">Pierfrancesco Marsiaj</a>
