@@ -4,7 +4,7 @@
  Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve/
  Description: This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog.
  Author: Josh Harrison
- Version: 1.3
+ Version: 1.4
  Author URI: http://www.picklewagon.com/
  */
 
@@ -78,7 +78,6 @@ class pw_new_user_approve {
 		add_filter('registration_errors', array( $this, 'show_user_message'), 10, 1);
 		add_filter('login_message', array( $this, 'welcome_user'));
 		add_filter('screen_layout_columns', array( $this, 'screen_layout_columns'), 10, 2);
-		add_filter( 'authenticate', array( $this, 'validate_user' ), 30, 3);
 	}
 
 	public function activation_check() {
@@ -470,26 +469,6 @@ class pw_new_user_approve {
 				}
 			}
 		}
-	}
-
-	public function validate_user( $empty, $username, $password ) {
-		$user = get_user_by( 'login', $username );
-		$status = get_user_meta( $user->ID, 'pw_user_status', true );
-
-		$ret_val = false;
-		switch ( $status ) {
-			case 'pending':
-				$ret_val = new WP_Error('pending_approval', __('<strong>ERROR</strong>: Your account is still pending approval.'));
-				break;
-			case 'denied':
-				$ret_val = new WP_Error('denied_access', __('<strong>ERROR</strong>: Your account was denied to access this site.'));
-				break;
-			case 'approved':
-				$ret_val = true;
-				break;
-		}
-
-		return $ret_val;
 	}
 
 	/**

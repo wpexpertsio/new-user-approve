@@ -51,16 +51,11 @@ your liking.
 
 == Changelog ==
 
-= 1.3 =
-* get rid of plugin errors with WP_DEBUG set to true
+= 1.4 =
 * add an options panel
-* use the User API to retrieve a user instead of querying the db
-* require at least WordPress 2.8.4
 * add a 'Unapproved' user role
 * miscellaneous bug fixes
 * add a hidden field to the registration form for integration with other plugins
-* add validate_user function to fix authentication problems
-* add more translations
 
 = 1.2.6 =
 * fix to include the deprecated code for user search
@@ -129,7 +124,3 @@ information can be found on the <a href="http://codex.wordpress.org/Translating_
 * French translation by <a href="http://philippe.scoffoni.net">Philippe Scoffoni</a>
 * Greek translation by <a href="http://alt3rnet.info">Leftys</a>
 * Polish translation by <a href="http://wordpress.org/support/profile/1271256">pik256</a>
-* German translation by Christoph Ploedt
-* Spanish translation by <a href="http://sinetiks.com">Eduardo Aranda</a>
-* Dutch translation by <a href="http://profiles.wordpress.org/users/moolie/">Ronald Moolenaar</a>
-* Italian translation by <a href="http://profiles.wordpress.org/users/pierinux">Pierfrancesco Marsiaj</a>
