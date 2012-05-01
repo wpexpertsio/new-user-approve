@@ -36,7 +36,7 @@ user will not be able to login to the site.
 The New User Approve plugin uses the functions provided by WordPress to send
 email. Make sure your host is setup correctly to send email if this happens.
 
-= How do customize the email address and/or name when sending notifications to users? =
+= How do I customize the email address and/or name when sending notifications to users? =
 
 This is not a function of the plugin but of WordPress. WordPress provides the
 *wp_mail_from* and *wp_mail_from_name* filters to allow you to customize this.
