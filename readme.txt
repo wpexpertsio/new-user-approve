@@ -52,6 +52,10 @@ your liking.
 
 == Changelog ==
 
+= 1.3.1 =
+* add czech translation
+* fix formatting issues in readme.txt
+
 = 1.3 =
 * use the User API to retrieve a user instead of querying the db
 * require at least WordPress 3.1
@@ -121,18 +125,16 @@ This version fixes some issues when authenticating users. Requires at least Word
 == Other Notes ==
 
 = Translations =
-The plugin has been prepared to be translated. If you want to help to translate 
-the plugin to your language, please have a look at the localization/new-user-approve.pot file which
-contains all defintions and may be used with a gettext editor like Poedit (Windows). More
-information can be found on the <a href="http://codex.wordpress.org/Translating_WordPress">Codex</a>
+The plugin has been prepared to be translated. If you want to help to translate the plugin to your language, please have a look at the localization/new-user-approve.pot file which contains all defintions and may be used with a gettext editor like Poedit (Windows). More information can be found on the [Codex](http://codex.wordpress.org/Translating_WordPress).
 
-* Belarusian translation by <a href="http://www.fatcow.com/">Fat Cow</a>
-* Danish translation by <a href="http://wordpress.org/support/profile/2874976">GeorgWP</a>
-* French translation by <a href="http://philippe.scoffoni.net">Philippe Scoffoni</a>
-* Greek translation by <a href="http://alt3rnet.info">Leftys</a>
-* Polish translation by <a href="http://wordpress.org/support/profile/1271256">pik256</a>
+* Belarusian translation by [Fat Cow](http://www.fatcow.com/)
+* Danish translation by [GeorgWP](http://wordpress.org/support/profile/georgwp)
+* French translation by [Philippe Scoffoni](http://philippe.scoffoni.net/)
+* Greek translation by [Leftys](http://alt3rnet.info/)
+* Polish translation by [pik256](http://wordpress.org/support/profile/1271256)
 * German translation by Christoph Ploedt
-* Spanish translation by <a href="http://sinetiks.com">Eduardo Aranda</a>
-* Dutch translation by <a href="http://profiles.wordpress.org/users/moolie/">Ronald Moolenaar</a>
-* Italian translation by <a href="http://profiles.wordpress.org/users/pierinux">Pierfrancesco Marsiaj</a>
+* Spanish translation by [Eduardo Aranda](http://sinetiks.com/)
+* Dutch translation by [Ronald Moolenaar](http://profiles.wordpress.org/moolie/)
+* Italian translation by [Pierfrancesco Marsiaj](http://profiles.wordpress.org/pierinux/)
+* Czech translation by [GazikT](http://profiles.wordpress.org/gazikt/)
 

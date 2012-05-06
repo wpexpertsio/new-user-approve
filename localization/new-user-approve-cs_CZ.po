@@ -1,0 +1,193 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: New User Approve 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
+"POT-Creation-Date: 2009-10-29 08:32+0000\n"
+"PO-Revision-Date: 2011-12-14 22:48+0100\n"
+"Last-Translator: Tomáš Gažůr <gazurtomas@seznam.cz>\n"
+"Language-Team: Philippe Scoffoni <philippe@scoffoni.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+
+#: new-user-approve.php:126
+msgid "Approve New Users"
+msgstr "Odsouhlasení nových uživatelů"
+
+#: new-user-approve.php:140
+msgid "Settings"
+msgstr "Nastavení"
+
+#: new-user-approve.php:183
+msgid "Users"
+msgstr "Uživatelé"
+
+#: new-user-approve.php:219
+msgid "User successfully updated."
+msgstr "Uživatel úspěšně aktualizován."
+
+#: new-user-approve.php:223
+msgid "User Registration Approval"
+msgstr "Uživatelova registrace povolena"
+
+#: new-user-approve.php:225
+msgid "User Management"
+msgstr "Správa uživatele"
+
+#: new-user-approve.php:228
+msgid "Users Pending Approval"
+msgstr "Uživatelé čekající na schválení"
+
+#: new-user-approve.php:229
+msgid "Approved Users"
+msgstr "Odsouhlasení uživatelé"
+
+#: new-user-approve.php:230
+msgid "Denied Users"
+msgstr "Zakázaní uživatelé"
+
+#: new-user-approve.php:255
+msgid "ID"
+msgstr "ID"
+
+#: new-user-approve.php:256
+msgid "Username"
+msgstr "Uživ. jméno"
+
+#: new-user-approve.php:257
+msgid "Name"
+msgstr "Jméno"
+
+#: new-user-approve.php:258
+msgid "E-mail"
+msgstr "E-mail"
+
+#: new-user-approve.php:260
+#: new-user-approve.php:262
+msgid "Actions"
+msgstr "Akce"
+
+#: new-user-approve.php:296
+msgid "email:"
+msgstr "email:"
+
+#: new-user-approve.php:298
+msgid "Approve"
+msgstr "Schválit"
+
+#: new-user-approve.php:301
+msgid "Deny"
+msgstr "Zamítnout"
+
+#: new-user-approve.php:313
+msgid "approved"
+msgstr "Schválený"
+
+#: new-user-approve.php:315
+msgid "denied"
+msgstr "Zamítnutý"
+
+#: new-user-approve.php:317
+msgid "pending"
+msgstr "nerozhodnutý"
+
+#: new-user-approve.php:320
+#, php-format
+msgid "There are no users with a status of %s"
+msgstr "Žádní uživatelé se stavem %s"
+
+#: new-user-approve.php:332
+msgid "User name already exists"
+msgstr "Uživatelské jméno již existuje"
+
+#: new-user-approve.php:335
+#, php-format
+msgid "%1$s (%2$s) has requested a username at %3$s"
+msgstr "%1$s (%2$s) požádal v uživatelské jméno %3$s"
+
+#: new-user-approve.php:337
+#, php-format
+msgid "To approve or deny this user access to %s go to"
+msgstr "Chcete-li schválit nebo zamítnout tohoto uživatele %s klikněte"
+
+#: new-user-approve.php:341
+#, php-format
+msgid "[%s] User Approval"
+msgstr "[%s] Uživatel schválen"
+
+#: new-user-approve.php:372
+#, php-format
+msgid "You have been approved to access %s"
+msgstr "byl jste schválen pro přístup %s"
+
+#: new-user-approve.php:373
+#, php-format
+msgid "Username: %s"
+msgstr "Uživ. jméno : %s"
+
+#: new-user-approve.php:374
+#, php-format
+msgid "Password: %s"
+msgstr "Heslo: %s"
+
+#: new-user-approve.php:378
+#, php-format
+msgid "[%s] Registration Approved"
+msgstr "[%s] Registrace schválena"
+
+#: new-user-approve.php:397
+#, php-format
+msgid "You have been denied access to %s"
+msgstr "Byl Vám zamítnut přístup k %s"
+
+#: new-user-approve.php:400
+#, php-format
+msgid "[%s] Registration Denied"
+msgstr "[%s] Registrace zamítnuta"
+
+#: new-user-approve.php:413
+msgid "An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request."
+msgstr "E-mail byl odeslán správci webu. Administrátor zkontroluje údaje, které byly předloženy, a buď schválí, nebo zamítne vaši žádost."
+
+#: new-user-approve.php:414
+msgid "You will receive an email with instructions on what you will need to do next. Thanks for your patience."
+msgstr "Obdržíte e-mail s pokyny o tom, co budete muset udělat. Děkujeme za vaši trpělivost."
+
+#: new-user-approve.php:418
+msgid "Pending Approval"
+msgstr "Čeká na schválení"
+
+#: new-user-approve.php:418
+msgid "Registration successful."
+msgstr "Registrace proběhla úspěšně."
+
+#: new-user-approve.php:466
+#, php-format
+msgid "Welcome to %s. This site is accessible to approved users only. To be approved, you must first register."
+msgstr "Vítejte v %s. Tato stránka je přístupná pouze schváleným uživatelům. Aby jste byl schválen, musíte se nejprve zaregistrovat."
+
+#: new-user-approve.php:471
+msgid "After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions."
+msgstr "Po registraci, bude Vaše žádost odeslána správci webu ke schválení. Poté obdržíte e-mail s dalšími instrukcemi."
+
+#. Plugin Name of an extension
+msgid "New User Approve"
+msgstr "Schválit nového uživatele"
+
+#. Plugin URI of an extension
+msgid "http://www.picklewagon.com/wordpress/new-user-approve"
+msgstr "http://www.picklewagon.com/wordpress/new-user-approve"
+
+#. Description of an extension
+msgid "This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog."
+msgstr "Tento plugin umožňuje správcům ke schválení uživatele po registraci. Pouze schválení uživatelé budou mít přístup do prezentace."
+
+#. Author of an extension
+msgid "Josh Harrison"
+msgstr "Josh Harrison"
+
+#. Author URI of an extension
+msgid "http://www.picklewagon.com/"
+msgstr "http://www.picklewagon.com/"
+
