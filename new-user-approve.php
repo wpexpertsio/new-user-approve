@@ -24,12 +24,15 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+
 if (!class_exists('pw_new_user_approve')) {
 class pw_new_user_approve {
 	/**
 	 * @var string $plugin_id unique identifier used for localization and other functions
 	 */
 	var $plugin_id = 'new-user-approve';
+
+	var $_admin_page = 'new-user-approve-admin';
 
 	// Class Functions
 	/**
@@ -79,7 +82,7 @@ class pw_new_user_approve {
 	public function admin_scripts_footer() {
 		global $wp_db_version;
 
-		if (WP_ADMIN && isset( $_GET['page'] ) && $_GET['page'] == basename(__FILE__)) {
+		if ( is_admin() && isset( $_GET['page'] ) && $_GET['page'] == $this->_admin_page) {
 			$page_id = ($wp_db_version >= 10851) ? '#pw_approve_tabs' : '#pw_approve_tabs > ul';
 ?>
 <script type="text/javascript">
@@ -113,7 +116,7 @@ class pw_new_user_approve {
 		}
 ?>
 			<div>
-				<p><span style="font-weight:bold;"><a href="users.php?page=<?php print basename(__FILE__) ?>"><?php _e('Users', $this->plugin_id) ?></a></span>:
+				<p><span style="font-weight:bold;"><a href="users.php?page=<?php print $this->_admin_page ?>"><?php _e('Users', $this->plugin_id) ?></a></span>:
 				<?php foreach($user_status as $status =>$count) print "$count $status&nbsp;&nbsp;"; ?>
 				</p>
 			</div>
@@ -204,11 +207,11 @@ class pw_new_user_approve {
 			$class = ($row % 2) ? '' : ' class="alternate"';
 			$avatar = get_avatar( $user->user_email, 32 );
 			if ($approve) {
-				$approve_link = get_option('siteurl').'/wp-admin/users.php?page='.basename(__FILE__).'&user='.$user->ID.'&status=approve';
+				$approve_link = get_option('siteurl').'/wp-admin/users.php?page='.$this->_admin_page.'&user='.$user->ID.'&status=approve';
 				$approve_link = wp_nonce_url($approve_link, 'pw_new_user_approve_action_' . get_class($this));
 			}
 			if ($deny) {
-				$deny_link = get_option('siteurl').'/wp-admin/users.php?page='.basename(__FILE__).'&user='.$user->ID.'&status=deny';
+				$deny_link = get_option('siteurl').'/wp-admin/users.php?page='.$this->_admin_page.'&user='.$user->ID.'&status=deny';
 				$deny_link = wp_nonce_url($deny_link, 'pw_new_user_approve_action_' . get_class($this));
 			}
 			if ( current_user_can( 'edit_user', $user->ID ) ) {
@@ -267,7 +270,7 @@ class pw_new_user_approve {
 				$message  = sprintf(__('%1$s (%2$s) has requested a username at %3$s', $this->plugin_id), $user_login, $user_email, get_option('blogname')) . "\r\n\r\n";
 				$message .= get_option('siteurl') . "\r\n\r\n";
 				$message .= sprintf(__('To approve or deny this user access to %s go to', $this->plugin_id), get_option('blogname')) . "\r\n\r\n";
-				$message .= get_option('siteurl') . "/wp-admin/users.php?page=".basename(__FILE__)."\r\n";
+				$message .= get_option('siteurl') . "/wp-admin/users.php?page=".$this->_admin_page."\r\n";
 
 				// send the mail
 				wp_mail(get_option('admin_email'), sprintf(__('[%s] User Approval', $this->plugin_id), get_option('blogname')), $message);
@@ -363,7 +366,7 @@ class pw_new_user_approve {
 	 * @desc accept input from admin to modify a user
 	 */
 	public function process_input() {
-		if ((isset($_GET['page']) && $_GET['page'] == basename(__FILE__)) && isset($_GET['status'])) {
+		if ((isset($_GET['page']) && $_GET['page'] == $this->_admin_page) && isset($_GET['status'])) {
 			$valid_request = check_admin_referer('pw_new_user_approve_action_' . get_class($this));
 
 			if ($valid_request) {
@@ -414,14 +417,15 @@ class pw_new_user_approve {
 	}
 
 	public function init() {
-		if ( is_admin() && isset($_GET['page']) && $_GET['page'] == basename(__FILE__) ) {
+		if ( is_admin() && isset($_GET['page']) && $_GET['page'] == $this->_admin_page ) {
 			wp_enqueue_script('jquery-ui-tabs');
 			wp_enqueue_style('pw-admin-ui-tabs', plugins_url( 'ui.tabs.css', __FILE__ ) );
 		}
 	}
 
 	function admin_menu_link() {
-		$this->user_page_hook = add_submenu_page('users.php', __('Approve New Users', $this->plugin_id), __('Approve New Users', $this->plugin_id), 'edit_users', basename(__FILE__), array(&$this, 'approve_admin'));
+		$cap = apply_filters( 'new_user_approve_minimum_cap', 'edit_users' );
+		$this->user_page_hook = add_users_page( __('Approve New Users', $this->plugin_id), __('Approve New Users', $this->plugin_id), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
 	}
 
 	public function validate_user( $empty, $username, $password ) {

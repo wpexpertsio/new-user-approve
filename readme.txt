@@ -55,6 +55,7 @@ your liking.
 = 1.3.1 =
 * add czech translation
 * fix formatting issues in readme.txt
+* add a filter to modify who has access to approve and deny users
 
 = 1.3 =
 * use the User API to retrieve a user instead of querying the db
