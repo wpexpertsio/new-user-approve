@@ -139,4 +139,5 @@ The plugin has been prepared to be translated. If you want to help to translate 
 * Italian translation by [Pierfrancesco Marsiaj](http://profiles.wordpress.org/pierinux/)
 * Czech translation by [GazikT](http://profiles.wordpress.org/gazikt/)
 * Catalan translation by [xoanet](http://profiles.wordpress.org/xoanet/)
+* Romanian translation by [Web Hosting Geeks](http://webhostinggeeks.com/)
 
