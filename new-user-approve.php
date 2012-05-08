@@ -387,11 +387,11 @@ class pw_new_user_approve {
 	public function lost_password() {
 		$is_email = strpos($_POST['user_login'], '@');
 		if ($is_email === false) {
-			$username = sanitize_user($_POST['user_login']);
-			$user_data = get_userdatabylogin(trim($username));
+			$username = sanitize_user( $_POST['user_login'] );
+			$user_data = get_user_by( 'login', trim( $username ) );
 		} else {
-			$email = is_email($_POST['user_login']);
-			$user_data = get_user_by_email($email);
+			$email = is_email( $_POST['user_login'] );
+			$user_data = get_user_by( 'email', $email );
 		}
 
 		if ($user_data->pw_user_status != 'approved') {
