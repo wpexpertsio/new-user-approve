@@ -429,7 +429,11 @@ class pw_new_user_approve {
 	}
 
 	public function validate_user( $empty, $username, $password ) {
-		if (empty( $username ) ) {
+		if ( empty( $password ) ) {
+			return;
+		}
+
+		if ( empty( $username ) ) {
 			return;
 		}
 
