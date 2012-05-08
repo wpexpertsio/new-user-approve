@@ -56,6 +56,8 @@ your liking.
 * add czech translation
 * fix formatting issues in readme.txt
 * add a filter to modify who has access to approve and deny users
+* remove deprecated function calls when a user resets a password
+* don't allow a user to login without a password
 
 = 1.3 =
 * use the User API to retrieve a user instead of querying the db
@@ -122,6 +124,9 @@ your liking.
 
 = 1.3 =
 This version fixes some issues when authenticating users. Requires at least WordPress 3.1.
+
+= 1.3.1 =
+Download version 1.3.1 immediately! A bug was found in version 1.3 that allows a user to login without using password.
 
 == Other Notes ==
 
