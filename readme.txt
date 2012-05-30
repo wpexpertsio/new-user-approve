@@ -2,7 +2,7 @@
 Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration
-Requires at least: 3.2
+Requires at least: 3.2.1
 Tested up to: 3.3.2
 Stable tag: 1.3.2
 
@@ -51,6 +51,9 @@ your liking.
 1. The backend to manage approving and denying users.
 
 == Changelog ==
+
+= 1.3.3 =
+* fix bug showing error message permanently on login page
 
 = 1.3.2 =
 * fix bug with allowing wrong passwords

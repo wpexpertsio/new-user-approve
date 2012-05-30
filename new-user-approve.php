@@ -65,7 +65,7 @@ class pw_new_user_approve {
 		add_filter('registration_errors', array( $this, 'show_user_message'), 10, 1);
 		add_filter('login_message', array( $this, 'welcome_user'));
 		add_filter('screen_layout_columns', array( $this, 'screen_layout_columns'), 10, 2);
-		add_filter( 'authenticate', array( $this, 'validate_user' ), 30, 3);
+		add_filter( 'wp_authenticate_user', array( $this, 'authenticate_user' ), 10, 2);
 	}
 
 	public function activation_check() {
@@ -427,27 +427,12 @@ class pw_new_user_approve {
 		$this->user_page_hook = add_users_page( __('Approve New Users', $this->plugin_id), __('Approve New Users', $this->plugin_id), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
 	}
 
-	public function validate_user( $empty, $username, $password ) {
-		if ( empty( $password ) ) {
-			return;
-		}
-
-		if ( empty( $username ) ) {
-			return;
-		}
-
-		$user = get_user_by( 'login', $username );
-
-		$result = wp_check_password( $password, $user->user_pass, $user->ID );
-		if ( !$result ) {
-			return;
-		}
-
-		$status = get_user_meta( $user->ID, 'pw_user_status', true );
+	public function authenticate_user( $userdata, $password ) {
+		$status = get_user_meta( $userdata->ID, 'pw_user_status', true );
 
 		if ( empty( $status ) ) {
 			// the user does not have a status so let's assume the user is good to go
-			return $user;
+			return $userdata;
 		}
 
 		$message = false;
@@ -459,7 +444,7 @@ class pw_new_user_approve {
 				$message = new WP_Error('denied_access', __('<strong>ERROR</strong>: Your account has been denied access to this site.'));
 				break;
 			case 'approved':
-				$message = $user;
+				$message = $userdata;
 				break;
 		}
 
