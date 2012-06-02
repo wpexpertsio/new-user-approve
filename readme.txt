@@ -52,6 +52,9 @@ your liking.
 
 == Changelog ==
 
+= 1.3.4 =
+* remove unused screen_layout_columns filter
+
 = 1.3.3 =
 * fix bug showing error message permanently on login page
 
