@@ -69,6 +69,11 @@ class pw_new_user_approve {
 		add_filter( 'wp_authenticate_user', array( $this, 'authenticate_user' ), 10, 2 );
 	}
 
+	/**
+	 * Require WordPress 3.2.1 on activation
+	 * 
+	 * @uses register_activation_hook
+	 */
 	public function activation_check() {
 		global $wp_version;
 
@@ -79,6 +84,27 @@ class pw_new_user_approve {
 		}
 	}
 
+	/**
+	 * Enqueue any javascript and css needed for the plugin
+	 */
+	public function init() {
+		if ( is_admin() && isset( $_GET['page'] ) && $_GET['page'] == $this->_admin_page ) {
+			wp_enqueue_script( 'jquery-ui-tabs' );
+			wp_enqueue_style( 'pw-admin-ui-tabs', plugins_url( 'ui.tabs.css', __FILE__ ) );
+		}
+	}
+	
+	/**
+	 * Add the new menu item to the users portion of the admin menu
+	 */
+	function admin_menu_link() {
+		$cap = apply_filters( 'new_user_approve_minimum_cap', 'edit_users' );
+		$this->user_page_hook = add_users_page( __( 'Approve New Users', $this->plugin_id ), __( 'Approve New Users', $this->plugin_id ), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
+	}
+	
+	/**
+	 * Output the javascript in the footer to display the tabs
+	 */
 	public function admin_scripts_footer() {
 		global $wp_db_version;
 
@@ -124,7 +150,7 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * @desc create the view for the admin interface
+	 * Create the view for the admin interface
 	 */
 	public function approve_admin() {
 		if ( isset( $_GET['user'] ) && isset( $_GET['status'] ) ) {
@@ -264,7 +290,7 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * @desc send an email to the admin to request approval
+	 * Send an email to the admin to request approval
 	 */
 	public function send_approval_email( $user_login, $user_email, $errors ) {
 		if ( ! $errors->get_error_code() ) {
@@ -295,7 +321,7 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * @desc admin approval of user
+	 * Admin approval of user
 	 */
 	public function approve_user() {
 		global $wpdb;
@@ -348,7 +374,7 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * @desc admin denial of user
+	 * Admin denial of user
 	 */
 	public function deny_user() {
 		$user_id = (int) $_GET['user'];
@@ -406,7 +432,7 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * @desc accept input from admin to modify a user
+	 * Accept input from admin to modify a user
 	 */
 	public function process_input() {
 		if ( ( isset( $_GET['page'] ) && $_GET['page'] == $this->_admin_page ) && isset( $_GET['status'] ) ) {
@@ -425,7 +451,7 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * @desc only give a user their password if they have been approved
+	 * Only give a user their password if they have been approved
 	 */
 	public function lost_password() {
 		$is_email = strpos( $_POST['user_login'], '@' );
@@ -445,6 +471,12 @@ class pw_new_user_approve {
 		return;
 	}
 
+	/**
+	 * Add message to login page saying registration is required.
+	 * 
+	 * @param string $message
+	 * @return string
+	 */
 	public function welcome_user($message) {
 		if ( ! isset( $_GET['action'] ) ) {
 			$welcome = sprintf( __( 'Welcome to %s. This site is accessible to approved users only. To be approved, you must first register.', $this->plugin_id ), get_option( 'blogname' ) );
@@ -463,18 +495,12 @@ class pw_new_user_approve {
 		return $message;
 	}
 
-	public function init() {
-		if ( is_admin() && isset( $_GET['page'] ) && $_GET['page'] == $this->_admin_page ) {
-			wp_enqueue_script('jquery-ui-tabs');
-			wp_enqueue_style('pw-admin-ui-tabs', plugins_url( 'ui.tabs.css', __FILE__ ) );
-		}
-	}
-
-	function admin_menu_link() {
-		$cap = apply_filters( 'new_user_approve_minimum_cap', 'edit_users' );
-		$this->user_page_hook = add_users_page( __( 'Approve New Users', $this->plugin_id ), __( 'Approve New Users', $this->plugin_id ), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
-	}
-
+	/**
+	 * Determine if the user is good to sign inbased on their status
+	 * 
+	 * @param array $userdata
+	 * @param string $password
+	 */
 	public function authenticate_user( $userdata, $password ) {
 		$status = get_user_meta( $userdata->ID, 'pw_user_status', true );
 
@@ -505,6 +531,10 @@ class pw_new_user_approve {
 		return $message;
 	}
 
+	/**
+	 * Give the user a status
+	 * @param int $user_id
+	 */
 	public function add_user_status( $user_id ) {
 		$status = 'pending';
 		if ( isset( $_REQUEST['action'] ) && 'createuser' == $_REQUEST['action'] ) {
