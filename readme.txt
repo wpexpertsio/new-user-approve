@@ -69,6 +69,8 @@ this feature.
 * add actions for when a user is approved or denied
 * add a filter to bypass password reset
 * add more translations
+* add user counts by status to dashboard
+* store the users by status in a transient
 
 = 1.3.4 =
 * remove unused screen_layout_columns filter

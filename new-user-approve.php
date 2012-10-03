@@ -61,7 +61,10 @@ class pw_new_user_approve {
 		add_action( 'user_register', array( $this, 'add_user_status' ) );
 		add_action( 'new_user_approve_approve_user', array( $this, 'approve_user' ) );
 		add_action( 'new_user_approve_deny_user', array( $this, 'deny_user' ) );
-		//add_action('rightnow_end', array( $this, 'dashboard_stats')); // still too slow
+		add_action( 'rightnow_end', array( $this, 'dashboard_stats' ) );
+		add_action( 'user_register', array( $this, 'delete_new_user_approve_transient' ), 11 );
+		add_action( 'new_user_approve_approve_user', array( $this, 'delete_new_user_approve_transient' ), 11 );
+		add_action( 'new_user_approve_deny_user', array( $this, 'delete_new_user_approve_transient' ), 11 );
 
 		// Filters
 		add_filter( 'registration_errors', array( $this, 'show_user_pending_message' ), 10, 1 );
@@ -123,27 +126,11 @@ class pw_new_user_approve {
 	}
 
 	public function dashboard_stats() {
-		// Query the users table
-		$wp_user_search = new WP_User_Search( $_GET['usersearch'], $_GET['userspage'] );
-		$user_status = array();
-
-		// Make the user objects
-		foreach ( $wp_user_search->get_results() as $userid ) {
-			$user = new WP_User( $userid );
-			$status = get_usermeta( $userid, 'pw_user_status' );
-			if ( $status == '' ) { // user was created in admin
-				update_user_meta( $userid, 'pw_user_status', 'approved' );
-				$status = get_usermeta( $userid, 'pw_user_status' );
-			}
-			if ( $user_status[$status] == null ) {
-				$user_status[$status] = 0;
-			}
-			$user_status[$status] += 1;
-		}
+		$user_status = $this->get_user_statuses();
 ?>
 			<div>
 				<p><span style="font-weight:bold;"><a href="users.php?page=<?php print $this->_admin_page ?>"><?php _e( 'Users', $this->plugin_id ); ?></a></span>:
-				<?php foreach ( $user_status as $status => $count ) print "$count $status&nbsp;&nbsp;"; ?>
+				<?php foreach ( $user_status as $status => $users ) print count( $users ) . " $status&nbsp;&nbsp;&nbsp;"; ?>
 				</p>
 			</div>
 <?php
@@ -192,32 +179,10 @@ class pw_new_user_approve {
 		$approve = ( 'denied' == $status || 'pending' == $status );
 		$deny = ( 'approved' == $status || 'pending' == $status );
 		
-		if ( $status != 'approved' ) {
-			// Query the users table
-			$query = array(
-				'meta_key' => 'pw_user_status',
-				'meta_value' => $status,
-			);
-			$wp_user_search = new WP_User_Query( $query );
-		} else {
-			$users = get_users( 'blog_id=1' );
-			$approved_users = array();
-			foreach( $users as $user ) {
-				$the_status = get_user_meta( $user->ID, 'pw_user_status', true );
+		$user_status = $this->get_user_statuses();
+		$users = $user_status[$status];
 
-				if ( $the_status == 'approved' || empty( $the_status ) ) {
-					$approved_users[] = $user->ID;
-				}
-			}
-
-			// get all approved users and any user without a status
-			$query = array( 'include' => $approved_users );
-			$wp_user_search = new WP_User_Query( $query );
-		}
-
-		if ( isset( $wp_user_search ) && $wp_user_search->total_users > 0 ) {
-			$users = $wp_user_search->get_results();
-			$users = apply_filters( 'new_user_approve_user_status', $users, $status );
+		if ( count( $users ) > 0 ) {
 		?>
 <table class="widefat">
 	<thead>
@@ -543,6 +508,58 @@ class pw_new_user_approve {
 		update_user_meta( $user_id, 'pw_user_status', $status );
 	}
 
+	/**
+	 * Get a status of all the users and save them using a transient
+	 */
+	public function get_user_statuses() {
+		$valid_stati = array( 'pending', 'approved', 'denied' );
+		$user_status = get_transient( 'new_user_approve_user_statuses' );
+		
+		if ( false === $user_status ) {
+			$user_status = array();
+			
+			foreach ( $valid_stati as $status ) {
+				// Query the users table
+				if ( $status != 'approved' ) {
+					// Query the users table
+					$query = array(
+						'meta_key' => 'pw_user_status',
+						'meta_value' => $status,
+					);
+					$wp_user_search = new WP_User_Query( $query );
+				} else {
+					$users = get_users( 'blog_id=1' );
+					$approved_users = array();
+					foreach( $users as $user ) {
+						$the_status = get_user_meta( $user->ID, 'pw_user_status', true );
+						
+						if ( $the_status == 'approved' || empty( $the_status ) ) {
+							$approved_users[] = $user->ID;
+						}
+					}
+					
+					// get all approved users and any user without a status
+					$query = array( 'include' => $approved_users );
+					$wp_user_search = new WP_User_Query( $query );
+				}
+				
+				$user_status[$status] = $wp_user_search->get_results();
+				
+				set_transient( 'new_user_approve_user_statuses', $user_status );
+			}
+		}
+		
+		foreach ( $valid_stati as $status ) {
+			$user_status[$status] = apply_filters( 'new_user_approve_user_status', $user_status[$status], $status );
+		}
+		
+		return $user_status;
+	}
+	
+	public function delete_new_user_approve_transient() {
+		delete_transient( 'new_user_approve_user_statuses' );
+	}
+	
 } // End Class
 } // End if class exists statement
 
