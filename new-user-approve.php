@@ -4,7 +4,7 @@
  Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve/
  Description: This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog. For support, please go to the <a href="http://wordpress.org/support/plugin/new-user-approve">support forums</a> on wordpress.org.
  Author: Josh Harrison
- Version: 1.3.4
+ Version: 1.4
  Author URI: http://www.picklewagon.com/
  */
 
@@ -24,7 +24,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-if (!class_exists('pw_new_user_approve')) {
+if ( ! class_exists( 'pw_new_user_approve' ) ) {
 class pw_new_user_approve {
 	/**
 	 * @var string $plugin_id unique identifier used for localization and other functions
@@ -47,41 +47,43 @@ class pw_new_user_approve {
 	public function __construct() {
 		// Load up the localization file if we're using WordPress in a different language
 		// Just drop it in this plugin's "localization" folder and name it "new-user-approve-[value in wp-config].mo"
-		load_plugin_textdomain($this->plugin_id, false, dirname(plugin_basename(__FILE__)) . '/localization');
+		load_plugin_textdomain( $this->plugin_id, false, dirname( plugin_basename( __FILE__ ) ) . '/localization' );
 
-		register_activation_hook(__FILE__, array( $this, 'activation_check'));
+		register_activation_hook( __FILE__, array( $this, 'activation_check' ) );
 
 		// Actions
-		add_action('admin_menu',          array( $this, 'admin_menu_link'));
-		add_action('admin_footer',        array( $this, 'admin_scripts_footer'));
-		add_action('init',                array( $this, 'init'));
-		add_action('init',                array( $this, 'process_input'));
-		add_action('register_post',       array( $this, 'send_approval_email'), 10, 3);
-		add_action('lostpassword_post',   array( $this, 'lost_password'));
-		add_action( 'user_register',      array( $this, 'add_user_status' ) );
+		add_action( 'admin_menu', array( $this, 'admin_menu_link' ) );
+		add_action( 'admin_footer', array( $this, 'admin_scripts_footer' ) );
+		add_action( 'init', array( $this, 'init' ) );
+		add_action( 'init', array( $this, 'process_input' ) );
+		add_action( 'register_post', array( $this, 'send_approval_email' ), 10, 3 );
+		add_action( 'lostpassword_post', array( $this, 'lost_password' ) );
+		add_action( 'user_register', array( $this, 'add_user_status' ) );
+		add_action( 'new_user_approve_approve_user', array( $this, 'approve_user' ) );
+		add_action( 'new_user_approve_deny_user', array( $this, 'deny_user' ) );
 		//add_action('rightnow_end', array( $this, 'dashboard_stats')); // still too slow
 
 		// Filters
-		add_filter('registration_errors', array( $this, 'show_user_message'), 10, 1);
-		add_filter('login_message', array( $this, 'welcome_user'));
-		add_filter( 'wp_authenticate_user', array( $this, 'authenticate_user' ), 10, 2);
+		add_filter( 'registration_errors', array( $this, 'show_user_pending_message' ), 10, 1 );
+		add_filter( 'login_message', array( $this, 'welcome_user' ) );
+		add_filter( 'wp_authenticate_user', array( $this, 'authenticate_user' ), 10, 2 );
 	}
 
 	public function activation_check() {
 		global $wp_version;
 
 		$min_wp_version = '3.1';
-		$exit_msg = sprintf( __('New User Approve requires WordPress %s or newer.', $this->plugin_id), $min_wp_version );
-		if (version_compare($wp_version, $min_wp_version, '<=')) {
-			exit($exit_msg);
+		$exit_msg = sprintf( __( 'New User Approve requires WordPress %s or newer.', $this->plugin_id ), $min_wp_version );
+		if ( version_compare( $wp_version, $min_wp_version, '<=' ) ) {
+			exit( $exit_msg );
 		}
 	}
 
 	public function admin_scripts_footer() {
 		global $wp_db_version;
 
-		if ( is_admin() && isset( $_GET['page'] ) && $_GET['page'] == $this->_admin_page) {
-			$page_id = ($wp_db_version >= 10851) ? '#pw_approve_tabs' : '#pw_approve_tabs > ul';
+		if ( is_admin() && isset( $_GET['page'] ) && $_GET['page'] == $this->_admin_page ) {
+			$page_id = ( $wp_db_version >= 10851 ) ? '#pw_approve_tabs' : '#pw_approve_tabs > ul';
 ?>
 <script type="text/javascript">
   //<![CDATA[
@@ -96,26 +98,26 @@ class pw_new_user_approve {
 
 	public function dashboard_stats() {
 		// Query the users table
-		$wp_user_search = new WP_User_Search($_GET['usersearch'], $_GET['userspage']);
+		$wp_user_search = new WP_User_Search( $_GET['usersearch'], $_GET['userspage'] );
 		$user_status = array();
 
 		// Make the user objects
-		foreach ($wp_user_search->get_results() as $userid) {
-			$user = new WP_User($userid);
-			$status = get_usermeta($userid, 'pw_user_status');
-			if ($status == '') { // user was created in admin
-				update_user_meta($userid, 'pw_user_status', 'approved');
-				$status = get_usermeta($userid, 'pw_user_status');
+		foreach ( $wp_user_search->get_results() as $userid ) {
+			$user = new WP_User( $userid );
+			$status = get_usermeta( $userid, 'pw_user_status' );
+			if ( $status == '' ) { // user was created in admin
+				update_user_meta( $userid, 'pw_user_status', 'approved' );
+				$status = get_usermeta( $userid, 'pw_user_status' );
 			}
-			if ($user_status[$status] == null) {
+			if ( $user_status[$status] == null ) {
 				$user_status[$status] = 0;
 			}
 			$user_status[$status] += 1;
 		}
 ?>
 			<div>
-				<p><span style="font-weight:bold;"><a href="users.php?page=<?php print $this->_admin_page ?>"><?php _e('Users', $this->plugin_id) ?></a></span>:
-				<?php foreach($user_status as $status =>$count) print "$count $status&nbsp;&nbsp;"; ?>
+				<p><span style="font-weight:bold;"><a href="users.php?page=<?php print $this->_admin_page ?>"><?php _e( 'Users', $this->plugin_id ); ?></a></span>:
+				<?php foreach ( $user_status as $status => $count ) print "$count $status&nbsp;&nbsp;"; ?>
 				</p>
 			</div>
 <?php
@@ -125,28 +127,28 @@ class pw_new_user_approve {
 	 * @desc create the view for the admin interface
 	 */
 	public function approve_admin() {
-		if (isset($_GET['user']) && isset($_GET['status'])) {
-			echo '<div id="message" class="updated fade"><p>'.__('User successfully updated.', $this->plugin_id).'</p></div>';
+		if ( isset( $_GET['user'] ) && isset( $_GET['status'] ) ) {
+			echo '<div id="message" class="updated fade"><p>'.__( 'User successfully updated.', $this->plugin_id ).'</p></div>';
 		}
 ?>
 		<div class="wrap">
-			<h2><?php _e('User Registration Approval', $this->plugin_id) ?></h2>
+			<h2><?php _e( 'User Registration Approval', $this->plugin_id ); ?></h2>
 
-			<h3><?php _e('User Management', $this->plugin_id) ?></h3>
+			<h3><?php _e( 'User Management', $this->plugin_id ); ?></h3>
 			<div id="pw_approve_tabs">
 				<ul>
-					<li><a href="#pw_pending_users"><span><?php _e('Users Pending Approval', $this->plugin_id) ?></span></a></li>
-					<li><a href="#pw_approved_users"><span><?php _e('Approved Users', $this->plugin_id) ?></span></a></li>
-					<li><a href="#pw_denied_users"><span><?php _e('Denied Users', $this->plugin_id) ?></span></a></li>
+					<li><a href="#pw_pending_users"><span><?php _e( 'Users Pending Approval', $this->plugin_id ); ?></span></a></li>
+					<li><a href="#pw_approved_users"><span><?php _e( 'Approved Users', $this->plugin_id ); ?></span></a></li>
+					<li><a href="#pw_denied_users"><span><?php _e( 'Denied Users', $this->plugin_id ); ?></span></a></li>
 				</ul>
 				<div id="pw_pending_users">
-					<?php $this->approve_table( 'pending', true, true ); ?>
+					<?php $this->user_table( 'pending' ); ?>
 				</div>
 				<div id="pw_approved_users">
-					<?php $this->approve_table( 'approved', false, true ); ?>
+					<?php $this->user_table( 'approved' ); ?>
 				</div>
 				<div id="pw_denied_users">
-					<?php $this->approve_table( 'denied', true, false ); ?>
+					<?php $this->user_table( 'denied' ); ?>
 				</div>
 			</div>
 		</div>
@@ -154,11 +156,16 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * @desc the table that shows the registered users grouped by status
+	 * Output the table that shows the registered users grouped by status
+	 * 
+	 * @param string $status the filter to use for which the users will be queried. Possible values are pending, approved, or denied.
 	 */
-	public function approve_table($status, $approve, $deny) {
+	public function user_table( $status ) {
 		global $current_user;
-
+		
+		$approve = ( 'denied' == $status || 'pending' == $status );
+		$deny = ( 'approved' == $status || 'pending' == $status );
+		
 		if ( $status != 'approved' ) {
 			// Query the users table
 			$query = array(
@@ -177,23 +184,25 @@ class pw_new_user_approve {
 				}
 			}
 
-			// get all approved users and any usr without a status
+			// get all approved users and any user without a status
 			$query = array( 'include' => $approved_users );
 			$wp_user_search = new WP_User_Query( $query );
 		}
 
 		if ( isset( $wp_user_search ) && $wp_user_search->total_users > 0 ) {
+			$users = $wp_user_search->get_results();
+			$users = apply_filters( 'new_user_approve_user_status', $users, $status );
 		?>
 <table class="widefat">
 	<thead>
 		<tr class="thead">
-			<th><?php _e('Username', $this->plugin_id) ?></th>
-			<th><?php _e('Name', $this->plugin_id) ?></th>
-			<th><?php _e('E-mail', $this->plugin_id) ?></th>
-		<?php if ($approve && $deny) { ?>
-			<th colspan="2" style="text-align: center"><?php _e('Actions', $this->plugin_id) ?></th>
+			<th><?php _e( 'Username', $this->plugin_id ); ?></th>
+			<th><?php _e( 'Name', $this->plugin_id ); ?></th>
+			<th><?php _e( 'E-mail', $this->plugin_id ); ?></th>
+		<?php if ( 'pending' == $status ) { ?>
+			<th colspan="2" style="text-align: center"><?php _e( 'Actions', $this->plugin_id ); ?></th>
 		<?php } else { ?>
-			<th style="text-align: center"><?php _e('Actions', $this->plugin_id) ?></th>
+			<th style="text-align: center"><?php _e( 'Actions', $this->plugin_id ); ?></th>
 		<?php } ?>
 		</tr>
 	</thead>
@@ -201,16 +210,16 @@ class pw_new_user_approve {
 		<?php
 		// show each of the users
 		$row = 1;
-		foreach ($wp_user_search->get_results() as $user) {
-			$class = ($row % 2) ? '' : ' class="alternate"';
+		foreach ( $users as $user ) {
+			$class = ( $row % 2 ) ? '' : ' class="alternate"';
 			$avatar = get_avatar( $user->user_email, 32 );
-			if ($approve) {
-				$approve_link = get_option('siteurl').'/wp-admin/users.php?page='.$this->_admin_page.'&user='.$user->ID.'&status=approve';
-				$approve_link = wp_nonce_url($approve_link, 'pw_new_user_approve_action_' . get_class($this));
+			if ( $approve ) {
+				$approve_link = get_option( 'siteurl' ) . '/wp-admin/users.php?page=' . $this->_admin_page . '&user=' . $user->ID . '&status=approve';
+				$approve_link = wp_nonce_url( $approve_link, 'pw_new_user_approve_action_' . get_class( $this ) );
 			}
-			if ($deny) {
-				$deny_link = get_option('siteurl').'/wp-admin/users.php?page='.$this->_admin_page.'&user='.$user->ID.'&status=deny';
-				$deny_link = wp_nonce_url($deny_link, 'pw_new_user_approve_action_' . get_class($this));
+			if ( $deny ) {
+				$deny_link = get_option( 'siteurl' ) . '/wp-admin/users.php?page=' . $this->_admin_page . '&user=' . $user->ID . '&status=deny';
+				$deny_link = wp_nonce_url( $deny_link, 'pw_new_user_approve_action_' . get_class( $this ) );
 			}
 			if ( current_user_can( 'edit_user', $user->ID ) ) {
 				if ($current_user->ID == $user->ID) {
@@ -224,14 +233,14 @@ class pw_new_user_approve {
 			}
 
 			?><tr <?php echo $class; ?>>
-				<td><?php echo $avatar." ".$edit; ?></td>
-				<td><?php echo get_user_meta( $user->ID, 'first_name', true )." ".get_user_meta( $user->ID, 'last_name', true ); ?></td>
+				<td><?php echo $avatar . ' ' . $edit; ?></td>
+				<td><?php echo get_user_meta( $user->ID, 'first_name', true ) . ' ' . get_user_meta( $user->ID, 'last_name', true ); ?></td>
 				<td><a href="mailto:<?php echo $user->user_email; ?>" title="<?php _e('email:', $this->plugin_id) ?> <?php echo $user->user_email; ?>"><?php echo $user->user_email; ?></a></td>
-				<?php if ($approve) { ?>
-				<td align="center"><a href="<?php echo $approve_link; ?>" title="<?php _e('Approve', $this->plugin_id) ?> <?php echo $user->user_login; ?>"><?php _e('Approve', $this->plugin_id) ?></a></td>
+				<?php if ( $approve ) { ?>
+				<td align="center"><a href="<?php echo $approve_link; ?>" title="<?php _e( 'Approve', $this->plugin_id ); ?> <?php echo $user->user_login; ?>"><?php _e( 'Approve', $this->plugin_id ); ?></a></td>
 				<?php } ?>
-				<?php if ($deny) { ?>
-				<td align="center"><a href="<?php echo $deny_link; ?>" title="<?php _e('Deny', $this->plugin_id) ?> <?php echo $user->user_login; ?>"><?php _e('Deny', $this->plugin_id) ?></a></td>
+				<?php if ( $deny ) { ?>
+				<td align="center"><a href="<?php echo $deny_link; ?>" title="<?php _e( 'Deny', $this->plugin_id ); ?> <?php echo $user->user_login; ?>"><?php _e( 'Deny', $this->plugin_id ); ?></a></td>
 				<?php } ?>
 			</tr><?php
 			$row++;
@@ -242,40 +251,45 @@ class pw_new_user_approve {
 		<?php
 		} else {
 			$status_i18n = $status;
-			if ($status == 'approved') {
-				$status_i18n = __('approved', $this->plugin_id);
-			} else if ($status == 'denied') {
-				$status_i18n = __('denied', $this->plugin_id);
-			} else if ($status == 'pending') {
-				$status_i18n = __('pending', $this->plugin_id);
+			if ( $status == 'approved' ) {
+				$status_i18n = __( 'approved', $this->plugin_id );
+			} else if ( $status == 'denied' ) {
+				$status_i18n = __( 'denied', $this->plugin_id );
+			} else if ( $status == 'pending' ) {
+				$status_i18n = __( 'pending', $this->plugin_id );
 			}
 
-			echo '<p>'.sprintf(__('There are no users with a status of %s', $this->plugin_id), $status_i18n).'</p>';
+			echo '<p>'.sprintf( __( 'There are no users with a status of %s', $this->plugin_id ), $status_i18n ) . '</p>';
 		}
 	}
 
 	/**
 	 * @desc send an email to the admin to request approval
 	 */
-	public function send_approval_email($user_login, $user_email, $errors) {
-		if (!$errors->get_error_code()) {
+	public function send_approval_email( $user_login, $user_email, $errors ) {
+		if ( ! $errors->get_error_code() ) {
 			/* check if already exists */
 			$user_data = get_user_by( 'login', $user_login );
-			if (!empty($user_data)){
-				$errors->add('registration_required' , __('User name already exists', $this->plugin_id), 'message');
+			if ( ! empty( $user_data ) ){
+				$errors->add( 'registration_required' , __( 'User name already exists', $this->plugin_id ), 'message' );
 			} else {
 				/* send email to admin for approval */
-				$message  = sprintf(__('%1$s (%2$s) has requested a username at %3$s', $this->plugin_id), $user_login, $user_email, get_option('blogname')) . "\r\n\r\n";
-				$message .= get_option('siteurl') . "\r\n\r\n";
-				$message .= sprintf(__('To approve or deny this user access to %s go to', $this->plugin_id), get_option('blogname')) . "\r\n\r\n";
-				$message .= get_option('siteurl') . "/wp-admin/users.php?page=".$this->_admin_page."\r\n";
+				$message  = sprintf( __( '%1$s (%2$s) has requested a username at %3$s', $this->plugin_id ), $user_login, $user_email, get_option( 'blogname' ) ) . "\r\n\r\n";
+				$message .= get_option( 'siteurl' ) . "\r\n\r\n";
+				$message .= sprintf( __( 'To approve or deny this user access to %s go to', $this->plugin_id ), get_option( 'blogname' ) ) . "\r\n\r\n";
+				$message .= get_option( 'siteurl' ) . '/wp-admin/users.php?page=' . $this->_admin_page . "\r\n";
+				
+				$message = apply_filters( 'new_user_approve_request_approval_message', $message, $user_login, $user_email );
+				
+				$subject = sprintf( __( '[%s] User Approval', $this->plugin_id ), get_option( 'blogname' ) );
+				$subject = apply_filters( 'new_user_approve_request_approval_subject', $subject );
 
 				// send the mail
-				wp_mail(get_option('admin_email'), sprintf(__('[%s] User Approval', $this->plugin_id), get_option('blogname')), $message);
+				wp_mail( get_option( 'admin_email' ), $subject, $message );
 
 				// create the user
 				$user_pass = wp_generate_password();
-				$user_id = wp_create_user($user_login, $user_pass, $user_email);
+				$user_id = wp_create_user( $user_login, $user_pass, $user_email );
 			}
 		}
 	}
@@ -289,35 +303,48 @@ class pw_new_user_approve {
 		$user_id = (int) $_GET['user'];
 		$user = new WP_User( $user_id );
 
-		// reset password to know what to send the user
-		$new_pass = wp_generate_password();
-		$data = array(
-			'user_pass' => md5($new_pass),
-			'user_activation_key' => '',
-		);
-		$where = array(
-			'ID' => $user->ID,
-		);
-		$wpdb->update($wpdb->users, $data, $where, array('%s', '%s'), array('%d'));
+		$bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', false );
+		
+		if ( ! $bypass_password_reset ) {
+			// reset password to know what to send the user
+			$new_pass = wp_generate_password();
+			$data = array(
+				'user_pass' => md5($new_pass),
+				'user_activation_key' => '',
+			);
+			$where = array(
+				'ID' => $user->ID,
+			);
+			$wpdb->update($wpdb->users, $data, $where, array( '%s', '%s' ), array( '%d' ) );
+		}
 
-		wp_cache_delete($user->ID, 'users');
-		wp_cache_delete($user->user_login, 'userlogins');
+		wp_cache_delete( $user->ID, 'users' );
+		wp_cache_delete( $user->user_login, 'userlogins' );
 
 		// send email to user telling of approval
-		$user_login = stripslashes($user->user_login);
-		$user_email = stripslashes($user->user_email);
+		$user_login = stripslashes( $user->user_login );
+		$user_email = stripslashes( $user->user_email );
 
 		// format the message
-		$message  = sprintf(__('You have been approved to access %s', $this->plugin_id), get_option('blogname')) . "\r\n";
-		$message .= sprintf(__('Username: %s', $this->plugin_id), $user_login) . "\r\n";
-		$message .= sprintf(__('Password: %s', $this->plugin_id), $new_pass) . "\r\n";
-		$message .= get_option('siteurl') . "/wp-login.php\r\n";
+		$message  = sprintf( __( 'You have been approved to access %s', $this->plugin_id ), get_option( 'blogname' ) ) . "\r\n";
+		$message .= sprintf( __( 'Username: %s', $this->plugin_id ), $user_login ) . "\r\n";
+		if ( ! $bypass_password_reset ) {
+			$message .= sprintf( __( 'Password: %s', $this->plugin_id ), $new_pass ) . "\r\n";
+		}
+		$message .= get_option( 'siteurl' ) . "/wp-login.php\r\n";
 
+		$message = apply_filters( 'new_user_approve_approve_user_message', $message, $user );
+		
+		$subject = sprintf( __( '[%s] Registration Approved', $this->plugin_id ), get_option( 'blogname' ) );
+		$subject = apply_filters( 'new_user_approve_approve_user_subject', $subject );
+		
 		// send the mail
-		@wp_mail($user_email, sprintf(__('[%s] Registration Approved', $this->plugin_id), get_option('blogname')), $message);
+		@wp_mail( $user_email, $subject, $message );
 
 		// change usermeta tag in database to approved
-		update_user_meta($user->ID, 'pw_user_status', 'approved');
+		update_user_meta( $user->ID, 'pw_user_status', 'approved' );
+		
+		do_action( 'new_user_approve_user_approved', $user );
 	}
 
 	/**
@@ -328,52 +355,70 @@ class pw_new_user_approve {
 		$user = new WP_User( $user_id );
 
 		// send email to user telling of denial
-		$user_email = stripslashes($user->user_email);
+		$user_email = stripslashes( $user->user_email );
 
 		// format the message
-		$message = sprintf(__('You have been denied access to %s', $this->plugin_id), get_option('blogname'));
+		$message = sprintf( __( 'You have been denied access to %s', $this->plugin_id ), get_option( 'blogname' ) );
+		$message = apply_filters( 'new_user_approve_deny_user_message', $message, $user );
+		
+		$subject = sprintf( __( '[%s] Registration Denied', $this->plugin_id ), get_option( 'blogname' ) );
+		$subject = apply_filters( 'new_user_approve_deny_user_subject', $subject );
 
 		// send the mail
-		@wp_mail($user_email, sprintf(__('[%s] Registration Denied', $this->plugin_id), get_option('blogname')), $message);
+		@wp_mail( $user_email, $subject, $message );
 
 		// change usermeta tag in database to denied
-		update_user_meta($user->ID, 'pw_user_status', 'denied');
+		update_user_meta( $user->ID, 'pw_user_status', 'denied' );
+		
+		do_action( 'new_user_approve_user_denied', $user );
 	}
 
 	/**
-	 * @desc display a message to the user if they have not been approved
+	 * Display a message to the user after they have registered
 	 */
-	public function show_user_message($errors) {
+	public function show_user_pending_message($errors) {
+		if ( ! empty( $_POST['redirect_to'] ) ) {
+			// if a redirect_to is set, honor it
+			wp_safe_redirect( $_POST['redirect_to'] );
+			exit();
+		}
+		
+		// if there is an error already, let it do it's thing
 		if ( $errors->get_error_code() )
 			return $errors;
+		
+		$message  = sprintf( __( 'An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request.', $this->plugin_id ) );
+		$message .= sprintf( __( 'You will receive an email with instructions on what you will need to do next. Thanks for your patience.', $this->plugin_id ) );
+		$message = apply_filters( 'new_user_approve_pending_message', $message );
 
-		$message  = sprintf(__('An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request.', $this->plugin_id));
-		$message .= sprintf(__('You will receive an email with instructions on what you will need to do next. Thanks for your patience.', $this->plugin_id));
+		$errors->add( 'registration_required', $message, 'message' );
 
-		$errors->add('registration_required', $message, 'message');
-
-		if (function_exists('login_header')) {
-			login_header(__('Pending Approval', $this->plugin_id), '<p class="message register">' . __("Registration successful.", $this->plugin_id) . '</p>', $errors);
+		$success_message = __( 'Registration successful.', $this->plugin_id );
+		$success_message = apply_filters( 'new_user_approve_registration_message', $success_message );
+		
+		if ( function_exists( 'login_header' ) ) {
+			login_header( __( 'Pending Approval', $this->plugin_id ), '<p class="message register">' . $success_message . '</p>', $errors );
+			login_footer();
+			
+			// an exit is necessay here so the normal process for user registration doesn't happen
+			exit();
 		}
-
-		echo "<body></html>";
-		exit();
 	}
 
 	/**
 	 * @desc accept input from admin to modify a user
 	 */
 	public function process_input() {
-		if ((isset($_GET['page']) && $_GET['page'] == $this->_admin_page) && isset($_GET['status'])) {
-			$valid_request = check_admin_referer('pw_new_user_approve_action_' . get_class($this));
+		if ( ( isset( $_GET['page'] ) && $_GET['page'] == $this->_admin_page ) && isset( $_GET['status'] ) ) {
+			$valid_request = check_admin_referer( 'pw_new_user_approve_action_' . get_class( $this ) );
 
-			if ($valid_request) {
-				if ($_GET['status'] == 'approve') {
-					$this->approve_user();
+			if ( $valid_request ) {
+				if ( $_GET['status'] == 'approve' ) {
+					do_action( 'new_user_approve_approve_user' );
 				}
 
-				if ($_GET['status'] == 'deny') {
-					$this->deny_user();
+				if ( $_GET['status'] == 'deny' ) {
+					do_action( 'new_user_approve_deny_user' );
 				}
 			}
 		}
@@ -383,8 +428,8 @@ class pw_new_user_approve {
 	 * @desc only give a user their password if they have been approved
 	 */
 	public function lost_password() {
-		$is_email = strpos($_POST['user_login'], '@');
-		if ($is_email === false) {
+		$is_email = strpos( $_POST['user_login'], '@' );
+		if ( $is_email === false ) {
 			$username = sanitize_user( $_POST['user_login'] );
 			$user_data = get_user_by( 'login', trim( $username ) );
 		} else {
@@ -392,8 +437,8 @@ class pw_new_user_approve {
 			$user_data = get_user_by( 'email', $email );
 		}
 
-		if ($user_data->pw_user_status != 'approved') {
-			wp_redirect('wp-login.php');
+		if ( $user_data->pw_user_status != 'approved' ) {
+			wp_redirect( 'wp-login.php' );
 			exit();
 		}
 
@@ -401,21 +446,25 @@ class pw_new_user_approve {
 	}
 
 	public function welcome_user($message) {
-		if (!isset($_GET['action'])) {
-			$inside = sprintf(__('Welcome to %s. This site is accessible to approved users only. To be approved, you must first register.', $this->plugin_id), get_option('blogname'));
-			$message .= '<p class="message">' . $inside . '</p>';
+		if ( ! isset( $_GET['action'] ) ) {
+			$welcome = sprintf( __( 'Welcome to %s. This site is accessible to approved users only. To be approved, you must first register.', $this->plugin_id ), get_option( 'blogname' ) );
+			$welcome = apply_filters( 'new_user_approve_welcome_message', $welcome );
+			
+			$message .= '<p class="message">' . $welcome . '</p>';
 		}
 
-		if ( isset( $_GET['action'] ) && $_GET['action'] == 'register' && !$_POST ) {
-			$inside = sprintf(__('After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions.', $this->plugin_id));
-			$message .= '<p class="message">' . $inside . '</p>';
+		if ( isset( $_GET['action'] ) && $_GET['action'] == 'register' && ! $_POST ) {
+			$instructions = sprintf( __( 'After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions.', $this->plugin_id ) );
+			$instructions = apply_filters( 'new_user_approve_register_instructions', $instructions );
+			
+			$message .= '<p class="message">' . $instructions . '</p>';
 		}
 
 		return $message;
 	}
 
 	public function init() {
-		if ( is_admin() && isset($_GET['page']) && $_GET['page'] == $this->_admin_page ) {
+		if ( is_admin() && isset( $_GET['page'] ) && $_GET['page'] == $this->_admin_page ) {
 			wp_enqueue_script('jquery-ui-tabs');
 			wp_enqueue_style('pw-admin-ui-tabs', plugins_url( 'ui.tabs.css', __FILE__ ) );
 		}
@@ -423,7 +472,7 @@ class pw_new_user_approve {
 
 	function admin_menu_link() {
 		$cap = apply_filters( 'new_user_approve_minimum_cap', 'edit_users' );
-		$this->user_page_hook = add_users_page( __('Approve New Users', $this->plugin_id), __('Approve New Users', $this->plugin_id), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
+		$this->user_page_hook = add_users_page( __( 'Approve New Users', $this->plugin_id ), __( 'Approve New Users', $this->plugin_id ), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
 	}
 
 	public function authenticate_user( $userdata, $password ) {
@@ -437,10 +486,16 @@ class pw_new_user_approve {
 		$message = false;
 		switch ( $status ) {
 			case 'pending':
-				$message = new WP_Error('pending_approval', __('<strong>ERROR</strong>: Your account is still pending approval.'));
+				$pending_message = __( '<strong>ERROR</strong>: Your account is still pending approval.' );
+				$pending_message = apply_filters( 'new_user_approve_pending_error', $pending_message );
+				
+				$message = new WP_Error( 'pending_approval', $pending_message );
 				break;
 			case 'denied':
-				$message = new WP_Error('denied_access', __('<strong>ERROR</strong>: Your account has been denied access to this site.'));
+				$denied_message = __( '<strong>ERROR</strong>: Your account has been denied access to this site.' );
+				$denied_message = apply_filters( 'new_user_approve_denied_error', $denied_message );
+				
+				$message = new WP_Error( 'denied_access', $denied_message );
 				break;
 			case 'approved':
 				$message = $userdata;
@@ -452,7 +507,7 @@ class pw_new_user_approve {
 
 	public function add_user_status( $user_id ) {
 		$status = 'pending';
-		if ( isset($_REQUEST['action']) && 'createuser' == $_REQUEST['action'] ) {
+		if ( isset( $_REQUEST['action'] ) && 'createuser' == $_REQUEST['action'] ) {
 			$status = 'approved';
 		}
 		update_user_meta( $user_id, 'pw_user_status', $status );
@@ -462,6 +517,6 @@ class pw_new_user_approve {
 } // End if class exists statement
 
 // instantiate the class
-if (class_exists('pw_new_user_approve')) {
+if ( class_exists( 'pw_new_user_approve' ) ) {
 	$pw_new_user_approve = new pw_new_user_approve();
 }

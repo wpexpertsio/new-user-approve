@@ -3,7 +3,7 @@ Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration
 Requires at least: 3.2.1
-Tested up to: 3.4.1
+Tested up to: 3.4.2
 Stable tag: 1.3.4
 
 New User Approve is a Wordpress plugin that allows a blog administrator to 
@@ -46,14 +46,29 @@ your liking.
 * [wp mail from](http://wordpress.org/extend/plugins/wp-mailfrom/)
 * [Mail From](http://wordpress.org/extend/plugins/mail-from/)
 
+= Why is the password reset when approving a user? =
+
+The password is generated again because, by default, the user will not be aware
+of their password. By generating a new password, the email that notifies the
+user can also give them the new password just like the email does when recieving
+your password on a regular WordPress install. At approval time, it is impossible
+to retrieve the user's password.
+
+There is a filter available (new_user_approve_bypass_password_reset) to turn off
+this feature.
+
 == Screenshots ==
 
 1. The backend to manage approving and denying users.
 
 == Changelog ==
 
-= 1.3.5 =
-* add Croatian translation
+= 1.4 =
+* add filters
+* honor the redirect if there is one set when registering
+* add actions for when a user is approved or denied
+* add a filter to bypass password reset
+* add more translations
 
 = 1.3.4 =
 * remove unused screen_layout_columns filter
@@ -146,18 +161,37 @@ Download version 1.3.2 immediately! A bug was found in version 1.3 that allows a
 
 == Other Notes ==
 
+= Filters =
+* *new_user_approve_user_status* - modify the list of users shown in the tables
+* *new_user_approve_request_approval_message* - modify the request approval message
+* *new_user_approve_request_approval_subject* - modify the request approval subject
+* *new_user_approve_approve_user_message* - modify the user approval message
+* *new_user_approve_approve_user_subject* - modify the user approval subject
+* *new_user_approve_deny_user_message* - modify the user denial message
+* *new_user_approve_deny_user_subject* - modify the user denial subject
+* *new_user_approve_pending_message* - modify message user sees after registration
+* *new_user_approve_registration_message* - modify message after a successful registration
+* *new_user_approve_register_instructions* - modify message that appears on registration screen
+* *new_user_approve_pending_error* - error message shown to pending users when attempting to log in
+* *new_user_approve_denied_error* - error message shown to denied users when attempting to log in
+
 = Translations =
 The plugin has been prepared to be translated. If you want to help to translate the plugin to your language, please have a look at the localization/new-user-approve.pot file which contains all defintions and may be used with a gettext editor like Poedit (Windows). More information can be found on the [Codex](http://codex.wordpress.org/Translating_WordPress).
 
+When sending me your translation files, please send me your wordpress.org username as well.
+
 * Belarusian translation by [Fat Cow](http://www.fatcow.com/)
-* Danish translation by [GeorgWP](http://wordpress.org/support/profile/georgwp)
-* French translation by [Philippe Scoffoni](http://philippe.scoffoni.net/)
-* Greek translation by [Leftys](http://alt3rnet.info/)
-* Polish translation by [pik256](http://wordpress.org/support/profile/1271256)
-* German translation by Christoph Ploedt
-* Spanish translation by [Eduardo Aranda](http://sinetiks.com/)
-* Dutch translation by [Ronald Moolenaar](http://profiles.wordpress.org/moolie/)
-* Italian translation by [Pierfrancesco Marsiaj](http://profiles.wordpress.org/pierinux/)
-* Czech translation by [GazikT](http://profiles.wordpress.org/gazikt/)
 * Catalan translation by [xoanet](http://profiles.wordpress.org/xoanet/)
+* Croation translation by Nik
+* Czech translation by [GazikT](http://profiles.wordpress.org/gazikt/)
+* Danish translation by [GeorgWP](http://wordpress.org/support/profile/georgwp)
+* Dutch translation by [Ronald Moolenaar](http://profiles.wordpress.org/moolie/)
+* Finnish translation by Tonttu-ukko
+* French translation by [Philippe Scoffoni](http://philippe.scoffoni.net/)
+* German translation by Christoph Ploedt
+* Greek translation by [Leftys](http://alt3rnet.info/)
+* Italian translation by [Pierfrancesco Marsiaj](http://profiles.wordpress.org/pierinux/)
+* Polish translation by [pik256](http://wordpress.org/support/profile/1271256)
 * Romanian translation by [Web Hosting Geeks](http://webhostinggeeks.com/)
+* Russion translation by [Alexey](http://wordpress.org/support/profile/asel)
+* Spanish translation by [Eduardo Aranda](http://sinetiks.com/)
