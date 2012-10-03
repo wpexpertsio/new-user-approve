@@ -177,6 +177,12 @@ Download version 1.3.2 immediately! A bug was found in version 1.3 that allows a
 * *new_user_approve_pending_error* - error message shown to pending users when attempting to log in
 * *new_user_approve_denied_error* - error message shown to denied users when attempting to log in
 
+= Actions =
+* *new_user_approve_user_approved* - after the user has been approved
+* *new_user_approve_user_denied* - after the user has been denied
+* *new_user_approve_approve_user* - when the user has been approved
+* *new_user_approve_deny_user* - when the user has been denied
+
 = Translations =
 The plugin has been prepared to be translated. If you want to help to translate the plugin to your language, please have a look at the localization/new-user-approve.pot file which contains all defintions and may be used with a gettext editor like Poedit (Windows). More information can be found on the [Codex](http://codex.wordpress.org/Translating_WordPress).
 
