@@ -201,6 +201,7 @@ When sending me your translation files, please send me your wordpress.org userna
 * French translation by [Philippe Scoffoni](http://philippe.scoffoni.net/)
 * German translation by Christoph Ploedt
 * Greek translation by [Leftys](http://alt3rnet.info/)
+* Hungarian translation by Gabor Varga
 * Italian translation by [Pierfrancesco Marsiaj](http://profiles.wordpress.org/pierinux/)
 * Polish translation by [pik256](http://wordpress.org/support/profile/1271256)
 * Romanian translation by [Web Hosting Geeks](http://webhostinggeeks.com/)

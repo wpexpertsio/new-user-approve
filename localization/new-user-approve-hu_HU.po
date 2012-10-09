@@ -1,0 +1,200 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Josh Harrison
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: new-user-approve-1.2.7\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
+"POT-Creation-Date: 2009-10-29 08:32+0000\n"
+"PO-Revision-Date: 2011-11-10 19:58+0100\n"
+"Last-Translator: \n"
+"Language-Team: gabesz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Hungarian\n"
+"X-Poedit-Country: HUNGARY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: new-user-approve.php:126
+msgid "Approve New Users"
+msgstr "Új felhasználók jóváhagyása"
+
+#: new-user-approve.php:140
+msgid "Settings"
+msgstr "Beállítások"
+
+#: new-user-approve.php:183
+msgid "Users"
+msgstr "Felhasználók"
+
+#: new-user-approve.php:219
+msgid "User successfully updated."
+msgstr "Felhasználó sikeresen frissítve"
+
+#: new-user-approve.php:223
+msgid "User Registration Approval"
+msgstr "Felhasználói regisztráció jóváhagyása"
+
+#: new-user-approve.php:225
+msgid "User Management"
+msgstr "Felhasználók kezelése"
+
+#: new-user-approve.php:228
+msgid "Users Pending Approval"
+msgstr "Függő felhasználók jóváhagyása"
+
+#: new-user-approve.php:229
+msgid "Approved Users"
+msgstr "Jóváhagyott felhasználók"
+
+#: new-user-approve.php:230
+msgid "Denied Users"
+msgstr "Elutasított felhasználók"
+
+#: new-user-approve.php:255
+msgid "ID"
+msgstr "ID"
+
+#: new-user-approve.php:256
+msgid "Username"
+msgstr "Felhasználónév"
+
+#: new-user-approve.php:257
+msgid "Name"
+msgstr "Név"
+
+#: new-user-approve.php:258
+msgid "E-mail"
+msgstr "E-mail"
+
+#: new-user-approve.php:260
+#: new-user-approve.php:262
+msgid "Actions"
+msgstr "Műveletek"
+
+#: new-user-approve.php:296
+msgid "email:"
+msgstr "e-mail:"
+
+#: new-user-approve.php:298
+msgid "Approve"
+msgstr "Jóváhagy"
+
+#: new-user-approve.php:301
+msgid "Deny"
+msgstr "Elutasít"
+
+#: new-user-approve.php:313
+msgid "approved"
+msgstr "jóváhagyva"
+
+#: new-user-approve.php:315
+msgid "denied"
+msgstr "elutasítva"
+
+#: new-user-approve.php:317
+msgid "pending"
+msgstr "függőben"
+
+#: new-user-approve.php:320
+#, php-format
+msgid "There are no users with a status of %s"
+msgstr "Nincs olyan felhasználó, akinek az állapota: %s"
+
+#: new-user-approve.php:332
+msgid "User name already exists"
+msgstr "Ez a felhasználónév már létezik"
+
+#: new-user-approve.php:335
+#, php-format
+msgid "%1$s (%2$s) has requested a username at %3$s"
+msgstr "%1$s (%2$s) regisztrált a következő blogra: %3$s"
+
+#: new-user-approve.php:337
+#, php-format
+msgid "To approve or deny this user access to %s go to"
+msgstr "Ezen felhasználó hozzáférésének engedélyezését vagy elutasítását %s bloghoz itt lehet intézni:"
+
+#: new-user-approve.php:341
+#, php-format
+msgid "[%s] User Approval"
+msgstr "[%s] Felhasználó jóváhagyása"
+
+#: new-user-approve.php:372
+#, php-format
+msgid "You have been approved to access %s"
+msgstr "A hozzáférést engedélyezték ehhez: %s"
+
+#: new-user-approve.php:373
+#, php-format
+msgid "Username: %s"
+msgstr "Felhasználónév: %s"
+
+#: new-user-approve.php:374
+#, php-format
+msgid "Password: %s"
+msgstr "Jelszó: %s"
+
+#: new-user-approve.php:378
+#, php-format
+msgid "[%s] Registration Approved"
+msgstr "[%s] Regisztrációja jóváhagyva"
+
+#: new-user-approve.php:397
+#, php-format
+msgid "You have been denied access to %s"
+msgstr "A hozzáférése ide: %s el lett utasítva"
+
+#: new-user-approve.php:400
+#, php-format
+msgid "[%s] Registration Denied"
+msgstr "[%s] Regisztráció elutasítva"
+
+#: new-user-approve.php:413
+msgid "An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request."
+msgstr "Egy e-mailt küldtünk a rendszergazdának, aki át fogja nézni a megadott adatokat és vagy jóváhagyja vagy elutasítja a kérést."
+
+#: new-user-approve.php:414
+msgid "You will receive an email with instructions on what you will need to do next. Thanks for your patience."
+msgstr "Rövidesen egy e-mail üzenetet fog kapni a további teendőkről. Köszönjük a türelmet!"
+
+#: new-user-approve.php:418
+msgid "Pending Approval"
+msgstr "Jóváhagyás függőben"
+
+#: new-user-approve.php:418
+msgid "Registration successful."
+msgstr "Sikeres regisztráció"
+
+#: new-user-approve.php:466
+#, php-format
+msgid "Welcome to %s. This site is accessible to approved users only. To be approved, you must first register."
+msgstr "%s üdvözli Önt! Ez az oldal csak jóváhagyott felhasználók számára elérhető. A jóváhagyáshoz először regisztrálnia kell!"
+
+#: new-user-approve.php:471
+msgid "After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions."
+msgstr "A regisztráció után a jóváhagyásra való kérését el fogjuk küldeni a rendszergazdának. Miután ő megvizsgálta a kérést, egy e-mailt fog kapni a további teendőkről."
+
+#. Plugin Name of an extension
+msgid "New User Approve"
+msgstr "Új felhasználó jóváhagyás"
+
+#. Plugin URI of an extension
+msgid "http://www.picklewagon.com/wordpress/new-user-approve"
+msgstr "http://www.picklewagon.com/wordpress/new-user-approve"
+
+#. Description of an extension
+msgid "This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog."
+msgstr "Ez a plugin lehetővé teszi a rendszergazdáknak, hogy jóváhagyják az újan regisztrált felhasználókat. Csak a jóváhagyott felhasználók férhetnek hozzá a bloghoz."
+
+#. Author of an extension
+msgid "Josh Harrison"
+msgstr "Josh Harrison"
+
+#. Author URI of an extension
+msgid "http://www.picklewagon.com/"
+msgstr "http://www.picklewagon.com/"
+
