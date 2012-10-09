@@ -56,7 +56,7 @@ class pw_new_user_approve {
 		add_action( 'admin_footer', array( $this, 'admin_scripts_footer' ) );
 		add_action( 'init', array( $this, 'init' ) );
 		add_action( 'init', array( $this, 'process_input' ) );
-		add_action( 'register_post', array( $this, 'send_approval_email' ), 10, 3 );
+		add_action( 'register_post', array( $this, 'send_admin_request' ), 10, 3 );
 		add_action( 'lostpassword_post', array( $this, 'lost_password' ) );
 		add_action( 'user_register', array( $this, 'add_user_status' ) );
 		add_action( 'new_user_approve_approve_user', array( $this, 'approve_user' ) );
@@ -258,7 +258,7 @@ class pw_new_user_approve {
 	/**
 	 * Send an email to the admin to request approval
 	 */
-	public function send_approval_email( $user_login, $user_email, $errors ) {
+	public function send_admin_request( $user_login, $user_email, $errors ) {
 		if ( ! $errors->get_error_code() ) {
 			/* check if already exists */
 			$user_data = get_user_by( 'login', $user_login );
