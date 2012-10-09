@@ -448,14 +448,18 @@ class pw_new_user_approve {
 			$welcome = sprintf( __( 'Welcome to %s. This site is accessible to approved users only. To be approved, you must first register.', $this->plugin_id ), get_option( 'blogname' ) );
 			$welcome = apply_filters( 'new_user_approve_welcome_message', $welcome );
 			
-			$message .= '<p class="message">' . $welcome . '</p>';
+			if ( ! empty( $welcome ) ) {
+				$message .= '<p class="message">' . $welcome . '</p>';
+			}
 		}
 
 		if ( isset( $_GET['action'] ) && $_GET['action'] == 'register' && ! $_POST ) {
 			$instructions = sprintf( __( 'After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions.', $this->plugin_id ) );
 			$instructions = apply_filters( 'new_user_approve_register_instructions', $instructions );
 			
-			$message .= '<p class="message">' . $instructions . '</p>';
+			if ( ! empty( $instructions ) ) {
+				$message .= '<p class="message">' . $instructions . '</p>';
+			}
 		}
 
 		return $message;
