@@ -66,6 +66,8 @@ class pw_new_user_approve {
 		add_action( 'new_user_approve_approve_user', array( $this, 'delete_new_user_approve_transient' ), 11 );
 		add_action( 'new_user_approve_deny_user', array( $this, 'delete_new_user_approve_transient' ), 11 );
 		add_action( 'deleted_user', array( $this, 'delete_new_user_approve_transient' ) );
+		add_action( 'new_user_approve_user_denied', array( $this, 'send_denial_message' ) );
+		add_action( 'new_user_approve_user_approved', array( $this, 'send_approval_message' ) );
 
 		// Filters
 		add_filter( 'registration_errors', array( $this, 'show_user_pending_message' ), 10, 1 );
@@ -290,11 +292,21 @@ class pw_new_user_approve {
 	 * Admin approval of user
 	 */
 	public function approve_user() {
-		global $wpdb;
-
 		$user_id = (int) $_GET['user'];
 		$user = new WP_User( $user_id );
 
+		// change usermeta tag in database to approved
+		update_user_meta( $user->ID, 'pw_user_status', 'approved' );
+		
+		do_action( 'new_user_approve_user_approved', $user );
+	}
+
+	/**
+	 * Send a message to the user upon approval
+	 * 
+	 * @param object $user WP_User object
+	 */
+	public function send_approval_email( $user ) {
 		$bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', false );
 		
 		if ( ! $bypass_password_reset ) {
@@ -309,14 +321,14 @@ class pw_new_user_approve {
 			);
 			$wpdb->update($wpdb->users, $data, $where, array( '%s', '%s' ), array( '%d' ) );
 		}
-
+		
 		wp_cache_delete( $user->ID, 'users' );
 		wp_cache_delete( $user->user_login, 'userlogins' );
-
+		
 		// send email to user telling of approval
 		$user_login = stripslashes( $user->user_login );
 		$user_email = stripslashes( $user->user_email );
-
+		
 		// format the message
 		$message  = sprintf( __( 'You have been approved to access %s', $this->plugin_id ), get_option( 'blogname' ) ) . "\r\n";
 		$message .= sprintf( __( 'Username: %s', $this->plugin_id ), $user_login ) . "\r\n";
@@ -324,21 +336,16 @@ class pw_new_user_approve {
 			$message .= sprintf( __( 'Password: %s', $this->plugin_id ), $new_pass ) . "\r\n";
 		}
 		$message .= get_option( 'siteurl' ) . "/wp-login.php\r\n";
-
+		
 		$message = apply_filters( 'new_user_approve_approve_user_message', $message, $user );
 		
 		$subject = sprintf( __( '[%s] Registration Approved', $this->plugin_id ), get_option( 'blogname' ) );
 		$subject = apply_filters( 'new_user_approve_approve_user_subject', $subject );
 		
 		// send the mail
-		@wp_mail( $user_email, $subject, $message );
-
-		// change usermeta tag in database to approved
-		update_user_meta( $user->ID, 'pw_user_status', 'approved' );
-		
-		do_action( 'new_user_approve_user_approved', $user );
+		wp_mail( $user_email, $subject, $message );
 	}
-
+	
 	/**
 	 * Admin denial of user
 	 */
@@ -346,25 +353,32 @@ class pw_new_user_approve {
 		$user_id = (int) $_GET['user'];
 		$user = new WP_User( $user_id );
 
-		// send email to user telling of denial
-		$user_email = stripslashes( $user->user_email );
-
-		// format the message
-		$message = sprintf( __( 'You have been denied access to %s', $this->plugin_id ), get_option( 'blogname' ) );
-		$message = apply_filters( 'new_user_approve_deny_user_message', $message, $user );
-		
-		$subject = sprintf( __( '[%s] Registration Denied', $this->plugin_id ), get_option( 'blogname' ) );
-		$subject = apply_filters( 'new_user_approve_deny_user_subject', $subject );
-
-		// send the mail
-		@wp_mail( $user_email, $subject, $message );
-
 		// change usermeta tag in database to denied
 		update_user_meta( $user->ID, 'pw_user_status', 'denied' );
 		
 		do_action( 'new_user_approve_user_denied', $user );
 	}
 
+	/**
+	 * Send the denial message to the user
+	 * 
+	 * @param object $user WP_User object
+	 */
+	public function send_denial_message( $user ) {
+		// send email to user telling of denial
+		$user_email = stripslashes( $user->user_email );
+		
+		// format the message
+		$message = sprintf( __( 'You have been denied access to %s', $this->plugin_id ), get_option( 'blogname' ) );
+		$message = apply_filters( 'new_user_approve_deny_user_message', $message, $user );
+		
+		$subject = sprintf( __( '[%s] Registration Denied', $this->plugin_id ), get_option( 'blogname' ) );
+		$subject = apply_filters( 'new_user_approve_deny_user_subject', $subject );
+		
+		// send the mail
+		wp_mail( $user_email, $subject, $message );
+	}
+	
 	/**
 	 * Display a message to the user after they have registered
 	 */
