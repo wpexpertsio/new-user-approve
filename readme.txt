@@ -63,6 +63,9 @@ this feature.
 
 == Changelog ==
 
+= 1.4.1 =
+* delete transient of user statuses when a user is deleted
+
 = 1.4 =
 * add filters
 * honor the redirect if there is one set when registering
