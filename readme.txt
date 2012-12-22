@@ -3,7 +3,7 @@ Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration
 Requires at least: 3.2.1
-Tested up to: 3.4.2
+Tested up to: 3.5
 Stable tag: 1.4.2
 
 New User Approve is a Wordpress plugin that allows a blog administrator to 
@@ -65,6 +65,8 @@ this feature.
 
 = 1.4.2 =
 * fix password recovery bug if a user does not have an approve-status meta field
+* add more translations
+* tested with WordPress 3.5
 
 = 1.4.1 =
 * delete transient of user statuses when a user is deleted
@@ -206,8 +208,9 @@ When sending me your translation files, please send me your wordpress.org userna
 * Greek translation by [Leftys](http://alt3rnet.info/)
 * Hungarian translation by Gabor Varga
 * Italian translation by [Pierfrancesco Marsiaj](http://profiles.wordpress.org/pierinux/)
+* Lithuanian translation by [Ksaveras](http://profiles.wordpress.org/xawiers)
 * Polish translation by [pik256](http://wordpress.org/support/profile/1271256)
 * Romanian translation by [Web Hosting Geeks](http://webhostinggeeks.com/)
 * Russion translation by [Alexey](http://wordpress.org/support/profile/asel)
 * Spanish translation by [Eduardo Aranda](http://sinetiks.com/)
-* Lithuanian translation by [Ksaveras](http://profiles.wordpress.org/xawiers)
+* Swedish translation by [Per Bjälevik](http://pastis.tauzero.se)

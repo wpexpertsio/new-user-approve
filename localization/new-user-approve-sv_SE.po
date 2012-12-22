@@ -1,0 +1,198 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Josh Harrison
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
+"POT-Creation-Date: 2009-10-29 08:32+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: new-user-approve.php:126
+msgid "Approve New Users"
+msgstr "Godkänna nya användare"
+
+#: new-user-approve.php:140
+msgid "Settings"
+msgstr "Inställningar"
+
+#: new-user-approve.php:183
+msgid "Users"
+msgstr "Användare"
+
+#: new-user-approve.php:219
+msgid "User successfully updated."
+msgstr "Användaren uppdaterad."
+
+#: new-user-approve.php:223
+msgid "User Registration Approval"
+msgstr "Godkänna registrerad användare"
+
+#: new-user-approve.php:225
+msgid "User Management"
+msgstr "Hantera användare"
+
+#: new-user-approve.php:228
+msgid "Users Pending Approval"
+msgstr "Väntar på godkännande"
+
+#: new-user-approve.php:229
+msgid "Approved Users"
+msgstr "Godkända användare"
+
+#: new-user-approve.php:230
+msgid "Denied Users"
+msgstr "Ej godkända användare"
+
+#: new-user-approve.php:255
+msgid "ID"
+msgstr ""
+
+#: new-user-approve.php:256
+msgid "Username"
+msgstr "Användare"
+
+#: new-user-approve.php:257
+msgid "Name"
+msgstr "Namn"
+
+#: new-user-approve.php:258
+msgid "E-mail"
+msgstr "E-post"
+
+#: new-user-approve.php:260 new-user-approve.php:262
+msgid "Actions"
+msgstr "Kommando"
+
+#: new-user-approve.php:296
+msgid "email:"
+msgstr "e-post"
+
+#: new-user-approve.php:298
+msgid "Approve"
+msgstr "Godkänna"
+
+#: new-user-approve.php:301
+msgid "Deny"
+msgstr "Avslå"
+
+#: new-user-approve.php:313
+msgid "approved"
+msgstr "godkända"
+
+#: new-user-approve.php:315
+msgid "denied"
+msgstr "ej godkända"
+
+#: new-user-approve.php:317
+msgid "pending"
+msgstr "väntar på godkännande"
+
+#: new-user-approve.php:320
+#, php-format
+msgid "There are no users with a status of %s"
+msgstr "Det finns inga användare med status %s"
+
+#: new-user-approve.php:332
+msgid "User name already exists"
+msgstr "Användaren finns redan"
+
+#: new-user-approve.php:335
+#, php-format
+msgid "%1$s (%2$s) has requested a username at %3$s"
+msgstr "%1$s (%2$s) har ansökt om ett användarkonto hos %3$s"
+
+#: new-user-approve.php:337
+#, php-format
+msgid "To approve or deny this user access to %s go to"
+msgstr "Använd följande länk för att godkänna eller avslå denna ansökan till %s"
+
+#: new-user-approve.php:341
+#, php-format
+msgid "[%s] User Approval"
+msgstr "[%s] Ny användare väntar på godkännande"
+
+#: new-user-approve.php:372
+#, php-format
+msgid "You have been approved to access %s"
+msgstr "Ditt konto har godkänts hos %s"
+
+#: new-user-approve.php:373
+#, php-format
+msgid "Username: %s"
+msgstr "Användarnamn: %s"
+
+#: new-user-approve.php:374
+#, php-format
+msgid "Password: %s"
+msgstr "Lösenord: %s"
+
+#: new-user-approve.php:378
+#, php-format
+msgid "[%s] Registration Approved"
+msgstr "[%s] Din ansökan godkänd"
+
+#: new-user-approve.php:397
+#, php-format
+msgid "You have been denied access to %s"
+msgstr "Ditt användarkonto hos %s har inte godkänts"
+
+#: new-user-approve.php:400
+#, php-format
+msgid "[%s] Registration Denied"
+msgstr "[%s] Din ansökan har inte godkänts"
+
+#: new-user-approve.php:413
+msgid "An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request."
+msgstr "Ett e-postbrev har skickats till sajtens administratör. Administratören kommer att granska dina uppgifter och därefter godkänna eller avslå din ansökan."
+
+#: new-user-approve.php:414
+msgid "You will receive an email with instructions on what you will need to do next. Thanks for your patience."
+msgstr "Du kommer då att få ett e-postbrev med instruktioner. Tack för din ansökan!"
+
+#: new-user-approve.php:418
+msgid "Pending Approval"
+msgstr "Väntar på godkännande"
+
+#: new-user-approve.php:418
+msgid "Registration successful."
+msgstr "Registreringen lyckades."
+
+#: new-user-approve.php:466
+#, php-format
+msgid "Welcome to %s. This site is accessible to approved users only. To be approved, you must first register."
+msgstr "Välkommen till %s. Den här sajten är bara tillgänglig för godkända användare. För att bli godkänd måste du registrera dig."
+
+#: new-user-approve.php:471
+msgid "After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions."
+msgstr "Efter att du registrerat dig kommer din ansökan att granskas för godkännande. Du får då ett e-postbrev med mera information."
+
+#. Plugin Name of an extension
+msgid "New User Approve"
+msgstr ""
+
+#. Plugin URI of an extension
+msgid "http://www.picklewagon.com/wordpress/new-user-approve"
+msgstr ""
+
+#. Description of an extension
+msgid ""
+"This plugin allows administrators to approve users once they register. Only "
+"approved users will be allowed to access the blog."
+msgstr ""
+
+#. Author of an extension
+msgid "Josh Harrison"
+msgstr ""
+
+#. Author URI of an extension
+msgid "http://www.picklewagon.com/"
+msgstr ""
