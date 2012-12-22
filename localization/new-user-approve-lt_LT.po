@@ -1,0 +1,201 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Josh Harrison
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: New User Approve\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
+"POT-Creation-Date: 2009-10-29 08:32+0000\n"
+"PO-Revision-Date: 2010-03-11 14:52+0200\n"
+"Last-Translator: Ksaveras Šakys <xawiers@gmail.com>\n"
+"Language-Team: Xawiers <xawiers@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Lithuanian\n"
+"X-Poedit-Country: LITHUANIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+
+#: new-user-approve.php:126
+msgid "Approve New Users"
+msgstr "Registracijos patvirtinimas"
+
+#: new-user-approve.php:140
+msgid "Settings"
+msgstr "Nustatymai"
+
+#: new-user-approve.php:183
+msgid "Users"
+msgstr "Vartotojai"
+
+#: new-user-approve.php:219
+msgid "User successfully updated."
+msgstr "Vartotojo duomenys pakeisti."
+
+#: new-user-approve.php:223
+msgid "User Registration Approval"
+msgstr "Vartotojų Registracijos Patvirtinimas"
+
+#: new-user-approve.php:225
+msgid "User Management"
+msgstr "Vartotojų administravimas"
+
+#: new-user-approve.php:228
+msgid "Users Pending Approval"
+msgstr "Laukiantys patvirtinimo"
+
+#: new-user-approve.php:229
+msgid "Approved Users"
+msgstr "Patvirtinti vartotojai"
+
+#: new-user-approve.php:230
+msgid "Denied Users"
+msgstr "Uždrausti vartotojai"
+
+#: new-user-approve.php:255
+msgid "ID"
+msgstr "ID"
+
+#: new-user-approve.php:256
+msgid "Username"
+msgstr "Vartotojas"
+
+#: new-user-approve.php:257
+msgid "Name"
+msgstr "Vardas"
+
+#: new-user-approve.php:258
+msgid "E-mail"
+msgstr "El. paštas"
+
+#: new-user-approve.php:260
+#: new-user-approve.php:262
+msgid "Actions"
+msgstr "Veiksmai"
+
+#: new-user-approve.php:296
+msgid "email:"
+msgstr "el. paštas:"
+
+#: new-user-approve.php:298
+msgid "Approve"
+msgstr "Patvirtinti"
+
+#: new-user-approve.php:301
+msgid "Deny"
+msgstr "Drausti"
+
+#: new-user-approve.php:313
+msgid "approved"
+msgstr "patvirtintas"
+
+#: new-user-approve.php:315
+msgid "denied"
+msgstr "uždraustas"
+
+#: new-user-approve.php:317
+msgid "pending"
+msgstr "laukiantis"
+
+#: new-user-approve.php:320
+#, php-format
+msgid "There are no users with a status of %s"
+msgstr "Nėra vartotojų su \"%s\" statusu"
+
+#: new-user-approve.php:332
+msgid "User name already exists"
+msgstr "Vartotojas jau egzistuoja"
+
+#: new-user-approve.php:335
+#, php-format
+msgid "%1$s (%2$s) has requested a username at %3$s"
+msgstr "%1$s (%2$s) užsiregistravo svetainėje %3$s ir laukia patvirtinimo."
+
+#: new-user-approve.php:337
+#, php-format
+msgid "To approve or deny this user access to %s go to"
+msgstr "Norėdami patvirtinti arba atmesti vartotoją svetainėje %s, eikite į"
+
+#: new-user-approve.php:341
+#, php-format
+msgid "[%s] User Approval"
+msgstr "[%s] Vartotojo patvirtinimas"
+
+#: new-user-approve.php:372
+#, php-format
+msgid "You have been approved to access %s"
+msgstr "Jūsų registracija %s svetainėje patvirtinta."
+
+#: new-user-approve.php:373
+#, php-format
+msgid "Username: %s"
+msgstr "Vartotojas: %s"
+
+#: new-user-approve.php:374
+#, php-format
+msgid "Password: %s"
+msgstr "Slaptažodis: %s"
+
+#: new-user-approve.php:378
+#, php-format
+msgid "[%s] Registration Approved"
+msgstr "[%s] Registracija patvirtinta"
+
+#: new-user-approve.php:397
+#, php-format
+msgid "You have been denied access to %s"
+msgstr "Jums uždrausta prisijungti prie %s"
+
+#: new-user-approve.php:400
+#, php-format
+msgid "[%s] Registration Denied"
+msgstr "[%s] Registracija atmesta"
+
+#: new-user-approve.php:413
+msgid "An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request."
+msgstr "El. pašto žinutė administratoriui išsiųsta. Administratorius peržiūrės pateiktą informaciją ir patvirtins arba atmes Jūsų registraciją."
+
+#: new-user-approve.php:414
+msgid "You will receive an email with instructions on what you will need to do next. Thanks for your patience."
+msgstr "Jūs gausite el. pašto pranešimą su instrukcijomis ką reikės daryti vėliau. Dėkojame už kantrybę."
+
+#: new-user-approve.php:418
+msgid "Pending Approval"
+msgstr "Laukia patvirtinimo"
+
+#: new-user-approve.php:418
+msgid "Registration successful."
+msgstr "Registracija sėkminga."
+
+#: new-user-approve.php:466
+#, php-format
+msgid "Welcome to %s. This site is accessible to approved users only. To be approved, you must first register."
+msgstr "Sveiki atvykę į %s. Šį svetainė skirta tik patvirtintiems vartotojams. Norint gauti šį statusą, reikia užsiregistruoti."
+
+#: new-user-approve.php:471
+msgid "After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions."
+msgstr "Po registracijos Jūsų duomenys bus nusiųsti patvirtinti administratoriui. Po patvirtinimo Jums bus atsiųsta el. pašto žinutė."
+
+#. Plugin Name of an extension
+msgid "New User Approve"
+msgstr "Naujų Vartotojų Patvirtinimas"
+
+#. Plugin URI of an extension
+msgid "http://www.picklewagon.com/wordpress/new-user-approve"
+msgstr "http://www.picklewagon.com/wordpress/new-user-approve"
+
+#. Description of an extension
+msgid "This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog."
+msgstr "Šis įskiepis liedžia patvirtinti naujų vartotojų registraciją. Tik patvirtinti vartotojai galės prisijugti prie svetainės"
+
+#. Author of an extension
+msgid "Josh Harrison"
+msgstr "Josh Harrison"
+
+#. Author URI of an extension
+msgid "http://www.picklewagon.com/"
+msgstr "http://www.picklewagon.com/"
+
