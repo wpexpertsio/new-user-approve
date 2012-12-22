@@ -210,3 +210,4 @@ When sending me your translation files, please send me your wordpress.org userna
 * Romanian translation by [Web Hosting Geeks](http://webhostinggeeks.com/)
 * Russion translation by [Alexey](http://wordpress.org/support/profile/asel)
 * Spanish translation by [Eduardo Aranda](http://sinetiks.com/)
+* Lithuanian translation by [Ksaveras](http://profiles.wordpress.org/xawiers)
