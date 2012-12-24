@@ -57,6 +57,7 @@ class pw_new_user_approve {
 		add_action( 'init', array( $this, 'init' ) );
 		add_action( 'init', array( $this, 'process_input' ) );
 		add_action( 'register_post', array( $this, 'request_admin_approval_email' ), 10, 3 );
+		add_action( 'register_post', array( $this, 'create_new_user' ), 10, 3 );
 		add_action( 'lostpassword_post', array( $this, 'lost_password' ) );
 		add_action( 'user_register', array( $this, 'add_user_status' ) );
 		add_action( 'new_user_approve_approve_user', array( $this, 'approve_user' ) );
@@ -259,6 +260,7 @@ class pw_new_user_approve {
 	 * Send an email to the admin to request approval. If there are already errors,
 	 * just go back and let core do it's thing.
 	 * 
+	 * @uses register_post
 	 * @param string $user_login
 	 * @param string $user_email
 	 * @param object $errors
@@ -268,20 +270,41 @@ class pw_new_user_approve {
 			return $errors;
 		}
 		
+		// The blogname option is escaped with esc_html on the way into the database in sanitize_option
+		// we want to reverse this for the plain text arena of emails.
+		$blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
+		
 		/* send email to admin for approval */
-		$message  = sprintf( __( '%1$s (%2$s) has requested a username at %3$s', $this->plugin_id ), $user_login, $user_email, get_option( 'blogname' ) ) . "\r\n\r\n";
+		$message  = sprintf( __( '%1$s (%2$s) has requested a username at %3$s', $this->plugin_id ), $user_login, $user_email, $blogname ) . "\r\n\r\n";
 		$message .= get_option( 'siteurl' ) . "\r\n\r\n";
-		$message .= sprintf( __( 'To approve or deny this user access to %s go to', $this->plugin_id ), get_option( 'blogname' ) ) . "\r\n\r\n";
+		$message .= sprintf( __( 'To approve or deny this user access to %s go to', $this->plugin_id ), $blogname ) . "\r\n\r\n";
 		$message .= get_option( 'siteurl' ) . '/wp-admin/users.php?page=' . $this->_admin_page . "\r\n";
 		
 		$message = apply_filters( 'new_user_approve_request_approval_message', $message, $user_login, $user_email );
 		
-		$subject = sprintf( __( '[%s] User Approval', $this->plugin_id ), get_option( 'blogname' ) );
+		$subject = sprintf( __( '[%s] User Approval', $this->plugin_id ), $blogname );
 		$subject = apply_filters( 'new_user_approve_request_approval_subject', $subject );
 
 		// send the mail
 		wp_mail( get_option( 'admin_email' ), $subject, $message );
-
+	}
+	
+	/**
+	 * Create a new user after the registration has been validated. Normally,
+	 * when a user registers, an email is sent to the user containing their
+	 * username and password. The email does not get sent to the user until
+	 * the user is approved when using the default behavior of this plugin.
+	 * 
+	 * @uses register_post
+	 * @param string $user_login
+	 * @param string $user_email
+	 * @param object $errors
+	 */
+	public function create_new_user( $user_login, $user_email, $errors ) {
+		if ( $errors->get_error_code() ) {
+			return $errors;
+		}
+		
 		// create the user
 		$user_pass = wp_generate_password( 12, false );
 		$user_id = wp_create_user( $user_login, $user_pass, $user_email );
@@ -289,10 +312,6 @@ class pw_new_user_approve {
 			$errors->add( 'registerfail', sprintf( __( '<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a href="mailto:%s">webmaster</a> !' ), get_option( 'admin_email' ) ) );
 			return $errors;
 		}
-		
-		update_user_option( $user_id, 'default_password_nag', true, true ); //Set up the Password change nag.
-		
-		
 	}
 
 	/**
