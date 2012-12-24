@@ -318,17 +318,17 @@ class pw_new_user_approve {
 	 * Admin approval of user
 	 */
 	public function approve_user( $user_id ) {
-		global $wpdb;
-
 		$user = new WP_User( $user_id );
 
 		$bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', false );
 		
 		if ( ! $bypass_password_reset ) {
+			global $wpdb;
+			
 			// reset password to know what to send the user
-			$new_pass = wp_generate_password();
+			$new_pass = wp_generate_password( 12, false );
 			$data = array(
-				'user_pass' => md5($new_pass),
+				'user_pass' => md5( $new_pass ),
 				'user_activation_key' => '',
 			);
 			$where = array(
