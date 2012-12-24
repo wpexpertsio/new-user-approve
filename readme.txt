@@ -6,12 +6,12 @@ Requires at least: 3.2.1
 Tested up to: 3.5
 Stable tag: 1.4.2
 
-New User Approve is a Wordpress plugin that allows a blog administrator to 
+New User Approve is a WordPress plugin that allows a blog administrator to 
 approve a user before they are able to access and login to the blog.
 
 == Description ==
 
-In a normal Wordpress blog, once a new user registers, the user is created in 
+In a normal WordPress blog, once a new user registers, the user is created in 
 the database. Then an email is sent to the new user with their login 
 credentials. Very simple. As it should be.
 
