@@ -317,10 +317,9 @@ class pw_new_user_approve {
 	/**
 	 * Admin approval of user
 	 */
-	public function approve_user() {
+	public function approve_user( $user_id ) {
 		global $wpdb;
 
-		$user_id = (int) $_GET['user'];
 		$user = new WP_User( $user_id );
 
 		$bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', false );
@@ -370,8 +369,7 @@ class pw_new_user_approve {
 	/**
 	 * Admin denial of user
 	 */
-	public function deny_user() {
-		$user_id = (int) $_GET['user'];
+	public function deny_user( $user_id ) {
 		$user = new WP_User( $user_id );
 
 		// send email to user telling of denial
@@ -433,12 +431,14 @@ class pw_new_user_approve {
 			$valid_request = check_admin_referer( 'pw_new_user_approve_action_' . get_class( $this ) );
 
 			if ( $valid_request ) {
+				$user_id = (int) $_GET['user'];
+				
 				if ( $_GET['status'] == 'approve' ) {
-					do_action( 'new_user_approve_approve_user' );
+					do_action( 'new_user_approve_approve_user', $user_id );
 				}
 
 				if ( $_GET['status'] == 'deny' ) {
-					do_action( 'new_user_approve_deny_user' );
+					do_action( 'new_user_approve_deny_user', $user_id );
 				}
 			}
 		}
