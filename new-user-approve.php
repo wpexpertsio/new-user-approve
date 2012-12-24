@@ -256,7 +256,12 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * Send an email to the admin to request approval
+	 * Send an email to the admin to request approval. If there are already errors,
+	 * just go back and let core do it's thing.
+	 * 
+	 * @param string $user_login
+	 * @param string $user_email
+	 * @param object $errors
 	 */
 	public function request_admin_approval_email( $user_login, $user_email, $errors ) {
 		if ( $errors->get_error_code() ) {
