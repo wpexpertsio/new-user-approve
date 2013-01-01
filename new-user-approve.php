@@ -431,15 +431,10 @@ class pw_new_user_approve {
 			$valid_request = check_admin_referer( 'pw_new_user_approve_action_' . get_class( $this ) );
 
 			if ( $valid_request ) {
+				$status = $_GET['status'];
 				$user_id = (int) $_GET['user'];
 				
-				if ( $_GET['status'] == 'approve' ) {
-					do_action( 'new_user_approve_approve_user', $user_id );
-				}
-
-				if ( $_GET['status'] == 'deny' ) {
-					do_action( 'new_user_approve_deny_user', $user_id );
-				}
+				do_action( 'new_user_approve_' . $status . '_user', $user_id );
 			}
 		}
 	}
