@@ -49,7 +49,7 @@ class pw_new_user_approve {
 		// Just drop it in this plugin's "localization" folder and name it "new-user-approve-[value in wp-config].mo"
 		load_plugin_textdomain( $this->plugin_id, false, dirname( plugin_basename( __FILE__ ) ) . '/localization' );
 
-		register_activation_hook( __FILE__,		array( $this, 'activation_check' ) );
+		register_activation_hook( __FILE__,		array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__,	array( $this, 'deactivation' ) );
 
 		// Actions
@@ -68,7 +68,8 @@ class pw_new_user_approve {
 		add_action( 'new_user_approve_approve_user',	array( $this, 'delete_new_user_approve_transient' ), 11 );
 		add_action( 'new_user_approve_deny_user',		array( $this, 'delete_new_user_approve_transient' ), 11 );
 		add_action( 'deleted_user',						array( $this, 'delete_new_user_approve_transient' ) );
-		add_action( 'new_user_approve_deactivation',	array( $this, 'deactivate_plugin' ) );
+		add_action( 'new_user_approve_deactivate',		array( $this, 'remove_unapproved_role' ) );
+		add_action( 'new_user_approve_activate',		array( $this, 'add_unapproved_role' ) );
 
 		// Filters
 		add_filter( 'registration_errors',				array( $this, 'show_user_pending_message' ), 10, 1 );
@@ -77,11 +78,11 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * Require WordPress 3.2.1 on activation
+	 * Require a minimum version of WordPress on activation
 	 * 
 	 * @uses register_activation_hook
 	 */
-	public function activation_check() {
+	public function activation() {
 		global $wp_version;
 
 		$min_wp_version = '3.2.1';
@@ -89,13 +90,24 @@ class pw_new_user_approve {
 		if ( version_compare( $wp_version, $min_wp_version, '<=' ) ) {
 			exit( $exit_msg );
 		}
-	}
-
-	public function deactivation() {
-		do_action( 'new_user_approve_deactivation' );
+		
+		// since the right version of WordPress is being used, run a hook
+		do_action( 'new_user_approve_activate' );
 	}
 	
-	public function deactivate_plugin() {
+	/**
+	 * @uses register_deactivation_hook
+	 */
+	public function deactivation() {
+		do_action( 'new_user_approve_deactivate' );
+	}
+	
+	public function add_unapproved_role() {
+		// the capabilities array is empty so unapproved users can't do anything
+		add_role( 'pw_unapproved', __( 'Unapproved', $this->plugin_id ), array() );
+	}
+	
+	public function remove_unapproved_role() {
 		remove_role( 'pw_unapproved' );
 	}
 	
