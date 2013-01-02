@@ -52,26 +52,26 @@ class pw_new_user_approve {
 		register_activation_hook( __FILE__, array( $this, 'activation_check' ) );
 
 		// Actions
-		add_action( 'admin_menu', array( $this, 'admin_menu_link' ) );
-		add_action( 'admin_footer', array( $this, 'admin_scripts_footer' ) );
-		add_action( 'init', array( $this, 'init' ) );
-		add_action( 'init', array( $this, 'process_input' ) );
-		add_action( 'register_post', array( $this, 'request_admin_approval_email' ), 10, 3 );
-		add_action( 'register_post', array( $this, 'create_new_user' ), 10, 3 );
-		add_action( 'lostpassword_post', array( $this, 'lost_password' ) );
-		add_action( 'user_register', array( $this, 'add_user_status' ) );
-		add_action( 'new_user_approve_approve_user', array( $this, 'approve_user' ) );
-		add_action( 'new_user_approve_deny_user', array( $this, 'deny_user' ) );
-		add_action( 'rightnow_end', array( $this, 'dashboard_stats' ) );
-		add_action( 'user_register', array( $this, 'delete_new_user_approve_transient' ), 11 );
-		add_action( 'new_user_approve_approve_user', array( $this, 'delete_new_user_approve_transient' ), 11 );
-		add_action( 'new_user_approve_deny_user', array( $this, 'delete_new_user_approve_transient' ), 11 );
-		add_action( 'deleted_user', array( $this, 'delete_new_user_approve_transient' ) );
+		add_action( 'admin_menu',						array( $this, 'admin_menu_link' ) );
+		add_action( 'admin_footer',						array( $this, 'admin_scripts_footer' ) );
+		add_action( 'init',								array( $this, 'init' ) );
+		add_action( 'init',								array( $this, 'process_input' ) );
+		add_action( 'register_post',					array( $this, 'request_admin_approval_email' ), 10, 3 );
+		add_action( 'register_post',					array( $this, 'create_new_user' ), 10, 3 );
+		add_action( 'lostpassword_post',				array( $this, 'lost_password' ) );
+		add_action( 'user_register',					array( $this, 'add_user_status' ) );
+		add_action( 'new_user_approve_approve_user',	array( $this, 'approve_user' ) );
+		add_action( 'new_user_approve_deny_user',		array( $this, 'deny_user' ) );
+		add_action( 'rightnow_end',						array( $this, 'dashboard_stats' ) );
+		add_action( 'user_register',					array( $this, 'delete_new_user_approve_transient' ), 11 );
+		add_action( 'new_user_approve_approve_user',	array( $this, 'delete_new_user_approve_transient' ), 11 );
+		add_action( 'new_user_approve_deny_user',		array( $this, 'delete_new_user_approve_transient' ), 11 );
+		add_action( 'deleted_user',						array( $this, 'delete_new_user_approve_transient' ) );
 
 		// Filters
-		add_filter( 'registration_errors', array( $this, 'show_user_pending_message' ), 10, 1 );
-		add_filter( 'login_message', array( $this, 'welcome_user' ) );
-		add_filter( 'wp_authenticate_user', array( $this, 'authenticate_user' ), 10, 2 );
+		add_filter( 'registration_errors',				array( $this, 'show_user_pending_message' ), 10, 1 );
+		add_filter( 'login_message',					array( $this, 'welcome_user' ) );
+		add_filter( 'wp_authenticate_user',				array( $this, 'authenticate_user' ), 10, 2 );
 	}
 
 	/**
