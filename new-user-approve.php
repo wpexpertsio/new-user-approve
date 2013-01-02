@@ -612,3 +612,5 @@ class pw_new_user_approve {
 if ( class_exists( 'pw_new_user_approve' ) ) {
 	$pw_new_user_approve = new pw_new_user_approve();
 }
+
+include_once( dirname( __FILE__ ) . '/multisite.php' );
