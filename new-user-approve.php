@@ -49,7 +49,8 @@ class pw_new_user_approve {
 		// Just drop it in this plugin's "localization" folder and name it "new-user-approve-[value in wp-config].mo"
 		load_plugin_textdomain( $this->plugin_id, false, dirname( plugin_basename( __FILE__ ) ) . '/localization' );
 
-		register_activation_hook( __FILE__, array( $this, 'activation_check' ) );
+		register_activation_hook( __FILE__,		array( $this, 'activation_check' ) );
+		register_deactivation_hook( __FILE__,	array( $this, 'deactivation' ) );
 
 		// Actions
 		add_action( 'admin_menu',						array( $this, 'admin_menu_link' ) );
@@ -67,6 +68,7 @@ class pw_new_user_approve {
 		add_action( 'new_user_approve_approve_user',	array( $this, 'delete_new_user_approve_transient' ), 11 );
 		add_action( 'new_user_approve_deny_user',		array( $this, 'delete_new_user_approve_transient' ), 11 );
 		add_action( 'deleted_user',						array( $this, 'delete_new_user_approve_transient' ) );
+		add_action( 'new_user_approve_deactivation',	array( $this, 'deactivate_plugin' ) );
 
 		// Filters
 		add_filter( 'registration_errors',				array( $this, 'show_user_pending_message' ), 10, 1 );
@@ -89,6 +91,14 @@ class pw_new_user_approve {
 		}
 	}
 
+	public function deactivation() {
+		do_action( 'new_user_approve_deactivation' );
+	}
+	
+	public function deactivate_plugin() {
+		remove_role( 'pw_unapproved' );
+	}
+	
 	/**
 	 * Enqueue any javascript and css needed for the plugin
 	 */
