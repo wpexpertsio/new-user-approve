@@ -2,7 +2,7 @@
 /*
  Plugin Name: New User Approve
  Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve/
- Description: This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog. For support, please go to the <a href="http://wordpress.org/support/plugin/new-user-approve">support forums</a> on wordpress.org.
+ Description: Allow administrators to approve users once they register. Only approved users will be allowed to access the blog. For support, please go to the <a href="http://wordpress.org/support/plugin/new-user-approve">support forums</a> on wordpress.org.
  Author: Josh Harrison
  Version: 1.4.2
  Author URI: http://www.picklewagon.com/
@@ -206,6 +206,8 @@ class pw_new_user_approve {
 		foreach ( $users as $user ) {
 			$class = ( $row % 2 ) ? '' : ' class="alternate"';
 			$avatar = get_avatar( $user->user_email, 32 );
+			
+			$the_link = admin_url( sprintf( 'users.php?page=%s&user=%s&status=%s', $this->_admin_page, $user->ID, $status ) );
 			if ( $approve ) {
 				$approve_link = get_option( 'siteurl' ) . '/wp-admin/users.php?page=' . $this->_admin_page . '&user=' . $user->ID . '&status=approve';
 				$approve_link = wp_nonce_url( $approve_link, 'pw_new_user_approve_action_' . get_class( $this ) );
@@ -319,7 +321,22 @@ class pw_new_user_approve {
 	 */
 	public function approve_user( $user_id ) {
 		$user = new WP_User( $user_id );
-
+		
+		// password should only be reset for users that:
+		// * have never logged in
+		// * are just approved
+		
+		// if no status is set, don't reset password
+		
+		// after setting password, set another meta field.
+		// if that meta field is set, don't reset password
+		
+		// Get the current user status. By default each user is given a pending
+		// status when the user is created (with this plugin activated). If the
+		// user was created while this plugin was not active, the user will not
+		// have a status set.
+		$user_status = get_user_meta( $user_id, 'pw_user_status' );
+		
 		$bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', false );
 		
 		if ( ! $bypass_password_reset ) {
@@ -334,7 +351,7 @@ class pw_new_user_approve {
 			$where = array(
 				'ID' => $user->ID,
 			);
-			$wpdb->update($wpdb->users, $data, $where, array( '%s', '%s' ), array( '%d' ) );
+			$wpdb->update( $wpdb->users, $data, $where, array( '%s', '%s' ), array( '%d' ) );
 		}
 
 		wp_cache_delete( $user->ID, 'users' );
@@ -418,7 +435,7 @@ class pw_new_user_approve {
 			login_header( __( 'Pending Approval', $this->plugin_id ), '<p class="message register">' . $success_message . '</p>', $errors );
 			login_footer();
 			
-			// an exit is necessay here so the normal process for user registration doesn't happen
+			// an exit is necessary here so the normal process for user registration doesn't happen
 			exit();
 		}
 	}
@@ -456,8 +473,6 @@ class pw_new_user_approve {
 			wp_redirect( 'wp-login.php' );
 			exit();
 		}
-
-		return;
 	}
 
 	/**
