@@ -24,7 +24,6 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-if ( ! class_exists( 'pw_new_user_approve' ) ) {
 class pw_new_user_approve {
 	/**
 	 * @var string $plugin_id unique identifier used for localization and other functions
@@ -459,6 +458,7 @@ class pw_new_user_approve {
 			return $errors;
 		
 		$message  = sprintf( __( 'An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request.', $this->plugin_id ) );
+        $message .= ' ';
 		$message .= sprintf( __( 'You will receive an email with instructions on what you will need to do next. Thanks for your patience.', $this->plugin_id ) );
 		$message = apply_filters( 'new_user_approve_pending_message', $message );
 
@@ -540,7 +540,7 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * Determine if the user is good to sign inbased on their status
+	 * Determine if the user is good to sign in based on their status
 	 * 
 	 * @param array $userdata
 	 * @param string $password
@@ -642,7 +642,6 @@ class pw_new_user_approve {
 	}
 	
 } // End Class
-} // End if class exists statement
 
 // instantiate the class
 if ( class_exists( 'pw_new_user_approve' ) ) {
