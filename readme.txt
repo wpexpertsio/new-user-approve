@@ -65,6 +65,8 @@ this feature.
 
 = 1.5 =
 * add more logic to prevent unwanted password resets
+* add more translations
+* minor bug fixes
 
 = 1.4.2 =
 * fix password recovery bug if a user does not have an approve-status meta field
@@ -199,9 +201,9 @@ The plugin has been prepared to be translated. If you want to help to translate 
 
 When sending me your translation files, please send me your wordpress.org username as well.
 
-* Belarusian translation by [Fat Cow](http://www.fatcow.com/)
+* Belarussian translation by [Fat Cow](http://www.fatcow.com/)
 * Catalan translation by [xoanet](http://profiles.wordpress.org/xoanet/)
-* Croation translation by Nik
+* Croatian translation by Nik
 * Czech translation by [GazikT](http://profiles.wordpress.org/gazikt/)
 * Danish translation by [GeorgWP](http://wordpress.org/support/profile/georgwp)
 * Dutch translation by [Ronald Moolenaar](http://profiles.wordpress.org/moolie/)
@@ -214,6 +216,7 @@ When sending me your translation files, please send me your wordpress.org userna
 * Lithuanian translation by [Ksaveras](http://profiles.wordpress.org/xawiers)
 * Polish translation by [pik256](http://wordpress.org/support/profile/1271256)
 * Romanian translation by [Web Hosting Geeks](http://webhostinggeeks.com/)
-* Russion translation by [Alexey](http://wordpress.org/support/profile/asel)
+* Russian translation by [Alexey](http://wordpress.org/support/profile/asel)
+* Slovakian translation by Boris Gereg
 * Spanish translation by [Eduardo Aranda](http://sinetiks.com/)
 * Swedish translation by [Per Bj�levik](http://pastis.tauzero.se)

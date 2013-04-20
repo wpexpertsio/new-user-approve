@@ -1,0 +1,236 @@
+# Copyright (C) YEAR Josh Harrison
+# This file is distributed under the same license as the new-user-approve.1.4.2.zip package.
+msgid ""
+msgstr ""
+"Project-Id-Version: new-user-approve.1.4.2\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
+"POT-Creation-Date: 2013-04-03 12:03:27+01:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-04-09 09:25:00+01:00\n"
+"Last-Translator: Boris Gereg <qwerty@elusion.sk>\n"
+"Language-Team: Boris Gereg <qwerty@elusion.sk>\n"
+"Language: SK\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: new-user-approve.php:126
+msgid "Approve New Users"
+msgstr ""
+"Schváliť nových používateľov"
+
+#: new-user-approve.php:140
+msgid "Settings"
+msgstr ""
+"Nastavenia"
+
+#: new-user-approve.php:183
+msgid "Users"
+msgstr ""
+"Používatelia"
+
+#: new-user-approve.php:219
+msgid "User successfully updated."
+msgstr ""
+"Používateľ sa úspešne aktualizoval."
+
+#: new-user-approve.php:223
+msgid "User Registration Approval"
+msgstr ""
+"Schválenie registrácie používateľa"
+
+#: new-user-approve.php:225
+msgid "User Management"
+msgstr ""
+"Manažment používateľov"
+
+#: new-user-approve.php:228
+msgid "Users Pending Approval"
+msgstr ""
+"Používatelia čakajúci na schválenie"
+
+#: new-user-approve.php:229
+msgid "Approved Users"
+msgstr ""
+"Schválení používatelia"
+
+#: new-user-approve.php:230
+msgid "Denied Users"
+msgstr ""
+"Zamietnutí používatelia"
+
+#: new-user-approve.php:255
+msgid "ID"
+msgstr ""
+"ID"
+
+#: new-user-approve.php:256
+msgid "Username"
+msgstr ""
+"Meno používateľa"
+
+#: new-user-approve.php:257
+msgid "Name"
+msgstr ""
+"Meno"
+
+#: new-user-approve.php:258
+msgid "E-mail"
+msgstr ""
+"E-mailová adresa"
+
+#: new-user-approve.php:260 new-user-approve.php:262
+msgid "Actions"
+msgstr ""
+"Akcia"
+
+#: new-user-approve.php:296
+msgid "email:"
+msgstr ""
+"E-mailová adresa:"
+
+#: new-user-approve.php:298
+msgid "Approve"
+msgstr ""
+"Schváliť"
+
+#: new-user-approve.php:301
+msgid "Deny"
+msgstr ""
+"Zamietnuť"
+
+#: new-user-approve.php:313
+msgid "approved"
+msgstr ""
+"„schválený“"
+
+#: new-user-approve.php:315
+msgid "denied"
+msgstr ""
+"„zamietnutý“"
+
+#: new-user-approve.php:317
+msgid "pending"
+msgstr ""
+"„čaká na schválenie“"
+
+#: new-user-approve.php:320
+#, php-format
+msgid "There are no users with a status of %s"
+msgstr ""
+"Žiadni používatelia so stavom %s"
+
+#: new-user-approve.php:332
+msgid "User name already exists"
+msgstr ""
+"Meno používateľa už existuje"
+
+#: new-user-approve.php:335
+#, php-format
+msgid "%1$s (%2$s) has requested a username at %3$s"
+msgstr ""
+"Návštevník %1$s (%2$s) požiadal o registráciu mena používateľa na lokalite „%3$s“."
+
+#: new-user-approve.php:337
+#, php-format
+msgid "To approve or deny this user access to %s go to"
+msgstr ""
+"Ak chcete schváliť alebo zamietnuť prístup tohto používateľa k lokalite „%s“, prejdite na stránku"
+
+#: new-user-approve.php:341
+#, php-format
+msgid "[%s] User Approval"
+msgstr ""
+"[%s] Schválenie používateľa"
+
+#: new-user-approve.php:372
+#, php-format
+msgid "You have been approved to access %s"
+msgstr ""
+"Váš prístup k lokalite „%s“ bol schválený."
+
+#: new-user-approve.php:373
+#, php-format
+msgid "Username: %s"
+msgstr ""
+"Meno používateľa: %s"
+
+#: new-user-approve.php:374
+#, php-format
+msgid "Password: %s"
+msgstr ""
+"Heslo: %s"
+
+#: new-user-approve.php:378
+#, php-format
+msgid "[%s] Registration Approved"
+msgstr ""
+"[%s] Schválenie registrácie"
+
+#: new-user-approve.php:397
+#, php-format
+msgid "You have been denied access to %s"
+msgstr ""
+"Váš prístup k lokalite „%s“ bol zamietnutý."
+
+#: new-user-approve.php:400
+#, php-format
+msgid "[%s] Registration Denied"
+msgstr ""
+"[%s] Zamietnutie registrácie"
+
+#: new-user-approve.php:413
+msgid "An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request."
+msgstr ""
+"Administrátorovi lokality sa odoslal e-mail. Administrátor si prezrie poskytnuté informácie a vašu požiadavku buď schváli, alebo zamietne."
+
+#: new-user-approve.php:414
+msgid "You will receive an email with instructions on what you will need to do next. Thanks for your patience."
+msgstr ""
+"Dostanete e-mail s pokynmi, ako postupovať ďalej. Ďakujeme vám za trpezlivosť."
+
+#: new-user-approve.php:418
+msgid "Pending Approval"
+msgstr ""
+"Čaká na schválenie"
+
+#: new-user-approve.php:418
+msgid "Registration successful."
+msgstr ""
+"Registrácia bola úspešná."
+
+#: new-user-approve.php:466
+#, php-format
+msgid "Welcome to %s. This site is accessible to approved users only. To be approved, you must first register."
+msgstr ""
+"Vitajte na lokalite „%s“. Táto lokalita je prístupná iba schváleným používateľom. Schválenie sa dá vykonať až po vašej registrácii."
+
+#: new-user-approve.php:471
+msgid "After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions."
+msgstr ""
+"Po zaregistrovaní sa administrátorovi lokality odošle vaša požiadavka o schválenie. Po jej spracovaní dostanete e-mail s ďalšími pokynmi."
+
+#. Plugin Name of an extension
+msgid "New User Approve"
+msgstr ""
+"Schválenie nového používateľa"
+
+#. Plugin URI of an extension
+msgid "http://www.picklewagon.com/wordpress/new-user-approve"
+msgstr ""
+"http://www.picklewagon.com/wordpress/new-user-approve"
+
+#. Description of an extension
+msgid "This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog."
+msgstr ""
+"Tento modul umožňuje administrátorom schváliť používateľov po ich registrácii. Prístup k blogu získajú iba schválení používatelia."
+
+#. Author of an extension
+msgid "Josh Harrison"
+msgstr ""
+"Josh Harrison"
+
+#. Author URI of an extension
+msgid "http://www.picklewagon.com/"
+msgstr ""
+"http://www.picklewagon.com/"
