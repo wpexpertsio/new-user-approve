@@ -50,7 +50,7 @@ your liking.
 
 The password is generated again because, by default, the user will not be aware
 of their password. By generating a new password, the email that notifies the
-user can also give them the new password just like the email does when recieving
+user can also give them the new password just like the email does when receiving
 your password on a regular WordPress install. At approval time, it is impossible
 to retrieve the user's password.
 

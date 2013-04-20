@@ -32,6 +32,25 @@ class pw_new_user_approve {
 
 	var $_admin_page = 'new-user-approve-admin';
 
+    /**
+     * The only instance of pw_new_user_approve.
+     *
+     * @var pw_new_user_approve
+     */
+    private static $instance;
+
+    /**
+     * Returns the main instance.
+     *
+     * @return pw_new_user_approve
+     */
+    public static function instance() {
+        if ( ! isset( self::$instance ) ) {
+            self::$instance = new pw_new_user_approve();
+        }
+        return self::$instance;
+    }
+
 	// Class Functions
 	/**
 	 * PHP 4 Compatible Constructor
@@ -644,6 +663,12 @@ class pw_new_user_approve {
 } // End Class
 
 // instantiate the class
-if ( class_exists( 'pw_new_user_approve' ) ) {
-	$pw_new_user_approve = new pw_new_user_approve();
+//if ( class_exists( 'pw_new_user_approve' ) ) {
+//	$pw_new_user_approve = new pw_new_user_approve();
+//}
+
+function pw_new_user_approve() {
+    return pw_new_user_approve::instance();
 }
+
+pw_new_user_approve();
