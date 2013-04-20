@@ -63,6 +63,9 @@ this feature.
 
 == Changelog ==
 
+= 1.5 =
+* add more logic to prevent unwanted password resets
+
 = 1.4.2 =
 * fix password recovery bug if a user does not have an approve-status meta field
 * add more translations
@@ -213,4 +216,4 @@ When sending me your translation files, please send me your wordpress.org userna
 * Romanian translation by [Web Hosting Geeks](http://webhostinggeeks.com/)
 * Russion translation by [Alexey](http://wordpress.org/support/profile/asel)
 * Spanish translation by [Eduardo Aranda](http://sinetiks.com/)
-* Swedish translation by [Per BjŠlevik](http://pastis.tauzero.se)
+* Swedish translation by [Per Bjï¿½levik](http://pastis.tauzero.se)

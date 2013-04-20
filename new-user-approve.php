@@ -346,20 +346,30 @@ class pw_new_user_approve {
 		
 		// password should only be reset for users that:
 		// * have never logged in
-		// * are just approved
+		// * are just approved for the first time
 		
-		// if no status is set, don't reset password
-		
-		// after setting password, set another meta field.
-		// if that meta field is set, don't reset password
+		// If the password has already been reset for this user,
+        // $password_reset will be a unix timestamp
+        $password_reset = get_user_meta( $user_id, 'pw_user_approve_password_reset' );
 		
 		// Get the current user status. By default each user is given a pending
 		// status when the user is created (with this plugin activated). If the
 		// user was created while this plugin was not active, the user will not
 		// have a status set.
 		$user_status = get_user_meta( $user_id, 'pw_user_status' );
-		
-		$bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', false );
+
+        // Default behavior is to reset password
+        $bypass_password_reset = false;
+
+        // if no status is set, don't reset password
+        if ( empty( $user_status ) )
+            $bypass_password_reset = true;
+
+        // if the password has already been reset, absolutely bypass
+        if ( empty( $password_reset ) )
+            $bypass_password_reset = true;
+
+		$bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', $bypass_password_reset );
 		
 		if ( ! $bypass_password_reset ) {
 			global $wpdb;
@@ -374,6 +384,10 @@ class pw_new_user_approve {
 				'ID' => $user->ID,
 			);
 			$wpdb->update( $wpdb->users, $data, $where, array( '%s', '%s' ), array( '%d' ) );
+
+            // Set this meta field to track that the password has been reset by
+            // the plugin. Don't reset it again.
+            update_user_meta( $user->ID, 'pw_user_approve_password_reset', time() );
 		}
 
 		wp_cache_delete( $user->ID, 'users' );
