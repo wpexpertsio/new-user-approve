@@ -368,6 +368,9 @@ class pw_new_user_approve_admin_approve {
             );
             $wpdb->update( $wpdb->users, $data, $where, array( '%s', '%s' ), array( '%d' ) );
 
+			// Set up the Password change nag.
+			update_user_option( $user->ID, 'default_password_nag', true, true );
+
             // Set this meta field to track that the password has been reset by
             // the plugin. Don't reset it again.
             update_user_meta( $user->ID, 'pw_user_approve_password_reset', time() );
