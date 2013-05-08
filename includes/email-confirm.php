@@ -184,8 +184,36 @@ class pw_new_user_approve_confirmation {
 		}
 	}
 
-	public function show_user_confirm_message() {
+	/**
+	 * Display a message to the user after registration for them to check their email
+	 * to confirm registration
+	 *
+	 * @param $errors
+	 */
+	public function show_user_confirm_message( $errors ) {
+		if ( ! empty( $_POST['redirect_to'] ) ) {
+			// if a redirect_to is set, honor it
+			wp_safe_redirect( $_POST['redirect_to'] );
+			exit();
+		}
 
+		// if there is an error already, let it do it's thing
+		if ( $errors->get_error_code() )
+			return $errors;
+
+		$message  = sprintf( __( 'An email has been sent to your inbox. Please click on the link within the email to confirm your registration.', pw_new_user_approve()->plugin_id ) );
+		$message = apply_filters( 'new_user_approve_confirm_message', $message );
+
+		$errors->add( 'registration_confirmation', $message, 'message' );
+
+		$success_message = __( 'Registration successful.', pw_new_user_approve()->plugin_id );
+		$success_message = apply_filters( 'new_user_approve_registration_message', $success_message );
+
+		login_header( __( 'Pending Confirmation', pw_new_user_approve()->plugin_id ), '<p class="message register">' . $success_message . '</p>', $errors );
+		login_footer();
+
+		// an exit is necessary here so the normal process for user registration doesn't happen
+		exit();
 	}
 
 }
