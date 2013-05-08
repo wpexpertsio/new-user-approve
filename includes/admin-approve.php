@@ -454,13 +454,11 @@ class pw_new_user_approve_admin_approve {
         $success_message = __( 'Registration successful.', pw_new_user_approve()->plugin_id );
         $success_message = apply_filters( 'new_user_approve_registration_message', $success_message );
 
-        if ( function_exists( 'login_header' ) ) {
-            login_header( __( 'Pending Approval', pw_new_user_approve()->plugin_id ), '<p class="message register">' . $success_message . '</p>', $errors );
-            login_footer();
+        login_header( __( 'Pending Approval', pw_new_user_approve()->plugin_id ), '<p class="message register">' . $success_message . '</p>', $errors );
+        login_footer();
 
-            // an exit is necessary here so the normal process for user registration doesn't happen
-            exit();
-        }
+        // an exit is necessary here so the normal process for user registration doesn't happen
+        exit();
     }
 
     /**
