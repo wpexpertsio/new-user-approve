@@ -31,14 +31,15 @@ class pw_new_user_approve_confirmation {
 	public function __construct() {
 		if ( $this->is_module_active() ) {
 			// Actions
-			add_action( 'new_user_approve_deactivate',		array( $this, 'remove_unverified_role' ) );
-			add_action( 'init',								array( $this, 'add_unverified_role' ) );
+			//add_action( 'new_user_approve_deactivate',		array( $this, 'remove_unverified_role' ) );
+			//add_action( 'init',								array( $this, 'add_unverified_role' ) );
 			add_action( 'register_post',					array( $this, 'create_new_user' ), 10, 3 );
 
 			// Filters
 			add_filter( 'template_include',					array( $this, 'activation_template' ) );
+			add_filter( 'registration_errors',				array( $this, 'show_user_confirm_message' ) );
 		} else {
-			add_action( 'init',								array( $this, 'remove_unverified_role' ) );
+			//add_action( 'init',								array( $this, 'remove_unverified_role' ) );
 		}
 	}
 
@@ -109,21 +110,31 @@ class pw_new_user_approve_confirmation {
 			$activation_key = wp_hash( $user_id );
 			update_user_meta( $user_id, 'activation_key', $activation_key );
 
-			if ( apply_filters( 'new_user_approve_signup_send_activation_key', true ) ) {
+			if ( apply_filters( 'new_user_approve_confirmation_send_activation_key', true ) ) {
 				$this->new_user_confirmation( $user_id, $user_email, $activation_key );
 			}
 		}
 	}
 
 	public function new_user_confirmation( $user_id, $user_email, $key ) {
-		$user = get_userdata( $user_id );
-
 		// The blogname option is escaped with esc_html on the way into the database in sanitize_option
 		// we want to reverse this for the plain text arena of emails.
 		$blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
 
 		$activate_url = add_query_arg( array( 'key' => $key ), $this->get_activation_link() );
 		$activate_url = esc_url( $activate_url );
+
+		$message = sprintf( __( "Thanks for registering at $blogname! To complete the activation of your account please click the following link:\n\n%1\$s\n\nIf you believe you received this message in error, please disregard.", pw_new_user_approve()->plugin_id ), $activate_url );
+		$subject = __( 'Activate Your Account', pw_new_user_approve()->plugin_id );
+
+		// Send the message
+		$to = apply_filters( 'new_user_approve_confirmation_send_validation_email_to', $user_email, $user_id );
+		$subject = apply_filters( 'new_user_approve_confirmation_send_validation_email_subject', $subject, $user_id );
+		$message = apply_filters( 'new_user_approve_confirmation_send_validation_email_message', $message, $user_id, $activate_url );
+
+		wp_mail( $to, $subject, $message );
+
+		do_action( 'new_user_approve_sent_user_validation_email', $subject, $message, $user_id, $user_email, $key );
 	}
 
 	public function get_activation_link() {
@@ -151,6 +162,30 @@ class pw_new_user_approve_confirmation {
 		}
 
 		return $template;
+	}
+
+	public function activate_user() {
+		if ( !is_multisite() ) {
+			// Get the user_id based on the $key
+			$user_id = $wpdb->get_var( $wpdb->prepare( "SELECT user_id FROM {$wpdb->usermeta} WHERE meta_key = 'activation_key' AND meta_value = %s", $key ) );
+
+			if ( empty( $user_id ) )
+				return new WP_Error( 'invalid_key', __( 'Invalid activation key', 'buddypress' ) );
+
+			// Change the user's status so they become active
+			if ( !$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->users} SET user_status = 0 WHERE ID = %d", $user_id ) ) )
+				return new WP_Error( 'invalid_key', __( 'Invalid activation key', 'buddypress' ) );
+
+			// Notify the site admin of a new user registration
+			wp_new_user_notification( $user_id );
+
+			// Remove the activation key meta
+			delete_user_meta( $user_id, 'activation_key' );
+		}
+	}
+
+	public function show_user_confirm_message() {
+
 	}
 
 }
