@@ -52,7 +52,7 @@ class pw_new_user_approve_admin_approve {
 			add_action( 'init',								array( $this, 'add_unapproved_role' ) );
 
 			// Filters
-			add_filter( 'registration_errors',				array( $this, 'show_user_pending_message' ), 10, 1 );
+			add_filter( 'registration_errors',				array( $this, 'show_user_pending_message' ) );
 			add_filter( 'login_message',					array( $this, 'welcome_user' ) );
 			add_filter( 'wp_authenticate_user',				array( $this, 'authenticate_user' ), 10, 2 );
 			add_filter( 'user_row_actions',                 array( $this, 'user_table_actions' ), 10, 2 );
@@ -510,7 +510,7 @@ class pw_new_user_approve_admin_approve {
             $welcome = apply_filters( 'new_user_approve_welcome_message', $welcome );
 
             if ( ! empty( $welcome ) ) {
-                $message .= '<p class="message">' . $welcome . '</p>';
+                $message .= '<p class="message register">' . $welcome . '</p>';
             }
         }
 
@@ -519,7 +519,7 @@ class pw_new_user_approve_admin_approve {
             $instructions = apply_filters( 'new_user_approve_register_instructions', $instructions );
 
             if ( ! empty( $instructions ) ) {
-                $message .= '<p class="message">' . $instructions . '</p>';
+                $message .= '<p class="message register">' . $instructions . '</p>';
             }
         }
 
