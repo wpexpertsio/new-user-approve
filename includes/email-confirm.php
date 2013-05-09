@@ -7,7 +7,7 @@
 
 class pw_new_user_approve_confirmation {
 
-	private $unverified_role = 'pw_unverified';
+	//private $unverified_role = 'pw_unverified';
 
 	/**
 	 * The only instance of pw_new_user_approve_confirmation.
@@ -15,6 +15,8 @@ class pw_new_user_approve_confirmation {
 	 * @var pw_new_user_approve_confirmation
 	 */
 	private static $instance;
+
+	public $confirmation_complete = false;
 
 	/**
 	 * Returns the main instance.
@@ -38,6 +40,7 @@ class pw_new_user_approve_confirmation {
 			// Filters
 			add_filter( 'template_include',					array( $this, 'activation_template' ) );
 			add_filter( 'registration_errors',				array( $this, 'show_user_confirm_message' ) );
+			add_filter( 'wp_authenticate_user',				array( $this, 'authenticate_user' ) );
 		} else {
 			//add_action( 'init',								array( $this, 'remove_unverified_role' ) );
 		}
@@ -148,7 +151,25 @@ class pw_new_user_approve_confirmation {
 	}
 
 	public function activation_template( $template ) {
+		$original_template = $template;
+
 		if ( get_query_var( 'new_user_approve' ) != 'activate' )
+			return $template;
+
+		if ( is_user_logged_in() )
+			return $template;
+
+		// Check if an activation key has been passed
+		if ( isset( $_GET['key'] ) ) {
+			$this->activate_user( $_GET['key'] );
+
+			$this->confirmation_complete = true;
+		} else {
+			return $template;
+		}
+
+		// override one last time?
+		if ( ! apply_filters( 'new_user_approve_confirmation_override', true, $template ) )
 			return $template;
 
 		if ( $overridden_template = locate_template( 'new-user-approve/activate.php' ) ) {
@@ -161,23 +182,36 @@ class pw_new_user_approve_confirmation {
 			$template = pw_new_user_approve()->get_plugin_dir() . 'user/activate.php';
 		}
 
+		$template = apply_filters( 'new_user_approve_confirmation_template', $template, $original_template );
+
 		return $template;
 	}
 
-	public function activate_user() {
-		if ( !is_multisite() ) {
+	public function activate_user( $key ) {
+		global $wpdb;
+		if ( ! is_multisite() ) {
 			// Get the user_id based on the $key
 			$user_id = $wpdb->get_var( $wpdb->prepare( "SELECT user_id FROM {$wpdb->usermeta} WHERE meta_key = 'activation_key' AND meta_value = %s", $key ) );
 
 			if ( empty( $user_id ) )
-				return new WP_Error( 'invalid_key', __( 'Invalid activation key', 'buddypress' ) );
+				return new WP_Error( 'invalid_key', __( 'Invalid activation key', pw_new_user_approve()->plugin_id ) );
 
 			// Change the user's status so they become active
-			if ( !$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->users} SET user_status = 0 WHERE ID = %d", $user_id ) ) )
-				return new WP_Error( 'invalid_key', __( 'Invalid activation key', 'buddypress' ) );
+			//if ( !$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->users} SET user_status = 0 WHERE ID = %d", $user_id ) ) )
+			//	return new WP_Error( 'invalid_key', __( 'Invalid activation key', pw_new_user_approve()->plugin_id ) );
+
+			$user_pass = wp_generate_password( 12, false );
+			$user_id = wp_update_user( array(
+				'ID' => $user_id,
+				'user_pass' => $user_pass,
+			) );
+			if ( is_wp_error( $user_id ) ) {
+				return $user_id;
+			}
 
 			// Notify the site admin of a new user registration
-			wp_new_user_notification( $user_id );
+			// and notify user of password
+			wp_new_user_notification( $user_id, $user_pass );
 
 			// Remove the activation key meta
 			delete_user_meta( $user_id, 'activation_key' );
@@ -216,6 +250,28 @@ class pw_new_user_approve_confirmation {
 		exit();
 	}
 
+	/**
+	 * Determine if the user has confirmed their registration. If not, throw an error
+	 * and display it to the user.
+	 *
+	 * @param $userdata
+	 */
+	public function authenticate_user( $userdata ) {
+		$key = get_user_meta( $userdata->ID, 'activation_key', true );
+
+		if ( empty( $key ) ) {
+			// the user does not have an activation key so let the user pass
+			return $userdata;
+		}
+
+		$activate_message = __( '<strong>ERROR</strong>: Your account has not yet been activated. Please check your email for instructions on confirming your account.' );
+		$activate_message = apply_filters( 'new_user_approve_pending_confirmation', $activate_message );
+
+		$message = new WP_Error( 'pending_confirmation', $activate_message );
+
+		return $message;
+	}
+
 }
 
 function pw_new_user_approve_confirmation() {
@@ -223,3 +279,16 @@ function pw_new_user_approve_confirmation() {
 }
 
 pw_new_user_approve_confirmation();
+
+/**
+ * Template tags
+ */
+
+
+
+function new_user_approve_activated() {
+	var_dump(pw_new_user_approve_confirmation());
+	$confirmation_complete = ( ! empty( pw_new_user_approve_confirmation()->confirmation_complete ) ) ? pw_new_user_approve_confirmation()->confirmation_complete : false;
+
+	return $confirmation_complete;
+}
