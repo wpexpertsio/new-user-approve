@@ -125,10 +125,9 @@ class pw_new_user_approve_confirmation {
 		$blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
 
 		$activate_url = add_query_arg( array( 'key' => $key ), $this->get_activation_link() );
-		$activate_url = esc_url( $activate_url );
 
 		$message = sprintf( __( "Thanks for registering at $blogname! To complete the activation of your account please click the following link:\n\n%1\$s\n\nIf you believe you received this message in error, please disregard.", pw_new_user_approve()->plugin_id ), $activate_url );
-		$subject = __( 'Activate Your Account', pw_new_user_approve()->plugin_id );
+		$subject = sprintf( __( '[%s] Activate Your Account', pw_new_user_approve()->plugin_id ), $blogname );
 
 		// Send the message
 		$to = apply_filters( 'new_user_approve_confirmation_send_validation_email_to', $user_email, $user_id );
@@ -287,7 +286,6 @@ pw_new_user_approve_confirmation();
 
 
 function new_user_approve_activated() {
-	var_dump(pw_new_user_approve_confirmation());
 	$confirmation_complete = ( ! empty( pw_new_user_approve_confirmation()->confirmation_complete ) ) ? pw_new_user_approve_confirmation()->confirmation_complete : false;
 
 	return $confirmation_complete;
