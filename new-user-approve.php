@@ -29,7 +29,7 @@ class pw_new_user_approve {
         return self::$instance;
     }
 
-	public function __construct() {
+	private function __construct() {
 		// Load up the localization file if we're using WordPress in a different language
 		// Just drop it in this plugin's "localization" folder and name it "new-user-approve-[value in wp-config].mo"
 		load_plugin_textdomain( 'new-user-approve', false, dirname( plugin_basename( __FILE__ ) ) . '/localization' );

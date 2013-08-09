@@ -30,7 +30,7 @@ class pw_new_user_approve_admin_approve {
         return self::$instance;
     }
 
-    public function __construct() {
+    private function __construct() {
         // Actions
         add_action( 'admin_menu',						array( $this, 'admin_menu_link' ) );
         add_action( 'admin_footer',						array( $this, 'admin_scripts_footer' ) );
