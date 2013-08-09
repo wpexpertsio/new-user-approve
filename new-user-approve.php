@@ -78,6 +78,15 @@ class pw_new_user_approve {
         require_once( dirname( __FILE__ ) . '/includes/user-list.php' );
     }
 
+    public function get_user_status( $user_id ) {
+        $user_status = get_user_meta( $user_id, 'pw_user_status', true );
+
+        if ( empty( $user_status ) )
+            $user_status = 'approved';
+
+        return $user_status;
+    }
+
 } // End Class
 
 function pw_new_user_approve() {

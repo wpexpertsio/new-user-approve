@@ -52,7 +52,6 @@ class pw_new_user_approve_admin_approve {
         add_filter( 'registration_errors',				array( $this, 'show_user_pending_message' ) );
         add_filter( 'login_message',					array( $this, 'welcome_user' ) );
         add_filter( 'wp_authenticate_user',				array( $this, 'authenticate_user' ), 10, 2 );
-        add_filter( 'user_row_actions',                 array( $this, 'user_table_actions' ), 10, 2 );
     }
 
     /**
@@ -582,21 +581,6 @@ class pw_new_user_approve_admin_approve {
 
     public function delete_new_user_approve_transient() {
         delete_transient( 'new_user_approve_user_statuses' );
-    }
-
-    public function user_table_actions( $actions, $user_object ) {
-        if ( $user_object->ID == get_current_user_id() )
-            return $actions;
-
-        $approve_link = wp_nonce_url( add_query_arg( array( 'action' => 'approve', 'user' => $user_object->ID ) ), 'new-user-approve' );
-        $deny_link = wp_nonce_url( add_query_arg( array( 'action' => 'deny', 'user' => $user_object->ID ) ), 'new-user-approve' );
-
-        if ( in_array( 'pw_unapproved', $user_object->roles ) )
-            $actions[] = '<a href="' . $approve_link . '">' . __( 'Approve', 'new-user-approve' ) . '</a>';
-        else
-            $actions[] = '<a href="' . $deny_link . '">' . __( 'Deny', 'new-user-approve' ) . '</a>';
-
-        return $actions;
     }
 
 }
