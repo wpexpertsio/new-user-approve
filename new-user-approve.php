@@ -74,7 +74,8 @@ class pw_new_user_approve {
 	}
 
     public function include_files() {
-        require_once( __DIR__ . '/includes/admin-approve.php' );
+        require_once( dirname( __FILE__ ) . '/includes/admin-approve.php' );
+        require_once( dirname( __FILE__ ) . '/includes/user-list.php' );
     }
 
 } // End Class
