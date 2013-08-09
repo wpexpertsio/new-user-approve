@@ -197,10 +197,10 @@ class pw_new_user_approve_admin_approve {
                     <td><?php echo $avatar . ' ' . $edit; ?></td>
                     <td><?php echo get_user_meta( $user->ID, 'first_name', true ) . ' ' . get_user_meta( $user->ID, 'last_name', true ); ?></td>
                     <td><a href="mailto:<?php echo $user->user_email; ?>" title="<?php _e('email:', 'new-user-approve' ) ?> <?php echo $user->user_email; ?>"><?php echo $user->user_email; ?></a></td>
-                    <?php if ( $approve ) { ?>
+                    <?php if ( $approve && $user->ID != get_current_user_id() ) { ?>
                         <td align="center"><a href="<?php echo $approve_link; ?>" title="<?php _e( 'Approve', 'new-user-approve' ); ?> <?php echo $user->user_login; ?>"><?php _e( 'Approve', 'new-user-approve' ); ?></a></td>
                     <?php } ?>
-                    <?php if ( $deny ) { ?>
+                    <?php if ( $deny && $user->ID != get_current_user_id() ) { ?>
                         <td align="center"><a href="<?php echo $deny_link; ?>" title="<?php _e( 'Deny', 'new-user-approve' ); ?> <?php echo $user->user_login; ?>"><?php _e( 'Deny', 'new-user-approve' ); ?></a></td>
                     <?php } ?>
                     </tr><?php
