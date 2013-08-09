@@ -53,11 +53,6 @@ class pw_new_user_approve {
 		register_deactivation_hook( __FILE__,	array( $this, 'deactivation' ) );
 
         add_action( 'plugins_loaded', array( $this, 'include_files' ) );
-
-		add_filter( 'new_user_approve_admin_approve_active', '__return_false' );
-		//add_filter( 'new_user_approve_confirmation_active', '__return_false' );
-		add_filter( 'query_vars', array( $this, 'query_var' ) );
-		add_filter( 'rewrite_rules_array', array( $this, 'add_rewrite_rules' ) );
 	}
 
     public function get_plugin_url() {
@@ -96,20 +91,7 @@ class pw_new_user_approve {
 
     public function include_files() {
         require_once( __DIR__ . '/includes/admin-approve.php' );
-		require_once( __DIR__ . '/includes/email-confirm.php' );
     }
-
-	public function query_var( $vars ) {
-		array_push( $vars, 'new_user_approve' );
-		return $vars;
-	}
-
-	public function add_rewrite_rules( $rules ) {
-		$newrules = array();
-		$newrules['new-user-approve/(activate)/?$'] = 'index.php?new_user_approve=$matches[1]' ;
-		
-		return $newrules + $rules ;
-	}
 
 } // End Class
 
