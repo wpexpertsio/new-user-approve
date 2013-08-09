@@ -9,10 +9,6 @@
  */
 
 class pw_new_user_approve {
-	/**
-	 * @var string $plugin_id unique identifier used for localization and other functions
-	 */
-	var $plugin_id = 'new-user-approve';
 
     /**
      * The only instance of pw_new_user_approve.
@@ -36,7 +32,7 @@ class pw_new_user_approve {
 	public function __construct() {
 		// Load up the localization file if we're using WordPress in a different language
 		// Just drop it in this plugin's "localization" folder and name it "new-user-approve-[value in wp-config].mo"
-		load_plugin_textdomain( $this->plugin_id, false, dirname( plugin_basename( __FILE__ ) ) . '/localization' );
+		load_plugin_textdomain( 'new-user-approve', false, dirname( plugin_basename( __FILE__ ) ) . '/localization' );
 
 		register_activation_hook( __FILE__,		array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__,	array( $this, 'deactivation' ) );
@@ -52,7 +48,6 @@ class pw_new_user_approve {
 		return plugin_dir_path( __FILE__ );
 	}
 
-
 	/**
 	 * Require a minimum version of WordPress on activation
 	 * 
@@ -62,7 +57,7 @@ class pw_new_user_approve {
 		global $wp_version;
 
 		$min_wp_version = '3.2.1';
-		$exit_msg = sprintf( __( 'New User Approve requires WordPress %s or newer.', $this->plugin_id ), $min_wp_version );
+		$exit_msg = sprintf( __( 'New User Approve requires WordPress %s or newer.', 'new-user-approve' ), $min_wp_version );
 		if ( version_compare( $wp_version, $min_wp_version, '<=' ) ) {
 			exit( $exit_msg );
 		}
