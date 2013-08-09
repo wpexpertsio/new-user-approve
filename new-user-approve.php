@@ -33,17 +33,6 @@ class pw_new_user_approve {
         return self::$instance;
     }
 
-	// Class Functions
-	/**
-	 * PHP 4 Compatible Constructor
-	 */
-	public function pw_new_user_approve() {
-		$this->__construct();
-	}
-
-	/**
-	 * PHP 5 Constructor
-	 */
 	public function __construct() {
 		// Load up the localization file if we're using WordPress in a different language
 		// Just drop it in this plugin's "localization" folder and name it "new-user-approve-[value in wp-config].mo"
