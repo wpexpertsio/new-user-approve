@@ -48,10 +48,14 @@ class pw_new_user_approve_user_list {
         return $actions;
     }
 
-    public function add_column( $column ) {
-        $column['pw_user_status'] = 'Status';
+    public function add_column( $columns ) {
+        $the_columns['pw_user_status'] = 'Status';
 
-        return $column;
+        $newcol = array_slice( $columns, 0, -1 );
+        $newcol = array_merge( $newcol, $the_columns );
+        $columns = array_merge( $newcol, array_slice( $columns, 1 ) );
+
+        return $columns;
     }
 
     public function status_column( $val, $column_name, $user_id ) {
