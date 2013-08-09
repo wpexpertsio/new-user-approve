@@ -47,40 +47,12 @@ class pw_new_user_approve_admin_approve {
         add_action( 'new_user_approve_approve_user',	array( $this, 'delete_new_user_approve_transient' ), 11 );
         add_action( 'new_user_approve_deny_user',		array( $this, 'delete_new_user_approve_transient' ), 11 );
         add_action( 'deleted_user',						array( $this, 'delete_new_user_approve_transient' ) );
-        add_action( 'new_user_approve_deactivate',		array( $this, 'remove_unapproved_role' ) );
-        add_action( 'init',								array( $this, 'add_unapproved_role' ) );
 
         // Filters
         add_filter( 'registration_errors',				array( $this, 'show_user_pending_message' ) );
         add_filter( 'login_message',					array( $this, 'welcome_user' ) );
         add_filter( 'wp_authenticate_user',				array( $this, 'authenticate_user' ), 10, 2 );
         add_filter( 'user_row_actions',                 array( $this, 'user_table_actions' ), 10, 2 );
-    }
-
-    public function add_unapproved_role() {
-		global $wp_roles;
-
-		if ( ! isset( $wp_roles ) )
-			$wp_roles = new WP_Roles();
-
-		$role_exists = array_key_exists( $this->unapproved_role, $wp_roles->get_names() );
-
-		if ( !$role_exists ) {
-        	// the capabilities array is empty so unapproved users can't do anything
-        	add_role( $this->unapproved_role, __( 'Unapproved', 'new-user-approve' ), array() );
-		}
-    }
-
-    public function remove_unapproved_role() {
-		global $wp_roles;
-
-		if ( ! isset( $wp_roles ) )
-			$wp_roles = new WP_Roles();
-
-		$role_exists = array_key_exists( $this->unapproved_role, $wp_roles->get_names() );
-
-		if ( $role_exists )
-        	remove_role( $this->unapproved_role );
     }
 
     /**
