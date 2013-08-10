@@ -39,7 +39,7 @@ class pw_new_user_approve_admin_approve {
      */
     function admin_menu_link() {
         $cap = apply_filters( 'new_user_approve_minimum_cap', 'edit_users' );
-        $this->user_page_hook = add_users_page( __( 'Approve New Users', 'new-user-approve' ), __( 'Approve New Users', 'new-user-approve' ), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
+        add_users_page( __( 'Approve New Users', 'new-user-approve' ), __( 'Approve New Users', 'new-user-approve' ), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
     }
 
     /**
