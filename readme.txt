@@ -67,6 +67,7 @@ this feature.
 * add more logic to prevent unwanted password resets
 * add more translations
 * minor bug fixes
+* use core definition of tabs
 
 = 1.4.2 =
 * fix password recovery bug if a user does not have an approve-status meta field
