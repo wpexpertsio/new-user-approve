@@ -7,8 +7,6 @@
 
 class pw_new_user_approve_admin_approve {
 
-	private $unapproved_role = 'pw_unapproved';
-
     var $_admin_page = 'new-user-approve-admin';
 
     /**
@@ -33,8 +31,6 @@ class pw_new_user_approve_admin_approve {
     private function __construct() {
         // Actions
         add_action( 'admin_menu',						array( $this, 'admin_menu_link' ) );
-        add_action( 'admin_footer',						array( $this, 'admin_scripts_footer' ) );
-        add_action( 'init',								array( $this, 'init' ) );
         add_action( 'init',								array( $this, 'process_input' ) );
         add_action( 'register_post',					array( $this, 'request_admin_approval_email' ), 10, 3 );
         add_action( 'register_post',					array( $this, 'create_new_user' ), 10, 3 );
@@ -55,41 +51,11 @@ class pw_new_user_approve_admin_approve {
     }
 
     /**
-     * Enqueue any javascript and css needed for the plugin
-     */
-    public function init() {
-        if ( is_admin() && isset( $_GET['page'] ) && $_GET['page'] == $this->_admin_page ) {
-            wp_enqueue_script( 'jquery-ui-tabs' );
-            wp_enqueue_style( 'pw-admin-ui-tabs', pw_new_user_approve()->get_plugin_url() . 'ui.tabs.css' );
-        }
-    }
-
-    /**
      * Add the new menu item to the users portion of the admin menu
      */
     function admin_menu_link() {
         $cap = apply_filters( 'new_user_approve_minimum_cap', 'edit_users' );
         $this->user_page_hook = add_users_page( __( 'Approve New Users', 'new-user-approve' ), __( 'Approve New Users', 'new-user-approve' ), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
-    }
-
-    /**
-     * Output the javascript in the footer to display the tabs
-     */
-    public function admin_scripts_footer() {
-        global $wp_db_version;
-
-        if ( is_admin() && isset( $_GET['page'] ) && $_GET['page'] == $this->_admin_page ) {
-            $page_id = ( $wp_db_version >= 10851 ) ? '#pw_approve_tabs' : '#pw_approve_tabs > ul';
-            ?>
-            <script type="text/javascript">
-                //<![CDATA[
-                jQuery(document).ready(function($) {
-                    $('<?php echo $page_id; ?>').tabs({ fx: { opacity: 'toggle' } });
-                });
-                //]]>
-            </script>
-        <?php
-        }
     }
 
     public function dashboard_stats() {
@@ -110,27 +76,31 @@ class pw_new_user_approve_admin_approve {
         if ( isset( $_GET['user'] ) && isset( $_GET['status'] ) ) {
             echo '<div id="message" class="updated fade"><p>'.__( 'User successfully updated.', 'new-user-approve' ).'</p></div>';
         }
+
+        $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'pending_users';
         ?>
         <div class="wrap">
             <h2><?php _e( 'User Registration Approval', 'new-user-approve' ); ?></h2>
 
-            <h3><?php _e( 'User Management', 'new-user-approve' ); ?></h3>
-            <div id="pw_approve_tabs">
-                <ul>
-                    <li><a href="#pw_pending_users"><span><?php _e( 'Users Pending Approval', 'new-user-approve' ); ?></span></a></li>
-                    <li><a href="#pw_approved_users"><span><?php _e( 'Approved Users', 'new-user-approve' ); ?></span></a></li>
-                    <li><a href="#pw_denied_users"><span><?php _e( 'Denied Users', 'new-user-approve' ); ?></span></a></li>
-                </ul>
-                <div id="pw_pending_users">
-                    <?php $this->user_table( 'pending' ); ?>
-                </div>
-                <div id="pw_approved_users">
-                    <?php $this->user_table( 'approved' ); ?>
-                </div>
-                <div id="pw_denied_users">
-                    <?php $this->user_table( 'denied' ); ?>
-                </div>
+            <h3 class="nav-tab-wrapper">
+                <a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=pending_users' ) ); ?>" class="nav-tab<?php echo $active_tab == 'pending_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Users Pending Approval', 'new-user-approve' ); ?></span></a>
+                <a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=approved_users' ) ); ?>" class="nav-tab<?php echo $active_tab == 'approved_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Approved Users', 'new-user-approve' ); ?></span></a>
+                <a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=denied_users' ) ); ?>" class="nav-tab<?php echo $active_tab == 'denied_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Denied Users', 'new-user-approve' ); ?></span></a>
+            </h3>
+
+            <?php if ( $active_tab == 'pending_users' ) : ?>
+            <div id="pw_pending_users">
+                <?php $this->user_table( 'pending' ); ?>
             </div>
+            <?php elseif ( $active_tab == 'approved_users') : ?>
+            <div id="pw_approved_users">
+                <?php $this->user_table( 'approved' ); ?>
+            </div>
+            <?php elseif ( $active_tab == 'denied_users') : ?>
+            <div id="pw_denied_users">
+                <?php $this->user_table( 'denied' ); ?>
+            </div>
+            <?php endif; ?>
         </div>
     <?php
     }
