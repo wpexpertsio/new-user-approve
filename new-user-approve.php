@@ -195,7 +195,7 @@ class pw_new_user_approve {
         $user_status = $this->get_user_statuses();
         ?>
         <div>
-            <p><span style="font-weight:bold;"><a href="<?php echo apply_filters( 'pw_new_user_approve_dashboard_link', 'users.php' ); ?>"><?php _e( 'Users', 'new-user-approve' ); ?></a></span>:
+            <p><span style="font-weight:bold;"><a href="<?php echo apply_filters( 'new_user_approve_dashboard_link', 'users.php' ); ?>"><?php _e( 'Users', 'new-user-approve' ); ?></a></span>:
             <?php foreach ( $user_status as $status => $users ) :
                 print count( $users ) . " $status&nbsp;&nbsp;&nbsp;";
             endforeach; ?>
