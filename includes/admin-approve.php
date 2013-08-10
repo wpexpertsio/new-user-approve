@@ -32,6 +32,8 @@ class pw_new_user_approve_admin_approve {
         // Actions
         add_action( 'admin_menu', array( $this, 'admin_menu_link' ) );
         add_action( 'init',	array( $this, 'process_input' ) );
+        add_action( 'admin_notices', array( $this, 'admin_notice' ) );
+        add_action( 'admin_init', array( $this, 'notice_ignore' ) );
     }
 
     /**
@@ -180,6 +182,29 @@ class pw_new_user_approve_admin_approve {
 
                 do_action( 'new_user_approve_' . $status . '_user', $user_id );
             }
+        }
+    }
+
+    public function admin_notice() {
+        $screen = get_current_screen();
+
+        if ( $screen->id == 'users_page_new-user-approve-admin' ) {
+            $user_id = get_current_user_id();
+
+            // Check that the user hasn't already clicked to ignore the message
+            if ( ! get_user_meta( $user_id, 'pw_new_user_approve_ignore_notice' ) ) {
+                echo '<div class="updated"><p>';
+                printf( __( 'You can now update user status on the <a href="%1$s">users admin page</a>. | <a href="%2$s">Hide Notice</a>', 'new-user-approve' ), admin_url( 'users.php' ), add_query_arg( array( 'new-user-approve-ignore-notice' => 1 ) ) );
+                echo "</p></div>";
+            }
+        }
+    }
+
+    public function notice_ignore() {
+        // If user clicks to ignore the notice, add that to their user meta
+        if ( isset( $_GET['new-user-approve-ignore-notice'] ) && '1' == $_GET['new-user-approve-ignore-notice'] ) {
+            $user_id = get_current_user_id();
+            add_user_meta( $user_id, 'pw_new_user_approve_ignore_notice', '1', true );
         }
     }
 
