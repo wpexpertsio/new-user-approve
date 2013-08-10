@@ -39,6 +39,7 @@ class pw_new_user_approve {
 
         // Actions
         add_action( 'plugins_loaded', array( $this, 'include_files' ) );
+        add_action( 'wp_loaded', array( $this, 'admin_loaded' ) );
         add_action( 'rightnow_end',	array( $this, 'dashboard_stats' ) );
         add_action( 'user_register', array( $this, 'delete_new_user_approve_transient' ), 11 );
         add_action( 'new_user_approve_approve_user', array( $this, 'delete_new_user_approve_transient' ), 11 );
@@ -92,7 +93,14 @@ class pw_new_user_approve {
 
     public function include_files() {
         require_once( dirname( __FILE__ ) . '/includes/admin-approve.php' );
-        require_once( dirname( __FILE__ ) . '/includes/user-list.php' );
+    }
+
+    public function admin_loaded() {
+        $user_admin_integration = apply_filters( 'new_user_approve_user_admin_integration', true );
+
+        if ( $user_admin_integration ) {
+            require_once( dirname( __FILE__ ) . '/includes/user-list.php' );
+        }
     }
 
     public function get_user_status( $user_id ) {

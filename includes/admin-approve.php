@@ -38,8 +38,12 @@ class pw_new_user_approve_admin_approve {
      * Add the new menu item to the users portion of the admin menu
      */
     function admin_menu_link() {
-        $cap = apply_filters( 'new_user_approve_minimum_cap', 'edit_users' );
-        add_users_page( __( 'Approve New Users', 'new-user-approve' ), __( 'Approve New Users', 'new-user-approve' ), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
+        $show_admin_page = apply_filters( 'new_user_approve_show_admin_page', true );
+
+        if ( $show_admin_page ) {
+            $cap = apply_filters( 'new_user_approve_minimum_cap', 'edit_users' );
+            add_users_page( __( 'Approve New Users', 'new-user-approve' ), __( 'Approve New Users', 'new-user-approve' ), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
+        }
     }
 
     /**
