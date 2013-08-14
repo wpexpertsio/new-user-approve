@@ -112,6 +112,21 @@ class pw_new_user_approve {
         return $user_status;
     }
 
+    public function update_user_status( $user, $status ) {
+        $user_id = absint( $user );
+        if ( ! $user_id )
+            return;
+
+        if ( ! in_array( $status, array( 'approve', 'deny' ) ) )
+            return;
+
+        do_action( 'new_user_approve_' . $status . '_user', $user_id );
+    }
+
+    public function get_valid_statuses() {
+        return array( 'pending', 'approved', 'denied' );
+    }
+
     /**
      * Determine if the user is good to sign in based on their status
      *
@@ -151,7 +166,7 @@ class pw_new_user_approve {
      * Get a status of all the users and save them using a transient
      */
     public function get_user_statuses() {
-        $valid_stati = array( 'pending', 'approved', 'denied' );
+        $valid_stati = $this->get_valid_statuses();
         $user_status = get_transient( 'new_user_approve_user_statuses' );
 
         if ( false === $user_status ) {

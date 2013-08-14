@@ -22,10 +22,25 @@ class pw_new_user_approve_user_list {
     }
 
     private function __construct() {
+        // Actions
+        add_action( 'load-users.php', array( $this, 'update_action' ) );
         // Filters
         add_filter( 'user_row_actions', array( $this, 'user_table_actions' ), 10, 2 );
         add_filter( 'manage_users_columns', array( $this, 'add_column' ) );
         add_filter( 'manage_users_custom_column', array( $this, 'status_column' ), 10, 3 );
+    }
+
+    public function update_action() {
+        if ( isset( $_GET['action'] ) && ( in_array( $_GET['action'], array( 'approve', 'deny' ) ) ) ) {
+            check_admin_referer( 'new-user-approve' );
+
+            $status = sanitize_key( $_GET['action'] );
+            $user = absint( $_GET['user'] );
+
+            pw_new_user_approve()->update_user_status( $user, $status );
+
+            wp_redirect( admin_url( 'users.php' ) );
+        }
     }
 
     public function user_table_actions( $actions, $user ) {

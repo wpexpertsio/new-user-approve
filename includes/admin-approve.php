@@ -177,8 +177,8 @@ class pw_new_user_approve_admin_approve {
             $valid_request = check_admin_referer( 'pw_new_user_approve_action_' . get_class( $this ) );
 
             if ( $valid_request ) {
-                $status = $_GET['status'];
-                $user_id = (int) $_GET['user'];
+                $status = sanitize_key( $_GET['status'] );
+                $user_id = absint( $_GET['user'] );
 
                 do_action( 'new_user_approve_' . $status . '_user', $user_id );
             }
@@ -202,7 +202,7 @@ class pw_new_user_approve_admin_approve {
 
     public function notice_ignore() {
         // If user clicks to ignore the notice, add that to their user meta
-        if ( isset( $_GET['new-user-approve-ignore-notice'] ) && '1' == $_GET['new-user-approve-ignore-notice'] ) {
+        if ( isset( $_GET['new-user-approve-ignore-notice'] ) && '1' == $_GET['new-user-approve-ignore-notice   '] ) {
             $user_id = get_current_user_id();
             add_user_meta( $user_id, 'pw_new_user_approve_ignore_notice', '1', true );
         }
