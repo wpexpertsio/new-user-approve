@@ -59,6 +59,10 @@ class pw_new_user_approve_user_list {
         if ( $user_status == 'pending' ) {
             $actions[] = $approve_action;
             $actions[] = $deny_action;
+        } else if ( $user_status == 'approved' ) {
+            $actions[] = $deny_action;
+        } else if ( $user_status == 'denied' ) {
+            $actions[] = $approve_action;
         }
 
         return $actions;
