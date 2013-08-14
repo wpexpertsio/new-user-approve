@@ -24,6 +24,7 @@ class pw_new_user_approve_user_list {
     private function __construct() {
         // Actions
         add_action( 'load-users.php', array( $this, 'update_action' ) );
+
         // Filters
         add_filter( 'user_row_actions', array( $this, 'user_table_actions' ), 10, 2 );
         add_filter( 'manage_users_columns', array( $this, 'add_column' ) );
