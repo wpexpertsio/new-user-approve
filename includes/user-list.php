@@ -24,6 +24,7 @@ class pw_new_user_approve_user_list {
     private function __construct() {
         // Actions
         add_action( 'load-users.php', array( $this, 'update_action' ) );
+        add_action( 'restrict_manage_users', array( $this, 'status_filter' ) );
 
         // Filters
         add_filter( 'user_row_actions', array( $this, 'user_table_actions' ), 10, 2 );
@@ -88,6 +89,27 @@ class pw_new_user_approve_user_list {
         }
 
         return $val;
+    }
+
+    public function status_filter() {
+        $filter_button = submit_button( __( 'Filter' ), 'button', 'pw-status-query-submit', false, array( 'id' => 'pw-status-query-submit' ) );
+
+        ?>
+        <label class="screen-reader-text" for="new_user_approve_filter">View all users</label>
+        <select id="new_user_approve_filter" name="new_user_approve_filter" style="float: none; margin: 0 0 0 15px;">
+            <option value="">View all users</option>
+        <?php foreach ( pw_new_user_approve()->get_valid_statuses() as $status ) : ?>
+            <option value="<?php echo esc_attr( $status ); ?>"><?php echo esc_html( $status ); ?></option>
+        <?php endforeach; ?>
+        </select>
+        <?php echo apply_filters( 'new_user_approve_filter_button', $filter_button ); ?>
+        <style>
+            #pw-status-query-submit {
+                float: right;
+                margin: 2px 0 0 5px;
+            }
+        </style>
+        <?php
     }
 }
 
