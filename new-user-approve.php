@@ -182,25 +182,29 @@ class pw_new_user_approve {
                     );
                     $wp_user_search = new WP_User_Query( $query );
                 } else {
-                    $users = get_users( 'blog_id=1' );
-                    $approved_users = array();
-                    foreach( $users as $user ) {
-                        $the_status = get_user_meta( $user->ID, 'pw_user_status', true );
-
-                        if ( $the_status == 'approved' || empty( $the_status ) ) {
-                            $approved_users[] = $user->ID;
-                        }
-                    }
-
                     // get all approved users and any user without a status
-                    $query = array( 'include' => $approved_users );
+                    $query = array(
+                        'meta_query' => array(
+                            'relation' => 'OR',
+                            array(
+                                'key' => 'pw_user_status',
+                                'value' => 'approved',
+                                'compare' => '='
+                            ),
+                            array(
+                                'key' => 'pw_user_status',
+                                'value' => '',
+                                'compare' => 'NOT EXISTS'
+                            ),
+                        ),
+                    );
                     $wp_user_search = new WP_User_Query( $query );
                 }
 
                 $user_status[$status] = $wp_user_search->get_results();
-
-                set_transient( 'new_user_approve_user_statuses', $user_status );
             }
+
+            set_transient( 'new_user_approve_user_statuses', $user_status );
         }
 
         foreach ( $valid_stati as $status ) {
