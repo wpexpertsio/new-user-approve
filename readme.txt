@@ -2,7 +2,7 @@
 Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration
-Requires at least: 3.2.1
+Requires at least: 3.5.1
 Tested up to: 3.5.1
 Stable tag: 1.5 alpha
 
@@ -68,6 +68,7 @@ this feature.
 * add more translations
 * minor bug fixes
 * use core definition of tabs
+* user query updates (requires 3.5)
 
 = 1.4.2 =
 * fix password recovery bug if a user does not have an approve-status meta field

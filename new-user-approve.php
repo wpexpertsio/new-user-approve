@@ -74,7 +74,7 @@ class pw_new_user_approve {
 	public function activation() {
 		global $wp_version;
 
-		$min_wp_version = '3.2.1';
+		$min_wp_version = '3.5.1';
 		$exit_msg = sprintf( __( 'New User Approve requires WordPress %s or newer.', 'new-user-approve' ), $min_wp_version );
 		if ( version_compare( $wp_version, $min_wp_version, '<=' ) ) {
 			exit( $exit_msg );
