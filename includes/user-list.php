@@ -26,6 +26,9 @@ class pw_new_user_approve_user_list {
         add_action( 'load-users.php', array( $this, 'update_action' ) );
         add_action( 'restrict_manage_users', array( $this, 'status_filter' ) );
         add_action( 'pre_user_query', array( $this, 'filter_by_status' ) );
+        add_action( 'admin_footer-users.php', array( $this, 'admin_footer' ) );
+        add_action( 'load-users.php', array( $this, 'bulk_action' ) );
+        add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 
         // Filters
         add_filter( 'user_row_actions', array( $this, 'user_table_actions' ), 10, 2 );
@@ -34,6 +37,9 @@ class pw_new_user_approve_user_list {
     }
 
     public function update_action() {
+        if ( isset( $_GET['new_user_approve_filter'] ) )
+            return;
+
         if ( isset( $_GET['action'] ) && ( in_array( $_GET['action'], array( 'approve', 'deny' ) ) ) ) {
             check_admin_referer( 'new-user-approve' );
 
@@ -138,6 +144,106 @@ class pw_new_user_approve_user_list {
             }
         }
     }
+
+    public function admin_footer() {
+        $screen = get_current_screen();
+
+        if ( $screen->id == 'users' ) : ?>
+            <script type="text/javascript">
+                jQuery(document).ready(function($) {
+                    $('<option>').val('approve').text('<?php _e( 'Approve', 'new-user-approve' )?>').appendTo("select[name='action']")
+                    $('<option>').val('approve').text('<?php _e( 'Approve', 'new-user-approve' )?>').appendTo("select[name='action2']");
+
+                    $('<option>').val('deny').text('<?php _e( 'Deny', 'new-user-approve' )?>').appendTo("select[name='action']")
+                    $('<option>').val('deny').text('<?php _e( 'Deny', 'new-user-approve' )?>').appendTo("select[name='action2']");
+                });
+            </script>
+        <?php endif;
+    }
+
+    public function bulk_action() {
+        $screen = get_current_screen();
+
+        if ( $screen->id == 'users' ) {
+
+            // get the action
+            $wp_list_table = _get_list_table( 'WP_Users_List_Table' );
+            $action = $wp_list_table->current_action();
+
+            $allowed_actions = array( 'approve', 'deny' );
+            if ( !in_array( $action, $allowed_actions ) )
+                return;
+
+            // security check
+            check_admin_referer( 'bulk-users' );
+
+            // make sure ids are submitted
+            if ( isset( $_REQUEST['users'] ) ) {
+                $user_ids = array_map( 'intval', $_REQUEST['users'] );
+            }
+
+            if ( empty( $user_ids ) )
+                return;
+
+            $sendback = remove_query_arg( array( 'approved', 'denied', 'deleted', 'ids' ), wp_get_referer() );
+            if ( ! $sendback )
+                $sendback = admin_url( "users.php" );
+
+            $pagenum = $wp_list_table->get_pagenum();
+            $sendback = add_query_arg( 'paged', $pagenum, $sendback );
+
+            switch($action) {
+                case 'approve':
+                    $approved = 0;
+                    foreach( $user_ids as $user_id ) {
+                        pw_new_user_approve()->approve_user( $user_id );
+                        $approved++;
+                    }
+
+                    $sendback = add_query_arg( array( 'approved' => $approved, 'ids' => join(',', $user_ids ) ), $sendback );
+                    break;
+
+                case 'deny':
+                    $denied = 0;
+                    foreach( $user_ids as $user_id ) {
+                        pw_new_user_approve()->deny_user( $user_id );
+                        $denied++;
+                    }
+
+                    $sendback = add_query_arg( array( 'denied' => $denied, 'ids' => join(',', $user_ids ) ), $sendback );
+                    break;
+
+                default: return;
+            }
+
+            $sendback = remove_query_arg( array('action', 'action2', 'tags_input', 'post_author', 'comment_status', 'ping_status', '_status',  'post', 'bulk_edit', 'post_view'), $sendback );
+
+            wp_redirect( $sendback );
+            exit();
+        }
+    }
+
+    public function admin_notices() {
+        $screen = get_current_screen();
+
+        if ( $screen->id != 'users' )
+            return;
+
+        $message = null;
+
+        if ( isset( $_REQUEST['denied'] ) && (int) $_REQUEST['denied']) {
+            $message = sprintf( _n( 'User denied.', '%s users denied.', 'new-user-approve' ), number_format_i18n( $_REQUEST['denied'] ) );
+        }
+
+        if ( isset( $_REQUEST['approved'] ) && (int) $_REQUEST['approved']) {
+            $message = sprintf( _n( 'User approved.', '%s users approved.', 'new-user-approve' ), number_format_i18n( $_REQUEST['approved'] ) );
+        }
+
+        if ( !empty( $message ) ) {
+            echo '<div class="updated"><p>' . $message . '</p></div>';
+        }
+    }
+
 }
 
 function pw_new_user_approve_user_list() {
