@@ -25,6 +25,7 @@ class pw_new_user_approve_user_list {
         // Actions
         add_action( 'load-users.php', array( $this, 'update_action' ) );
         add_action( 'restrict_manage_users', array( $this, 'status_filter' ) );
+        add_action( 'pre_user_query', array( $this, 'filter_by_status' ) );
 
         // Filters
         add_filter( 'user_row_actions', array( $this, 'user_table_actions' ), 10, 2 );
@@ -93,13 +94,14 @@ class pw_new_user_approve_user_list {
 
     public function status_filter() {
         $filter_button = submit_button( __( 'Filter' ), 'button', 'pw-status-query-submit', false, array( 'id' => 'pw-status-query-submit' ) );
+        $filtered_status = (isset( $_GET['new_user_approve_filter'] ) ) ? esc_attr( $_GET['new_user_approve_filter'] ) : '';
 
         ?>
         <label class="screen-reader-text" for="new_user_approve_filter">View all users</label>
         <select id="new_user_approve_filter" name="new_user_approve_filter" style="float: none; margin: 0 0 0 15px;">
             <option value="">View all users</option>
         <?php foreach ( pw_new_user_approve()->get_valid_statuses() as $status ) : ?>
-            <option value="<?php echo esc_attr( $status ); ?>"><?php echo esc_html( $status ); ?></option>
+            <option value="<?php echo esc_attr( $status ); ?>"<?php selected( $status, $filtered_status ); ?>><?php echo esc_html( $status ); ?></option>
         <?php endforeach; ?>
         </select>
         <?php echo apply_filters( 'new_user_approve_filter_button', $filter_button ); ?>
@@ -110,6 +112,31 @@ class pw_new_user_approve_user_list {
             }
         </style>
         <?php
+    }
+
+    public function filter_by_status( $query ) {
+        global $wpdb;
+
+        if ( !is_admin() )
+            return;
+
+        $screen = get_current_screen();
+        if ( 'users' != $screen->id )
+            return;
+
+        if ( isset( $_GET['new_user_approve_filter'] ) ) {
+            $filter = esc_attr( $_GET['new_user_approve_filter'] );
+
+            $query->query_from .= " INNER JOIN {$wpdb->usermeta} wp_usermeta ON ( {$wpdb->users}.ID = wp_usermeta.user_id )";
+
+            if ( 'approved' == $filter ) {
+                $query->query_fields = "DISTINCT SQL_CALC_FOUND_ROWS {$wpdb->users}.ID";
+                $query->query_from .= " LEFT JOIN {$wpdb->usermeta} AS mt1 ON ({$wpdb->users}.ID = mt1.user_id AND mt1.meta_key = 'pw_user_status')";
+                $query->query_where .= " AND ( ( wp_usermeta.meta_key = 'pw_user_status' AND CAST(wp_usermeta.meta_value AS CHAR) = 'approved' ) OR mt1.user_id IS NULL )";
+            } else {
+                $query->query_where .= " AND ( (wp_usermeta.meta_key = 'pw_user_status' AND CAST(wp_usermeta.meta_value AS CHAR) = '{$filter}') )";
+            }
+        }
     }
 }
 
