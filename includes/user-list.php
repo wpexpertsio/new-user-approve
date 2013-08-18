@@ -338,8 +338,8 @@ class pw_new_user_approve_user_list {
                     <?php if ( $user_status == 'pending' ) : ?>
                         <option value=""><?php _e( '-- Status --', 'new-user-approve' ); ?></option>
                     <?php endif; ?>
-                    <?php foreach ( array( 'approve' => 'approved', 'deny' => 'denied' ) as $key => $status ) : ?>
-                        <option value="<?php echo esc_attr( $key ); ?>"<?php selected( $status, $user_status ); ?>><?php echo esc_html( $status ); ?></option>
+                    <?php foreach ( array( 'approved', 'denied' ) as $status ) : ?>
+                        <option value="<?php echo esc_attr( $status ); ?>"<?php selected( $status, $user_status ); ?>><?php echo esc_html( $status ); ?></option>
                     <?php endforeach; ?>
                     </select>
                     <span class="description"><?php _e( 'If user has access to sign in or not.', 'new-user-approve' ); ?></span>
@@ -364,8 +364,17 @@ class pw_new_user_approve_user_list {
             return false;
 
         if ( ! empty( $_POST['new_user_approve_status'] ) ) {
-            $status = esc_attr( $_POST['new_user_approve_status'] );
-            pw_new_user_approve()->update_user_status( $user_id, $status );
+            $current_status = pw_new_user_approve()->get_user_status( $user_id );
+            $new_status = esc_attr( $_POST['new_user_approve_status'] );
+
+            if ( $current_status != $new_status ) {
+                if ( $new_status == 'approved' )
+                    $new_status = 'approve';
+                else if ( $new_status == 'denied' )
+                    $new_status = 'deny';
+
+                pw_new_user_approve()->update_user_status( $user_id, $new_status );
+            }
         }
     }
 }
