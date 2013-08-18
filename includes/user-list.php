@@ -31,6 +31,7 @@ class pw_new_user_approve_user_list {
         add_action( 'admin_notices', array( $this, 'admin_notices' ) );
         add_action( 'show_user_profile', array( $this, 'profile_status_field' ) );
         add_action( 'edit_user_profile', array( $this, 'profile_status_field' ) );
+        add_action( 'edit_user_profile_update', array( $this, 'save_profile_status_field' ) );
 
         // Filters
         add_filter( 'user_row_actions', array( $this, 'user_table_actions' ), 10, 2 );
@@ -266,27 +267,38 @@ class pw_new_user_approve_user_list {
             return;
 
         $user_status = pw_new_user_approve()->get_user_status( $user->ID );
-
         ?>
         <table class="form-table">
-
             <tr>
                 <th><label for="new_user_approve_status"><?php _e( 'Access Status', 'new-user-approve' ); ?></label></th>
-
                 <td>
                     <select id="new_user_approve_status" name="new_user_approve_status">
-                    <?php foreach ( pw_new_user_approve()->get_valid_statuses() as $status ) : ?>
-                        <option value="<?php echo esc_attr( $status ); ?>"<?php selected( $status, $user_status ); ?>><?php echo esc_html( $status ); ?></option>
+                    <?php if ( $user_status == 'pending' ) : ?>
+                        <option value=""><?php _e( '-- Status --', 'new-user-approve' ); ?></option>
+                    <?php endif; ?>
+                    <?php foreach ( array( 'approve' => 'approved', 'deny' => 'denied' ) as $key => $status ) : ?>
+                        <option value="<?php echo esc_attr( $key ); ?>"<?php selected( $status, $user_status ); ?>><?php echo esc_html( $status ); ?></option>
                     <?php endforeach; ?>
                     </select>
-                    <span class="description"><?php _e( 'User has access to sign in or not.', 'new-user-approve' ); ?></span>
+                    <span class="description"><?php _e( 'If user has access to sign in or not.', 'new-user-approve' ); ?></span>
+                <?php if ( $user_status == 'pending' ) : ?>
+                    <br /><span class="description"><?php _e( 'Current user status is <strong>pending</strong>.', 'new-user-approve' ); ?></span>
+                <?php endif; ?>
                 </td>
             </tr>
-
         </table>
         <?php
     }
 
+    public function save_profile_status_field( $user_id ) {
+        if ( !current_user_can( 'edit_user', $user_id ) )
+            return false;
+
+        if ( ! empty( $_POST['new_user_approve_status'] ) ) {
+            $status = esc_attr( $_POST['new_user_approve_status'] );
+            pw_new_user_approve()->update_user_status( $user_id, $status );
+        }
+    }
 }
 
 function pw_new_user_approve_user_list() {
