@@ -39,6 +39,11 @@ class pw_new_user_approve_user_list {
         add_filter( 'manage_users_custom_column', array( $this, 'status_column' ), 10, 3 );
     }
 
+    /**
+     * Update the user status if the approve or deny link was clicked.
+     *
+     * @uses load-users.php
+     */
     public function update_action() {
         if ( isset( $_GET['new_user_approve_filter'] ) )
             return;
@@ -70,6 +75,14 @@ class pw_new_user_approve_user_list {
         }
     }
 
+    /**
+     * Add the approve or deny link where appropriate.
+     *
+     * @uses user_row_actions
+     * @param array $actions
+     * @param object $user
+     * @return array
+     */
     public function user_table_actions( $actions, $user ) {
         if ( $user->ID == get_current_user_id() )
             return $actions;
@@ -94,6 +107,13 @@ class pw_new_user_approve_user_list {
         return $actions;
     }
 
+    /**
+     * Add the status column to the user table
+     *
+     * @uses manage_users_columns
+     * @param array $columns
+     * @return array
+     */
     public function add_column( $columns ) {
         $the_columns['pw_user_status'] = __( 'Status', 'new-user-approve' );
 
@@ -104,6 +124,15 @@ class pw_new_user_approve_user_list {
         return $columns;
     }
 
+    /**
+     * Show the status of the user in the status column
+     *
+     * @uses manage_users_custom_column
+     * @param string $val
+     * @param string $column_name
+     * @param int $user_id
+     * @return string
+     */
     public function status_column( $val, $column_name, $user_id ) {
         switch ( $column_name ) {
             case 'pw_user_status' :
@@ -116,6 +145,11 @@ class pw_new_user_approve_user_list {
         return $val;
     }
 
+    /**
+     * Add a filter to the user table to filter by user status
+     *
+     * @uses restrict_manage_users
+     */
     public function status_filter() {
         $filter_button = submit_button( __( 'Filter', 'new-user-approve' ), 'button', 'pw-status-query-submit', false, array( 'id' => 'pw-status-query-submit' ) );
         $filtered_status = (isset( $_GET['new_user_approve_filter'] ) ) ? esc_attr( $_GET['new_user_approve_filter'] ) : '';
@@ -138,6 +172,12 @@ class pw_new_user_approve_user_list {
         <?php
     }
 
+    /**
+     * Modify the user query if the status filter is being used.
+     *
+     * @uses pre_user_query
+     * @param $query
+     */
     public function filter_by_status( $query ) {
         global $wpdb;
 
@@ -163,6 +203,11 @@ class pw_new_user_approve_user_list {
         }
     }
 
+    /**
+     * Use javascript to add the ability to bulk modify the status of users.
+     *
+     * @uses admin_footer-users.php
+     */
     public function admin_footer() {
         $screen = get_current_screen();
 
@@ -179,6 +224,11 @@ class pw_new_user_approve_user_list {
         <?php endif;
     }
 
+    /**
+     * Process the bulk status updates
+     *
+     * @uses load-users.php
+     */
     public function bulk_action() {
         $screen = get_current_screen();
 
@@ -241,6 +291,11 @@ class pw_new_user_approve_user_list {
         }
     }
 
+    /**
+     * Show a message on the users page if a status has been updated.
+     *
+     * @uses admin_notices
+     */
     public function admin_notices() {
         $screen = get_current_screen();
 
@@ -262,6 +317,13 @@ class pw_new_user_approve_user_list {
         }
     }
 
+    /**
+     * Display the dropdown on the user profile page to allow an admin to update the user status.
+     *
+     * @uses show_user_profile
+     * @uses edit_user_profile
+     * @param object $user
+     */
     public function profile_status_field( $user ) {
         if ( $user->ID == get_current_user_id() )
             return;
@@ -290,6 +352,13 @@ class pw_new_user_approve_user_list {
         <?php
     }
 
+    /**
+     * Save the user status when updating from the user profile.
+     *
+     * @uses edit_user_profile_update
+     * @param int $user_id
+     * @return bool
+     */
     public function save_profile_status_field( $user_id ) {
         if ( !current_user_can( 'edit_user', $user_id ) )
             return false;

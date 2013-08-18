@@ -91,10 +91,21 @@ class pw_new_user_approve {
 		do_action( 'new_user_approve_deactivate' );
 	}
 
+    /**
+     * Include any external files as part of the plugin.
+     *
+     * @uses plugins_loaded
+     */
     public function include_files() {
         require_once( dirname( __FILE__ ) . '/includes/admin-approve.php' );
     }
 
+    /**
+     * Makes it possible to disable the user admin integration. Must happen after
+     * WordPres is loaded.
+     *
+     * @uses wp_loaded
+     */
     public function admin_loaded() {
         $user_admin_integration = apply_filters( 'new_user_approve_user_admin_integration', true );
 
@@ -103,6 +114,12 @@ class pw_new_user_approve {
         }
     }
 
+    /**
+     * Get the status of a user.
+     *
+     * @param int $user_id
+     * @return string the status of the user
+     */
     public function get_user_status( $user_id ) {
         $user_status = get_user_meta( $user_id, 'pw_user_status', true );
 
@@ -112,6 +129,12 @@ class pw_new_user_approve {
         return $user_status;
     }
 
+    /**
+     * Update the status of a user. The new status must be either 'approve' or 'deny'.
+     *
+     * @param int $user
+     * @param string $status
+     */
     public function update_user_status( $user, $status ) {
         $user_id = absint( $user );
         if ( ! $user_id )
@@ -120,16 +143,23 @@ class pw_new_user_approve {
         if ( ! in_array( $status, array( 'approve', 'deny' ) ) )
             return;
 
+        // where it all happens
         do_action( 'new_user_approve_' . $status . '_user', $user_id );
     }
 
+    /**
+     * Get the valid statuses. Anything outside of the returned array is an invalid status.
+     *
+     * @return array
+     */
     public function get_valid_statuses() {
         return array( 'pending', 'approved', 'denied' );
     }
 
     /**
-     * Determine if the user is good to sign in based on their status
+     * Determine if the user is good to sign in based on their status.
      *
+     * @uses wp_authenticate_user
      * @param array $userdata
      */
     public function authenticate_user( $userdata ) {
@@ -214,10 +244,24 @@ class pw_new_user_approve {
         return $user_status;
     }
 
+    /**
+     * Delete the transient storing all of the user statuses.
+     *
+     * @uses user_register
+     * @uses deleted_user
+     * @uses new_user_approve_approve_user
+     * @uses new_user_approve_deny_user
+     */
     public function delete_new_user_approve_transient() {
         delete_transient( 'new_user_approve_user_statuses' );
     }
 
+    /**
+     * Display the stats on the WP dashboard. Will show 1 line with a count
+     * of users and their status.
+     *
+     * @uses rightnow_end
+     */
     public function dashboard_stats() {
         $user_status = $this->get_user_statuses();
         ?>
@@ -291,6 +335,8 @@ class pw_new_user_approve {
 
     /**
      * Admin approval of user
+     *
+     * @uses new_user_approve_approve_user
      */
     public function approve_user( $user_id ) {
         $user = new WP_User( $user_id );
@@ -375,6 +421,8 @@ class pw_new_user_approve {
 
     /**
      * Admin denial of user
+     *
+     * @uses new_user_approve_deny_user
      */
     public function deny_user( $user_id ) {
         $user = new WP_User( $user_id );
@@ -400,6 +448,8 @@ class pw_new_user_approve {
 
     /**
      * Display a message to the user after they have registered
+     *
+     * @uses registration_errors
      */
     public function show_user_pending_message($errors) {
         if ( ! empty( $_POST['redirect_to'] ) ) {
@@ -431,6 +481,8 @@ class pw_new_user_approve {
 
     /**
      * Only give a user their password if they have been approved
+     *
+     * @uses lostpassword_post
      */
     public function lost_password() {
         $is_email = strpos( $_POST['user_login'], '@' );
@@ -451,6 +503,7 @@ class pw_new_user_approve {
     /**
      * Add message to login page saying registration is required.
      *
+     * @uses login_message
      * @param string $message
      * @return string
      */
@@ -478,6 +531,8 @@ class pw_new_user_approve {
 
     /**
      * Give the user a status
+     *
+     * @uses user_register
      * @param int $user_id
      */
     public function add_user_status( $user_id ) {

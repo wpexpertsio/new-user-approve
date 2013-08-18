@@ -38,6 +38,8 @@ class pw_new_user_approve_admin_approve {
 
     /**
      * Add the new menu item to the users portion of the admin menu
+     *
+     * @uses admin_menu
      */
     function admin_menu_link() {
         $show_admin_page = apply_filters( 'new_user_approve_show_admin_page', true );
@@ -177,6 +179,8 @@ class pw_new_user_approve_admin_approve {
 
     /**
      * Accept input from admin to modify a user
+     *
+     * @uses init
      */
     public function process_input() {
         if ( ( isset( $_GET['page'] ) && $_GET['page'] == $this->_admin_page ) && isset( $_GET['status'] ) ) {
@@ -191,6 +195,11 @@ class pw_new_user_approve_admin_approve {
         }
     }
 
+    /**
+     * Display a notice on the legacy page that notifies the user of the new interface.
+     *
+     * @uses admin_notices
+     */
     public function admin_notice() {
         $screen = get_current_screen();
 
@@ -206,8 +215,12 @@ class pw_new_user_approve_admin_approve {
         }
     }
 
+    /**
+     * If user clicks to ignore the notice, add that to their user meta
+     *
+     * @uses admin_init
+     */
     public function notice_ignore() {
-        // If user clicks to ignore the notice, add that to their user meta
         if ( isset( $_GET['new-user-approve-ignore-notice'] ) && '1' == $_GET['new-user-approve-ignore-notice   '] ) {
             $user_id = get_current_user_id();
             add_user_meta( $user_id, 'pw_new_user_approve_ignore_notice', '1', true );
