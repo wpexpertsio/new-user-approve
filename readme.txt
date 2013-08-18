@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
-Tags: users, registration
+Tags: users, registration, sign up, user management
 Requires at least: 3.5.1
 Tested up to: 3.5.1
 Stable tag: 1.5 alpha
@@ -11,7 +11,7 @@ approve a user before they are able to access and login to the blog.
 
 == Description ==
 
-In a normal WordPress blog, once a new user registers, the user is created in 
+On a normal WordPress site, once a new user registers, the user is created in
 the database. Then an email is sent to the new user with their login 
 credentials. Very simple. As it should be.
 
@@ -19,7 +19,7 @@ The New User Approve plugin modifies the registration process. When a user
 registers for the blog, the user gets created and then an email gets sent to 
 the administrators of the site. An administrator then is expected to either 
 approve or deny the registration request. An email is then sent to the user 
-indicating whether they were approved or denied. If the user was approved, 
+indicating whether they were approved or denied. If the user has been approved,
 the email will include the login credentials. Until a user is approved, the 
 user will not be able to login to the site.
 
@@ -69,6 +69,9 @@ this feature.
 * minor bug fixes
 * use core definition of tabs
 * user query updates (requires 3.5)
+* add status attribute to user profile page
+* integration with core user table (bulk approve, filtering, etc.)
+* tested with WordPress 3.6
 
 = 1.4.2 =
 * fix password recovery bug if a user does not have an approve-status meta field
@@ -167,6 +170,9 @@ this feature.
 
 == Upgrade Notice ==
 
+= 1.5 =
+A long awaited upgrade that include better integration with WordPress core. Requires at least WordPress 3.5.
+
 = 1.3 =
 This version fixes some issues when authenticating users. Requires at least WordPress 3.1.
 
@@ -177,6 +183,8 @@ Download version 1.3.1 immediately! A bug was found in version 1.3 that allows a
 Download version 1.3.2 immediately! A bug was found in version 1.3 that allows a user to login using any password.
 
 == Other Notes ==
+
+The code for this plugin is also available at Github - https://github.com/picklewagon/new-user-approve. Pull requests welcomed.
 
 = Filters =
 * *new_user_approve_user_status* - modify the list of users shown in the tables
@@ -199,7 +207,7 @@ Download version 1.3.2 immediately! A bug was found in version 1.3 that allows a
 * *new_user_approve_deny_user* - when the user has been denied
 
 = Translations =
-The plugin has been prepared to be translated. If you want to help to translate the plugin to your language, please have a look at the localization/new-user-approve.pot file which contains all defintions and may be used with a gettext editor like Poedit (Windows). More information can be found on the [Codex](http://codex.wordpress.org/Translating_WordPress).
+The plugin has been prepared to be translated. If you want to help to translate the plugin to your language, please have a look at the localization/new-user-approve.pot file which contains all definitions and may be used with a gettext editor like Poedit (Windows). More information can be found on the [Codex](http://codex.wordpress.org/Translating_WordPress).
 
 When sending me your translation files, please send me your wordpress.org username as well.
 
@@ -221,4 +229,4 @@ When sending me your translation files, please send me your wordpress.org userna
 * Russian translation by [Alexey](http://wordpress.org/support/profile/asel)
 * Slovakian translation by Boris Gereg
 * Spanish translation by [Eduardo Aranda](http://sinetiks.com/)
-* Swedish translation by [Per Bj�levik](http://pastis.tauzero.se)
+* Swedish translation by [Per Bj&auml;levik](http://pastis.tauzero.se)
