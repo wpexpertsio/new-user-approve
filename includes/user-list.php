@@ -264,7 +264,7 @@ class pw_new_user_approve_user_list {
                 case 'approve':
                     $approved = 0;
                     foreach( $user_ids as $user_id ) {
-                        pw_new_user_approve()->approve_user( $user_id );
+                        pw_new_user_approve()->update_user_status( $user_id, 'approve' );
                         $approved++;
                     }
 
@@ -274,7 +274,7 @@ class pw_new_user_approve_user_list {
                 case 'deny':
                     $denied = 0;
                     foreach( $user_ids as $user_id ) {
-                        pw_new_user_approve()->deny_user( $user_id );
+                        pw_new_user_approve()->update_user_status( $user_id, 'deny' );
                         $denied++;
                     }
 
@@ -364,17 +364,14 @@ class pw_new_user_approve_user_list {
             return false;
 
         if ( ! empty( $_POST['new_user_approve_status'] ) ) {
-            $current_status = pw_new_user_approve()->get_user_status( $user_id );
             $new_status = esc_attr( $_POST['new_user_approve_status'] );
 
-            if ( $current_status != $new_status ) {
-                if ( $new_status == 'approved' )
-                    $new_status = 'approve';
-                else if ( $new_status == 'denied' )
-                    $new_status = 'deny';
+            if ( $new_status == 'approved' )
+                $new_status = 'approve';
+            else if ( $new_status == 'denied' )
+                $new_status = 'deny';
 
-                pw_new_user_approve()->update_user_status( $user_id, $new_status );
-            }
+            pw_new_user_approve()->update_user_status( $user_id, $new_status );
         }
     }
 }

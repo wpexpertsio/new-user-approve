@@ -143,6 +143,16 @@ class pw_new_user_approve {
         if ( ! in_array( $status, array( 'approve', 'deny' ) ) )
             return;
 
+        $current_status = pw_new_user_approve()->get_user_status( $user_id );
+        $new_status = '';
+        if ( $status == 'approve' )
+            $new_status = 'approved';
+        else if ( $status == 'deny' )
+            $new_status = 'denied';
+
+        if ( $current_status == $new_status )
+            return;
+
         // where it all happens
         do_action( 'new_user_approve_' . $status . '_user', $user_id );
     }
