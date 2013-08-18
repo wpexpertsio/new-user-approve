@@ -171,7 +171,7 @@ this feature.
 == Upgrade Notice ==
 
 = 1.5 =
-A long awaited upgrade that include better integration with WordPress core. Requires at least WordPress 3.5.
+A long awaited upgrade that includes better integration with WordPress core. Requires at least WordPress 3.5.
 
 = 1.3 =
 This version fixes some issues when authenticating users. Requires at least WordPress 3.1.
