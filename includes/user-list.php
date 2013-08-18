@@ -29,6 +29,8 @@ class pw_new_user_approve_user_list {
         add_action( 'admin_footer-users.php', array( $this, 'admin_footer' ) );
         add_action( 'load-users.php', array( $this, 'bulk_action' ) );
         add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+        add_action( 'show_user_profile', array( $this, 'profile_status_field' ) );
+        add_action( 'edit_user_profile', array( $this, 'profile_status_field' ) );
 
         // Filters
         add_filter( 'user_row_actions', array( $this, 'user_table_actions' ), 10, 2 );
@@ -43,12 +45,27 @@ class pw_new_user_approve_user_list {
         if ( isset( $_GET['action'] ) && ( in_array( $_GET['action'], array( 'approve', 'deny' ) ) ) ) {
             check_admin_referer( 'new-user-approve' );
 
+            $sendback = remove_query_arg( array( 'approved', 'denied', 'deleted', 'ids', 'new_user_approve_filter', 'pw-status-query-submit', 'new_role' ), wp_get_referer() );
+            if ( ! $sendback )
+                $sendback = admin_url( 'users.php' );
+
+            $wp_list_table = _get_list_table( 'WP_Users_List_Table' );
+            $pagenum = $wp_list_table->get_pagenum();
+            $sendback = add_query_arg( 'paged', $pagenum, $sendback );
+
             $status = sanitize_key( $_GET['action'] );
             $user = absint( $_GET['user'] );
 
             pw_new_user_approve()->update_user_status( $user, $status );
 
-            wp_redirect( admin_url( 'users.php' ) );
+            if ( $_GET['action'] == 'approve' ) {
+                $sendback = add_query_arg( array( 'approved' => 1, 'ids' => $user ), $sendback );
+            } else {
+                $sendback = add_query_arg( array( 'denied' => 1, 'ids' => $user ), $sendback );
+            }
+
+            wp_redirect( $sendback );
+            exit;
         }
     }
 
@@ -77,7 +94,7 @@ class pw_new_user_approve_user_list {
     }
 
     public function add_column( $columns ) {
-        $the_columns['pw_user_status'] = 'Status';
+        $the_columns['pw_user_status'] = __( 'Status', 'new-user-approve' );
 
         $newcol = array_slice( $columns, 0, -1 );
         $newcol = array_merge( $newcol, $the_columns );
@@ -99,13 +116,13 @@ class pw_new_user_approve_user_list {
     }
 
     public function status_filter() {
-        $filter_button = submit_button( __( 'Filter' ), 'button', 'pw-status-query-submit', false, array( 'id' => 'pw-status-query-submit' ) );
+        $filter_button = submit_button( __( 'Filter', 'new-user-approve' ), 'button', 'pw-status-query-submit', false, array( 'id' => 'pw-status-query-submit' ) );
         $filtered_status = (isset( $_GET['new_user_approve_filter'] ) ) ? esc_attr( $_GET['new_user_approve_filter'] ) : '';
 
         ?>
-        <label class="screen-reader-text" for="new_user_approve_filter">View all users</label>
+        <label class="screen-reader-text" for="new_user_approve_filter"><?php _e( 'View all users', 'new-user-approve' ); ?></label>
         <select id="new_user_approve_filter" name="new_user_approve_filter" style="float: none; margin: 0 0 0 15px;">
-            <option value="">View all users</option>
+            <option value=""><?php _e( 'View all users', 'new-user-approve' ); ?></option>
         <?php foreach ( pw_new_user_approve()->get_valid_statuses() as $status ) : ?>
             <option value="<?php echo esc_attr( $status ); ?>"<?php selected( $status, $filtered_status ); ?>><?php echo esc_html( $status ); ?></option>
         <?php endforeach; ?>
@@ -185,7 +202,7 @@ class pw_new_user_approve_user_list {
             if ( empty( $user_ids ) )
                 return;
 
-            $sendback = remove_query_arg( array( 'approved', 'denied', 'deleted', 'ids' ), wp_get_referer() );
+            $sendback = remove_query_arg( array( 'approved', 'denied', 'deleted', 'ids', 'new_user_approve_filter', 'pw-status-query-submit', 'new_role' ), wp_get_referer() );
             if ( ! $sendback )
                 $sendback = admin_url( "users.php" );
 
@@ -232,16 +249,42 @@ class pw_new_user_approve_user_list {
         $message = null;
 
         if ( isset( $_REQUEST['denied'] ) && (int) $_REQUEST['denied']) {
-            $message = sprintf( _n( 'User denied.', '%s users denied.', 'new-user-approve' ), number_format_i18n( $_REQUEST['denied'] ) );
+            $message = sprintf( _n( 'User denied.', '%s users denied.', $_REQUEST['denied'], 'new-user-approve' ), number_format_i18n( $_REQUEST['denied'] ) );
         }
 
         if ( isset( $_REQUEST['approved'] ) && (int) $_REQUEST['approved']) {
-            $message = sprintf( _n( 'User approved.', '%s users approved.', 'new-user-approve' ), number_format_i18n( $_REQUEST['approved'] ) );
+            $message = sprintf( _n( 'User approved.', '%s users approved.', $_REQUEST['approved'], 'new-user-approve' ), number_format_i18n( $_REQUEST['approved'] ) );
         }
 
         if ( !empty( $message ) ) {
             echo '<div class="updated"><p>' . $message . '</p></div>';
         }
+    }
+
+    public function profile_status_field( $user ) {
+        if ( $user->ID == get_current_user_id() )
+            return;
+
+        $user_status = pw_new_user_approve()->get_user_status( $user->ID );
+
+        ?>
+        <table class="form-table">
+
+            <tr>
+                <th><label for="new_user_approve_status"><?php _e( 'Access Status', 'new-user-approve' ); ?></label></th>
+
+                <td>
+                    <select id="new_user_approve_status" name="new_user_approve_status">
+                    <?php foreach ( pw_new_user_approve()->get_valid_statuses() as $status ) : ?>
+                        <option value="<?php echo esc_attr( $status ); ?>"<?php selected( $status, $user_status ); ?>><?php echo esc_html( $status ); ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                    <span class="description"><?php _e( 'User has access to sign in or not.', 'new-user-approve' ); ?></span>
+                </td>
+            </tr>
+
+        </table>
+        <?php
     }
 
 }
