@@ -61,7 +61,10 @@ this feature.
 
 == Screenshots ==
 
-1. The backend to manage approving and denying users.
+1. The backend to manage approving and denying users. This is an alternative to approving users.
+2. Integration with WordPress Users admin page.
+3. Filter users by status.
+4. Approve or deny users using the bulk edit feature in WordPress.
 
 == Changelog ==
 
