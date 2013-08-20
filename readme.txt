@@ -217,6 +217,7 @@ The plugin has been prepared to be translated. If you want to help to translate 
 When sending me your translation files, please send me your wordpress.org username as well.
 
 * Belarussian translation by [Fat Cow](http://www.fatcow.com/)
+* Brazilian Portuguese translation by [leogermani](http://profiles.wordpress.org/leogermani/)
 * Catalan translation by [xoanet](http://profiles.wordpress.org/xoanet/)
 * Croatian translation by Nik
 * Czech translation by [GazikT](http://profiles.wordpress.org/gazikt/)
