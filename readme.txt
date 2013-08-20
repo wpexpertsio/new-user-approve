@@ -77,6 +77,8 @@ this feature.
 * add status attribute to user profile page
 * integration with core user table (bulk approve, filtering, etc.)
 * tested with WordPress 3.6
+* set email header when sending email
+* more filters and actions
 
 = 1.4.2 =
 * fix password recovery bug if a user does not have an approve-status meta field

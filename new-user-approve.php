@@ -172,7 +172,7 @@ class pw_new_user_approve {
      */
     public function validate_status_update( $do_update, $user_id, $status ) {
         $current_status = pw_new_user_approve()->get_user_status( $user_id );
-        
+
         if ( $status == 'approve' )
             $new_status = 'approved';
         else
@@ -333,7 +333,7 @@ class pw_new_user_approve {
         $subject = apply_filters( 'new_user_approve_request_approval_subject', $subject );
 
         // send the mail
-        wp_mail( get_option( 'admin_email' ), $subject, $message );
+        wp_mail( get_option( 'admin_email' ), $subject, $message, $this->email_message_headers() );
     }
 
     /**
@@ -439,7 +439,7 @@ class pw_new_user_approve {
         $subject = apply_filters( 'new_user_approve_approve_user_subject', $subject );
 
         // send the mail
-        wp_mail( $user_email, $subject, $message );
+        wp_mail( $user_email, $subject, $message, $this->email_message_headers() );
 
         // change usermeta tag in database to approved
         update_user_meta( $user->ID, 'pw_user_status', 'approved' );
@@ -466,12 +466,30 @@ class pw_new_user_approve {
         $subject = apply_filters( 'new_user_approve_deny_user_subject', $subject );
 
         // send the mail
-        @wp_mail( $user_email, $subject, $message );
+        @wp_mail( $user_email, $subject, $message, $this->email_message_headers() );
 
         // change usermeta tag in database to denied
         update_user_meta( $user->ID, 'pw_user_status', 'denied' );
 
         do_action( 'new_user_approve_user_denied', $user );
+    }
+
+    public function email_message_headers() {
+        $admin_email = get_option( 'admin_email' );
+        if ( empty( $admin_email ) )
+            $admin_email = 'support@' . $_SERVER['SERVER_NAME'];
+
+        $from_name = get_option( 'blogname' );
+
+        $headers = array(
+            "MIME-Version: 1.0\n",
+            "From: \"{$from_name}\" <{$admin_email}>\n",
+            "Content-Type: text/plain; charset=\"" . get_option( 'blog_charset' ) . "\"\n",
+        );
+
+        $headers = apply_filters( 'new_user_approve_email_header', $headers );
+
+        return $headers;
     }
 
     /**
