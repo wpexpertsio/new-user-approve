@@ -227,6 +227,7 @@ When sending me your translation files, please send me your wordpress.org userna
 * French translation by [Philippe Scoffoni](http://philippe.scoffoni.net/)
 * German translation by Christoph Ploedt
 * Greek translation by [Leftys](http://alt3rnet.info/)
+* Hebrew translation by [Udi Burg](http://blog.udiburg.com)
 * Hungarian translation by Gabor Varga
 * Italian translation by [Pierfrancesco Marsiaj](http://profiles.wordpress.org/pierinux/)
 * Lithuanian translation by [Ksaveras](http://profiles.wordpress.org/xawiers)
