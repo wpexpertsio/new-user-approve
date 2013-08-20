@@ -56,6 +56,7 @@ class pw_new_user_approve {
         add_filter( 'wp_authenticate_user',	array( $this, 'authenticate_user' ) );
         add_filter( 'registration_errors', array( $this, 'show_user_pending_message' ) );
         add_filter( 'login_message', array( $this, 'welcome_user' ) );
+        add_filter( 'new_user_approve_validate_status_update', array( $this, 'validate_status_update' ), 10, 3 );
 	}
 
     public function get_plugin_url() {
@@ -143,14 +144,9 @@ class pw_new_user_approve {
         if ( ! in_array( $status, array( 'approve', 'deny' ) ) )
             return;
 
-        $current_status = pw_new_user_approve()->get_user_status( $user_id );
-        $new_status = '';
-        if ( $status == 'approve' )
-            $new_status = 'approved';
-        else if ( $status == 'deny' )
-            $new_status = 'denied';
+        $do_update = apply_filters( 'new_user_approve_validate_status_update', true, $user_id, $status );
 
-        if ( $current_status == $new_status )
+        if ( !$do_update )
             return;
 
         // where it all happens
@@ -164,6 +160,28 @@ class pw_new_user_approve {
      */
     public function get_valid_statuses() {
         return array( 'pending', 'approved', 'denied' );
+    }
+
+    /**
+     * Only validate the update if the status has been updated to prevent unnecessary update
+     * and especially emails.
+     *
+     * @param bool $do_update
+     * @param int $user_id
+     * @param string $status either 'approve' or 'deny'
+     */
+    public function validate_status_update( $do_update, $user_id, $status ) {
+        $current_status = pw_new_user_approve()->get_user_status( $user_id );
+        
+        if ( $status == 'approve' )
+            $new_status = 'approved';
+        else
+            $new_status = 'denied';
+
+        if ( $current_status == $new_status )
+            $do_update = false;
+
+        return $do_update;
     }
 
     /**
