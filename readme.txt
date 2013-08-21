@@ -1,17 +1,19 @@
 === Plugin Name ===
 Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
-Tags: users, registration
-Requires at least: 3.2.1
-Tested up to: 3.5
-Stable tag: 1.4.2
+Tags: users, registration, sign up, user management
+Requires at least: 3.5.1
+Tested up to: 3.6
+Stable tag: 1.5
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-New User Approve is a Wordpress plugin that allows a blog administrator to 
+New User Approve is a WordPress plugin that allows a blog administrator to
 approve a user before they are able to access and login to the blog.
 
 == Description ==
 
-In a normal Wordpress blog, once a new user registers, the user is created in 
+On a normal WordPress site, once a new user registers, the user is created in
 the database. Then an email is sent to the new user with their login 
 credentials. Very simple. As it should be.
 
@@ -19,7 +21,7 @@ The New User Approve plugin modifies the registration process. When a user
 registers for the blog, the user gets created and then an email gets sent to 
 the administrators of the site. An administrator then is expected to either 
 approve or deny the registration request. An email is then sent to the user 
-indicating whether they were approved or denied. If the user was approved, 
+indicating whether they were approved or denied. If the user has been approved,
 the email will include the login credentials. Until a user is approved, the 
 user will not be able to login to the site.
 
@@ -50,7 +52,7 @@ your liking.
 
 The password is generated again because, by default, the user will not be aware
 of their password. By generating a new password, the email that notifies the
-user can also give them the new password just like the email does when recieving
+user can also give them the new password just like the email does when receiving
 your password on a regular WordPress install. At approval time, it is impossible
 to retrieve the user's password.
 
@@ -59,9 +61,24 @@ this feature.
 
 == Screenshots ==
 
-1. The backend to manage approving and denying users.
+1. The backend to manage approving and denying users. This is an alternative to approving users.
+2. Integration with WordPress Users admin page.
+3. Filter users by status.
+4. Approve or deny users using the bulk edit feature in WordPress.
 
 == Changelog ==
+
+= 1.5 =
+* add more logic to prevent unwanted password resets
+* add more translations
+* minor bug fixes
+* use core definition of tabs
+* user query updates (requires 3.5)
+* add status attribute to user profile page
+* integration with core user table (bulk approve, filtering, etc.)
+* tested with WordPress 3.6
+* set email header when sending email
+* more filters and actions
 
 = 1.4.2 =
 * fix password recovery bug if a user does not have an approve-status meta field
@@ -160,6 +177,9 @@ this feature.
 
 == Upgrade Notice ==
 
+= 1.5 =
+A long awaited upgrade that includes better integration with WordPress core. Requires at least WordPress 3.5.
+
 = 1.3 =
 This version fixes some issues when authenticating users. Requires at least WordPress 3.1.
 
@@ -170,6 +190,8 @@ Download version 1.3.1 immediately! A bug was found in version 1.3 that allows a
 Download version 1.3.2 immediately! A bug was found in version 1.3 that allows a user to login using any password.
 
 == Other Notes ==
+
+The code for this plugin is also available at Github - https://github.com/picklewagon/new-user-approve. Pull requests welcomed.
 
 = Filters =
 * *new_user_approve_user_status* - modify the list of users shown in the tables
@@ -192,13 +214,14 @@ Download version 1.3.2 immediately! A bug was found in version 1.3 that allows a
 * *new_user_approve_deny_user* - when the user has been denied
 
 = Translations =
-The plugin has been prepared to be translated. If you want to help to translate the plugin to your language, please have a look at the localization/new-user-approve.pot file which contains all defintions and may be used with a gettext editor like Poedit (Windows). More information can be found on the [Codex](http://codex.wordpress.org/Translating_WordPress).
+The plugin has been prepared to be translated. If you want to help to translate the plugin to your language, please have a look at the localization/new-user-approve.pot file which contains all definitions and may be used with a gettext editor like Poedit (Windows). More information can be found on the [Codex](http://codex.wordpress.org/Translating_WordPress).
 
 When sending me your translation files, please send me your wordpress.org username as well.
 
-* Belarusian translation by [Fat Cow](http://www.fatcow.com/)
+* Belarussian translation by [Fat Cow](http://www.fatcow.com/)
+* Brazilian Portuguese translation by [leogermani](http://profiles.wordpress.org/leogermani/)
 * Catalan translation by [xoanet](http://profiles.wordpress.org/xoanet/)
-* Croation translation by Nik
+* Croatian translation by Nik
 * Czech translation by [GazikT](http://profiles.wordpress.org/gazikt/)
 * Danish translation by [GeorgWP](http://wordpress.org/support/profile/georgwp)
 * Dutch translation by [Ronald Moolenaar](http://profiles.wordpress.org/moolie/)
@@ -206,11 +229,13 @@ When sending me your translation files, please send me your wordpress.org userna
 * French translation by [Philippe Scoffoni](http://philippe.scoffoni.net/)
 * German translation by Christoph Ploedt
 * Greek translation by [Leftys](http://alt3rnet.info/)
+* Hebrew translation by [Udi Burg](http://blog.udiburg.com)
 * Hungarian translation by Gabor Varga
 * Italian translation by [Pierfrancesco Marsiaj](http://profiles.wordpress.org/pierinux/)
 * Lithuanian translation by [Ksaveras](http://profiles.wordpress.org/xawiers)
 * Polish translation by [pik256](http://wordpress.org/support/profile/1271256)
 * Romanian translation by [Web Hosting Geeks](http://webhostinggeeks.com/)
-* Russion translation by [Alexey](http://wordpress.org/support/profile/asel)
+* Russian translation by [Alexey](http://wordpress.org/support/profile/asel)
+* Slovakian translation by Boris Gereg
 * Spanish translation by [Eduardo Aranda](http://sinetiks.com/)
-* Swedish translation by [Per Bjälevik](http://pastis.tauzero.se)
+* Swedish translation by [Per Bj&auml;levik](http://pastis.tauzero.se)

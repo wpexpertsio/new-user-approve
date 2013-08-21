@@ -1,0 +1,216 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Josh Harrison
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
+"POT-Creation-Date: 2009-10-29 08:32+0000\n"
+"PO-Revision-Date: 2013-07-28 17:08+0200\n"
+"Last-Translator: Udi Burg <blog@udiburg.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: new-user-approve.php:126
+msgid "Approve New Users"
+msgstr "אשר משתמשים חדשים"
+
+#: new-user-approve.php:140
+msgid "Settings"
+msgstr "הגדרות"
+
+#: new-user-approve.php:183
+msgid "Users"
+msgstr "משתמשים"
+
+#: new-user-approve.php:219
+msgid "User successfully updated."
+msgstr "המשתמש עודכן בהצלחה."
+
+#: new-user-approve.php:223
+msgid "User Registration Approval"
+msgstr "אישור רישום משתמש"
+
+#: new-user-approve.php:225
+msgid "User Management"
+msgstr "ניהול משתמשים"
+
+#: new-user-approve.php:228
+msgid "Users Pending Approval"
+msgstr "משתמשים המחכים לאישור"
+
+#: new-user-approve.php:229
+msgid "Approved Users"
+msgstr "משתמשים מאושרים"
+
+#: new-user-approve.php:230
+msgid "Denied Users"
+msgstr "משתמשים שנדחו"
+
+#: new-user-approve.php:255
+msgid "ID"
+msgstr "ID"
+
+#: new-user-approve.php:256
+msgid "Username"
+msgstr "שם משתמש"
+
+#: new-user-approve.php:257
+msgid "Name"
+msgstr "שם"
+
+#: new-user-approve.php:258
+msgid "E-mail"
+msgstr "אימייל"
+
+#: new-user-approve.php:260 new-user-approve.php:262
+msgid "Actions"
+msgstr "פעולות"
+
+#: new-user-approve.php:296
+msgid "email:"
+msgstr "אימייל:"
+
+#: new-user-approve.php:298
+msgid "Approve"
+msgstr "מאושר"
+
+#: new-user-approve.php:301
+msgid "Deny"
+msgstr "נדחה"
+
+#: new-user-approve.php:313
+msgid "approved"
+msgstr "אושר"
+
+#: new-user-approve.php:315
+msgid "denied"
+msgstr "נדחה"
+
+#: new-user-approve.php:317
+msgid "pending"
+msgstr "ממתין לאישור"
+
+#: new-user-approve.php:320
+#, php-format
+msgid "There are no users with a status of %s"
+msgstr "אין משתמשים במצב %s"
+
+#: new-user-approve.php:332
+msgid "User name already exists"
+msgstr "שם המשתמש כבר קיים"
+
+#: new-user-approve.php:335
+#, php-format
+msgid "%1$s (%2$s) has requested a username at %3$s"
+msgstr "%1$s (%2$s)  כבר ביקש שם משתמש ב %3$s"
+
+#: new-user-approve.php:337
+#, php-format
+msgid "To approve or deny this user access to %s go to"
+msgstr "כדי לאשר או לדחות את המשתמש הזה כנסו ל %s go to"
+
+#: new-user-approve.php:341
+#, php-format
+msgid "[%s] User Approval"
+msgstr "[%s} אישור משתמש"
+
+#: new-user-approve.php:372
+#, php-format
+msgid "You have been approved to access %s"
+msgstr "אושרת להכנס ל %s"
+
+#: new-user-approve.php:373
+#, php-format
+msgid "Username: %s"
+msgstr "שם משתמש: %s"
+
+#: new-user-approve.php:374
+#, php-format
+msgid "Password: %s"
+msgstr "סיסמא: %s"
+
+#: new-user-approve.php:378
+#, php-format
+msgid "[%s] Registration Approved"
+msgstr "[%s] ההרשמה אושרה"
+
+#: new-user-approve.php:397
+#, php-format
+msgid "You have been denied access to %s"
+msgstr "בקשתך להכנס ל %s נדחתה"
+
+#: new-user-approve.php:400
+#, php-format
+msgid "[%s] Registration Denied"
+msgstr "[%s] הרשמה נדחתה"
+
+#: new-user-approve.php:413
+msgid ""
+"An email has been sent to the site administrator. The administrator will "
+"review the information that has been submitted and either approve or deny "
+"your request."
+msgstr ""
+"נשלח אימייל למנהל האתר. מנהל האתר יעבור על המידע שנרשם על ידיכם ויחליט אם "
+"לאשר או לדחות את בקשתכם."
+
+#: new-user-approve.php:414
+msgid ""
+"You will receive an email with instructions on what you will need to do "
+"next. Thanks for your patience."
+msgstr ""
+"אתם תקבלו אימייל עם הוראות לגבי מה עליכם לעשות בהמשך. תודה על סבלנותכם."
+
+#: new-user-approve.php:418
+msgid "Pending Approval"
+msgstr "ממתין לאישור"
+
+#: new-user-approve.php:418
+msgid "Registration successful."
+msgstr "ההרשמה הצליחה."
+
+#: new-user-approve.php:466
+#, php-format
+msgid ""
+"Welcome to %s. This site is accessible to approved users only. To be "
+"approved, you must first register."
+msgstr ""
+"ברוכים הבאים ל %s. הכניסה לאתר למשתמשים מורשים בלבד. על מנת לקבל הרשאת כניסה "
+"עליכם להרשם."
+
+#: new-user-approve.php:471
+msgid ""
+"After you register, your request will be sent to the site administrator for "
+"approval. You will then receive an email with further instructions."
+msgstr ""
+"אחרי שתרשמו בקשתכם תישלח למנהל האתר לצורך אישור. לאחר מכן תקבלו אימייל עם "
+"הנחיות נוספות."
+
+#. Plugin Name of an extension
+msgid "New User Approve"
+msgstr "אישור משתמש חדש"
+
+#. Plugin URI of an extension
+msgid "http://www.picklewagon.com/wordpress/new-user-approve"
+msgstr "http://www.picklewagon.com/wordpress/new-user-approve"
+
+#. Description of an extension
+msgid ""
+"This plugin allows administrators to approve users once they register. Only "
+"approved users will be allowed to access the blog."
+msgstr ""
+"התוסף הזה מאפשר למנהלי האתר לאשר משתמשים שנרשמו. רק משתמשים מורשים יוכלו "
+"להכנס לבלוג."
+
+#. Author of an extension
+msgid "Josh Harrison"
+msgstr "Josh Harrison"
+
+#. Author URI of an extension
+msgid "http://www.picklewagon.com/"
+msgstr "http://www.picklewagon.com/"
