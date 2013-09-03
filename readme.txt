@@ -68,6 +68,9 @@ this feature.
 
 == Changelog ==
 
+= 1.5.2 =
+* fix link to approve new users in email to admin
+
 = 1.5.1 =
 * fix bug when trying to install on a site with WP 3.5.1
 

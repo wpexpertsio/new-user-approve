@@ -325,7 +325,7 @@ class pw_new_user_approve {
         $message  = sprintf( __( '%1$s (%2$s) has requested a username at %3$s', 'new-user-approve' ), $user_login, $user_email, $blogname ) . "\r\n\r\n";
         $message .= get_option( 'siteurl' ) . "\r\n\r\n";
         $message .= sprintf( __( 'To approve or deny this user access to %s go to', 'new-user-approve' ), $blogname ) . "\r\n\r\n";
-        $message .= get_option( 'siteurl' ) . '/wp-admin/users.php?page=' . $this->_admin_page . "\r\n";
+        $message .= admin_url( 'users.php?s&pw-status-query-submit=Filter&new_user_approve_filter=pending&paged=1' ) . "\r\n";
 
         $message = apply_filters( 'new_user_approve_request_approval_message', $message, $user_login, $user_email );
 

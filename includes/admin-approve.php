@@ -31,7 +31,7 @@ class pw_new_user_approve_admin_approve {
     private function __construct() {
         // Actions
         add_action( 'admin_menu', array( $this, 'admin_menu_link' ) );
-        add_action( 'init',	array( $this, 'process_input' ) );
+        add_action( 'init', array( $this, 'process_input' ) );
         add_action( 'admin_notices', array( $this, 'admin_notice' ) );
         add_action( 'admin_init', array( $this, 'notice_ignore' ) );
     }
