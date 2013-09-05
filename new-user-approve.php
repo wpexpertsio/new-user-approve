@@ -419,11 +419,11 @@ class pw_new_user_approve {
         }
 
         wp_cache_delete( $user->ID, 'users' );
-        wp_cache_delete( $user->user_login, 'userlogins' );
+        wp_cache_delete( $user->data->user_login, 'userlogins' );
 
         // send email to user telling of approval
-        $user_login = stripslashes( $user->user_login );
-        $user_email = stripslashes( $user->user_email );
+        $user_login = stripslashes( $user->data->user_login );
+        $user_email = stripslashes( $user->data->user_email );
 
         // format the message
         $message  = sprintf( __( 'You have been approved to access %s', 'new-user-approve' ), get_option( 'blogname' ) ) . "\r\n";
