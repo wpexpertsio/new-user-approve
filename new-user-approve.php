@@ -335,8 +335,10 @@ class pw_new_user_approve {
         $subject = sprintf( __( '[%s] User Approval', 'new-user-approve' ), $blogname );
         $subject = apply_filters( 'new_user_approve_request_approval_subject', $subject );
 
+        $to = apply_filters( 'new_user_approve_email_admins', get_option( 'admin_email' ) );
+
         // send the mail
-        wp_mail( get_option( 'admin_email' ), $subject, $message, $this->email_message_headers() );
+        wp_mail( $to, $subject, $message, $this->email_message_headers() );
     }
 
     /**
