@@ -321,11 +321,14 @@ class pw_new_user_approve {
         // we want to reverse this for the plain text arena of emails.
         $blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
 
+        $default_admin_url = admin_url( 'users.php?s&pw-status-query-submit=Filter&new_user_approve_filter=pending&paged=1' );
+        $admin_url = apply_filters( 'new_user_approve_admin_link', $default_admin_url );
+
         /* send email to admin for approval */
         $message  = sprintf( __( '%1$s (%2$s) has requested a username at %3$s', 'new-user-approve' ), $user_login, $user_email, $blogname ) . "\r\n\r\n";
         $message .= get_option( 'siteurl' ) . "\r\n\r\n";
         $message .= sprintf( __( 'To approve or deny this user access to %s go to', 'new-user-approve' ), $blogname ) . "\r\n\r\n";
-        $message .= admin_url( 'users.php?s&pw-status-query-submit=Filter&new_user_approve_filter=pending&paged=1' ) . "\r\n";
+        $message .= $admin_url . "\r\n";
 
         $message = apply_filters( 'new_user_approve_request_approval_message', $message, $user_login, $user_email );
 

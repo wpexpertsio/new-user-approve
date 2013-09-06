@@ -68,6 +68,9 @@ this feature.
 
 == Changelog ==
 
+= 1.5.3 =
+* add filter for link to approve/deny users
+
 = 1.5.2 =
 * fix link to approve new users in email to admin
 * fix bug with sending emails to new approved users
