@@ -4,7 +4,7 @@ Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration, sign up, user management
 Requires at least: 3.5.1
 Tested up to: 3.6
-Stable tag: 1.5
+Stable tag: 1.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,17 @@ this feature.
 4. Approve or deny users using the bulk edit feature in WordPress.
 
 == Changelog ==
+
+= 1.5.3 =
+* add filter for link to approve/deny users
+* add filter for adding more email addresses to get notifications
+
+= 1.5.2 =
+* fix link to approve new users in email to admin
+* fix bug with sending emails to new approved users
+
+= 1.5.1 =
+* fix bug when trying to install on a site with WP 3.5.1
 
 = 1.5 =
 * add more logic to prevent unwanted password resets

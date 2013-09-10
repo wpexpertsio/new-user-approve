@@ -4,7 +4,7 @@
  Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve/
  Description: Allow administrators to approve users once they register. Only approved users will be allowed to access the blog. For support, please go to the <a href="http://wordpress.org/support/plugin/new-user-approve">support forums</a> on wordpress.org.
  Author: Josh Harrison
- Version: 1.5
+ Version: 1.5.3
  Author URI: http://www.picklewagon.com/
  */
 
@@ -77,7 +77,7 @@ class pw_new_user_approve {
 
 		$min_wp_version = '3.5.1';
 		$exit_msg = sprintf( __( 'New User Approve requires WordPress %s or newer.', 'new-user-approve' ), $min_wp_version );
-		if ( version_compare( $wp_version, $min_wp_version, '<=' ) ) {
+		if ( version_compare( $wp_version, $min_wp_version, '<' ) ) {
 			exit( $exit_msg );
 		}
 		
@@ -151,6 +151,7 @@ class pw_new_user_approve {
 
         // where it all happens
         do_action( 'new_user_approve_' . $status . '_user', $user_id );
+        do_action( 'new_user_approve_user_status_update', $user_id, $status );
     }
 
     /**
@@ -321,19 +322,25 @@ class pw_new_user_approve {
         // we want to reverse this for the plain text arena of emails.
         $blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
 
+        $default_admin_url = admin_url( 'users.php?s&pw-status-query-submit=Filter&new_user_approve_filter=pending&paged=1' );
+        $admin_url = apply_filters( 'new_user_approve_admin_link', $default_admin_url );
+
         /* send email to admin for approval */
         $message  = sprintf( __( '%1$s (%2$s) has requested a username at %3$s', 'new-user-approve' ), $user_login, $user_email, $blogname ) . "\r\n\r\n";
         $message .= get_option( 'siteurl' ) . "\r\n\r\n";
         $message .= sprintf( __( 'To approve or deny this user access to %s go to', 'new-user-approve' ), $blogname ) . "\r\n\r\n";
-        $message .= get_option( 'siteurl' ) . '/wp-admin/users.php?page=' . $this->_admin_page . "\r\n";
+        $message .= $admin_url . "\r\n";
 
         $message = apply_filters( 'new_user_approve_request_approval_message', $message, $user_login, $user_email );
 
         $subject = sprintf( __( '[%s] User Approval', 'new-user-approve' ), $blogname );
         $subject = apply_filters( 'new_user_approve_request_approval_subject', $subject );
 
+        $to = apply_filters( 'new_user_approve_email_admins', get_option( 'admin_email' ) );
+        $to = array_unique( $to );
+
         // send the mail
-        wp_mail( get_option( 'admin_email' ), $subject, $message, $this->email_message_headers() );
+        wp_mail( $to, $subject, $message, $this->email_message_headers() );
     }
 
     /**
@@ -419,11 +426,11 @@ class pw_new_user_approve {
         }
 
         wp_cache_delete( $user->ID, 'users' );
-        wp_cache_delete( $user->user_login, 'userlogins' );
+        wp_cache_delete( $user->data->user_login, 'userlogins' );
 
         // send email to user telling of approval
-        $user_login = stripslashes( $user->user_login );
-        $user_email = stripslashes( $user->user_email );
+        $user_login = stripslashes( $user->data->user_login );
+        $user_email = stripslashes( $user->data->user_email );
 
         // format the message
         $message  = sprintf( __( 'You have been approved to access %s', 'new-user-approve' ), get_option( 'blogname' ) ) . "\r\n";
