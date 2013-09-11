@@ -38,7 +38,6 @@ class pw_new_user_approve {
 		register_deactivation_hook( __FILE__,	array( $this, 'deactivation' ) );
 
         // Actions
-        add_action( 'plugins_loaded', array( $this, 'include_files' ) );
         add_action( 'wp_loaded', array( $this, 'admin_loaded' ) );
         add_action( 'rightnow_end',	array( $this, 'dashboard_stats' ) );
         add_action( 'user_register', array( $this, 'delete_new_user_approve_transient' ), 11 );
@@ -93,25 +92,20 @@ class pw_new_user_approve {
 	}
 
     /**
-     * Include any external files as part of the plugin.
-     *
-     * @uses plugins_loaded
-     */
-    public function include_files() {
-        require_once( dirname( __FILE__ ) . '/includes/admin-approve.php' );
-    }
-
-    /**
      * Makes it possible to disable the user admin integration. Must happen after
-     * WordPres is loaded.
+     * WordPress is loaded.
      *
      * @uses wp_loaded
      */
     public function admin_loaded() {
         $user_admin_integration = apply_filters( 'new_user_approve_user_admin_integration', true );
-
         if ( $user_admin_integration ) {
             require_once( dirname( __FILE__ ) . '/includes/user-list.php' );
+        }
+
+        $legacy_panel = apply_filters( 'new_user_approve_user_admin_legacy', true );
+        if ( $legacy_panel ) {
+            require_once( dirname( __FILE__ ) . '/includes/admin-approve.php' );
         }
     }
 
