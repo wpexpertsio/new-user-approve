@@ -299,6 +299,20 @@ class pw_new_user_approve {
     }
 
     /**
+     * The default notification message that is sent to site admin when requesting approval.
+     *
+     * @return string
+     */
+    public function default_notification_message() {
+        $message  = __( 'USERNAME (USEREMAIL) has requested a username at SITENAME', 'new-user-approve' ) . "\n\n";
+        $message .= "SITEURL\n\n";
+        $message .= __( 'To approve or deny this user access to SITENAME go to', 'new-user-approve' ) . "\n\n";
+        $message .= "ADMINURL\n\n";
+
+        return $message;
+    }
+
+    /**
      * Send an email to the admin to request approval. If there are already errors,
      * just go back and let core do it's thing.
      *
@@ -320,10 +334,14 @@ class pw_new_user_approve {
         $admin_url = apply_filters( 'new_user_approve_admin_link', $default_admin_url );
 
         /* send email to admin for approval */
-        $message  = sprintf( __( '%1$s (%2$s) has requested a username at %3$s', 'new-user-approve' ), $user_login, $user_email, $blogname ) . "\r\n\r\n";
-        $message .= get_option( 'siteurl' ) . "\r\n\r\n";
-        $message .= sprintf( __( 'To approve or deny this user access to %s go to', 'new-user-approve' ), $blogname ) . "\r\n\r\n";
-        $message .= $admin_url . "\r\n";
+        $message = apply_filters( 'new_user_approve_request_approval_message_default', $this->default_notification_message() );
+
+        $message = str_replace( 'USERNAME', $user_login, $message );
+        $message = str_replace( 'USEREMAIL', $user_email, $message );
+        $message = str_replace( 'SITENAME', $blogname, $message );
+        $message = str_replace( 'SITEURL', get_option( 'siteurl' ), $message );
+        $message = str_replace( 'ADMINURL', $admin_url, $message );
+        $message = str_replace( "\n", "\r\n", $message );
 
         $message = apply_filters( 'new_user_approve_request_approval_message', $message, $user_login, $user_email );
 
