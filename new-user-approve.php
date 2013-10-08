@@ -347,7 +347,7 @@ class pw_new_user_approve {
         $subject = sprintf( __( '[%s] User Approval', 'new-user-approve' ), $blogname );
         $subject = apply_filters( 'new_user_approve_request_approval_subject', $subject );
 
-        $to = apply_filters( 'new_user_approve_email_admins', get_option( 'admin_email' ) );
+        $to = apply_filters( 'new_user_approve_email_admins', array( get_option( 'admin_email' ) ) );
         $to = array_unique( $to );
 
         // send the mail
