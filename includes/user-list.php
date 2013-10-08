@@ -185,7 +185,7 @@ class pw_new_user_approve_user_list {
         if ( 'users' != $screen->id )
             return;
 
-        if ( isset( $_GET['new_user_approve_filter'] ) ) {
+        if ( isset( $_GET['new_user_approve_filter'] ) && $_GET['new_user_approve_filter'] != '' ) {
             $filter = esc_attr( $_GET['new_user_approve_filter'] );
 
             $query->query_from .= " INNER JOIN {$wpdb->usermeta} wp_usermeta ON ( {$wpdb->users}.ID = wp_usermeta.user_id )";

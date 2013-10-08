@@ -73,6 +73,7 @@ this feature.
 * add filter for adding more email addresses to get notifications
 * fix bug that prevents users to be approved and denied when requested
 * fix bug that prevents the new user email from including a password
+* fix bug that prevents search results from showing when searching users
 
 = 1.5.2 =
 * fix link to approve new users in email to admin
