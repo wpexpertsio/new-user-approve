@@ -45,9 +45,6 @@ class pw_new_user_approve_user_list {
      * @uses load-users.php
      */
     public function update_action() {
-        if ( isset( $_GET['new_user_approve_filter'] ) )
-            return;
-
         if ( isset( $_GET['action'] ) && ( in_array( $_GET['action'], array( 'approve', 'deny' ) ) ) ) {
             check_admin_referer( 'new-user-approve' );
 
