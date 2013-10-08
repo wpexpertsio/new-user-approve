@@ -31,7 +31,7 @@ class pw_new_user_approve_admin_approve {
     private function __construct() {
         // Actions
         add_action( 'admin_menu', array( $this, 'admin_menu_link' ) );
-        add_action( 'init', array( $this, 'process_input' ) );
+        add_action( 'admin_init', array( $this, 'process_input' ) );
         add_action( 'admin_notices', array( $this, 'admin_notice' ) );
         add_action( 'admin_init', array( $this, 'notice_ignore' ) );
     }
@@ -125,10 +125,14 @@ class pw_new_user_approve_admin_approve {
 
                     if ( $approve ) {
                         $approve_link = get_option( 'siteurl' ) . '/wp-admin/users.php?page=' . $this->_admin_page . '&user=' . $user->ID . '&status=approve';
+                        if ( isset( $_REQUEST['tab'] ) )
+                            $approve_link = add_query_arg( array( 'tab' => esc_attr( $_REQUEST['tab'] ) ), $approve_link );
                         $approve_link = wp_nonce_url( $approve_link, 'pw_new_user_approve_action_' . get_class( $this ) );
                     }
                     if ( $deny ) {
                         $deny_link = get_option( 'siteurl' ) . '/wp-admin/users.php?page=' . $this->_admin_page . '&user=' . $user->ID . '&status=deny';
+                        if ( isset( $_REQUEST['tab'] ) )
+                            $deny_link = add_query_arg( 'tab', esc_attr( $_REQUEST['tab'] ), $deny_link );
                         $deny_link = wp_nonce_url( $deny_link, 'pw_new_user_approve_action_' . get_class( $this ) );
                     }
 
