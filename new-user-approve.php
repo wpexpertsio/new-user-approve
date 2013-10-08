@@ -341,7 +341,6 @@ class pw_new_user_approve {
         $message = str_replace( 'SITENAME', $blogname, $message );
         $message = str_replace( 'SITEURL', get_option( 'siteurl' ), $message );
         $message = str_replace( 'ADMINURL', $admin_url, $message );
-        $message = str_replace( "\n", "\r\n", $message );
 
         $message = apply_filters( 'new_user_approve_request_approval_message', $message, $user_login, $user_email );
 
@@ -410,7 +409,7 @@ class pw_new_user_approve {
             $bypass_password_reset = true;
 
         // if the password has already been reset, absolutely bypass
-        if ( empty( $password_reset ) )
+        if ( !empty( $password_reset ) )
             $bypass_password_reset = true;
 
         $bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', $bypass_password_reset );

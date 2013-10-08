@@ -71,6 +71,8 @@ this feature.
 = 1.5.3 =
 * add filter for link to approve/deny users
 * add filter for adding more email addresses to get notifications
+* fix bug that prevents users to be approved and denied when requested
+* fix bug that prevents the new user email from including a password
 
 = 1.5.2 =
 * fix link to approve new users in email to admin
