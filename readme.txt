@@ -191,6 +191,9 @@ this feature.
 
 == Upgrade Notice ==
 
+= 1.5.3 =
+Download version 1.5.3 immediately! Some bugs have been fixed that have been affecting how the plugin worked.
+
 = 1.5 =
 A long awaited upgrade that includes better integration with WordPress core. Requires at least WordPress 3.5.
 
