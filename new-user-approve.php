@@ -501,7 +501,6 @@ class pw_new_user_approve {
         $from_name = get_option( 'blogname' );
 
         $headers = array(
-            "MIME-Version: 1.0\n",
             "From: \"{$from_name}\" <{$admin_email}>\n",
             "Content-Type: text/plain; charset=\"" . get_option( 'blog_charset' ) . "\"\n",
         );
