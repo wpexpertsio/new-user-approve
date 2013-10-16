@@ -264,6 +264,7 @@ When sending me your translation files, please send me your wordpress.org userna
 * Polish translation by [pik256](http://wordpress.org/support/profile/1271256)
 * Romanian translation by [Web Hosting Geeks](http://webhostinggeeks.com/)
 * Russian translation by [Alexey](http://wordpress.org/support/profile/asel)
+* Serbo-Croation translation by [Web Hosting Hub](http://www.webhostinghub.com/)
 * Slovakian translation by Boris Gereg
 * Spanish translation by [Eduardo Aranda](http://sinetiks.com/)
 * Swedish translation by [Per Bj&auml;levik](http://pastis.tauzero.se)

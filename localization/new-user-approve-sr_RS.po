@@ -1,0 +1,216 @@
+# Copyright (C) YEAR Josh Harrison
+# This file is distributed under the same license as the new-user-approve.1.4.2.zip package.
+msgid ""
+msgstr ""
+"Project-Id-Version: new-user-approve.1.4.2\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
+"POT-Creation-Date: 2013-04-03 12:03:27+01:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-10-16 09:31+0100\n"
+"Last-Translator: Boris Gereg <qwerty@elusion.sk>\n"
+"Language-Team: Boris Gereg <qwerty@elusion.sk>\n"
+"Language: SK\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Poedit 1.5.7\n"
+
+#: new-user-approve.php:126
+msgid "Approve New Users"
+msgstr "Odobrite nove korisnike"
+
+#: new-user-approve.php:140
+msgid "Settings"
+msgstr "Postavke"
+
+#: new-user-approve.php:183
+msgid "Users"
+msgstr "Korisnici"
+
+#: new-user-approve.php:219
+msgid "User successfully updated."
+msgstr "Korisnik uspešno update-ovan."
+
+#: new-user-approve.php:223
+msgid "User Registration Approval"
+msgstr "Registracija korisnika odobrena"
+
+#: new-user-approve.php:225
+msgid "User Management"
+msgstr "Menadžment korisnika"
+
+#: new-user-approve.php:228
+msgid "Users Pending Approval"
+msgstr "Korisnik čeka odobrenje"
+
+#: new-user-approve.php:229
+msgid "Approved Users"
+msgstr "Odobreni korisnici"
+
+#: new-user-approve.php:230
+msgid "Denied Users"
+msgstr "Odbijeni korisnici"
+
+#: new-user-approve.php:255
+msgid "ID"
+msgstr "ID"
+
+#: new-user-approve.php:256
+msgid "Username"
+msgstr "Korisničko ime"
+
+#: new-user-approve.php:257
+msgid "Name"
+msgstr "Ime"
+
+#: new-user-approve.php:258
+msgid "E-mail"
+msgstr "E-mail"
+
+#: new-user-approve.php:260 new-user-approve.php:262
+msgid "Actions"
+msgstr "Akcije"
+
+#: new-user-approve.php:296
+msgid "email:"
+msgstr "email:"
+
+#: new-user-approve.php:298
+msgid "Approve"
+msgstr "Odobri"
+
+#: new-user-approve.php:301
+msgid "Deny"
+msgstr "Odbij"
+
+#: new-user-approve.php:313
+msgid "approved"
+msgstr "odobreno"
+
+#: new-user-approve.php:315
+msgid "denied"
+msgstr "odbijeno"
+
+#: new-user-approve.php:317
+msgid "pending"
+msgstr "čeka"
+
+#: new-user-approve.php:320
+#, php-format
+msgid "There are no users with a status of %s"
+msgstr "Nema korisnika sa statusom %s"
+
+#: new-user-approve.php:332
+msgid "User name already exists"
+msgstr "Već postoji ovo ime korisnika"
+
+#: new-user-approve.php:335
+#, php-format
+msgid "%1$s (%2$s) has requested a username at %3$s"
+msgstr "%1$s (%2$s) zahteva korisničko ime na na %3$s"
+
+#: new-user-approve.php:337
+#, php-format
+msgid "To approve or deny this user access to %s go to"
+msgstr "Da biste odobrili ili odbili pristup ovog korisnika za %s idite na"
+
+#: new-user-approve.php:341
+#, php-format
+msgid "[%s] User Approval"
+msgstr "[%s] dozvola korisnika"
+
+#: new-user-approve.php:372
+#, php-format
+msgid "You have been approved to access %s"
+msgstr "Dozvoljen vam je pristup %s"
+
+#: new-user-approve.php:373
+#, php-format
+msgid "Username: %s"
+msgstr "Korisničko ime:%s"
+
+#: new-user-approve.php:374
+#, php-format
+msgid "Password: %s"
+msgstr "Šifra: %s"
+
+#: new-user-approve.php:378
+#, php-format
+msgid "[%s] Registration Approved"
+msgstr "[%s] Registracija dozvoljena"
+
+#: new-user-approve.php:397
+#, php-format
+msgid "You have been denied access to %s"
+msgstr "Nije vam dozvoljen pristup na  %s"
+
+#: new-user-approve.php:400
+#, php-format
+msgid "[%s] Registration Denied"
+msgstr "[%s] Registracija odbijena"
+
+#: new-user-approve.php:413
+msgid ""
+"An email has been sent to the site administrator. The administrator will "
+"review the information that has been submitted and either approve or deny "
+"your request."
+msgstr ""
+"Email je poslat administratoru sajta. Administrator će pregledati "
+"informaciju koja je podneta i ili će vam odobriti ili odbiti zahtev."
+
+#: new-user-approve.php:414
+msgid ""
+"You will receive an email with instructions on what you will need to do "
+"next. Thanks for your patience."
+msgstr ""
+"Primićete email sa uputstvima šta treba dalje da uradite. Hvala na "
+"strpljenju."
+
+#: new-user-approve.php:418
+msgid "Pending Approval"
+msgstr "Čeka se odobrenje"
+
+#: new-user-approve.php:418
+msgid "Registration successful."
+msgstr "Registracije uspešna."
+
+#: new-user-approve.php:466
+#, php-format
+msgid ""
+"Welcome to %s. This site is accessible to approved users only. To be "
+"approved, you must first register."
+msgstr ""
+"Dobrodošli na %s.  Ovom sajtu mogu da pristupe samo odobreni korisnici. Da "
+"biste bili odobreni, morate se prvo registrovati."
+
+#: new-user-approve.php:471
+msgid ""
+"After you register, your request will be sent to the site administrator for "
+"approval. You will then receive an email with further instructions."
+msgstr ""
+"Nakon što se registrujete vaš zahtev će biti poslat administratoru sajta za "
+"odobrenje. Zatim ćete primiti mail sa daljim instrukcijama."
+
+#. Plugin Name of an extension
+msgid "New User Approve"
+msgstr "Novi korisnik odobren"
+
+#. Plugin URI of an extension
+msgid "http://www.picklewagon.com/wordpress/new-user-approve"
+msgstr "http://www.picklewagon.com/wordpress/new-user-approve"
+
+#. Description of an extension
+msgid ""
+"This plugin allows administrators to approve users once they register. Only "
+"approved users will be allowed to access the blog."
+msgstr ""
+"Ovaj pligin omogućava administratoru da odobre korisnike kada se registruju. "
+"Samo odobreni korisnici mogu da pristupe ovom blogu."
+
+#. Author of an extension
+msgid "Josh Harrison"
+msgstr "Josh Harrison"
+
+#. Author URI of an extension
+msgid "http://www.picklewagon.com/"
+msgstr "http://www.picklewagon.com/"
