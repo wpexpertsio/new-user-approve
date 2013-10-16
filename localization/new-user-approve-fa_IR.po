@@ -1,0 +1,253 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: New User Approve 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
+"POT-Creation-Date: 2013-10-03 11:23+0330\n"
+"PO-Revision-Date: 2013-10-09 08:54+0330\n"
+"Last-Translator: Alimir <info@alimir.ir>\n"
+"Language-Team: Philippe Scoffoni <philippe@scoffoni.net>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../new-user-approve.php:79
+#, php-format
+msgid "New User Approve requires WordPress %s or newer."
+msgstr "این افزونه به وردپرس %s به بالا، نیازمند است."
+
+#: ../new-user-approve.php:204
+msgid "<strong>ERROR</strong>: Your account is still pending approval."
+msgstr "<strong>خطا</strong>: حساب کاربری شما هنوز تأیید نشده است."
+
+#: ../new-user-approve.php:210
+msgid ""
+"<strong>ERROR</strong>: Your account has been denied access to this site."
+msgstr ""
+"<strong>خطا</strong>: متأسفانه حساب کاربری شما تأیید نشده و نمی توانید به "
+"سایت دسترسی داشته باشید."
+
+#: ../new-user-approve.php:297
+msgid "Users"
+msgstr "کاربران"
+
+#: ../new-user-approve.php:325
+#, php-format
+msgid "%1$s (%2$s) has requested a username at %3$s"
+msgstr "%1$s (%2$s) یک نام کاربری را در %3$s درخواست کرده است"
+
+#: ../new-user-approve.php:327
+#, php-format
+msgid "To approve or deny this user access to %s go to"
+msgstr "جهت تأیید یا رد دسترسی این کاربر به %s بروید به"
+
+#: ../new-user-approve.php:332
+#, php-format
+msgid "[%s] User Approval"
+msgstr "[%s] تأیید کاربر"
+
+#: ../new-user-approve.php:359
+#, php-format
+msgid ""
+"<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a "
+"href=\"mailto:%s\">webmaster</a> !"
+msgstr ""
+"<strong>خطا</strong>: متأسفانه امکان نام نویسی شما وجو ندارد...لطفا با <a "
+"href=\"mailto:%s\">مدیریت</a> تماس بگیرید !"
+
+#: ../new-user-approve.php:429
+#, php-format
+msgid "You have been approved to access %s"
+msgstr "دسترسی شما به %s تأیید شد"
+
+#: ../new-user-approve.php:430
+#, php-format
+msgid "Username: %s"
+msgstr "نام کاربری: %s"
+
+#: ../new-user-approve.php:432
+#, php-format
+msgid "Password: %s"
+msgstr "رمز عبور: %s"
+
+#: ../new-user-approve.php:438
+#, php-format
+msgid "[%s] Registration Approved"
+msgstr "عضویت [%s] تأیید شد"
+
+#: ../new-user-approve.php:462
+#, php-format
+msgid "You have been denied access to %s"
+msgstr "دسترسی شما به %s رد شد"
+
+#: ../new-user-approve.php:465
+#, php-format
+msgid "[%s] Registration Denied"
+msgstr "عضویت [%s] رد شد"
+
+#: ../new-user-approve.php:511
+msgid ""
+"An email has been sent to the site administrator. The administrator will "
+"review the information that has been submitted and either approve or deny "
+"your request."
+msgstr ""
+"درخواست عضویت شما به میز مدیریت فرستاده شد. به زودی مدیر سایت اطلاعات شما را "
+"بررسی کرده و در صورت نبود مشکل، عضویت شما تأیید خواهد شد. "
+
+#: ../new-user-approve.php:513
+msgid ""
+"You will receive an email with instructions on what you will need to do "
+"next. Thanks for your patience."
+msgstr ""
+"به زودی یک ایمیل حاوی اطلاعات تکمیلی برای شما فرستاده خواهد شد. با تشکر از "
+"صبر و تحمل شما."
+
+#: ../new-user-approve.php:518
+msgid "Registration successful."
+msgstr "نام نویسی با موفقیت انجام شد."
+
+#: ../new-user-approve.php:521
+msgid "Pending Approval"
+msgstr "هنوز تأیید نشده"
+
+#: ../new-user-approve.php:558
+#, php-format
+msgid ""
+"Welcome to %s. This site is accessible to approved users only. To be "
+"approved, you must first register."
+msgstr ""
+"به %s خوش آمدید. این بخش تنها برای کاربران تأیید شده قابل دسترس است. اگر عضو "
+"نیستید، همین حالا نام نویسی کنید."
+
+#: ../new-user-approve.php:567
+msgid ""
+"After you register, your request will be sent to the site administrator for "
+"approval. You will then receive an email with further instructions."
+msgstr ""
+"پس از نام نویسی، درخواست شما به میز مدیریت فرستاده خواهد شد. در صورت تأیید، "
+"شما را از طریق ایمیل با خبر خواهیم ساخت."
+
+#: ../includes/admin-approve.php:49
+msgid "Approve New Users"
+msgstr "تأیید کاربران"
+
+#: ../includes/admin-approve.php:58
+msgid "User successfully updated."
+msgstr "کاربر با موفقیت به روزرسانی شد."
+
+#: ../includes/admin-approve.php:64
+msgid "User Registration Approval"
+msgstr "میز تأیید کاربران عضو شده"
+
+#: ../includes/admin-approve.php:67
+msgid "Users Pending Approval"
+msgstr "فهرست کاربران در انتظار تأیید"
+
+#: ../includes/admin-approve.php:68
+msgid "Approved Users"
+msgstr "کابران تأیید شده"
+
+#: ../includes/admin-approve.php:69
+msgid "Denied Users"
+msgstr "کاربران رد شده"
+
+#: ../includes/admin-approve.php:108
+msgid "Username"
+msgstr "نام کاربری"
+
+#: ../includes/admin-approve.php:109
+msgid "Name"
+msgstr "نام"
+
+#: ../includes/admin-approve.php:110
+msgid "E-mail"
+msgstr "ایمیل"
+
+#: ../includes/admin-approve.php:112 ../includes/admin-approve.php:114
+msgid "Actions"
+msgstr "فعالیت ها"
+
+#: ../includes/admin-approve.php:149
+msgid "email:"
+msgstr "ایمیل:"
+
+#: ../includes/admin-approve.php:151 ../includes/user-list.php:95
+#: ../includes/user-list.php:217 ../includes/user-list.php:218
+msgid "Approve"
+msgstr "تأیید"
+
+#: ../includes/admin-approve.php:154 ../includes/user-list.php:96
+#: ../includes/user-list.php:220 ../includes/user-list.php:221
+msgid "Deny"
+msgstr "عدم تأیید"
+
+#: ../includes/admin-approve.php:169
+msgid "approved"
+msgstr "تأیید شده"
+
+#: ../includes/admin-approve.php:171
+msgid "denied"
+msgstr "رد شده"
+
+#: ../includes/admin-approve.php:173
+msgid "pending"
+msgstr "در انتظار تأیید"
+
+#: ../includes/admin-approve.php:176
+#, php-format
+msgid "There are no users with a status of %s"
+msgstr "کاربری با مشخصه \"%s\" وجود ندارد"
+
+#: ../includes/admin-approve.php:212
+#, php-format
+msgid ""
+"You can now update user status on the <a href=\"%1$s\">users admin page</a>. "
+"| <a href=\"%2$s\">Hide Notice</a>"
+msgstr ""
+" شما می توانید اطلاعات کاربران را در بخش<a href=\"%1$s\"> همه کاربران </a> "
+"به روز رسانی کنید. | <a href=\"%2$s\">پنهان کردن این پیغام</a>"
+
+#: ../includes/user-list.php:118
+msgid "Status"
+msgstr "وضعیت"
+
+#: ../includes/user-list.php:154
+msgid "Filter"
+msgstr "فیلتر"
+
+#: ../includes/user-list.php:158 ../includes/user-list.php:160
+msgid "View all users"
+msgstr "مشاهده تمام کاربران"
+
+#: ../includes/user-list.php:335
+msgid "Access Status"
+msgstr "وضعیت دسترسی"
+
+#: ../includes/user-list.php:339
+msgid "-- Status --"
+msgstr "-- وضعیت --"
+
+#: ../includes/user-list.php:345
+msgid "If user has access to sign in or not."
+msgstr "وضعیت کاربر جهت ورود و خروج"
+
+#: ../includes/user-list.php:347
+msgid "Current user status is <strong>pending</strong>."
+msgstr "وضعیت تأیید کاربر، هنوز <strong>معلق</strong> است."
+
+#~ msgid "Settings"
+#~ msgstr "تنظیمات"
+
+#~ msgid "ID"
+#~ msgstr "آی دی"
+
+#~ msgid "Josh Harrison"
+#~ msgstr "Ali Mirzaei"
+
+#~ msgid "http://www.picklewagon.com/"
+#~ msgstr "http://alimir.ir"

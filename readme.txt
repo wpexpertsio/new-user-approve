@@ -68,6 +68,9 @@ this feature.
 
 == Changelog ==
 
+= 1.5.6 =
+* add more translations
+
 = 1.5.5 =
 * allow approval from legacy page
 
@@ -256,6 +259,7 @@ When sending me your translation files, please send me your wordpress.org userna
 * Hungarian translation by Gabor Varga
 * Italian translation by [Pierfrancesco Marsiaj](http://profiles.wordpress.org/pierinux/)
 * Lithuanian translation by [Ksaveras](http://profiles.wordpress.org/xawiers)
+* Persian translation by [alimir](http://profiles.wordpress.org/alimir)
 * Polish translation by [pik256](http://wordpress.org/support/profile/1271256)
 * Romanian translation by [Web Hosting Geeks](http://webhostinggeeks.com/)
 * Russian translation by [Alexey](http://wordpress.org/support/profile/asel)
