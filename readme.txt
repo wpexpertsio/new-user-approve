@@ -251,6 +251,7 @@ When sending me your translation files, please send me your wordpress.org userna
 * Czech translation by [GazikT](http://profiles.wordpress.org/gazikt/)
 * Danish translation by [GeorgWP](http://wordpress.org/support/profile/georgwp)
 * Dutch translation by [Ronald Moolenaar](http://profiles.wordpress.org/moolie/)
+* Estonian translation by (Rait Huusmann)(http://profiles.wordpress.org/raitulja/)
 * Finnish translation by Tonttu-ukko
 * French translation by [Philippe Scoffoni](http://philippe.scoffoni.net/)
 * German translation by Christoph Ploedt
