@@ -180,12 +180,14 @@ class pw_new_user_approve_user_list {
 	public function filter_by_status( $query ) {
 		global $wpdb;
 
-		if ( !is_admin() )
+		if ( !is_admin() ) {
 			return;
+		}
 
 		$screen = get_current_screen();
-		if ( 'users' != $screen->id )
+		if ( 'users' != $screen->id ) {
 			return;
+		}
 
 		if ( isset( $_GET['new_user_approve_filter'] ) && $_GET['new_user_approve_filter'] != '' ) {
 			$filter = esc_attr( $_GET['new_user_approve_filter'] );
@@ -238,8 +240,9 @@ class pw_new_user_approve_user_list {
 			$action = $wp_list_table->current_action();
 
 			$allowed_actions = array( 'approve', 'deny' );
-			if ( !in_array( $action, $allowed_actions ) )
+			if ( !in_array( $action, $allowed_actions ) ) {
 				return;
+			}
 
 			// security check
 			check_admin_referer( 'bulk-users' );
@@ -249,12 +252,14 @@ class pw_new_user_approve_user_list {
 				$user_ids = array_map( 'intval', $_REQUEST['users'] );
 			}
 
-			if ( empty( $user_ids ) )
+			if ( empty( $user_ids ) ) {
 				return;
+			}
 
 			$sendback = remove_query_arg( array( 'approved', 'denied', 'deleted', 'ids', 'new_user_approve_filter', 'pw-status-query-submit', 'new_role' ), wp_get_referer() );
-			if ( !$sendback )
-				$sendback = admin_url( "users.php" );
+			if ( !$sendback ) {
+				$sendback = admin_url( 'users.php' );
+			}
 
 			$pagenum = $wp_list_table->get_pagenum();
 			$sendback = add_query_arg( 'paged', $pagenum, $sendback );
@@ -299,8 +304,9 @@ class pw_new_user_approve_user_list {
 	public function admin_notices() {
 		$screen = get_current_screen();
 
-		if ( $screen->id != 'users' )
+		if ( $screen->id != 'users' ) {
 			return;
+		}
 
 		$message = null;
 
@@ -327,8 +333,9 @@ class pw_new_user_approve_user_list {
 	 * @param object $user
 	 */
 	public function profile_status_field( $user ) {
-		if ( $user->ID == get_current_user_id() )
+		if ( $user->ID == get_current_user_id() ) {
 			return;
+		}
 
 		$user_status = pw_new_user_approve()->get_user_status( $user->ID );
 		?>
@@ -366,8 +373,9 @@ class pw_new_user_approve_user_list {
 	 * @return bool
 	 */
 	public function save_profile_status_field( $user_id ) {
-		if ( !current_user_can( 'edit_user', $user_id ) )
+		if ( !current_user_can( 'edit_user', $user_id ) ) {
 			return false;
+		}
 
 		if ( !empty( $_POST['new_user_approve_status'] ) ) {
 			$new_status = esc_attr( $_POST['new_user_approve_status'] );

@@ -118,8 +118,9 @@ class pw_new_user_approve {
 	public function get_user_status( $user_id ) {
 		$user_status = get_user_meta( $user_id, 'pw_user_status', true );
 
-		if ( empty( $user_status ) )
+		if ( empty( $user_status ) ) {
 			$user_status = 'approved';
+		}
 
 		return $user_status;
 	}
@@ -132,16 +133,18 @@ class pw_new_user_approve {
 	 */
 	public function update_user_status( $user, $status ) {
 		$user_id = absint( $user );
-		if ( !$user_id )
+		if ( !$user_id ) {
 			return;
+		}
 
-		if ( !in_array( $status, array( 'approve', 'deny' ) ) )
+		if ( !in_array( $status, array( 'approve', 'deny' ) ) ) {
 			return;
+		}
 
 		$do_update = apply_filters( 'new_user_approve_validate_status_update', true, $user_id, $status );
-
-		if ( !$do_update )
+		if ( !$do_update ) {
 			return;
+		}
 
 		// where it all happens
 		do_action( 'new_user_approve_' . $status . '_user', $user_id );
@@ -168,12 +171,15 @@ class pw_new_user_approve {
 	public function validate_status_update( $do_update, $user_id, $status ) {
 		$current_status = pw_new_user_approve()->get_user_status( $user_id );
 
-		if ( $status == 'approve' )
-			$new_status = 'approved'; else
+		if ( $status == 'approve' ) {
+			$new_status = 'approved';
+		} else {
 			$new_status = 'denied';
+		}
 
-		if ( $current_status == $new_status )
+		if ( $current_status == $new_status ) {
 			$do_update = false;
+		}
 
 		return $do_update;
 	}
@@ -387,12 +393,14 @@ class pw_new_user_approve {
 		$bypass_password_reset = false;
 
 		// if no status is set, don't reset password
-		if ( empty( $user_status ) )
+		if ( empty( $user_status ) ) {
 			$bypass_password_reset = true;
+		}
 
 		// if the password has already been reset, absolutely bypass
-		if ( !empty( $password_reset ) )
+		if ( !empty( $password_reset ) ) {
 			$bypass_password_reset = true;
+		}
 
 		$bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', $bypass_password_reset );
 
@@ -471,8 +479,9 @@ class pw_new_user_approve {
 
 	public function email_message_headers() {
 		$admin_email = get_option( 'admin_email' );
-		if ( empty( $admin_email ) )
+		if ( empty( $admin_email ) ) {
 			$admin_email = 'support@' . $_SERVER['SERVER_NAME'];
+		}
 
 		$from_name = get_option( 'blogname' );
 
@@ -496,8 +505,9 @@ class pw_new_user_approve {
 		}
 
 		// if there is an error already, let it do it's thing
-		if ( $errors->get_error_code() )
+		if ( $errors->get_error_code() ) {
 			return $errors;
+		}
 
 		$message = sprintf( __( 'An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request.', 'new-user-approve' ) );
 		$message .= ' ';
