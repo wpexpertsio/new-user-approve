@@ -45,7 +45,7 @@ class pw_new_user_approve_user_list {
      * @uses load-users.php
      */
     public function update_action() {
-        if ( isset( $_GET['action'] ) && ( in_array( $_GET['action'], array( 'approve', 'deny' ) ) ) ) {
+        if ( isset( $_GET['action'] ) && in_array( $_GET['action'], array( 'approve', 'deny' ) ) && !isset( $_GET['new_role'] ) ) {
             check_admin_referer( 'new-user-approve' );
 
             $sendback = remove_query_arg( array( 'approved', 'denied', 'deleted', 'ids', 'new_user_approve_filter', 'pw-status-query-submit', 'new_role' ), wp_get_referer() );
@@ -302,11 +302,13 @@ class pw_new_user_approve_user_list {
         $message = null;
 
         if ( isset( $_REQUEST['denied'] ) && (int) $_REQUEST['denied']) {
-            $message = sprintf( _n( 'User denied.', '%s users denied.', $_REQUEST['denied'], 'new-user-approve' ), number_format_i18n( $_REQUEST['denied'] ) );
+            $denied = esc_attr( $_REQUEST['denied'] );
+            $message = sprintf( _n( 'User denied.', '%s users denied.', $denied, 'new-user-approve' ), number_format_i18n( $denied ) );
         }
 
         if ( isset( $_REQUEST['approved'] ) && (int) $_REQUEST['approved']) {
-            $message = sprintf( _n( 'User approved.', '%s users approved.', $_REQUEST['approved'], 'new-user-approve' ), number_format_i18n( $_REQUEST['approved'] ) );
+            $approved = esc_attr( $_REQUEST['approved'] );
+            $message = sprintf( _n( 'User approved.', '%s users approved.', $approved, 'new-user-approve' ), number_format_i18n( $approved ) );
         }
 
         if ( !empty( $message ) ) {
