@@ -43,7 +43,7 @@ class pw_new_user_approve {
         add_action( 'user_register', array( $this, 'delete_new_user_approve_transient' ), 11 );
         add_action( 'new_user_approve_approve_user', array( $this, 'delete_new_user_approve_transient' ), 11 );
         add_action( 'new_user_approve_deny_user', array( $this, 'delete_new_user_approve_transient' ), 11 );
-        add_action( 'deleted_user',	array( $this, 'delete_new_user_approve_transient' ) );
+        add_action( 'deleted_user', array( $this, 'delete_new_user_approve_transient' ) );
         add_action( 'register_post', array( $this, 'request_admin_approval_email' ), 10, 3 );
         add_action( 'register_post', array( $this, 'create_new_user' ), 10, 3 );
         add_action( 'lostpassword_post', array( $this, 'lost_password' ) );
