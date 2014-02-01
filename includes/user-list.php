@@ -213,10 +213,10 @@ class pw_new_user_approve_user_list {
 		if ( $screen->id == 'users' ) : ?>
 			<script type="text/javascript">
 				jQuery(document).ready(function ($) {
-					$('<option>').val('approve').text('<?php _e( 'Approve', 'new-user-approve' )?>').appendTo("select[name='action']")
+					$('<option>').val('approve').text('<?php _e( 'Approve', 'new-user-approve' )?>').appendTo("select[name='action']");
 					$('<option>').val('approve').text('<?php _e( 'Approve', 'new-user-approve' )?>').appendTo("select[name='action2']");
 
-					$('<option>').val('deny').text('<?php _e( 'Deny', 'new-user-approve' )?>').appendTo("select[name='action']")
+					$('<option>').val('deny').text('<?php _e( 'Deny', 'new-user-approve' )?>').appendTo("select[name='action']");
 					$('<option>').val('deny').text('<?php _e( 'Deny', 'new-user-approve' )?>').appendTo("select[name='action2']");
 				});
 			</script>

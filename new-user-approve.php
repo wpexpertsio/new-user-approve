@@ -306,7 +306,7 @@ class pw_new_user_approve {
 	 */
 	public function request_admin_approval_email( $user_login, $user_email, $errors ) {
 		if ( $errors->get_error_code() ) {
-			return $errors;
+			return;
 		}
 
 		// The blogname option is escaped with esc_html on the way into the database in sanitize_option
@@ -350,7 +350,7 @@ class pw_new_user_approve {
 	 */
 	public function create_new_user( $user_login, $user_email, $errors ) {
 		if ( $errors->get_error_code() ) {
-			return $errors;
+			return;
 		}
 
 		// create the user
@@ -358,7 +358,6 @@ class pw_new_user_approve {
 		$user_id = wp_create_user( $user_login, $user_pass, $user_email );
 		if ( !$user_id ) {
 			$errors->add( 'registerfail', sprintf( __( '<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a href="mailto:%s">webmaster</a> !' ), get_option( 'admin_email' ) ) );
-			return $errors;
 		}
 	}
 
