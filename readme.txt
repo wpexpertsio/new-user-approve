@@ -69,6 +69,7 @@ this feature.
 == Changelog ==
 
 = 1.5.7 =
+* fix bug that was preventing bulk approval/denials
 
 = 1.5.6 =
 * add more translations
