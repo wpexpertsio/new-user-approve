@@ -485,7 +485,10 @@ class pw_new_user_approve {
 
 		$from_name = get_option( 'blogname' );
 
-		$headers = array( "From: \"{$from_name}\" <{$admin_email}>\n", "Content-Type: text/plain; charset=\"" . get_option( 'blog_charset' ) . "\"\n", );
+		$headers = array(
+			"From: \"{$from_name}\" <{$admin_email}>\n",
+			"Content-Type: text/plain; charset=\"" . get_option( 'blog_charset' ) . "\"\n",
+		);
 
 		$headers = apply_filters( 'new_user_approve_email_header', $headers );
 
