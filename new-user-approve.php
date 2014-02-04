@@ -328,7 +328,7 @@ class pw_new_user_approve {
 		$message = str_replace( 'USERNAME', $user_login, $message );
 		$message = str_replace( 'USEREMAIL', $user_email, $message );
 		$message = str_replace( 'SITENAME', $blogname, $message );
-		$message = str_replace( 'SITEURL', get_option( 'siteurl' ), $message );
+		$message = str_replace( 'SITEURL', home_url(), $message );
 		$message = str_replace( 'ADMINURL', $admin_url, $message );
 
 		$message = apply_filters( 'new_user_approve_request_approval_message', $message, $user_login, $user_email );
