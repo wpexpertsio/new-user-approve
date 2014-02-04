@@ -8,8 +8,8 @@ Stable tag: 1.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-New User Approve is a WordPress plugin that allows a blog administrator to
-approve a user before they are able to access and login to the blog.
+New User Approve allows a site administrator to approve a user before they
+are able to login to the site.
 
 == Description ==
 
@@ -18,16 +18,31 @@ the database. Then an email is sent to the new user with their login
 credentials. Very simple. As it should be.
 
 The New User Approve plugin modifies the registration process. When a user 
-registers for the blog, the user gets created and then an email gets sent to 
+registers for the site, the user gets created and then an email gets sent to
 the administrators of the site. An administrator then is expected to either 
 approve or deny the registration request. An email is then sent to the user 
 indicating whether they were approved or denied. If the user has been approved,
 the email will include the login credentials. Until a user is approved, the 
 user will not be able to login to the site.
 
+Default WordPress registration process:
+1. User registers for access to site.
+2a. Login credentials is sent to new user in an email.
+2b. Admin is notified of new user signup via email.
+3. User logs in to site using login credentials.
+
+WordPress registration process with New User Approve plugin activated:
+1. User registers for access to site.
+2a. User is shown message to wait for approval.
+2b. Admin is notified of new user signup via email.
+3. Admin goes to admin to approve or deny new user.
+4. Email is sent to user. If approved, email will include login credentials.
+5. User logs in to site using login credentials.
+
 == Installation ==
 
-1. Upload new-user-approve to the wp-content/plugins directory
+1. Upload new-user-approve to the wp-content/plugins directory or download from
+the WordPress backend (Plugins -> Add New -> search for 'new user approve'
 2. Activate the plugin through the Plugins menu in WordPress
 3. No configuration necessary.
 
