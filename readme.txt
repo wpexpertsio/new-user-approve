@@ -4,7 +4,7 @@ Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration, sign up, user management
 Requires at least: 3.5.1
 Tested up to: 3.8.1
-Stable tag: 1.5.7
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,17 +27,17 @@ user will not be able to login to the site.
 
 Default WordPress registration process:
 1. User registers for access to site.
-2a. Login credentials is sent to new user in an email.
-2b. Admin is notified of new user signup via email.
-3. User logs in to site using login credentials.
+2. Login credentials is sent to new user in an email.
+3. Admin is notified of new user signup via email.
+4. User logs in to site using login credentials.
 
 WordPress registration process with New User Approve plugin activated:
 1. User registers for access to site.
-2a. User is shown message to wait for approval.
-2b. Admin is notified of new user signup via email.
-3. Admin goes to admin to approve or deny new user.
-4. Email is sent to user. If approved, email will include login credentials.
-5. User logs in to site using login credentials.
+2. User is shown message to wait for approval.
+3. Admin is notified of new user signup via email.
+4. Admin goes to admin to approve or deny new user.
+5. Email is sent to user. If approved, email will include login credentials.
+6. User logs in to site using login credentials.
 
 == Installation ==
 
