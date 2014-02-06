@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
-Tags: users, registration, sign up, user management
+Tags: users, registration, sign up, user management, login
 Requires at least: 3.5.1
 Tested up to: 3.8.1
 Stable tag: 1.6
@@ -25,6 +25,14 @@ indicating whether they were approved or denied. If the user has been approved,
 the email will include the login credentials. Until a user is approved, the 
 user will not be able to login to the site.
 
+Only approved users will be allowed to login to site. Users waiting for approval
+as well as denied users will not be able to login to site.
+
+A user's status can be updated even after the initial approval/denial.
+
+Each user that exists before New User Approve has been activated will be treated as
+an approved user.
+
 Default WordPress registration process:
 1. User registers for access to site.
 2. Login credentials is sent to new user in an email.
@@ -39,10 +47,12 @@ WordPress registration process with New User Approve plugin activated:
 5. Email is sent to user. If approved, email will include login credentials.
 6. User logs in to site using login credentials.
 
+[Fork New User Approve on Github](https://github.com/picklewagon/new-user-approve)
+
 == Installation ==
 
 1. Upload new-user-approve to the wp-content/plugins directory or download from
-the WordPress backend (Plugins -> Add New -> search for 'new user approve'
+the WordPress backend (Plugins -> Add New -> search for 'new user approve')
 2. Activate the plugin through the Plugins menu in WordPress
 3. No configuration necessary.
 
@@ -80,6 +90,7 @@ this feature.
 2. Integration with WordPress Users admin page.
 3. Filter users by status.
 4. Approve or deny users using the bulk edit feature in WordPress.
+5. Custom messages on the login screen.
 
 == Changelog ==
 
