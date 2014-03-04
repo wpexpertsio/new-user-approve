@@ -59,5 +59,14 @@ class NewUserApproveUserTest extends WP_UnitTestCase {
 		$do_update = pw_new_user_approve()->validate_status_update( true, $user_id, 'approve' );
 		$this->assertFalse( $do_update );
 	}
+
+	function testUserStatusList() {
+		$valids = pw_new_user_approve()->get_valid_statuses();
+
+		$statuses = pw_new_user_approve()->_get_user_statuses();
+
+		$this->assertTrue( is_array( $statuses ) );
+		$this->assertTrue( count($statuses) == count( $valids ) );
+	}
 }
 

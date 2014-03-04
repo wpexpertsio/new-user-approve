@@ -224,39 +224,42 @@ class pw_new_user_approve {
 		return $message;
 	}
 
+	public function _get_user_statuses() {
+		$statuses = array();
+
+		foreach ( $this->get_valid_statuses() as $status ) {
+			// Query the users table
+			if ( $status != 'approved' ) {
+				// Query the users table
+				$query = array( 'meta_key' => 'pw_user_status', 'meta_value' => $status, );
+				$wp_user_search = new WP_User_Query( $query );
+			} else {
+				// get all approved users and any user without a status
+				$query = array( 'meta_query' => array( 'relation' => 'OR', array( 'key' => 'pw_user_status', 'value' => 'approved', 'compare' => '=' ), array( 'key' => 'pw_user_status', 'value' => '', 'compare' => 'NOT EXISTS' ), ), );
+				$wp_user_search = new WP_User_Query( $query );
+			}
+
+			$statuses[$status] = $wp_user_search->get_results();
+		}
+
+		return $statuses;
+	}
 	/**
 	 * Get a status of all the users and save them using a transient
 	 */
 	public function get_user_statuses() {
-		$valid_stati = $this->get_valid_statuses();
-		$user_status = get_transient( 'new_user_approve_user_statuses' );
+		$user_statuses = get_transient( 'new_user_approve_user_statuses' );
 
-		if ( false === $user_status ) {
-			$user_status = array();
-
-			foreach ( $valid_stati as $status ) {
-				// Query the users table
-				if ( $status != 'approved' ) {
-					// Query the users table
-					$query = array( 'meta_key' => 'pw_user_status', 'meta_value' => $status, );
-					$wp_user_search = new WP_User_Query( $query );
-				} else {
-					// get all approved users and any user without a status
-					$query = array( 'meta_query' => array( 'relation' => 'OR', array( 'key' => 'pw_user_status', 'value' => 'approved', 'compare' => '=' ), array( 'key' => 'pw_user_status', 'value' => '', 'compare' => 'NOT EXISTS' ), ), );
-					$wp_user_search = new WP_User_Query( $query );
-				}
-
-				$user_status[$status] = $wp_user_search->get_results();
-			}
-
-			set_transient( 'new_user_approve_user_statuses', $user_status );
+		if ( false === $user_statuses ) {
+			$user_statuses = _get_user_statuses();
+			set_transient( 'new_user_approve_user_statuses', $user_statuses );
 		}
 
-		foreach ( $valid_stati as $status ) {
-			$user_status[$status] = apply_filters( 'new_user_approve_user_status', $user_status[$status], $status );
+		foreach ( $this->get_valid_statuses() as $status ) {
+			$user_statuses[$status] = apply_filters( 'new_user_approve_user_status', $user_statuses[$status], $status );
 		}
 
-		return $user_status;
+		return $user_statuses;
 	}
 
 	/**
