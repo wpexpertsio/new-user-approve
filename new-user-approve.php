@@ -130,25 +130,29 @@ class pw_new_user_approve {
 	 *
 	 * @param int $user
 	 * @param string $status
+	 *
+	 * @return boolean
 	 */
 	public function update_user_status( $user, $status ) {
 		$user_id = absint( $user );
 		if ( !$user_id ) {
-			return;
+			return false;
 		}
 
 		if ( !in_array( $status, array( 'approve', 'deny' ) ) ) {
-			return;
+			return false;
 		}
 
 		$do_update = apply_filters( 'new_user_approve_validate_status_update', true, $user_id, $status );
 		if ( !$do_update ) {
-			return;
+			return false;
 		}
 
 		// where it all happens
 		do_action( 'new_user_approve_' . $status . '_user', $user_id );
 		do_action( 'new_user_approve_user_status_update', $user_id, $status );
+
+		return true;
 	}
 
 	/**

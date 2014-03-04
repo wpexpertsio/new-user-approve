@@ -20,5 +20,28 @@ class NewUserApproveUserTest extends WP_UnitTestCase {
 		$this->assertTrue( $status == 'approved' );
 	}
 
+	function testStatusUpdate() {
+		$user_id = $this->factory->user->create();
+
+		$result = pw_new_user_approve()->update_user_status( 'hello', 'approve' );
+		$this->assertFalse( $result );
+
+		$result = pw_new_user_approve()->update_user_status( $user_id, 'hello' );
+		$this->assertFalse( $result );
+
+		$result = pw_new_user_approve()->update_user_status( $user_id, 'approve' );
+		$this->assertTrue( $result );
+
+		add_filter( 'new_user_approve_validate_status_update', '__return_false' );
+
+		$another_user = $this->factory->user->create();
+		$result = pw_new_user_approve()->update_user_status( $another_user, 'deny' );
+		$this->assertFalse( $result );
+
+		remove_filter( 'new_user_approve_validate_status_update', '__return_false' );
+
+		$result = pw_new_user_approve()->update_user_status( $user_id, 'deny' );
+		$this->assertTrue( $result );
+	}
 }
 
