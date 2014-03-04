@@ -43,5 +43,11 @@ class NewUserApproveUserTest extends WP_UnitTestCase {
 		$result = pw_new_user_approve()->update_user_status( $user_id, 'deny' );
 		$this->assertTrue( $result );
 	}
+
+	function testValidStatuses() {
+		$statuses = pw_new_user_approve()->get_valid_statuses();
+
+		$this->assertEquals( $statuses, array( 'pending', 'approved', 'denied' ) );
+	}
 }
 
