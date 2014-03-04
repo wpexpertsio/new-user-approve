@@ -7,7 +7,7 @@ class NewUserApproveUserTest extends WP_UnitTestCase {
 		$status = pw_new_user_approve()->get_user_status( $user_id );
 
 		// default status for new user is pending
-		$this->assertTrue( $status == 'pending' );
+		$this->assertEquals( $status, 'pending' );
 	}
 
 	function testStatusOfUserAlreadyAdded() {
@@ -17,7 +17,7 @@ class NewUserApproveUserTest extends WP_UnitTestCase {
 		$this->assertEmpty( $user_status );
 
 		$status = pw_new_user_approve()->get_user_status( $user->ID );
-		$this->assertTrue( $status == 'approved' );
+		$this->assertEquals( $status, 'approved' );
 	}
 
 	function testStatusUpdate() {
@@ -66,7 +66,7 @@ class NewUserApproveUserTest extends WP_UnitTestCase {
 		$statuses = pw_new_user_approve()->_get_user_statuses();
 
 		$this->assertTrue( is_array( $statuses ) );
-		$this->assertTrue( count($statuses) == count( $valids ) );
+		$this->assertEquals( count($statuses), count( $valids ) );
 	}
 }
 
