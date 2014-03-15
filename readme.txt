@@ -59,6 +59,12 @@ to retrieve the user's password.
 There is a filter available (new_user_approve_bypass_password_reset) to turn off
 this feature.
 
+= What happens to the user's status after the plugin is deactivated? =
+
+If you deactivate the plugin, their status doesn't matter. The status that the
+plugin uses is only used by the plugin. All users will be allowed to login as long
+as they have their username and passwords.
+
 == Screenshots ==
 
 1. The backend to manage approving and denying users. This is an alternative to approving users.
