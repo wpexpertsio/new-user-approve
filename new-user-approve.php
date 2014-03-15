@@ -251,7 +251,7 @@ class pw_new_user_approve {
 		$user_statuses = get_transient( 'new_user_approve_user_statuses' );
 
 		if ( false === $user_statuses ) {
-			$user_statuses = _get_user_statuses();
+			$user_statuses = $this->_get_user_statuses();
 			set_transient( 'new_user_approve_user_statuses', $user_statuses );
 		}
 
@@ -529,11 +529,13 @@ class pw_new_user_approve {
 		$success_message = __( 'Registration successful.', 'new-user-approve' );
 		$success_message = apply_filters( 'new_user_approve_registration_message', $success_message );
 
-		login_header( __( 'Pending Approval', 'new-user-approve' ), '<p class="message register">' . $success_message . '</p>', $errors );
-		login_footer();
+		if ( defined( 'login_header' ) ) {
+			login_header( __( 'Pending Approval', 'new-user-approve' ), '<p class="message register">' . $success_message . '</p>', $errors );
+			login_footer();
 
-		// an exit is necessary here so the normal process for user registration doesn't happen
-		exit();
+			// an exit is necessary here so the normal process for user registration doesn't happen
+			exit();
+		}
 	}
 
 	/**
