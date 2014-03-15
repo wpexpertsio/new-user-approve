@@ -4,7 +4,7 @@
  Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve/
  Description: Allow administrators to approve users once they register. Only approved users will be allowed to access the blog. For support, please go to the <a href="http://wordpress.org/support/plugin/new-user-approve">support forums</a> on wordpress.org.
  Author: Josh Harrison
- Version: 1.5.7
+ Version: 1.6
  Author URI: http://picklewagon.com/
  */
 
@@ -335,7 +335,7 @@ class pw_new_user_approve {
 		$message = str_replace( 'USERNAME', $user_login, $message );
 		$message = str_replace( 'USEREMAIL', $user_email, $message );
 		$message = str_replace( 'SITENAME', $blogname, $message );
-		$message = str_replace( 'SITEURL', get_option( 'siteurl' ), $message );
+		$message = str_replace( 'SITEURL', home_url(), $message );
 		$message = str_replace( 'ADMINURL', $admin_url, $message );
 
 		$message = apply_filters( 'new_user_approve_request_approval_message', $message, $user_login, $user_email );
