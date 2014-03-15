@@ -100,6 +100,9 @@ as they have their username and passwords.
 
 == Changelog ==
 
+= 1.6 =
+* unit tests
+
 = 1.5.7 =
 * fix bug that was preventing bulk approval/denials
 
