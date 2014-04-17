@@ -102,6 +102,7 @@ as they have their username and passwords.
 
 = 1.6 =
 * unit tests
+* updated French translation
 
 = 1.5.7 =
 * fix bug that was preventing bulk approval/denials
