@@ -56,6 +56,7 @@ class pw_new_user_approve {
 		add_filter( 'registration_errors', array( $this, 'show_user_pending_message' ) );
 		add_filter( 'login_message', array( $this, 'welcome_user' ) );
 		add_filter( 'new_user_approve_validate_status_update', array( $this, 'validate_status_update' ), 10, 3 );
+		add_filter( 'shake_error_codes', array( $this, 'failure_shake' ) );
 	}
 
 	public function get_plugin_url() {
@@ -600,6 +601,21 @@ class pw_new_user_approve {
 			$status = 'approved';
 		}
 		update_user_meta( $user_id, 'pw_user_status', $status );
+	}
+
+	/**
+	 * Add error codes to shake the login form on failure
+	 *
+	 * @uses shake_error_codes
+	 * @param $error_codes
+	 * @return array
+	 */
+	public function failure_shake( $error_codes ) {
+		$error_codes[] = 'registration_required';
+		$error_codes[] = 'pending_approval';
+		$error_codes[] = 'denied_access';
+
+		return $error_codes;
 	}
 } // End Class
 

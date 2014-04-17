@@ -102,6 +102,7 @@ as they have their username and passwords.
 
 = 1.6 =
 * unit tests
+* shake the login form when attempting to login as unapproved user
 * updated French translation
 
 = 1.5.8 =
