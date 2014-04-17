@@ -611,7 +611,6 @@ class pw_new_user_approve {
 	 * @return array
 	 */
 	public function failure_shake( $error_codes ) {
-		$error_codes[] = 'registration_required';
 		$error_codes[] = 'pending_approval';
 		$error_codes[] = 'denied_access';
 
