@@ -236,7 +236,7 @@ class pw_new_user_approve_admin_approve {
 	 * @uses admin_init
 	 */
 	public function notice_ignore() {
-		if ( isset( $_GET['new-user-approve-ignore-notice'] ) && '1' == $_GET['new-user-approve-ignore-notice   '] ) {
+		if ( isset( $_GET['new-user-approve-ignore-notice'] ) && '1' == $_GET['new-user-approve-ignore-notice'] ) {
 			$user_id = get_current_user_id();
 			add_user_meta( $user_id, 'pw_new_user_approve_ignore_notice', '1', true );
 		}
