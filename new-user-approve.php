@@ -576,6 +576,13 @@ class pw_new_user_approve {
 		}
 	}
 
+	public function default_welcome_message() {
+		$welcome = sprintf( __( 'Welcome to SITENAME. This site is accessible to approved users only. To be approved, you must first register.', 'new-user-approve' ), get_option( 'blogname' ) );
+		$welcome = apply_filters( 'new_user_approve_welcome_message_default', $welcome );
+
+		return $welcome;
+	}
+
 	/**
 	 * Add message to login page saying registration is required.
 	 *
@@ -585,8 +592,10 @@ class pw_new_user_approve {
 	 */
 	public function welcome_user( $message ) {
 		if ( !isset( $_GET['action'] ) ) {
-			$welcome = sprintf( __( 'Welcome to %s. This site is accessible to approved users only. To be approved, you must first register.', 'new-user-approve' ), get_option( 'blogname' ) );
+			$welcome = $this->default_welcome_message();
 			$welcome = apply_filters( 'new_user_approve_welcome_message', $welcome );
+
+			$welcome = str_replace( 'SITENAME', get_option( 'blogname' ), $welcome );
 
 			if ( !empty( $welcome ) ) {
 				$message .= '<p class="message register">' . $welcome . '</p>';
