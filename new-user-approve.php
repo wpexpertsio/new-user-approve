@@ -190,6 +190,28 @@ class pw_new_user_approve {
 	}
 
 	/**
+	 * The default message that is shown to a user depending on their status
+	 * when trying to sign in.
+	 *
+	 * @return string
+	 */
+	public function default_authentication_message( $status ) {
+		$message = '';
+
+		if ( $status == 'pending' ) {
+			$message = __( '<strong>ERROR</strong>: Your account is still pending approval.', 'new-user-approve' );
+			$message = apply_filters( 'new_user_approve_pending_error', $message );
+		} else if ( $status == 'denied' ) {
+			$message = __( '<strong>ERROR</strong>: Your account has been denied access to this site.', 'new-user-approve' );
+			$message = apply_filters( 'new_user_approve_denied_error', $message );
+		}
+
+		$message = apply_filters( 'new_user_approve_default_authentication_message', $message, $status );
+
+		return $message;
+	}
+
+	/**
 	 * Determine if the user is good to sign in based on their status.
 	 *
 	 * @uses wp_authenticate_user
@@ -206,15 +228,11 @@ class pw_new_user_approve {
 		$message = false;
 		switch ( $status ) {
 			case 'pending':
-				$pending_message = __( '<strong>ERROR</strong>: Your account is still pending approval.', 'new-user-approve' );
-				$pending_message = apply_filters( 'new_user_approve_pending_error', $pending_message );
-
+				$pending_message = $this->default_authentication_message( 'pending' );
 				$message = new WP_Error( 'pending_approval', $pending_message );
 				break;
 			case 'denied':
-				$denied_message = __( '<strong>ERROR</strong>: Your account has been denied access to this site.', 'new-user-approve' );
-				$denied_message = apply_filters( 'new_user_approve_denied_error', $denied_message );
-
+				$denied_message = $this->default_authentication_message( 'denied' );
 				$message = new WP_Error( 'denied_access', $denied_message );
 				break;
 			case 'approved':
