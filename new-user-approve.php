@@ -583,6 +583,11 @@ class pw_new_user_approve {
 		return $welcome;
 	}
 
+	public function default_registration_message() {
+		$message = __( 'After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions.', 'new-user-approve' );
+
+		return $message;
+	}
 	/**
 	 * Add message to login page saying registration is required.
 	 *
@@ -603,7 +608,7 @@ class pw_new_user_approve {
 		}
 
 		if ( isset( $_GET['action'] ) && $_GET['action'] == 'register' && !$_POST ) {
-			$instructions = sprintf( __( 'After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions.', 'new-user-approve' ) );
+			$instructions = $this->default_registration_message();
 			$instructions = apply_filters( 'new_user_approve_register_instructions', $instructions );
 
 			if ( !empty( $instructions ) ) {
