@@ -1,11 +1,22 @@
 <?php
+/**
+ * Bootstrap the plugin unit testing environment.
+ *
+ * Edit 'active_plugins' setting below to point to your main plugin file.
+ *
+ * @package wordpress-plugin-tests
+ */
 
-require_once getenv( 'WP_TESTS_DIR' ) . '/includes/functions.php';
+// Activates this plugin in WordPress so it can be tested.
+$GLOBALS['wp_tests_options'] = array(
+	'active_plugins' => array( 'new-user-approve/new-user-approve.php' ),
+);
 
-function _manually_load_plugin() {
-	require dirname( __FILE__ ) . '/../new-user-approve.php';
+// If the develop repo location is defined (as WP_DEVELOP_DIR), use that
+// location. Otherwise, we'll just assume that this plugin is installed in a
+// WordPress develop SVN checkout.
+if ( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
+	require getenv( 'WP_DEVELOP_DIR' ) . '/tests/phpunit/includes/bootstrap.php';
+} else {
+	require '../../../includes/bootstrap.php';
 }
-tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
-
-require getenv( 'WP_TESTS_DIR' ) . '/includes/bootstrap.php';
-
