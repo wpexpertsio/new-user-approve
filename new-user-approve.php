@@ -521,6 +521,14 @@ class pw_new_user_approve {
 		return $headers;
 	}
 
+	public function default_registration_complete_message() {
+		$message = sprintf( __( 'An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request.', 'new-user-approve' ) );
+		$message .= ' ';
+		$message .= sprintf( __( 'You will receive an email with instructions on what you will need to do next. Thanks for your patience.', 'new-user-approve' ) );
+
+		return $message;
+	}
+
 	/**
 	 * Display a message to the user after they have registered
 	 *
@@ -538,9 +546,7 @@ class pw_new_user_approve {
 			return $errors;
 		}
 
-		$message = sprintf( __( 'An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request.', 'new-user-approve' ) );
-		$message .= ' ';
-		$message .= sprintf( __( 'You will receive an email with instructions on what you will need to do next. Thanks for your patience.', 'new-user-approve' ) );
+		$message = $this->default_registration_complete_message();
 		$message = apply_filters( 'new_user_approve_pending_message', $message );
 
 		$errors->add( 'registration_required', $message, 'message' );
