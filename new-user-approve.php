@@ -455,12 +455,25 @@ class pw_new_user_approve {
 		$user_email = stripslashes( $user->data->user_email );
 
 		// format the message
-		$message = sprintf( __( 'You have been approved to access %s', 'new-user-approve' ), get_option( 'blogname' ) ) . "\r\n";
-		$message .= sprintf( __( 'Username: %s', 'new-user-approve' ), $user_login ) . "\r\n";
+		$message = apply_filters( 'new_user_approve_approve_user_message_default', $this->default_approve_user_message() );
+
+		$message = str_replace( 'USERNAME', sprintf( __( 'Username: %s', 'new-user-approve' ), $user_login ), $message );
 		if ( !$bypass_password_reset ) {
-			$message .= sprintf( __( 'Password: %s', 'new-user-approve' ), $new_pass ) . "\r\n";
+			$message = str_replace( 'PASSWORD', sprintf( __( 'Password: %s', 'new-user-approve' ), $new_pass ), $message );
+		} else {
+			$message = str_replace( 'PASSWORD', '', $message );
 		}
-		$message .= wp_login_url() . "\r\n";
+		$message = str_replace( 'USEREMAIL', $user_email, $message );
+		$message = str_replace( 'SITENAME', get_option( 'blogname' ), $message );
+		$message = str_replace( 'SITEURL', home_url(), $message );
+		$message = str_replace( 'LOGINURL', wp_login_url(), $message );
+
+		//$message = sprintf( , get_option( 'blogname' ) ) . "\r\n";
+		//$message .= sprintf( __( 'Username: %s', 'new-user-approve' ), $user_login ) . "\r\n";
+		//if ( !$bypass_password_reset ) {
+		//	$message .= sprintf( __( 'Password: %s', 'new-user-approve' ), $new_pass ) . "\r\n";
+		//}
+		//$message .= wp_login_url() . "\r\n";
 
 		$message = apply_filters( 'new_user_approve_approve_user_message', $message, $user );
 
@@ -476,6 +489,21 @@ class pw_new_user_approve {
 		do_action( 'new_user_approve_user_approved', $user );
 	}
 
+	public function default_approve_user_message() {
+		$message = __( 'You have been approved to access SITENAME', 'new-user-approve' ) . "\r\n\r\n";
+		$message .= "USERNAME\r\n";
+		$message .= "PASSWORD\r\n\r\n";
+		$message .= "LOGINURL";
+
+		return $message;
+	}
+
+	public function default_deny_user_message() {
+		$message = sprintf( __( 'You have been denied access to %s.', 'new-user-approve' ), get_option( 'blogname' ) );
+
+		return $message;
+	}
+
 	/**
 	 * Admin denial of user
 	 *
@@ -488,7 +516,7 @@ class pw_new_user_approve {
 		$user_email = stripslashes( $user->user_email );
 
 		// format the message
-		$message = sprintf( __( 'You have been denied access to %s', 'new-user-approve' ), get_option( 'blogname' ) );
+		$message = $this->default_deny_user_message();
 		$message = apply_filters( 'new_user_approve_deny_user_message', $message, $user );
 
 		$subject = sprintf( __( '[%s] Registration Denied', 'new-user-approve' ), get_option( 'blogname' ) );
