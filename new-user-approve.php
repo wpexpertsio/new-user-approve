@@ -185,6 +185,28 @@ class pw_new_user_approve {
 	}
 
 	/**
+	 * The default message that is shown to a user depending on their status
+	 * when trying to sign in.
+	 *
+	 * @return string
+	 */
+	public function default_authentication_message( $status ) {
+		$message = '';
+
+		if ( $status == 'pending' ) {
+			$message = __( '<strong>ERROR</strong>: Your account is still pending approval.', 'new-user-approve' );
+			$message = apply_filters( 'new_user_approve_pending_error', $message );
+		} else if ( $status == 'denied' ) {
+			$message = __( '<strong>ERROR</strong>: Your account has been denied access to this site.', 'new-user-approve' );
+			$message = apply_filters( 'new_user_approve_denied_error', $message );
+		}
+
+		$message = apply_filters( 'new_user_approve_default_authentication_message', $message, $status );
+
+		return $message;
+	}
+
+	/**
 	 * Determine if the user is good to sign in based on their status.
 	 *
 	 * @uses wp_authenticate_user
@@ -201,14 +223,12 @@ class pw_new_user_approve {
 		$message = false;
 		switch ( $status ) {
 			case 'pending':
-				$pending_message = __( '<strong>ERROR</strong>: Your account is still pending approval.', 'new-user-approve' );
-				$pending_message = apply_filters( 'new_user_approve_pending_error', $pending_message );
+				$pending_message = $this->default_authentication_message( 'pending' );
 
 				$message = new WP_Error( 'pending_approval', $pending_message );
 				break;
 			case 'denied':
-				$denied_message = __( '<strong>ERROR</strong>: Your account has been denied access to this site.', 'new-user-approve' );
-				$denied_message = apply_filters( 'new_user_approve_denied_error', $denied_message );
+				$denied_message = $this->default_authentication_message( 'denied' );
 
 				$message = new WP_Error( 'denied_access', $denied_message );
 				break;
@@ -429,12 +449,18 @@ class pw_new_user_approve {
 		$user_email = stripslashes( $user->data->user_email );
 
 		// format the message
-		$message = sprintf( __( 'You have been approved to access %s', 'new-user-approve' ), get_option( 'blogname' ) ) . "\r\n";
-		$message .= sprintf( __( 'Username: %s', 'new-user-approve' ), $user_login ) . "\r\n";
+		$message = apply_filters( 'new_user_approve_approve_user_message_default', $this->default_approve_user_message() );
+
+		$message = str_replace( 'USERNAME', sprintf( __( 'Username: %s', 'new-user-approve' ), $user_login ), $message );
 		if ( !$bypass_password_reset ) {
-			$message .= sprintf( __( 'Password: %s', 'new-user-approve' ), $new_pass ) . "\r\n";
+			$message = str_replace( 'PASSWORD', sprintf( __( 'Password: %s', 'new-user-approve' ), $new_pass ), $message );
+		} else {
+			$message = str_replace( 'PASSWORD', '', $message );
 		}
-		$message .= wp_login_url() . "\r\n";
+		$message = str_replace( 'USEREMAIL', $user_email, $message );
+		$message = str_replace( 'SITENAME', get_option( 'blogname' ), $message );
+		$message = str_replace( 'SITEURL', home_url(), $message );
+		$message = str_replace( 'LOGINURL', wp_login_url(), $message );
 
 		$message = apply_filters( 'new_user_approve_approve_user_message', $message, $user );
 
@@ -450,6 +476,21 @@ class pw_new_user_approve {
 		do_action( 'new_user_approve_user_approved', $user );
 	}
 
+	public function default_approve_user_message() {
+		$message = __( 'You have been approved to access SITENAME', 'new-user-approve' ) . "\r\n\r\n";
+		$message .= "USERNAME\r\n";
+		$message .= "PASSWORD\r\n\r\n";
+		$message .= "LOGINURL";
+
+		return $message;
+	}
+
+	public function default_deny_user_message() {
+		$message = sprintf( __( 'You have been denied access to %s.', 'new-user-approve' ), get_option( 'blogname' ) );
+
+		return $message;
+	}
+
 	/**
 	 * Admin denial of user
 	 *
@@ -462,7 +503,7 @@ class pw_new_user_approve {
 		$user_email = stripslashes( $user->user_email );
 
 		// format the message
-		$message = sprintf( __( 'You have been denied access to %s', 'new-user-approve' ), get_option( 'blogname' ) );
+		$message = $this->default_deny_user_message();
 		$message = apply_filters( 'new_user_approve_deny_user_message', $message, $user );
 
 		$subject = sprintf( __( '[%s] Registration Denied', 'new-user-approve' ), get_option( 'blogname' ) );
@@ -495,6 +536,14 @@ class pw_new_user_approve {
 		return $headers;
 	}
 
+	public function default_registration_complete_message() {
+		$message = sprintf( __( 'An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request.', 'new-user-approve' ) );
+		$message .= ' ';
+		$message .= sprintf( __( 'You will receive an email with instructions on what you will need to do next. Thanks for your patience.', 'new-user-approve' ) );
+
+		return $message;
+	}
+
 	/**
 	 * Display a message to the user after they have registered
 	 *
@@ -512,9 +561,7 @@ class pw_new_user_approve {
 			return $errors;
 		}
 
-		$message = sprintf( __( 'An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request.', 'new-user-approve' ) );
-		$message .= ' ';
-		$message .= sprintf( __( 'You will receive an email with instructions on what you will need to do next. Thanks for your patience.', 'new-user-approve' ) );
+		$message = $this->default_registration_complete_message();
 		$message = apply_filters( 'new_user_approve_pending_message', $message );
 
 		$errors->add( 'registration_required', $message, 'message' );
@@ -550,6 +597,18 @@ class pw_new_user_approve {
 		}
 	}
 
+	public function default_welcome_message() {
+		$welcome = sprintf( __( 'Welcome to SITENAME. This site is accessible to approved users only. To be approved, you must first register.', 'new-user-approve' ), get_option( 'blogname' ) );
+		$welcome = apply_filters( 'new_user_approve_welcome_message_default', $welcome );
+
+		return $welcome;
+	}
+
+	public function default_registration_message() {
+		$message = __( 'After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions.', 'new-user-approve' );
+
+		return $message;
+	}
 	/**
 	 * Add message to login page saying registration is required.
 	 *
@@ -559,8 +618,10 @@ class pw_new_user_approve {
 	 */
 	public function welcome_user( $message ) {
 		if ( !isset( $_GET['action'] ) ) {
-			$welcome = sprintf( __( 'Welcome to %s. This site is accessible to approved users only. To be approved, you must first register.', 'new-user-approve' ), get_option( 'blogname' ) );
+			$welcome = $this->default_welcome_message();
 			$welcome = apply_filters( 'new_user_approve_welcome_message', $welcome );
+
+			$welcome = str_replace( 'SITENAME', get_option( 'blogname' ), $welcome );
 
 			if ( !empty( $welcome ) ) {
 				$message .= '<p class="message register">' . $welcome . '</p>';
@@ -568,7 +629,7 @@ class pw_new_user_approve {
 		}
 
 		if ( isset( $_GET['action'] ) && $_GET['action'] == 'register' && !$_POST ) {
-			$instructions = sprintf( __( 'After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions.', 'new-user-approve' ) );
+			$instructions = $this->default_registration_message();
 			$instructions = apply_filters( 'new_user_approve_register_instructions', $instructions );
 
 			if ( !empty( $instructions ) ) {
