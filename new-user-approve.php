@@ -50,6 +50,7 @@ class pw_new_user_approve {
 		add_action( 'user_register', array( $this, 'add_user_status' ) );
 		add_action( 'new_user_approve_approve_user', array( $this, 'approve_user' ) );
 		add_action( 'new_user_approve_deny_user', array( $this, 'deny_user' ) );
+		add_action( 'new_user_approve_deny_user', array( $this, 'update_deny_status' ) );
 
 		// Filters
 		add_filter( 'wp_authenticate_user', array( $this, 'authenticate_user' ) );
@@ -492,7 +493,7 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * Admin denial of user
+	 * Send email to notify user of denial.
 	 *
 	 * @uses new_user_approve_deny_user
 	 */
@@ -511,6 +512,15 @@ class pw_new_user_approve {
 
 		// send the mail
 		@wp_mail( $user_email, $subject, $message, $this->email_message_headers() );
+	}
+
+	/**
+	 * Update user status when denying user.
+	 *
+	 * @uses new_user_approve_deny_user
+	 */
+	public function update_deny_status( $user_id ) {
+		$user = new WP_User( $user_id );
 
 		// change usermeta tag in database to denied
 		update_user_meta( $user->ID, 'pw_user_status', 'denied' );
