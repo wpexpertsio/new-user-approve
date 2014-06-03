@@ -68,6 +68,10 @@ this feature.
 
 == Changelog ==
 
+= 1.5.9 =
+* improve actions and filters
+* refactor messages to make them easier to override
+
 = 1.5.8 =
 * tested for WordPress 3.9
 * fix bug preventing the notice from hiding on legacy page
