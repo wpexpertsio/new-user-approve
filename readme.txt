@@ -71,6 +71,7 @@ this feature.
 = 1.5.9 =
 * improve actions and filters
 * refactor messages to make them easier to override
+* show admin notice if the membership setting is turned off
 
 = 1.5.8 =
 * tested for WordPress 3.9

@@ -106,7 +106,7 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * Show admin notice if the membership setting is turned off. 
+	 * Show admin notice if the membership setting is turned off.
 	 */
 	public function admin_notices() {
 		$user_id = get_current_user_id();
