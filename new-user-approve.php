@@ -51,6 +51,7 @@ class pw_new_user_approve {
 		add_action( 'new_user_approve_approve_user', array( $this, 'approve_user' ) );
 		add_action( 'new_user_approve_deny_user', array( $this, 'deny_user' ) );
 		add_action( 'new_user_approve_deny_user', array( $this, 'update_deny_status' ) );
+		add_action( 'admin_init', array( $this, 'verify_settings' ) );
 
 		// Filters
 		add_filter( 'wp_authenticate_user', array( $this, 'authenticate_user' ) );
@@ -90,6 +91,37 @@ class pw_new_user_approve {
 	 */
 	public function deactivation() {
 		do_action( 'new_user_approve_deactivate' );
+	}
+
+	/**
+	 * Verify settings upon activation
+	 *
+	 * @uses admin_init
+	 */
+	public function verify_settings() {
+		// make sure the membership setting is turned on
+		if ( get_option( 'users_can_register' ) != 1 ) {
+			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+		}
+	}
+
+	/**
+	 * Show admin notice if the membership setting is turned off. 
+	 */
+	public function admin_notices() {
+		$user_id = get_current_user_id();
+
+		// update the setting for the current user
+		if ( isset( $_GET['new-user-approve-settings-notice'] ) && '1' == $_GET['new-user-approve-settings-notice'] ) {
+			add_user_meta( $user_id, 'pw_new_user_approve_settings_notice', '1', true );
+		}
+
+		// Check that the user hasn't already clicked to ignore the message
+		if ( !get_user_meta( $user_id, 'pw_new_user_approve_settings_notice' ) ) {
+			echo '<div class="error"><p>';
+			printf( __( 'The Membership setting must be turned on in order for the New User Approve to work correctly. <a href="%1$s">Update in settings</a>. | <a href="%2$s">Hide Notice</a>', 'new-user-approve' ), admin_url( 'options-general.php' ), add_query_arg( array( 'new-user-approve-settings-notice' => 1 ) ) );
+			echo "</p></div>";
+		}
 	}
 
 	/**
