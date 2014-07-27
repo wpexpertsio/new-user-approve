@@ -222,9 +222,9 @@ class pw_new_user_approve_admin_approve {
 
 	public function add_meta_boxes() {
 		add_meta_box( 'nua-approve-admin', __( 'Approve Users', 'new-user-approve' ), array( $this, 'metabox_main' ), 'users_page_new-user-approve-admin', 'main', 'high' );
-		add_meta_box( 'nua-updates', __( 'Updates', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side', 'default', array( 'url' => 'http://newuserapprove.picklewagon.test/wp-json/posts/66' ) );
-		add_meta_box( 'nua-support', __( 'Support', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side' );
-		add_meta_box( 'nua-feedback', __( 'Feedback', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side' );
+		add_meta_box( 'nua-updates', __( 'Updates', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side', 'default', array( 'url' => 'http://newuserapprove.com/wp-json/posts/52' ) );
+		add_meta_box( 'nua-support', __( 'Support', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side', 'default', array( 'url' => 'http://newuserapprove.com/wp-json/posts/54' ) );
+		add_meta_box( 'nua-feedback', __( 'Feedback', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side', 'default', array( 'url' => 'http://newuserapprove.com/wp-json/posts/56' ) );
 	}
 
 	public function metabox_main() {
