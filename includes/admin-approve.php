@@ -47,7 +47,9 @@ class pw_new_user_approve_admin_approve {
 
 		if ( $show_admin_page ) {
 			$cap = apply_filters( 'new_user_approve_minimum_cap', 'edit_users' );
-			add_users_page( __( 'Approve New Users', 'new-user-approve' ), __( 'Approve New Users', 'new-user-approve' ), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
+			$hook = add_users_page( __( 'Approve New Users', 'new-user-approve' ), __( 'Approve New Users', 'new-user-approve' ), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
+
+			add_action( 'load-' . $hook, array( $this, 'admin_enqueue_scripts' ) );
 		}
 	}
 
@@ -212,6 +214,10 @@ class pw_new_user_approve_admin_approve {
 			$user_id = get_current_user_id();
 			add_user_meta( $user_id, 'pw_new_user_approve_ignore_notice', '1', true );
 		}
+	}
+
+	public function admin_enqueue_scripts() {
+		wp_enqueue_script( 'post' );
 	}
 
 	public function add_meta_boxes() {
