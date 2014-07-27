@@ -222,9 +222,9 @@ class pw_new_user_approve_admin_approve {
 
 	public function add_meta_boxes() {
 		add_meta_box( 'nua-approve-admin', __( 'Approve Users', 'new-user-approve' ), array( $this, 'metabox_main' ), 'users_page_new-user-approve-admin', 'main', 'high' );
-		add_meta_box( 'nua-updates', __( 'Updates', 'new-user-approve' ), array( $this, 'metabox_updates' ), 'users_page_new-user-approve-admin', 'side' );
-		add_meta_box( 'nua-support', __( 'Support', 'new-user-approve' ), array( $this, 'metabox_support' ), 'users_page_new-user-approve-admin', 'side' );
-		add_meta_box( 'nua-feedback', __( 'Feedback', 'new-user-approve' ), array( $this, 'metabox_feedback' ), 'users_page_new-user-approve-admin', 'side' );
+		add_meta_box( 'nua-updates', __( 'Updates', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side', 'default', array( 'url' => 'http://newuserapprove.picklewagon.test/wp-json/posts/66' ) );
+		add_meta_box( 'nua-support', __( 'Support', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side' );
+		add_meta_box( 'nua-feedback', __( 'Feedback', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side' );
 	}
 
 	public function metabox_main() {
@@ -255,16 +255,13 @@ elseif ( $active_tab == 'denied_users' ) : ?>
 <?php endif;
 	}
 
-	public function metabox_updates() {
-		echo 'updates';
-	}
-
-	public function metabox_support() {
-		echo 'support';
-	}
-
-	public function metabox_feedback() {
-		echo 'feedback';
+	public function metabox_ajax( $post, $metabox = array() ) {
+		$response = wp_remote_get( $metabox['args']['url'] );
+		if ( wp_remote_retrieve_response_code( $response ) == 200 ) {
+			$body = wp_remote_retrieve_body( $response );
+			$details = json_decode( $body );
+			print $details->content;
+		}
 	}
 
 }
