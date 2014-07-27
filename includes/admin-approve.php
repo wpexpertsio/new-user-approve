@@ -215,7 +215,8 @@ class pw_new_user_approve_admin_approve {
 	}
 
 	public function add_meta_boxes() {
-		add_meta_box( 'nua_approve_admin', __( 'Approve Users', 'new-user-approve' ), array( $this, 'metabox_main' ), 'users_page_new-user-approve-admin', 'main', 'high' );
+		add_meta_box( 'nua-approve-admin', __( 'Approve Users', 'new-user-approve' ), array( $this, 'metabox_main' ), 'users_page_new-user-approve-admin', 'main', 'high' );
+		add_meta_box( 'nua-updates', __( 'Updates', 'new-user-approve' ), array( $this, 'metabox_updates' ), 'users_page_new-user-approve-admin', 'side' );
 	}
 
 	public function metabox_main() {
@@ -244,6 +245,10 @@ elseif ( $active_tab == 'denied_users' ) : ?>
 		<?php $this->user_table( 'denied' ); ?>
 	</div>
 <?php endif;
+	}
+
+	public function metabox_updates() {
+		echo 'updates';
 	}
 
 }

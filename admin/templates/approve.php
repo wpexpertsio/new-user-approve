@@ -14,11 +14,13 @@ if ( isset( $_GET['user'] ) && isset( $_GET['status'] ) ) {
 	<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 
 	<div id="poststuff" class="columns metabox-holder">
-		<div class="postbox-container column-primary">
-			<?php do_meta_boxes( 'users_page_new-user-approve-admin', 'main', $this ); ?>
-		</div>
-		<div class="postbox-container column-secondary">
-			<?php do_meta_boxes( 'users_page_new-user-approve-admin', 'side', $this ); ?>
+		<div id="post-body" class="metabox-holder columns-2">
+			<div id="postbox-container-1" class="postbox-container column-secondary">
+				<?php do_meta_boxes( 'users_page_new-user-approve-admin', 'side', $this ); ?>
+			</div>
+			<div id="postbox-container-2" class="postbox-container column-primary">
+				<?php do_meta_boxes( 'users_page_new-user-approve-admin', 'main', $this ); ?>
+			</div>
 		</div>
 	</div>
 </div>
