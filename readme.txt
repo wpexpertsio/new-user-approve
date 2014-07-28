@@ -3,7 +3,7 @@ Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration, sign up, user management, login
 Requires at least: 3.5.1
-Tested up to: 3.9
+Tested up to: 3.9.1
 Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,7 +100,7 @@ as they have their username and passwords.
 
 == Changelog ==
 
-= 1.5.9 =
+= 1.6 =
 * improve actions and filters
 * refactor messages to make them easier to override
 * show admin notice if the membership setting is turned off
