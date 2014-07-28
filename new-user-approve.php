@@ -4,7 +4,11 @@
  Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve/
  Description: Allow administrators to approve users once they register. Only approved users will be allowed to access the blog. For support, please go to the <a href="http://wordpress.org/support/plugin/new-user-approve">support forums</a> on wordpress.org.
  Author: Josh Harrison
+<<<<<<< HEAD
  Version: 1.5.9
+=======
+ Version: 1.6
+>>>>>>> options-support
  Author URI: http://picklewagon.com/
  */
 
@@ -58,6 +62,7 @@ class pw_new_user_approve {
 		add_filter( 'registration_errors', array( $this, 'show_user_pending_message' ) );
 		add_filter( 'login_message', array( $this, 'welcome_user' ) );
 		add_filter( 'new_user_approve_validate_status_update', array( $this, 'validate_status_update' ), 10, 3 );
+		add_filter( 'shake_error_codes', array( $this, 'failure_shake' ) );
 	}
 
 	public function get_plugin_url() {
@@ -163,25 +168,29 @@ class pw_new_user_approve {
 	 *
 	 * @param int $user
 	 * @param string $status
+	 *
+	 * @return boolean
 	 */
 	public function update_user_status( $user, $status ) {
 		$user_id = absint( $user );
 		if ( !$user_id ) {
-			return;
+			return false;
 		}
 
 		if ( !in_array( $status, array( 'approve', 'deny' ) ) ) {
-			return;
+			return false;
 		}
 
 		$do_update = apply_filters( 'new_user_approve_validate_status_update', true, $user_id, $status );
 		if ( !$do_update ) {
-			return;
+			return false;
 		}
 
 		// where it all happens
 		do_action( 'new_user_approve_' . $status . '_user', $user_id );
 		do_action( 'new_user_approve_user_status_update', $user_id, $status );
+
+		return true;
 	}
 
 	/**
@@ -257,12 +266,10 @@ class pw_new_user_approve {
 		switch ( $status ) {
 			case 'pending':
 				$pending_message = $this->default_authentication_message( 'pending' );
-
 				$message = new WP_Error( 'pending_approval', $pending_message );
 				break;
 			case 'denied':
 				$denied_message = $this->default_authentication_message( 'denied' );
-
 				$message = new WP_Error( 'denied_access', $denied_message );
 				break;
 			case 'approved':
@@ -273,39 +280,42 @@ class pw_new_user_approve {
 		return $message;
 	}
 
+	public function _get_user_statuses() {
+		$statuses = array();
+
+		foreach ( $this->get_valid_statuses() as $status ) {
+			// Query the users table
+			if ( $status != 'approved' ) {
+				// Query the users table
+				$query = array( 'meta_key' => 'pw_user_status', 'meta_value' => $status, );
+				$wp_user_search = new WP_User_Query( $query );
+			} else {
+				// get all approved users and any user without a status
+				$query = array( 'meta_query' => array( 'relation' => 'OR', array( 'key' => 'pw_user_status', 'value' => 'approved', 'compare' => '=' ), array( 'key' => 'pw_user_status', 'value' => '', 'compare' => 'NOT EXISTS' ), ), );
+				$wp_user_search = new WP_User_Query( $query );
+			}
+
+			$statuses[$status] = $wp_user_search->get_results();
+		}
+
+		return $statuses;
+	}
 	/**
 	 * Get a status of all the users and save them using a transient
 	 */
 	public function get_user_statuses() {
-		$valid_stati = $this->get_valid_statuses();
-		$user_status = get_transient( 'new_user_approve_user_statuses' );
+		$user_statuses = get_transient( 'new_user_approve_user_statuses' );
 
-		if ( false === $user_status ) {
-			$user_status = array();
-
-			foreach ( $valid_stati as $status ) {
-				// Query the users table
-				if ( $status != 'approved' ) {
-					// Query the users table
-					$query = array( 'meta_key' => 'pw_user_status', 'meta_value' => $status, );
-					$wp_user_search = new WP_User_Query( $query );
-				} else {
-					// get all approved users and any user without a status
-					$query = array( 'meta_query' => array( 'relation' => 'OR', array( 'key' => 'pw_user_status', 'value' => 'approved', 'compare' => '=' ), array( 'key' => 'pw_user_status', 'value' => '', 'compare' => 'NOT EXISTS' ), ), );
-					$wp_user_search = new WP_User_Query( $query );
-				}
-
-				$user_status[$status] = $wp_user_search->get_results();
-			}
-
-			set_transient( 'new_user_approve_user_statuses', $user_status );
+		if ( false === $user_statuses ) {
+			$user_statuses = $this->_get_user_statuses();
+			set_transient( 'new_user_approve_user_statuses', $user_statuses );
 		}
 
-		foreach ( $valid_stati as $status ) {
-			$user_status[$status] = apply_filters( 'new_user_approve_user_status', $user_status[$status], $status );
+		foreach ( $this->get_valid_statuses() as $status ) {
+			$user_statuses[$status] = apply_filters( 'new_user_approve_user_status', $user_statuses[$status], $status );
 		}
 
-		return $user_status;
+		return $user_statuses;
 	}
 
 	/**
@@ -381,7 +391,7 @@ class pw_new_user_approve {
 		$message = str_replace( 'USERNAME', $user_login, $message );
 		$message = str_replace( 'USEREMAIL', $user_email, $message );
 		$message = str_replace( 'SITENAME', $blogname, $message );
-		$message = str_replace( 'SITEURL', get_option( 'siteurl' ), $message );
+		$message = str_replace( 'SITEURL', home_url(), $message );
 		$message = str_replace( 'ADMINURL', $admin_url, $message );
 
 		$message = apply_filters( 'new_user_approve_request_approval_message', $message, $user_login, $user_email );
@@ -696,6 +706,20 @@ class pw_new_user_approve {
 			$status = 'approved';
 		}
 		update_user_meta( $user_id, 'pw_user_status', $status );
+	}
+
+	/**
+	 * Add error codes to shake the login form on failure
+	 *
+	 * @uses shake_error_codes
+	 * @param $error_codes
+	 * @return array
+	 */
+	public function failure_shake( $error_codes ) {
+		$error_codes[] = 'pending_approval';
+		$error_codes[] = 'denied_access';
+
+		return $error_codes;
 	}
 } // End Class
 
