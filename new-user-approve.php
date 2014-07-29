@@ -50,6 +50,8 @@ class pw_new_user_approve {
 		add_action( 'user_register', array( $this, 'add_user_status' ) );
 		add_action( 'new_user_approve_approve_user', array( $this, 'approve_user' ) );
 		add_action( 'new_user_approve_deny_user', array( $this, 'deny_user' ) );
+		add_action( 'new_user_approve_deny_user', array( $this, 'update_deny_status' ) );
+		add_action( 'admin_init', array( $this, 'verify_settings' ) );
 
 		// Filters
 		add_filter( 'wp_authenticate_user', array( $this, 'authenticate_user' ) );
@@ -90,6 +92,37 @@ class pw_new_user_approve {
 	 */
 	public function deactivation() {
 		do_action( 'new_user_approve_deactivate' );
+	}
+
+	/**
+	 * Verify settings upon activation
+	 *
+	 * @uses admin_init
+	 */
+	public function verify_settings() {
+		// make sure the membership setting is turned on
+		if ( get_option( 'users_can_register' ) != 1 ) {
+			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+		}
+	}
+
+	/**
+	 * Show admin notice if the membership setting is turned off.
+	 */
+	public function admin_notices() {
+		$user_id = get_current_user_id();
+
+		// update the setting for the current user
+		if ( isset( $_GET['new-user-approve-settings-notice'] ) && '1' == $_GET['new-user-approve-settings-notice'] ) {
+			add_user_meta( $user_id, 'pw_new_user_approve_settings_notice', '1', true );
+		}
+
+		// Check that the user hasn't already clicked to ignore the message
+		if ( !get_user_meta( $user_id, 'pw_new_user_approve_settings_notice' ) ) {
+			echo '<div class="error"><p>';
+			printf( __( 'The Membership setting must be turned on in order for the New User Approve to work correctly. <a href="%1$s">Update in settings</a>. | <a href="%2$s">Hide Notice</a>', 'new-user-approve' ), admin_url( 'options-general.php' ), add_query_arg( array( 'new-user-approve-settings-notice' => 1 ) ) );
+			echo "</p></div>";
+		}
 	}
 
 	/**
@@ -366,7 +399,7 @@ class pw_new_user_approve {
 		$to = array_unique( $to );
 
 		// send the mail
-		wp_mail( $to, $subject, $message, $this->email_message_headers() );
+		$send = wp_mail( $to, $subject, $message, $this->email_message_headers() );
 	}
 
 	/**
@@ -468,13 +501,6 @@ class pw_new_user_approve {
 		$message = str_replace( 'SITEURL', home_url(), $message );
 		$message = str_replace( 'LOGINURL', wp_login_url(), $message );
 
-		//$message = sprintf( , get_option( 'blogname' ) ) . "\r\n";
-		//$message .= sprintf( __( 'Username: %s', 'new-user-approve' ), $user_login ) . "\r\n";
-		//if ( !$bypass_password_reset ) {
-		//	$message .= sprintf( __( 'Password: %s', 'new-user-approve' ), $new_pass ) . "\r\n";
-		//}
-		//$message .= wp_login_url() . "\r\n";
-
 		$message = apply_filters( 'new_user_approve_approve_user_message', $message, $user );
 
 		$subject = sprintf( __( '[%s] Registration Approved', 'new-user-approve' ), get_option( 'blogname' ) );
@@ -505,7 +531,7 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * Admin denial of user
+	 * Send email to notify user of denial.
 	 *
 	 * @uses new_user_approve_deny_user
 	 */
@@ -524,6 +550,15 @@ class pw_new_user_approve {
 
 		// send the mail
 		@wp_mail( $user_email, $subject, $message, $this->email_message_headers() );
+	}
+
+	/**
+	 * Update user status when denying user.
+	 *
+	 * @uses new_user_approve_deny_user
+	 */
+	public function update_deny_status( $user_id ) {
+		$user = new WP_User( $user_id );
 
 		// change usermeta tag in database to denied
 		update_user_meta( $user->ID, 'pw_user_status', 'denied' );

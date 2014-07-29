@@ -48,7 +48,7 @@ class pw_new_user_approve_user_list {
 		if ( isset( $_GET['action'] ) && in_array( $_GET['action'], array( 'approve', 'deny' ) ) && !isset( $_GET['new_role'] ) ) {
 			check_admin_referer( 'new-user-approve' );
 
-			$sendback = remove_query_arg( array( 'approved', 'denied', 'deleted', 'ids', 'new_user_approve_filter', 'pw-status-query-submit', 'new_role' ), wp_get_referer() );
+			$sendback = remove_query_arg( array( 'approved', 'denied', 'deleted', 'ids', 'pw-status-query-submit', 'new_role' ), wp_get_referer() );
 			if ( !$sendback )
 				$sendback = admin_url( 'users.php' );
 
@@ -86,8 +86,13 @@ class pw_new_user_approve_user_list {
 
 		$user_status = pw_new_user_approve()->get_user_status( $user->ID );
 
-		$approve_link = wp_nonce_url( add_query_arg( array( 'action' => 'approve', 'user' => $user->ID ) ), 'new-user-approve' );
-		$deny_link = wp_nonce_url( add_query_arg( array( 'action' => 'deny', 'user' => $user->ID ) ), 'new-user-approve' );
+		$approve_link = add_query_arg( array( 'action' => 'approve', 'user' => $user->ID ) );
+		$approve_link = remove_query_arg( array( 'new_role' ), $approve_link );
+		$approve_link = wp_nonce_url( $approve_link, 'new-user-approve' );
+
+		$deny_link = add_query_arg( array( 'action' => 'deny', 'user' => $user->ID ) );
+		$deny_link = remove_query_arg( array( 'new_role' ), $deny_link );
+		$deny_link = wp_nonce_url( $deny_link, 'new-user-approve' );
 
 		$approve_action = '<a href="' . esc_url( $approve_link ) . '">' . __( 'Approve', 'new-user-approve' ) . '</a>';
 		$deny_action = '<a href="' . esc_url( $deny_link ) . '">' . __( 'Deny', 'new-user-approve' ) . '</a>';

@@ -34,6 +34,7 @@ class pw_new_user_approve_admin_approve {
 		add_action( 'admin_init', array( $this, 'process_input' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
 		add_action( 'admin_init', array( $this, 'notice_ignore' ) );
+		add_action( 'admin_init', array( $this, 'add_meta_boxes' ) );
 	}
 
 	/**
@@ -46,7 +47,9 @@ class pw_new_user_approve_admin_approve {
 
 		if ( $show_admin_page ) {
 			$cap = apply_filters( 'new_user_approve_minimum_cap', 'edit_users' );
-			add_users_page( __( 'Approve New Users', 'new-user-approve' ), __( 'Approve New Users', 'new-user-approve' ), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
+			$hook = add_users_page( __( 'Approve New Users', 'new-user-approve' ), __( 'Approve New Users', 'new-user-approve' ), $cap, $this->_admin_page, array( $this, 'approve_admin' ) );
+
+			add_action( 'load-' . $hook, array( $this, 'admin_enqueue_scripts' ) );
 		}
 	}
 
@@ -54,40 +57,11 @@ class pw_new_user_approve_admin_approve {
 	 * Create the view for the admin interface
 	 */
 	public function approve_admin() {
-		if ( isset( $_GET['user'] ) && isset( $_GET['status'] ) ) {
-			echo '<div id="message" class="updated fade"><p>' . __( 'User successfully updated.', 'new-user-approve' ) . '</p></div>';
+		if ( !current_user_can( 'manage_options' ) ) {
+			wp_die( __('You do not have sufficient permissions to access this page.') );
 		}
 
-		$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'pending_users';
-		?>
-		<div class="wrap">
-			<h2><?php _e( 'User Registration Approval', 'new-user-approve' ); ?></h2>
-
-			<h3 class="nav-tab-wrapper">
-				<a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=pending_users' ) ); ?>"
-				   class="nav-tab<?php echo $active_tab == 'pending_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Users Pending Approval', 'new-user-approve' ); ?></span></a>
-				<a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=approved_users' ) ); ?>"
-				   class="nav-tab<?php echo $active_tab == 'approved_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Approved Users', 'new-user-approve' ); ?></span></a>
-				<a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=denied_users' ) ); ?>"
-				   class="nav-tab<?php echo $active_tab == 'denied_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Denied Users', 'new-user-approve' ); ?></span></a>
-			</h3>
-
-			<?php if ( $active_tab == 'pending_users' ) : ?>
-				<div id="pw_pending_users">
-					<?php $this->user_table( 'pending' ); ?>
-				</div>
-			<?php elseif ( $active_tab == 'approved_users' ) : ?>
-				<div id="pw_approved_users">
-					<?php $this->user_table( 'approved' ); ?>
-				</div>
-			<?php
-			elseif ( $active_tab == 'denied_users' ) : ?>
-				<div id="pw_denied_users">
-					<?php $this->user_table( 'denied' ); ?>
-				</div>
-			<?php endif; ?>
-		</div>
-	<?php
+		require_once( pw_new_user_approve()->get_plugin_dir() . '/admin/templates/approve.php' );
 	}
 
 	/**
@@ -241,6 +215,55 @@ class pw_new_user_approve_admin_approve {
 			add_user_meta( $user_id, 'pw_new_user_approve_ignore_notice', '1', true );
 		}
 	}
+
+	public function admin_enqueue_scripts() {
+		wp_enqueue_script( 'post' );
+	}
+
+	public function add_meta_boxes() {
+		add_meta_box( 'nua-approve-admin', __( 'Approve Users', 'new-user-approve' ), array( $this, 'metabox_main' ), 'users_page_new-user-approve-admin', 'main', 'high' );
+		add_meta_box( 'nua-updates', __( 'Updates', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side', 'default', array( 'url' => 'http://newuserapprove.com/wp-json/posts/52' ) );
+		add_meta_box( 'nua-support', __( 'Support', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side', 'default', array( 'url' => 'http://newuserapprove.com/wp-json/posts/54' ) );
+		add_meta_box( 'nua-feedback', __( 'Feedback', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side', 'default', array( 'url' => 'http://newuserapprove.com/wp-json/posts/56' ) );
+	}
+
+	public function metabox_main() {
+		$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'pending_users';
+?>
+		<h3 class="nav-tab-wrapper" style="padding-bottom: 0; border-bottom: none;">
+			<a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=pending_users' ) ); ?>"
+				class="nav-tab<?php echo $active_tab == 'pending_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Users Pending Approval', 'new-user-approve' ); ?></span></a>
+			<a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=approved_users' ) ); ?>"
+			   class="nav-tab<?php echo $active_tab == 'approved_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Approved Users', 'new-user-approve' ); ?></span></a>
+			<a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=denied_users' ) ); ?>"
+			   class="nav-tab<?php echo $active_tab == 'denied_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Denied Users', 'new-user-approve' ); ?></span></a>
+		</h3>
+
+<?php if ( $active_tab == 'pending_users' ) : ?>
+	<div id="pw_pending_users">
+		<?php $this->user_table( 'pending' ); ?>
+	</div>
+<?php elseif ( $active_tab == 'approved_users' ) : ?>
+	<div id="pw_approved_users">
+		<?php $this->user_table( 'approved' ); ?>
+	</div>
+<?php
+elseif ( $active_tab == 'denied_users' ) : ?>
+	<div id="pw_denied_users">
+		<?php $this->user_table( 'denied' ); ?>
+	</div>
+<?php endif;
+	}
+
+	public function metabox_ajax( $post, $metabox = array() ) {
+		$response = wp_remote_get( $metabox['args']['url'] );
+		if ( wp_remote_retrieve_response_code( $response ) == 200 ) {
+			$body = wp_remote_retrieve_body( $response );
+			$details = json_decode( $body );
+			print $details->content;
+		}
+	}
+
 }
 
 function pw_new_user_approve_admin_approve() {
