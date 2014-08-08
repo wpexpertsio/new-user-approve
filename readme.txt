@@ -49,6 +49,8 @@ WordPress registration process with New User Approve plugin activated:
 
 [Fork New User Approve on Github](https://github.com/picklewagon/new-user-approve)
 
+[newuserapprove.com](http://newuserapprove.com/)
+
 == Installation ==
 
 1. Upload new-user-approve to the wp-content/plugins directory or download from
