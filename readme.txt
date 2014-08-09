@@ -36,15 +36,15 @@ an approved user.
 Default WordPress registration process:
 
 1. User registers for access to site.
-2. Login credentials is sent to new user in an email.
-3. Admin is notified of new user signup via email.
+2. Login credentials are sent to new user in an email.
+3. Admin is notified of new user sign up via email.
 4. User logs in to site using login credentials.
 
 WordPress registration process with New User Approve plugin activated:
 
 1. User registers for access to site.
 2. User is shown message to wait for approval.
-3. Admin is notified of new user signup via email.
+3. Admin is notified of new user sign up via email.
 4. Admin goes to admin to approve or deny new user.
 5. Email is sent to user. If approved, email will include login credentials.
 6. User logs in to site using login credentials.
