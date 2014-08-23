@@ -409,7 +409,7 @@ class pw_new_user_approve {
 		$to = array_unique( $to );
 
 		// send the mail
-		$send = wp_mail( $to, $subject, $message, $this->email_message_headers() );
+		wp_mail( $to, $subject, $message, $this->email_message_headers() );
 	}
 
 	/**
