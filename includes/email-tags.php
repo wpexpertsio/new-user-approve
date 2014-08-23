@@ -24,26 +24,20 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class EDD_Email_Template_Tags {
+class NUA_Email_Template_Tags {
 
 	/**
 	 * Container for storing all tags
-	 *
-	 * @since 1.9
 	 */
 	private $tags;
 
 	/**
-	 * Payment ID
-	 *
-	 * @since 1.9
+	 * User ID
 	 */
-	private $payment_id;
+	private $user_id;
 
 	/**
 	 * Add an email tag
-	 *
-	 * @since 1.9
 	 *
 	 * @param string   $tag  Email tag to be replace in email
 	 * @param callable $func Hook to run when email tag is found
@@ -61,8 +55,6 @@ class EDD_Email_Template_Tags {
 	/**
 	 * Remove an email tag
 	 *
-	 * @since 1.9
-	 *
 	 * @param string $tag Email tag to remove hook from
 	 */
 	public function remove( $tag ) {
@@ -71,8 +63,6 @@ class EDD_Email_Template_Tags {
 
 	/**
 	 * Check if $tag is a registered email tag
-	 *
-	 * @since 1.9
 	 *
 	 * @param string $tag Email tag that will be searched
 	 *
@@ -85,8 +75,6 @@ class EDD_Email_Template_Tags {
 	/**
 	 * Returns a list of all email tags
 	 *
-	 * @since 1.9
-	 *
 	 * @return array
 	 */
 	public function get_tags() {
@@ -97,32 +85,28 @@ class EDD_Email_Template_Tags {
 	 * Search content for email tags and filter email tags through their hooks
 	 *
 	 * @param string $content Content to search for email tags
-	 * @param int $payment_id The payment id
-	 *
-	 * @since 1.9
+	 * @param int $user_id The user id
 	 *
 	 * @return string Content with email tags filtered out.
 	 */
-	public function do_tags( $content, $payment_id ) {
+	public function do_tags( $content, $user_id ) {
 
 		// Check if there is atleast one tag added
 		if ( empty( $this->tags ) || ! is_array( $this->tags ) ) {
 			return $content;
 		}
 
-		$this->payment_id = $payment_id;
+		$this->user_id = $user_id;
 
 		$new_content = preg_replace_callback( "/{([A-z0-9\-\_]+)}/s", array( $this, 'do_tag' ), $content );
 
-		$this->payment_id = null;
+		$this->user_id = null;
 
 		return $new_content;
 	}
 
 	/**
 	 * Do a specific tag, this function should not be used. Please use edd_do_email_tags instead.
-	 *
-	 * @since 1.9
 	 *
 	 * @param $m message
 	 *
@@ -138,7 +122,7 @@ class EDD_Email_Template_Tags {
 			return $m[0];
 		}
 
-		return call_user_func( $this->tags[$tag]['func'], $this->payment_id, $tag );
+		return call_user_func( $this->tags[$tag]['func'], $this->user_id, $tag );
 	}
 
 }
@@ -146,63 +130,53 @@ class EDD_Email_Template_Tags {
 /**
  * Add an email tag
  *
- * @since 1.9
- *
  * @param string   $tag  Email tag to be replace in email
  * @param callable $func Hook to run when email tag is found
  */
-function edd_add_email_tag( $tag, $description, $func ) {
-	EDD()->email_tags->add( $tag, $description, $func );
+function nua_add_email_tag( $tag, $description, $func ) {
+	pw_new_user_approve()->email_tags->add( $tag, $description, $func );
 }
 
 /**
  * Remove an email tag
  *
- * @since 1.9
- *
  * @param string $tag Email tag to remove hook from
  */
-function edd_remove_email_tag( $tag ) {
-	EDD()->email_tags->remove( $tag );
+function nua_remove_email_tag( $tag ) {
+	pw_new_user_approve()->email_tags->remove( $tag );
 }
 
 /**
  * Check if $tag is a registered email tag
  *
- * @since 1.9
- *
  * @param string $tag Email tag that will be searched
  *
  * @return bool
  */
-function edd_email_tag_exists( $tag ) {
-	return EDD()->email_tags->email_tag_exists( $tag );
+function nua_email_tag_exists( $tag ) {
+	return pw_new_user_approve()->email_tags->email_tag_exists( $tag );
 }
 
 /**
  * Get all email tags
  *
- * @since 1.9
- *
  * @return array
  */
-function edd_get_email_tags() {
-	return EDD()->email_tags->get_tags();
+function nua_get_email_tags() {
+	return pw_new_user_approve()->email_tags->get_tags();
 }
 
 /**
  * Get a formatted HTML list of all available email tags
  *
- * @since 1.9
- *
  * @return string
  */
-function edd_get_emails_tags_list() {
+function nua_get_emails_tags_list() {
 	// The list
 	$list = '';
 
 	// Get all tags
-	$email_tags = edd_get_email_tags();
+	$email_tags = nua_get_email_tags();
 
 	// Check
 	if ( count( $email_tags ) > 0 ) {
@@ -225,19 +199,17 @@ function edd_get_emails_tags_list() {
  * Search content for email tags and filter email tags through their hooks
  *
  * @param string $content Content to search for email tags
- * @param int $payment_id The payment id
- *
- * @since 1.9
+ * @param int $user_id The user id
  *
  * @return string Content with email tags filtered out.
  */
-function edd_do_email_tags( $content, $payment_id ) {
+function nua_do_email_tags( $content, $user_id ) {
 
 	// Replace all tags
-	$content = EDD()->email_tags->do_tags( $content, $payment_id );
+	$content = pw_new_user_approve()->email_tags->do_tags( $content, $user_id );
 
 	// Maintaining backwards compatibility
-	$content = apply_filters( 'edd_email_template_tags', $content, edd_get_payment_meta( $payment_id ), $payment_id );
+	$content = apply_filters( 'edd_email_template_tags', $content, $user_id, $user_id );
 
 	// Return content
 	return $content;
@@ -245,20 +217,16 @@ function edd_do_email_tags( $content, $payment_id ) {
 
 /**
  * Load email tags
- *
- * @since 1.9
  */
-function edd_load_email_tags() {
-	do_action( 'edd_add_email_tags' );
+function nua_load_email_tags() {
+	do_action( 'nua_add_email_tags' );
 }
-add_action( 'init', 'edd_load_email_tags', -999 );
+add_action( 'init', 'nua_load_email_tags', -999 );
 
 /**
- * Add default EDD email template tags
- *
- * @since 1.9
+ * Add default NUA email template tags
  */
-function edd_setup_email_tags() {
+function nua_setup_email_tags() {
 
 	// Setup default tags array
 	$email_tags = array(
@@ -349,16 +317,16 @@ function edd_setup_email_tags() {
 		),
 	);
 
-	// Apply edd_email_tags filter
-	$email_tags = apply_filters( 'edd_email_tags', $email_tags );
+	// Apply nua_email_tags filter
+	$email_tags = apply_filters( 'nua_email_tags', $email_tags );
 
 	// Add email tags
 	foreach ( $email_tags as $email_tag ) {
-		edd_add_email_tag( $email_tag['tag'], $email_tag['description'], $email_tag['function'] );
+		nua_add_email_tag( $email_tag['tag'], $email_tag['description'], $email_tag['function'] );
 	}
 
 }
-add_action( 'edd_add_email_tags', 'edd_setup_email_tags' );
+add_action( 'nua_add_email_tags', 'nua_setup_email_tags' );
 
 /**
  * Email template tag: download_list
