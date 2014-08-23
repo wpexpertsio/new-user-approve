@@ -523,7 +523,7 @@ class pw_new_user_approve {
 	}
 
 	public function default_deny_user_message() {
-		$message = sprintf( __( 'You have been denied access to %s.', 'new-user-approve' ), get_option( 'blogname' ) );
+		$message = __( 'You have been denied access to {sitename}.', 'new-user-approve' );
 
 		return $message;
 	}
@@ -541,13 +541,16 @@ class pw_new_user_approve {
 
 		// format the message
 		$message = $this->default_deny_user_message();
+		$message = nua_do_email_tags( $message, array(
+			'context' => 'deny_user',
+		) );
 		$message = apply_filters( 'new_user_approve_deny_user_message', $message, $user );
 
 		$subject = sprintf( __( '[%s] Registration Denied', 'new-user-approve' ), get_option( 'blogname' ) );
 		$subject = apply_filters( 'new_user_approve_deny_user_subject', $subject );
 
 		// send the mail
-		@wp_mail( $user_email, $subject, $message, $this->email_message_headers() );
+		wp_mail( $user_email, $subject, $message, $this->email_message_headers() );
 	}
 
 	/**
