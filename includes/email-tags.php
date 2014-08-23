@@ -32,9 +32,9 @@ class NUA_Email_Template_Tags {
 	private $tags;
 
 	/**
-	 * User ID
+	 * Attributes
 	 */
-	private $user_id;
+	private $attributes;
 
 	/**
 	 * Add an email tag
@@ -85,18 +85,18 @@ class NUA_Email_Template_Tags {
 	 * Search content for email tags and filter email tags through their hooks
 	 *
 	 * @param string $content Content to search for email tags
-	 * @param int $user_id The user id
+	 * @param array $attributes Attributes for email customization
 	 *
 	 * @return string Content with email tags filtered out.
 	 */
-	public function do_tags( $content, $user_id ) {
+	public function do_tags( $content, $attributes ) {
 
 		// Check if there is atleast one tag added
 		if ( empty( $this->tags ) || ! is_array( $this->tags ) ) {
 			return $content;
 		}
 
-		$this->user_id = $user_id;
+		$this->attributes = $attributes;
 
 		$new_content = preg_replace_callback( "/{([A-z0-9\-\_]+)}/s", array( $this, 'do_tag' ), $content );
 
@@ -122,7 +122,7 @@ class NUA_Email_Template_Tags {
 			return $m[0];
 		}
 
-		return call_user_func( $this->tags[$tag]['func'], $this->user_id, $tag );
+		return call_user_func( $this->tags[$tag]['func'], $this->attributes, $tag );
 	}
 
 }
@@ -199,17 +199,16 @@ function nua_get_emails_tags_list() {
  * Search content for email tags and filter email tags through their hooks
  *
  * @param string $content Content to search for email tags
- * @param int $user_id The user id
+ * @param int $attributes Attributes to customize email messages
  *
  * @return string Content with email tags filtered out.
  */
-function nua_do_email_tags( $content, $user_id ) {
+function nua_do_email_tags( $content, $attributes ) {
+
+	$attributes = apply_filters( 'nua_email_tags_attributes', $attributes );
 
 	// Replace all tags
-	$content = pw_new_user_approve()->email_tags->do_tags( $content, $user_id );
-
-	// Maintaining backwards compatibility
-	$content = apply_filters( 'edd_email_template_tags', $content, $user_id, $user_id );
+	$content = pw_new_user_approve()->email_tags->do_tags( $content, $attributes );
 
 	// Return content
 	return $content;
@@ -231,90 +230,35 @@ function nua_setup_email_tags() {
 	// Setup default tags array
 	$email_tags = array(
 		array(
-			'tag'         => 'download_list',
-			'description' => __( 'A list of download links for each download purchased', 'edd' ),
-			'function'    => 'edd_email_tag_download_list'
+			'tag'         => 'username',
+			'description' => __( "The user's user name on the site", 'edd' ),
+			'function'    => 'nua_email_tag_username'
 		),
-		array(
-			'tag'         => 'file_urls',
-			'description' => __( 'A plain-text list of download URLs for each download purchased', 'edd' ),
-			'function'    => 'edd_email_tag_file_urls'
-		),
-		array(
+		/*array(
 			'tag'         => 'name',
-			'description' => __( "The buyer's first name", 'edd' ),
+			'description' => __( "The user's first name", 'new-user-approve' ),
 			'function'    => 'edd_email_tag_first_name'
 		),
 		array(
 			'tag'         => 'fullname',
-			'description' => __( "The buyer's full name, first and last", 'edd' ),
+			'description' => __( "The user's full name, first and last", 'new-user-approve' ),
 			'function'    => 'edd_email_tag_fullname'
 		),
 		array(
-			'tag'         => 'username',
-			'description' => __( "The buyer's user name on the site, if they registered an account", 'edd' ),
-			'function'    => 'edd_email_tag_username'
-		),
-		array(
 			'tag'         => 'user_email',
-			'description' => __( "The buyer's email address", 'edd' ),
+			'description' => __( "The user's email address", 'new-user-approve' ),
 			'function'    => 'edd_email_tag_user_email'
 		),
 		array(
-			'tag'         => 'billing_address',
-			'description' => __( 'The buyer\'s billing address', 'edd' ),
-			'function'    => 'edd_email_tag_billing_address'
-		),
-		array(
 			'tag'         => 'date',
-			'description' => __( 'The date of the purchase', 'edd' ),
+			'description' => __( 'The date of signup', 'new-user-approve' ),
 			'function'    => 'edd_email_tag_date'
 		),
 		array(
-			'tag'         => 'subtotal',
-			'description' => __( 'The price of the purchase before taxes', 'edd' ),
-			'function'    => 'edd_email_tag_subtotal'
-		),
-		array(
-			'tag'         => 'tax',
-			'description' => __( 'The taxed amount of the purchase', 'edd' ),
-			'function'    => 'edd_email_tag_tax'
-		),
-		array(
-			'tag'         => 'price',
-			'description' => __( 'The total price of the purchase', 'edd' ),
-			'function'    => 'edd_email_tag_price'
-		),
-		array(
-			'tag'         => 'payment_id',
-			'description' => __( 'The unique ID number for this purchase', 'edd' ),
-			'function'    => 'edd_email_tag_payment_id'
-		),
-		array(
-			'tag'         => 'receipt_id',
-			'description' => __( 'The unique ID number for this purchase receipt', 'edd' ),
-			'function'    => 'edd_email_tag_receipt_id'
-		),
-		array(
-			'tag'         => 'payment_method',
-			'description' => __( 'The method of payment used for this purchase', 'edd' ),
-			'function'    => 'edd_email_tag_payment_method'
-		),
-		array(
 			'tag'         => 'sitename',
-			'description' => __( 'Your site name', 'edd' ),
+			'description' => __( 'Your site name', 'new-user-approve' ),
 			'function'    => 'edd_email_tag_sitename'
-		),
-		array(
-			'tag'         => 'receipt_link',
-			'description' => __( 'Adds a link so users can view their receipt directly on your website if they are unable to view it in the browser correctly.', 'edd' ),
-			'function'    => 'edd_email_tag_receipt_link'
-		),
-		array(
-			'tag'         => 'discount_codes',
-			'description' => __( 'Adds a list of any discount codes applied to this purchase', 'edd' ),
-			'function'    => 'edd_email_tag_discount_codes'
-		),
+		),*/
 	);
 
 	// Apply nua_email_tags filter
@@ -329,151 +273,26 @@ function nua_setup_email_tags() {
 add_action( 'nua_add_email_tags', 'nua_setup_email_tags' );
 
 /**
- * Email template tag: download_list
- * A list of download links for each download purchased
+ * Email template tag: username
+ * The user's user name on the site
  *
- * @param int $payment_id
+ * @param array $attributes
  *
- * @return string download_list
+ * @return string username
  */
-function edd_email_tag_download_list( $payment_id ) {
-
-	$payment_data  = edd_get_payment_meta( $payment_id );
-	$download_list = '<ul>';
-	$cart_items    = edd_get_payment_meta_cart_details( $payment_id );
-	$email         = edd_get_payment_user_email( $payment_id );
-
-	if ( $cart_items ) {
-		$show_names = apply_filters( 'edd_email_show_names', true );
-
-		foreach ( $cart_items as $item ) {
-
-			if ( edd_use_skus() ) {
-				$sku = edd_get_download_sku( $item['id'] );
-			}
-
-			$price_id = edd_get_cart_item_price_id( $item );
-
-			if ( $show_names ) {
-
-				$title = get_the_title( $item['id'] );
-
-				if ( ! empty( $sku ) ) {
-					$title .= "&nbsp;&ndash;&nbsp;" . __( 'SKU', 'edd' ) . ': ' . $sku;
-				}
-
-				if ( $price_id !== false ) {
-					$title .= "&nbsp;&ndash;&nbsp;" . edd_get_price_option_name( $item['id'], $price_id );
-				}
-
-				$download_list .= '<li>' . apply_filters( 'edd_email_receipt_download_title', $title, $item, $price_id, $payment_id ) . '<br/>';
-				$download_list .= '<ul>';
-			}
-
-			$files = edd_get_download_files( $item['id'], $price_id );
-
-			if ( $files ) {
-				foreach ( $files as $filekey => $file ) {
-					$download_list .= '<li>';
-					$file_url = edd_get_download_file_url( $payment_data['key'], $email, $filekey, $item['id'], $price_id );
-					$download_list .= '<a href="' . esc_url( $file_url ) . '">' . edd_get_file_name( $file ) . '</a>';
-					$download_list .= '</li>';
-				}
-			}
-			elseif ( edd_is_bundled_product( $item['id'] ) ) {
-
-				$bundled_products = edd_get_bundled_products( $item['id'] );
-
-				foreach ( $bundled_products as $bundle_item ) {
-
-					$download_list .= '<li class="edd_bundled_product"><strong>' . get_the_title( $bundle_item ) . '</strong></li>';
-
-					$files = edd_get_download_files( $bundle_item );
-
-					foreach ( $files as $filekey => $file ) {
-						$download_list .= '<li>';
-						$file_url = edd_get_download_file_url( $payment_data['key'], $email, $filekey, $bundle_item, $price_id );
-						$download_list .= '<a href="' . esc_url( $file_url ) . '">' . $file['name'] . '</a>';
-						$download_list .= '</li>';
-					}
-				}
-			}
-
-			if ( $show_names ) {
-				$download_list .= '</ul>';
-			}
-
-			if ( '' != edd_get_product_notes( $item['id'] ) ) {
-				$download_list .= ' &mdash; <small>' . edd_get_product_notes( $item['id'] ) . '</small>';
-			}
-
-
-			if ( $show_names ) {
-				$download_list .= '</li>';
-			}
-		}
-	}
-	$download_list .= '</ul>';
-
-	return $download_list;
-}
-
-/**
- * Email template tag: file_urls
- * A plain-text list of download URLs for each download purchased
- *
- * @param int $payment_id
- *
- * @return string $file_urls
- */
-function edd_email_tag_file_urls( $payment_id ) {
-
-	$payment_data = edd_get_payment_meta( $payment_id );
-	$file_urls    = '';
-	$cart_items   = edd_get_payment_meta_cart_details( $payment_id );
-	$email        = edd_get_payment_user_email( $payment_id );
-
-	foreach ( $cart_items as $item ) {
-
-		$price_id = edd_get_cart_item_price_id( $item );
-		$files    = edd_get_download_files( $item['id'], $price_id );
-
-		if ( $files ) {
-			foreach ( $files as $filekey => $file ) {
-				$file_url = edd_get_download_file_url( $payment_data['key'], $email, $filekey, $item['id'], $price_id );
-
-				$file_urls .= esc_html( $file_url ) . '<br/>';
-			}
-		}
-		elseif ( edd_is_bundled_product( $item['id'] ) ) {
-
-			$bundled_products = edd_get_bundled_products( $item['id'] );
-
-			foreach ( $bundled_products as $bundle_item ) {
-
-				$files = edd_get_download_files( $bundle_item );
-				foreach ( $files as $filekey => $file ) {
-					$file_url = edd_get_download_file_url( $payment_data['key'], $email, $filekey, $bundle_item, $price_id );
-					$file_urls .= esc_html( $file_url ) . '<br/>';
-				}
-
-			}
-		}
-
-	}
-
-	return $file_urls;
+function nua_email_tag_username( $attributes ) {
+	return $attributes['user_login'];
 }
 
 /**
  * Email template tag: name
- * The buyer's first name
+ * The user's first name. If the first name is not available, the username will be returned.
  *
- * @param int $payment_id
+ * @param int $user_id
  *
  * @return string name
  */
-function edd_email_tag_first_name( $payment_id ) {
+function nua_email_tag_first_name( $user_id ) {
 	$payment_data = edd_get_payment_meta( $payment_id );
 	$email_name   = edd_get_email_names( $payment_data['user_info'] );
 	return $email_name['name'];
@@ -491,20 +310,6 @@ function edd_email_tag_fullname( $payment_id ) {
 	$payment_data = edd_get_payment_meta( $payment_id );
 	$email_name   = edd_get_email_names( $payment_data['user_info'] );
 	return $email_name['fullname'];
-}
-
-/**
- * Email template tag: username
- * The buyer's user name on the site, if they registered an account
- *
- * @param int $payment_id
- *
- * @return string username
- */
-function edd_email_tag_username( $payment_id ) {
-	$payment_data = edd_get_payment_meta( $payment_id );
-	$email_name   = edd_get_email_names( $payment_data['user_info'] );
-	return $email_name['username'];
 }
 
 /**
