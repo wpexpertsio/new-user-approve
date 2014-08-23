@@ -473,23 +473,6 @@ class pw_new_user_approve {
 
 		$bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', $bypass_password_reset );
 
-		if ( !$bypass_password_reset ) {
-			global $wpdb;
-
-			// reset password to know what to send the user
-			$new_pass = wp_generate_password( 12, false );
-			$data = array( 'user_pass' => md5( $new_pass ), 'user_activation_key' => '', );
-			$where = array( 'ID' => $user->ID, );
-			$wpdb->update( $wpdb->users, $data, $where, array( '%s', '%s' ), array( '%d' ) );
-
-			// Set up the Password change nag.
-			update_user_option( $user->ID, 'default_password_nag', true, true );
-
-			// Set this meta field to track that the password has been reset by
-			// the plugin. Don't reset it again.
-			update_user_meta( $user->ID, 'pw_user_approve_password_reset', time() );
-		}
-
 		wp_cache_delete( $user->ID, 'users' );
 		wp_cache_delete( $user->data->user_login, 'userlogins' );
 
@@ -500,23 +483,14 @@ class pw_new_user_approve {
 		// format the message
 		$message = apply_filters( 'new_user_approve_approve_user_message_default', $this->default_approve_user_message() );
 
-		if ( !$bypass_password_reset ) {
-			$message = str_replace( 'PASSWORD', sprintf( __( 'Password: %s', 'new-user-approve' ), $new_pass ), $message );
-		} else {
-			$message = str_replace( 'PASSWORD', '', $message );
-		}
-		$message = str_replace( 'USEREMAIL', $user_email, $message );
-		$message = str_replace( 'SITENAME', get_option( 'blogname' ), $message );
-		$message = str_replace( 'SITEURL', home_url(), $message );
-		$message = str_replace( 'LOGINURL', wp_login_url(), $message );
-
 		$message = nua_do_email_tags( $message, array(
 			'context' => 'approve_user',
 			'user' => $user,
 			'user_login' => $user_login,
 			'user_email' => $user_email,
+			'bypass_password_reset' => $bypass_password_reset,
 		) );
-		$message = apply_filters( 'new_user_approve_approve_user_message', $message, $user );
+		$message = apply_filters( 'new_user_approve_approve_user_message', $message, $user, $bypass_password_reset );
 
 		$subject = sprintf( __( '[%s] Registration Approved', 'new-user-approve' ), get_option( 'blogname' ) );
 		$subject = apply_filters( 'new_user_approve_approve_user_subject', $subject );
@@ -533,7 +507,7 @@ class pw_new_user_approve {
 	public function default_approve_user_message() {
 		$message = __( 'You have been approved to access {sitename}', 'new-user-approve' ) . "\r\n\r\n";
 		$message .= "{username}\r\n";
-		$message .= "PASSWORD\r\n\r\n";
+		$message .= "{password}\r\n\r\n";
 		$message .= "LOGINURL";
 
 		return $message;

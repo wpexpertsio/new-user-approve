@@ -254,6 +254,16 @@ function nua_setup_email_tags() {
 			'description' => __( 'The URL to approve/deny users', 'new-user-approve' ),
 			'function'    => 'nua_email_tag_adminurl'
 		),
+		array(
+			'tag'         => 'login_url',
+			'description' => __( 'The URL to login to the site', 'new-user-approve' ),
+			'function'    => 'nua_email_tag_loginurl'
+		),
+		array(
+			'tag'         => 'password',
+			'description' => __( 'Generates the password for the user to add to the email', 'new-user-approve' ),
+			'function'    => 'nua_email_tag_password'
+		),
 		/*array(
 			'tag'         => 'name',
 			'description' => __( "The user's first name", 'new-user-approve' ),
@@ -340,6 +350,51 @@ function nua_email_tag_siteurl( $attributes ) {
  */
 function nua_email_tag_adminurl( $attributes ) {
 	return $attributes['admin_url'];
+}
+
+/**
+ * Email template tag: login_url
+ * Your site URL
+ *
+ * @param array $attributes
+ *
+ * @return string admin approval URL
+ */
+function nua_email_tag_loginurl( $attributes ) {
+	return wp_login_url();
+}
+
+/**
+ * Email template tag: password
+ * Generates the password for the user to add to the email
+ *
+ * @param array $attributes
+ *
+ * @return string password label and password
+ */
+function nua_email_tag_password( $attributes ) {
+	if ( ! $attributes['bypass_password_reset'] ) {
+		global $wpdb;
+
+		$user = $attributes['user'];
+
+		// reset password to know what to send the user
+		$new_pass = wp_generate_password( 12, false );
+		$data = array( 'user_pass' => md5( $new_pass ), 'user_activation_key' => '', );
+		$where = array( 'ID' => $user->ID, );
+		$wpdb->update( $wpdb->users, $data, $where, array( '%s', '%s' ), array( '%d' ) );
+
+		// Set up the Password change nag.
+		update_user_option( $user->ID, 'default_password_nag', true, true );
+
+		// Set this meta field to track that the password has been reset by
+		// the plugin. Don't reset it again.
+		update_user_meta( $user->ID, 'pw_user_approve_password_reset', time() );
+
+		return sprintf( __( 'Password: %s', 'new-user-approve' ), $new_pass );
+	} else {
+		return '';
+	}
 }
 
 /**
