@@ -517,7 +517,7 @@ class pw_new_user_approve {
 		$message = __( 'You have been approved to access {sitename}', 'new-user-approve' ) . "\r\n\r\n";
 		$message .= "{username}\r\n";
 		$message .= "{password}\r\n\r\n";
-		$message .= "LOGINURL";
+		$message .= "{login_url}";
 
 		return $message;
 	}
