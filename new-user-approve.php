@@ -25,6 +25,9 @@ class pw_new_user_approve {
 	public static function instance() {
 		if ( !isset( self::$instance ) ) {
 			self::$instance = new pw_new_user_approve();
+
+			self::$instance->includes();
+			self::$instance->email_tags = new NUA_Email_Template_Tags();
 		}
 		return self::$instance;
 	}
@@ -67,6 +70,17 @@ class pw_new_user_approve {
 
 	public function get_plugin_dir() {
 		return plugin_dir_path( __FILE__ );
+	}
+
+	/**
+	 * Include required files
+	 *
+	 * @access private
+	 * @since 1.4
+	 * @return void
+	 */
+	private function includes() {
+		require_once( $this->get_plugin_dir() . 'includes/email-tags.php' );
 	}
 
 	/**
