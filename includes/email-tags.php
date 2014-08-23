@@ -373,10 +373,10 @@ function nua_email_tag_loginurl( $attributes ) {
  * @return string password label and password
  */
 function nua_email_tag_password( $attributes ) {
-	if ( ! $attributes['bypass_password_reset'] ) {
-		global $wpdb;
+	$user = $attributes['user'];
 
-		$user = $attributes['user'];
+	if ( pw_new_user_approve()->do_password_reset( $user->ID ) ) {
+		global $wpdb;
 
 		// reset password to know what to send the user
 		$new_pass = wp_generate_password( 12, false );

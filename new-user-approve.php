@@ -437,20 +437,21 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * Admin approval of user
+	 * Determine whether a password needs to be reset.
 	 *
-	 * @uses new_user_approve_approve_user
+	 * password should only be reset for users that:
+	 * * have never logged in
+	 * * are just approved for the first time
+	 *
+	 * @return boolean
 	 */
-	public function approve_user( $user_id ) {
-		$user = new WP_User( $user_id );
-
-		// password should only be reset for users that:
-		// * have never logged in
-		// * are just approved for the first time
+	public function do_password_reset( $user_id ) {
+		// Default behavior is to reset password
+		$do_password_reset = true;
 
 		// If the password has already been reset for this user,
 		// $password_reset will be a unix timestamp
-		$password_reset = get_user_meta( $user_id, 'pw_user_approve_password_reset' );
+		$last_password_reset = get_user_meta( $user_id, 'pw_user_approve_password_reset' );
 
 		// Get the current user status. By default each user is given a pending
 		// status when the user is created (with this plugin activated). If the
@@ -458,20 +459,29 @@ class pw_new_user_approve {
 		// have a status set.
 		$user_status = get_user_meta( $user_id, 'pw_user_status' );
 
-		// Default behavior is to reset password
-		$bypass_password_reset = false;
-
 		// if no status is set, don't reset password
 		if ( empty( $user_status ) ) {
-			$bypass_password_reset = true;
+			$do_password_reset = false;
 		}
 
 		// if the password has already been reset, absolutely bypass
-		if ( !empty( $password_reset ) ) {
-			$bypass_password_reset = true;
+		if ( ! empty( $last_password_reset ) ) {
+			$do_password_reset = false;
 		}
 
-		$bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', $bypass_password_reset );
+		// for backward compatability
+		$bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', !$do_password_reset );
+
+		return apply_filters( 'new_user_approve_do_password_reset', !$bypass_password_reset );
+	}
+
+	/**
+	 * Admin approval of user
+	 *
+	 * @uses new_user_approve_approve_user
+	 */
+	public function approve_user( $user_id ) {
+		$user = new WP_User( $user_id );
 
 		wp_cache_delete( $user->ID, 'users' );
 		wp_cache_delete( $user->data->user_login, 'userlogins' );
@@ -488,9 +498,8 @@ class pw_new_user_approve {
 			'user' => $user,
 			'user_login' => $user_login,
 			'user_email' => $user_email,
-			'bypass_password_reset' => $bypass_password_reset,
 		) );
-		$message = apply_filters( 'new_user_approve_approve_user_message', $message, $user, $bypass_password_reset );
+		$message = apply_filters( 'new_user_approve_approve_user_message', $message, $user );
 
 		$subject = sprintf( __( '[%s] Registration Approved', 'new-user-approve' ), get_option( 'blogname' ) );
 		$subject = apply_filters( 'new_user_approve_approve_user_subject', $subject );
