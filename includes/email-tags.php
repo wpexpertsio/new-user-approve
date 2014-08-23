@@ -234,6 +234,26 @@ function nua_setup_email_tags() {
 			'description' => __( "The user's user name on the site", 'edd' ),
 			'function'    => 'nua_email_tag_username'
 		),
+		array(
+			'tag'         => 'user_email',
+			'description' => __( "The user's email address", 'new-user-approve' ),
+			'function'    => 'nua_email_tag_user_email'
+		),
+		array(
+			'tag'         => 'sitename',
+			'description' => __( 'Your site name', 'new-user-approve' ),
+			'function'    => 'nua_email_tag_sitename'
+		),
+		array(
+			'tag'         => 'site_url',
+			'description' => __( 'Your site URL', 'new-user-approve' ),
+			'function'    => 'nua_email_tag_siteurl'
+		),
+		array(
+			'tag'         => 'admin_approve_url',
+			'description' => __( 'The URL to approve/deny users', 'new-user-approve' ),
+			'function'    => 'nua_email_tag_adminurl'
+		),
 		/*array(
 			'tag'         => 'name',
 			'description' => __( "The user's first name", 'new-user-approve' ),
@@ -245,19 +265,9 @@ function nua_setup_email_tags() {
 			'function'    => 'edd_email_tag_fullname'
 		),
 		array(
-			'tag'         => 'user_email',
-			'description' => __( "The user's email address", 'new-user-approve' ),
-			'function'    => 'edd_email_tag_user_email'
-		),
-		array(
 			'tag'         => 'date',
 			'description' => __( 'The date of signup', 'new-user-approve' ),
 			'function'    => 'edd_email_tag_date'
-		),
-		array(
-			'tag'         => 'sitename',
-			'description' => __( 'Your site name', 'new-user-approve' ),
-			'function'    => 'edd_email_tag_sitename'
 		),*/
 	);
 
@@ -282,6 +292,54 @@ add_action( 'nua_add_email_tags', 'nua_setup_email_tags' );
  */
 function nua_email_tag_username( $attributes ) {
 	return $attributes['user_login'];
+}
+
+/**
+ * Email template tag: user_email
+ * The user's email address
+ *
+ * @param array $attributes
+ *
+ * @return string user_email
+ */
+function nua_email_tag_user_email( $attributes ) {
+	return $attributes['user_email'];
+}
+
+/**
+ * Email template tag: sitename
+ * Your site name
+ *
+ * @param array $attributes
+ *
+ * @return string sitename
+ */
+function nua_email_tag_sitename( $attributes ) {
+	return get_bloginfo( 'name' );
+}
+
+/**
+ * Email template tag: site_url
+ * Your site URL
+ *
+ * @param array $attributes
+ *
+ * @return string site URL
+ */
+function nua_email_tag_siteurl( $attributes ) {
+	return home_url();
+}
+
+/**
+ * Email template tag: admin_approve_url
+ * Your site URL
+ *
+ * @param array $attributes
+ *
+ * @return string admin approval URL
+ */
+function nua_email_tag_adminurl( $attributes ) {
+	return $attributes['admin_url'];
 }
 
 /**
@@ -313,41 +371,6 @@ function edd_email_tag_fullname( $payment_id ) {
 }
 
 /**
- * Email template tag: user_email
- * The buyer's email address
- *
- * @param int $payment_id
- *
- * @return string user_email
- */
-function edd_email_tag_user_email( $payment_id ) {
-	return edd_get_payment_user_email( $payment_id );
-}
-
-/**
- * Email template tag: billing_address
- * The buyer's billing address
- *
- * @param int $payment_id
- *
- * @return string billing_address
- */
-function edd_email_tag_billing_address( $payment_id ) {
-
-	$user_info    = edd_get_payment_meta_user_info( $payment_id );
-	$user_address = ! empty( $user_info['address'] ) ? $user_info['address'] : array( 'line1' => '', 'line2' => '', 'city' => '', 'country' => '', 'state' => '', 'zip' => '' );
-
-	$return = $user_address['line1'] . "\n";
-	if( ! empty( $user_address['line2'] ) ) {
-		$return .= $user_address['line2'] . "\n";
-	}
-	$return .= $user_address['city'] . ' ' . $user_address['zip'] . ' ' . $user_address['state'] . "\n";
-	$return .= $user_address['country'];
-
-	return $return;
-}
-
-/**
  * Email template tag: date
  * Date of purchase
  *
@@ -358,123 +381,4 @@ function edd_email_tag_billing_address( $payment_id ) {
 function edd_email_tag_date( $payment_id ) {
 	$payment_data = edd_get_payment_meta( $payment_id );
 	return date_i18n( get_option( 'date_format' ), strtotime( $payment_data['date'] ) );
-}
-
-/**
- * Email template tag: subtotal
- * Price of purchase before taxes
- *
- * @param int $payment_id
- *
- * @return string subtotal
- */
-function edd_email_tag_subtotal( $payment_id ) {
-	$subtotal = edd_currency_filter( edd_format_amount( edd_get_payment_subtotal( $payment_id ) ) );
-	return html_entity_decode( $subtotal, ENT_COMPAT, 'UTF-8' );
-}
-
-/**
- * Email template tag: tax
- * The taxed amount of the purchase
- *
- * @param int $payment_id
- *
- * @return string tax
- */
-function edd_email_tag_tax( $payment_id ) {
-	$tax = edd_currency_filter( edd_format_amount( edd_get_payment_tax( $payment_id ) ) );
-	return html_entity_decode( $tax, ENT_COMPAT, 'UTF-8' );
-}
-
-/**
- * Email template tag: price
- * The total price of the purchase
- *
- * @param int $payment_id
- *
- * @return string price
- */
-function edd_email_tag_price( $payment_id ) {
-	$price = edd_currency_filter( edd_format_amount( edd_get_payment_amount( $payment_id ) ) );
-	return html_entity_decode( $price, ENT_COMPAT, 'UTF-8' );
-}
-
-/**
- * Email template tag: payment_id
- * The unique ID number for this purchase
- *
- * @param int $payment_id
- *
- * @return int payment_id
- */
-function edd_email_tag_payment_id( $payment_id ) {
-	return edd_get_payment_number( $payment_id );
-}
-
-/**
- * Email template tag: receipt_id
- * The unique ID number for this purchase receipt
- *
- * @param int $payment_id
- *
- * @return string receipt_id
- */
-function edd_email_tag_receipt_id( $payment_id ) {
-	return edd_get_payment_key( $payment_id );
-}
-
-/**
- * Email template tag: payment_method
- * The method of payment used for this purchase
- *
- * @param int $payment_id
- *
- * @return string gateway
- */
-function edd_email_tag_payment_method( $payment_id ) {
-	return edd_get_gateway_checkout_label( edd_get_payment_gateway( $payment_id ) );
-}
-
-/**
- * Email template tag: sitename
- * Your site name
- *
- * @param int $payment_id
- *
- * @return string sitename
- */
-function edd_email_tag_sitename( $payment_id ) {
-	return get_bloginfo( 'name' );
-}
-
-/**
- * Email template tag: receipt_link
- * Adds a link so users can view their receipt directly on your website if they are unable to view it in the browser correctly
- *
- * @param $int payment_id
- *
- * @return string receipt_link
- */
-function edd_email_tag_receipt_link( $payment_id ) {
-	return sprintf( __( '%1$sView it in your browser.%2$s', 'edd' ), '<a href="' . add_query_arg( array( 'payment_key' => edd_get_payment_key( $payment_id ), 'edd_action' => 'view_receipt' ), home_url() ) . '">', '</a>' );
-}
-
-/**
- * Email template tag: discount_codes
- * Adds a list of any discount codes applied to this purchase
- *
- * @param $int payment_id
- * @since 2.0
- * @return string $discount_codes
- */
-function edd_email_tag_discount_codes( $payment_id ) {
-	$user_info = edd_get_payment_meta_user_info( $payment_id );
-
-	$discount_codes = '';
-
-	if( isset( $user_info['discount'] ) && $user_info['discount'] !== 'none' ) {
-		$discount_codes = $user_info['discount'];
-	}
-
-	return $discount_codes;
 }

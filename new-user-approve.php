@@ -366,10 +366,10 @@ class pw_new_user_approve {
 	 * @return string
 	 */
 	public function default_notification_message() {
-		$message = __( 'USERNAME (USEREMAIL) has requested a username at SITENAME', 'new-user-approve' ) . "\n\n";
-		$message .= "SITEURL\n\n";
-		$message .= __( 'To approve or deny this user access to SITENAME go to', 'new-user-approve' ) . "\n\n";
-		$message .= "ADMINURL\n\n";
+		$message = __( '{username} ({user_email}) has requested a username at {sitename}', 'new-user-approve' ) . "\n\n";
+		$message .= "{site_url}\n\n";
+		$message .= __( 'To approve or deny this user access to {sitename} go to', 'new-user-approve' ) . "\n\n";
+		$message .= "{admin_approve_url}\n\n";
 
 		return $message;
 	}
@@ -388,25 +388,21 @@ class pw_new_user_approve {
 			return;
 		}
 
-		// The blogname option is escaped with esc_html on the way into the database in sanitize_option
-		// we want to reverse this for the plain text arena of emails.
-		$blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
-
 		$default_admin_url = admin_url( 'users.php?s&pw-status-query-submit=Filter&new_user_approve_filter=pending&paged=1' );
 		$admin_url = apply_filters( 'new_user_approve_admin_link', $default_admin_url );
 
 		/* send email to admin for approval */
 		$message = apply_filters( 'new_user_approve_request_approval_message_default', $this->default_notification_message() );
 
-		$message = str_replace( 'USERNAME', $user_login, $message );
-		$message = str_replace( 'USEREMAIL', $user_email, $message );
-		$message = str_replace( 'SITENAME', $blogname, $message );
-		$message = str_replace( 'SITEURL', home_url(), $message );
-		$message = str_replace( 'ADMINURL', $admin_url, $message );
-
+		$message = nua_do_email_tags( $message, array(
+			'context' => 'request_admin_approval_email',
+			'user_login' => $user_login,
+			'user_email' => $user_email,
+			'admin_url' => $admin_url,
+		) );
 		$message = apply_filters( 'new_user_approve_request_approval_message', $message, $user_login, $user_email );
 
-		$subject = sprintf( __( '[%s] User Approval', 'new-user-approve' ), $blogname );
+		$subject = sprintf( __( '[%s] User Approval', 'new-user-approve' ), wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ) );
 		$subject = apply_filters( 'new_user_approve_request_approval_subject', $subject );
 
 		$to = apply_filters( 'new_user_approve_email_admins', array( get_option( 'admin_email' ) ) );
@@ -504,7 +500,6 @@ class pw_new_user_approve {
 		// format the message
 		$message = apply_filters( 'new_user_approve_approve_user_message_default', $this->default_approve_user_message() );
 
-		$message = str_replace( 'USERNAME', sprintf( __( 'Username: %s', 'new-user-approve' ), $user_login ), $message );
 		if ( !$bypass_password_reset ) {
 			$message = str_replace( 'PASSWORD', sprintf( __( 'Password: %s', 'new-user-approve' ), $new_pass ), $message );
 		} else {
@@ -515,6 +510,12 @@ class pw_new_user_approve {
 		$message = str_replace( 'SITEURL', home_url(), $message );
 		$message = str_replace( 'LOGINURL', wp_login_url(), $message );
 
+		$message = nua_do_email_tags( $message, array(
+			'context' => 'approve_user',
+			'user' => $user,
+			'user_login' => $user_login,
+			'user_email' => $user_email,
+		) );
 		$message = apply_filters( 'new_user_approve_approve_user_message', $message, $user );
 
 		$subject = sprintf( __( '[%s] Registration Approved', 'new-user-approve' ), get_option( 'blogname' ) );
@@ -530,8 +531,8 @@ class pw_new_user_approve {
 	}
 
 	public function default_approve_user_message() {
-		$message = __( 'You have been approved to access SITENAME', 'new-user-approve' ) . "\r\n\r\n";
-		$message .= "USERNAME\r\n";
+		$message = __( 'You have been approved to access {sitename}', 'new-user-approve' ) . "\r\n\r\n";
+		$message .= "{username}\r\n";
 		$message .= "PASSWORD\r\n\r\n";
 		$message .= "LOGINURL";
 
@@ -660,7 +661,7 @@ class pw_new_user_approve {
 	}
 
 	public function default_welcome_message() {
-		$welcome = sprintf( __( 'Welcome to SITENAME. This site is accessible to approved users only. To be approved, you must first register.', 'new-user-approve' ), get_option( 'blogname' ) );
+		$welcome = sprintf( __( 'Welcome to {sitename}. This site is accessible to approved users only. To be approved, you must first register.', 'new-user-approve' ), get_option( 'blogname' ) );
 		$welcome = apply_filters( 'new_user_approve_welcome_message_default', $welcome );
 
 		return $welcome;
@@ -683,7 +684,7 @@ class pw_new_user_approve {
 			$welcome = $this->default_welcome_message();
 			$welcome = apply_filters( 'new_user_approve_welcome_message', $welcome );
 
-			$welcome = str_replace( 'SITENAME', get_option( 'blogname' ), $welcome );
+			$welcome = str_replace( '{sitename}', get_option( 'blogname' ), $welcome );
 
 			if ( !empty( $welcome ) ) {
 				$message .= '<p class="message register">' . $welcome . '</p>';
