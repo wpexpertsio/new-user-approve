@@ -231,7 +231,7 @@ function nua_setup_email_tags() {
 	$email_tags = array(
 		array(
 			'tag'         => 'username',
-			'description' => __( "The user's user name on the site", 'edd' ),
+			'description' => __( "The user's username on the site as well as the Username label", 'new-user-approve' ),
 			'function'    => 'nua_email_tag_username'
 		),
 		array(
@@ -301,7 +301,9 @@ add_action( 'nua_add_email_tags', 'nua_setup_email_tags' );
  * @return string username
  */
 function nua_email_tag_username( $attributes ) {
-	return $attributes['user_login'];
+	$username = $attributes['user_login'];
+
+	return sprintf( __( 'Username: %s', 'new-user-approve' ), $username );
 }
 
 /**
@@ -376,10 +378,11 @@ function nua_email_tag_password( $attributes ) {
 	$user = $attributes['user'];
 
 	if ( pw_new_user_approve()->do_password_reset( $user->ID ) ) {
-		global $wpdb;
-
 		// reset password to know what to send the user
 		$new_pass = wp_generate_password( 12, false );
+
+		// store the password
+		global $wpdb;
 		$data = array( 'user_pass' => md5( $new_pass ), 'user_activation_key' => '', );
 		$where = array( 'ID' => $user->ID, );
 		$wpdb->update( $wpdb->users, $data, $where, array( '%s', '%s' ), array( '%d' ) );
@@ -388,7 +391,7 @@ function nua_email_tag_password( $attributes ) {
 		update_user_option( $user->ID, 'default_password_nag', true, true );
 
 		// Set this meta field to track that the password has been reset by
-		// the plugin. Don't reset it again.
+		// the plugin. Don't reset it again unless doing a password reset.
 		update_user_meta( $user->ID, 'pw_user_approve_password_reset', time() );
 
 		return sprintf( __( 'Password: %s', 'new-user-approve' ), $new_pass );
