@@ -264,21 +264,6 @@ function nua_setup_email_tags() {
 			'description' => __( 'Generates the password for the user to add to the email', 'new-user-approve' ),
 			'function'    => 'nua_email_tag_password'
 		),
-		/*array(
-			'tag'         => 'name',
-			'description' => __( "The user's first name", 'new-user-approve' ),
-			'function'    => 'edd_email_tag_first_name'
-		),
-		array(
-			'tag'         => 'fullname',
-			'description' => __( "The user's full name, first and last", 'new-user-approve' ),
-			'function'    => 'edd_email_tag_fullname'
-		),
-		array(
-			'tag'         => 'date',
-			'description' => __( 'The date of signup', 'new-user-approve' ),
-			'function'    => 'edd_email_tag_date'
-		),*/
 	);
 
 	// Apply nua_email_tags filter
@@ -398,45 +383,4 @@ function nua_email_tag_password( $attributes ) {
 	} else {
 		return '';
 	}
-}
-
-/**
- * Email template tag: name
- * The user's first name. If the first name is not available, the username will be returned.
- *
- * @param int $user_id
- *
- * @return string name
- */
-function nua_email_tag_first_name( $user_id ) {
-	$payment_data = edd_get_payment_meta( $payment_id );
-	$email_name   = edd_get_email_names( $payment_data['user_info'] );
-	return $email_name['name'];
-}
-
-/**
- * Email template tag: fullname
- * The buyer's full name, first and last
- *
- * @param int $payment_id
- *
- * @return string fullname
- */
-function edd_email_tag_fullname( $payment_id ) {
-	$payment_data = edd_get_payment_meta( $payment_id );
-	$email_name   = edd_get_email_names( $payment_data['user_info'] );
-	return $email_name['fullname'];
-}
-
-/**
- * Email template tag: date
- * Date of purchase
- *
- * @param int $payment_id
- *
- * @return string date
- */
-function edd_email_tag_date( $payment_id ) {
-	$payment_data = edd_get_payment_meta( $payment_id );
-	return date_i18n( get_option( 'date_format' ), strtotime( $payment_data['date'] ) );
 }
