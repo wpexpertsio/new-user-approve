@@ -42,12 +42,13 @@ class NUA_Email_Template_Tags {
 	 * @param string   $tag  Email tag to be replace in email
 	 * @param callable $func Hook to run when email tag is found
 	 */
-	public function add( $tag, $description, $func ) {
+	public function add( $tag, $description, $func, $context ) {
 		if ( is_callable( $func ) ) {
 			$this->tags[$tag] = array(
 				'tag'         => $tag,
 				'description' => $description,
-				'func'        => $func
+				'func'        => $func,
+				'context'     => $context,
 			);
 		}
 	}
@@ -133,8 +134,8 @@ class NUA_Email_Template_Tags {
  * @param string   $tag  Email tag to be replace in email
  * @param callable $func Hook to run when email tag is found
  */
-function nua_add_email_tag( $tag, $description, $func ) {
-	pw_new_user_approve()->email_tags->add( $tag, $description, $func );
+function nua_add_email_tag( $tag, $description, $func, $context ) {
+	pw_new_user_approve()->email_tags->add( $tag, $description, $func, $context );
 }
 
 /**
@@ -171,7 +172,7 @@ function nua_get_email_tags() {
  *
  * @return string
  */
-function nua_get_emails_tags_list() {
+function nua_get_emails_tags_list( $context = 'email' ) {
 	// The list
 	$list = '';
 
@@ -183,10 +184,10 @@ function nua_get_emails_tags_list() {
 
 		// Loop
 		foreach ( $email_tags as $email_tag ) {
-
-			// Add email tag to list
-			$list .= '{' . $email_tag['tag'] . '} - ' . $email_tag['description'] . '<br/>';
-
+			if ( in_array( $context, $email_tag['context'] ) ) {
+				// Add email tag to list
+				$list .= '{' . $email_tag['tag'] . '} - ' . $email_tag['description'] . '<br/>';
+			}
 		}
 
 	}
@@ -232,37 +233,44 @@ function nua_setup_email_tags() {
 		array(
 			'tag'         => 'username',
 			'description' => __( "The user's username on the site as well as the Username label", 'new-user-approve' ),
-			'function'    => 'nua_email_tag_username'
+			'function'    => 'nua_email_tag_username',
+			'context'     => array( 'email' ),
 		),
 		array(
 			'tag'         => 'user_email',
 			'description' => __( "The user's email address", 'new-user-approve' ),
-			'function'    => 'nua_email_tag_user_email'
+			'function'    => 'nua_email_tag_user_email',
+			'context'     => array( 'email' ),
 		),
 		array(
 			'tag'         => 'sitename',
 			'description' => __( 'Your site name', 'new-user-approve' ),
-			'function'    => 'nua_email_tag_sitename'
+			'function'    => 'nua_email_tag_sitename',
+			'context'     => array( 'email', 'login' ),
 		),
 		array(
 			'tag'         => 'site_url',
 			'description' => __( 'Your site URL', 'new-user-approve' ),
-			'function'    => 'nua_email_tag_siteurl'
+			'function'    => 'nua_email_tag_siteurl',
+			'context'     => array( 'email' ),
 		),
 		array(
 			'tag'         => 'admin_approve_url',
 			'description' => __( 'The URL to approve/deny users', 'new-user-approve' ),
-			'function'    => 'nua_email_tag_adminurl'
+			'function'    => 'nua_email_tag_adminurl',
+			'context'     => array( 'email' ),
 		),
 		array(
 			'tag'         => 'login_url',
 			'description' => __( 'The URL to login to the site', 'new-user-approve' ),
-			'function'    => 'nua_email_tag_loginurl'
+			'function'    => 'nua_email_tag_loginurl',
+			'context'     => array( 'email' ),
 		),
 		array(
 			'tag'         => 'password',
 			'description' => __( 'Generates the password for the user to add to the email', 'new-user-approve' ),
-			'function'    => 'nua_email_tag_password'
+			'function'    => 'nua_email_tag_password',
+			'context'     => array( 'email' ),
 		),
 	);
 
@@ -271,7 +279,7 @@ function nua_setup_email_tags() {
 
 	// Add email tags
 	foreach ( $email_tags as $email_tag ) {
-		nua_add_email_tag( $email_tag['tag'], $email_tag['description'], $email_tag['function'] );
+		nua_add_email_tag( $email_tag['tag'], $email_tag['description'], $email_tag['function'], $email_tag['context'] );
 	}
 
 }
