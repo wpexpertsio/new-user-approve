@@ -574,6 +574,10 @@ class pw_new_user_approve {
 		}
 
 		$message = nua_default_registration_complete_message();
+		$message = nua_do_email_tags( $message, array(
+			'context' => 'pending_message',
+		) );
+		$message = apply_filters( 'new_user_approve_pending_message', $message );
 
 		$errors->add( 'registration_required', $message, 'message' );
 
@@ -618,8 +622,9 @@ class pw_new_user_approve {
 	public function welcome_user( $message ) {
 		if ( !isset( $_GET['action'] ) ) {
 			$welcome = nua_default_welcome_message();
-
-			$welcome = str_replace( '{sitename}', get_option( 'blogname' ), $welcome );
+			$welcome = nua_do_email_tags( $welcome, array(
+				'context' => 'welcome_message',
+			) );
 			$welcome = apply_filters( 'new_user_approve_welcome_message', $welcome );
 
 			if ( !empty( $welcome ) ) {
@@ -629,6 +634,9 @@ class pw_new_user_approve {
 
 		if ( isset( $_GET['action'] ) && $_GET['action'] == 'register' && !$_POST ) {
 			$instructions = nua_default_registration_message();
+			$instructions = nua_do_email_tags( $instructions, array(
+				'context' => 'registration_message',
+			) );
 			$instructions = apply_filters( 'new_user_approve_register_instructions', $instructions );
 
 			if ( !empty( $instructions ) ) {

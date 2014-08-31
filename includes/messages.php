@@ -24,13 +24,14 @@ function nua_default_registration_complete_message() {
 	$message .= ' ';
 	$message .= sprintf( __( 'You will receive an email with instructions on what you will need to do next. Thanks for your patience.', 'new-user-approve' ) );
 
-	$message = apply_filters( 'new_user_approve_pending_message', $message );
+	$message = apply_filters( 'new_user_approve_pending_message_default', $message );
 
 	return $message;
 }
 
 function nua_default_welcome_message() {
 	$welcome = sprintf( __( 'Welcome to {sitename}. This site is accessible to approved users only. To be approved, you must first register.', 'new-user-approve' ), get_option( 'blogname' ) );
+
 	$welcome = apply_filters( 'new_user_approve_welcome_message_default', $welcome );
 
 	return $welcome;
