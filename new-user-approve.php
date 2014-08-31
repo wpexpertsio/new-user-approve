@@ -633,7 +633,7 @@ class pw_new_user_approve {
 			$instructions = apply_filters( 'new_user_approve_register_instructions', $instructions );
 
 			if ( !empty( $instructions ) ) {
-				$mess	age .= '<p class="message register">' . $instructions . '</p>';
+				$message .= '<p class="message register">' . $instructions . '</p>';
 			}
 		}
 
