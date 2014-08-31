@@ -105,6 +105,10 @@ as they have their username and passwords.
 
 == Changelog ==
 
+= 1.7 =
+* email/message tags
+* refactor messages
+
 = 1.6 =
 * improve actions and filters
 * refactor messages to make them easier to override
