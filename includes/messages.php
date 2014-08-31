@@ -6,11 +6,15 @@ function nua_default_approve_user_message() {
 	$message .= "{password}\r\n\r\n";
 	$message .= "{login_url}";
 
+	$message = apply_filters( 'new_user_approve_approve_user_message_default', $message );
+
 	return $message;
 }
 
 function nua_default_deny_user_message() {
 	$message = __( 'You have been denied access to {sitename}.', 'new-user-approve' );
+
+	$message = apply_filters( 'new_user_approve_deny_user_message_default', $message );
 
 	return $message;
 }
@@ -19,6 +23,8 @@ function nua_default_registration_complete_message() {
 	$message = sprintf( __( 'An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request.', 'new-user-approve' ) );
 	$message .= ' ';
 	$message .= sprintf( __( 'You will receive an email with instructions on what you will need to do next. Thanks for your patience.', 'new-user-approve' ) );
+
+	$message = apply_filters( 'new_user_approve_pending_message', $message );
 
 	return $message;
 }
@@ -41,11 +47,15 @@ function nua_default_notification_message() {
 	$message .= __( 'To approve or deny this user access to {sitename} go to', 'new-user-approve' ) . "\n\n";
 	$message .= "{admin_approve_url}\n\n";
 
+	$message = apply_filters( 'new_user_approve_notification_message_default', $message );
+
 	return $message;
 }
 
 function nua_default_registration_message() {
 	$message = __( 'After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions.', 'new-user-approve' );
+
+	$message = apply_filters( 'new_user_approve_registration_message_default', $message );
 
 	return $message;
 }
