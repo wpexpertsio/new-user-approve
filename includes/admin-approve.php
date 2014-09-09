@@ -57,10 +57,6 @@ class pw_new_user_approve_admin_approve {
 	 * Create the view for the admin interface
 	 */
 	public function approve_admin() {
-		if ( !current_user_can( 'manage_options' ) ) {
-			wp_die( __('You do not have sufficient permissions to access this page.') );
-		}
-
 		require_once( pw_new_user_approve()->get_plugin_dir() . '/admin/templates/approve.php' );
 	}
 
