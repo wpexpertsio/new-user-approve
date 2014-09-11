@@ -362,19 +362,12 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * Send an email to the admin to request approval. If there are already errors,
-	 * just go back and let core do it's thing.
-	 *
-	 * @uses register_post
-	 * @param string $user_login
-	 * @param string $user_email
-	 * @param object $errors
+	 * Send email to admin requesting approval.
+	 * 
+	 * @param $user_login username
+	 * @param $user_email email address of the user
 	 */
-	public function request_admin_approval_email( $user_login, $user_email, $errors ) {
-		if ( $errors->get_error_code() ) {
-			return;
-		}
-
+	public function admin_approval_email( $user_login, $user_email ) {
 		$default_admin_url = admin_url( 'users.php?s&pw-status-query-submit=Filter&new_user_approve_filter=pending&paged=1' );
 		$admin_url = apply_filters( 'new_user_approve_admin_link', $default_admin_url );
 
@@ -397,6 +390,23 @@ class pw_new_user_approve {
 
 		// send the mail
 		wp_mail( $to, $subject, $message, $this->email_message_headers() );
+	}
+
+	/**
+	 * Send an email to the admin to request approval. If there are already errors,
+	 * just go back and let core do it's thing.
+	 *
+	 * @uses register_post
+	 * @param string $user_login
+	 * @param string $user_email
+	 * @param object $errors
+	 */
+	public function request_admin_approval_email( $user_login, $user_email, $errors ) {
+		if ( $errors->get_error_code() ) {
+			return;
+		}
+
+		$this->admin_approval_email( $user_login, $user_email );
 	}
 
 	/**
