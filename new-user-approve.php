@@ -81,6 +81,7 @@ class pw_new_user_approve {
 	 */
 	private function includes() {
 		require_once( $this->get_plugin_dir() . 'includes/email-tags.php' );
+		require_once( $this->get_plugin_dir() . 'includes/messages.php' );
 	}
 
 	/**
