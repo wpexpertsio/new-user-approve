@@ -4,7 +4,7 @@
  Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve/
  Description: Allow administrators to approve users once they register. Only approved users will be allowed to access the blog. For support, please go to the <a href="http://wordpress.org/support/plugin/new-user-approve">support forums</a> on wordpress.org.
  Author: Josh Harrison
- Version: 1.6
+ Version: 1.7a
  Author URI: http://picklewagon.com/
  */
 
@@ -47,10 +47,11 @@ class pw_new_user_approve {
 		add_action( 'new_user_approve_approve_user', array( $this, 'delete_new_user_approve_transient' ), 11 );
 		add_action( 'new_user_approve_deny_user', array( $this, 'delete_new_user_approve_transient' ), 11 );
 		add_action( 'deleted_user', array( $this, 'delete_new_user_approve_transient' ) );
-		add_action( 'register_post', array( $this, 'request_admin_approval_email' ), 10, 3 );
+		//add_action( 'register_post', array( $this, 'request_admin_approval_email' ), 10, 3 );
 		add_action( 'register_post', array( $this, 'create_new_user' ), 10, 3 );
 		add_action( 'lostpassword_post', array( $this, 'lost_password' ) );
 		add_action( 'user_register', array( $this, 'add_user_status' ) );
+		add_action( 'user_register', array( $this, 'request_admin_approval_email_2' ) );
 		add_action( 'new_user_approve_approve_user', array( $this, 'approve_user' ) );
 		add_action( 'new_user_approve_deny_user', array( $this, 'deny_user' ) );
 		add_action( 'new_user_approve_deny_user', array( $this, 'update_deny_status' ) );
@@ -363,7 +364,7 @@ class pw_new_user_approve {
 
 	/**
 	 * Send email to admin requesting approval.
-	 * 
+	 *
 	 * @param $user_login username
 	 * @param $user_email email address of the user
 	 */
@@ -409,6 +410,14 @@ class pw_new_user_approve {
 		$this->admin_approval_email( $user_login, $user_email );
 	}
 
+	public function request_admin_approval_email_2( $user_id ) {
+		$user = new WP_User( $user_id );
+
+		$user_login = stripslashes( $user->data->user_login );
+		$user_email = stripslashes( $user->data->user_email );
+
+		$this->admin_approval_email( $user_login, $user_email );
+	}
 	/**
 	 * Create a new user after the registration has been validated. Normally,
 	 * when a user registers, an email is sent to the user containing their

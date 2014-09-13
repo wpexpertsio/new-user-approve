@@ -108,6 +108,7 @@ as they have their username and passwords.
 = 1.7 =
 * email/message tags
 * refactor messages
+* send admin approval email after the user has been created
 
 = 1.6 =
 * improve actions and filters
