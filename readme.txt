@@ -3,7 +3,7 @@ Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration, sign up, user management, login
 Requires at least: 3.5.1
-Tested up to: 3.9.1
+Tested up to: 4.0
 Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -109,6 +109,8 @@ as they have their username and passwords.
 * email/message tags
 * refactor messages
 * send admin approval email after the user has been created
+* tested for WordPress 4.0
+* finish updates in preparation of option addon plugin
 
 = 1.6 =
 * improve actions and filters
