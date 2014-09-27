@@ -190,7 +190,7 @@ class pw_new_user_approve_user_list {
 		}
 
 		$screen = get_current_screen();
-		if ( 'users' != $screen->id ) {
+		if ( isset( $screen ) && 'users' != $screen->id ) {
 			return;
 		}
 
