@@ -56,6 +56,7 @@ class pw_new_user_approve {
 		add_action( 'new_user_approve_deny_user', array( $this, 'deny_user' ) );
 		add_action( 'new_user_approve_deny_user', array( $this, 'update_deny_status' ) );
 		add_action( 'admin_init', array( $this, 'verify_settings' ) );
+		add_action( 'wp_login', array( $this, 'login_user' ), 10, 2 );
 
 		// Filters
 		add_filter( 'wp_authenticate_user', array( $this, 'authenticate_user' ) );
@@ -707,6 +708,12 @@ class pw_new_user_approve {
 		$error_codes[] = 'denied_access';
 
 		return $error_codes;
+	}
+
+	public function login_user( $user_login, $user ) {
+		if ( ! get_user_meta( $user->ID, 'pw_new_user_approve_has_signed_in' ) ) {
+			add_user_meta( $user->ID, 'pw_new_user_approve_has_signed_in', time() );
+		}
 	}
 } // End Class
 
