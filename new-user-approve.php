@@ -710,6 +710,14 @@ class pw_new_user_approve {
 		return $error_codes;
 	}
 
+	/**
+	 * After a user successfully logs in, record in user meta. This will only be recorded
+	 * one time. The password will not be reset after a successful login.
+	 * 
+	 * @uses wp_login
+	 * @param $user_login
+	 * @param $user
+	 */
 	public function login_user( $user_login, $user ) {
 		if ( ! get_user_meta( $user->ID, 'pw_new_user_approve_has_signed_in' ) ) {
 			add_user_meta( $user->ID, 'pw_new_user_approve_has_signed_in', time() );
