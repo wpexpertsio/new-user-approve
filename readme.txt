@@ -105,6 +105,10 @@ as they have their username and passwords.
 
 == Changelog ==
 
+= 1.7.1 =
+* Remove PHP notices
+* Don't show admin notice for registration setting if S2Member plugin is active
+
 = 1.7 =
 * email/message tags
 * refactor messages

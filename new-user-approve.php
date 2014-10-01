@@ -2,7 +2,7 @@
 /*
  Plugin Name: New User Approve
  Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve/
- Description: Allow administrators to approve users once they register. Only approved users will be allowed to access the blog. For support, please go to the <a href="http://wordpress.org/support/plugin/new-user-approve">support forums</a> on wordpress.org.
+ Description: Allow administrators to approve users once they register. Only approved users will be allowed to access the site. For support, please go to the <a href="http://wordpress.org/support/plugin/new-user-approve">support forums</a> on wordpress.org.
  Author: Josh Harrison
  Version: 1.7
  Author URI: http://picklewagon.com/
@@ -133,8 +133,13 @@ class pw_new_user_approve {
 			add_user_meta( $user_id, 'pw_new_user_approve_settings_notice', '1', true );
 		}
 
+		// Don't show the error if the s2member plugin is active
+		if ( class_exists( 'c_ws_plugin__s2member_constants' ) ) {
+			return;
+		}
+
 		// Check that the user hasn't already clicked to ignore the message
-		if ( !get_user_meta( $user_id, 'pw_new_user_approve_settings_notice' ) ) {
+		if ( ! get_user_meta( $user_id, 'pw_new_user_approve_settings_notice' ) ) {
 			echo '<div class="error"><p>';
 			printf( __( 'The Membership setting must be turned on in order for the New User Approve to work correctly. <a href="%1$s">Update in settings</a>. | <a href="%2$s">Hide Notice</a>', 'new-user-approve' ), admin_url( 'options-general.php' ), add_query_arg( array( 'new-user-approve-settings-notice' => 1 ) ) );
 			echo "</p></div>";
