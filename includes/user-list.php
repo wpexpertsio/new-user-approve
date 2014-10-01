@@ -394,6 +394,11 @@ class pw_new_user_approve_user_list {
 		}
 	}
 
+	/**
+	 * Add bubble for number of users pending to the user menu
+	 *
+	 * @uses admin_menu
+	 */
 	public function pending_users_bubble() {
 		global $menu;
 
@@ -417,6 +422,13 @@ class pw_new_user_approve_user_list {
 		}
 	}
 
+	/**
+	 * Recursively search the menu array to determine the key to place the bubble.
+	 * 
+	 * @param $needle
+	 * @param $haystack
+	 * @return bool|int|string
+	 */
 	public function recursive_array_search( $needle, $haystack ) {
 		foreach ( $haystack as $key => $value ) {
 			$current_key = $key;
