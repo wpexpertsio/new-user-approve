@@ -415,6 +415,12 @@ class pw_new_user_approve {
 		$this->admin_approval_email( $user_login, $user_email );
 	}
 
+	/**
+	 * Send an email to the admin to request approval.
+	 *
+	 * @uses user_register
+	 * @param int $user_id
+	 */
 	public function request_admin_approval_email_2( $user_id ) {
 		$user = new WP_User( $user_id );
 
@@ -423,6 +429,7 @@ class pw_new_user_approve {
 
 		$this->admin_approval_email( $user_login, $user_email );
 	}
+
 	/**
 	 * Create a new user after the registration has been validated. Normally,
 	 * when a user registers, an email is sent to the user containing their
