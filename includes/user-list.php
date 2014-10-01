@@ -32,6 +32,7 @@ class pw_new_user_approve_user_list {
 		add_action( 'show_user_profile', array( $this, 'profile_status_field' ) );
 		add_action( 'edit_user_profile', array( $this, 'profile_status_field' ) );
 		add_action( 'edit_user_profile_update', array( $this, 'save_profile_status_field' ) );
+		add_action( 'admin_menu', array( $this, 'pending_users_bubble' ), 999 );
 
 		// Filters
 		add_filter( 'user_row_actions', array( $this, 'user_table_actions' ), 10, 2 );
@@ -391,6 +392,39 @@ class pw_new_user_approve_user_list {
 
 			pw_new_user_approve()->update_user_status( $user_id, $new_status );
 		}
+	}
+
+	public function pending_users_bubble() {
+		global $menu;
+
+		$users = pw_new_user_approve()->get_user_statuses();
+
+		// Count Number of Pending Members
+		$pending_users = count( $users['pending'] );
+
+		// Make sure there are pending members
+		if ( $pending_users > 0 ) {
+			// Locate the key of
+			$key = $this->recursive_array_search( 'users.php', $menu );
+
+			// Not found, just in case
+			if ( ! $key ) {
+				return;
+			}
+
+			// Modify menu item
+			$menu[$key][0] .= sprintf( '<span class="update-plugins count-%1$s" style="background-color:white;color:black;margin-left:5px;"><span class="plugin-count">%1$s</span></span>', $pending_users );
+		}
+	}
+
+	public function recursive_array_search( $needle, $haystack ) {
+		foreach ( $haystack as $key => $value ) {
+			$current_key = $key;
+			if ( $needle === $value || ( is_array( $value ) && $this->recursive_array_search( $needle, $value ) !== false ) ) {
+				return $current_key;
+			}
+		}
+		return false;
 	}
 }
 
