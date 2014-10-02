@@ -468,10 +468,6 @@ class pw_new_user_approve {
 		// Default behavior is to reset password
 		$do_password_reset = true;
 
-		// If the password has already been reset for this user,
-		// $password_reset will be a unix timestamp
-		$last_password_reset = get_user_meta( $user_id, 'pw_user_approve_password_reset' );
-
 		// Get the current user status. By default each user is given a pending
 		// status when the user is created (with this plugin activated). If the
 		// user was created while this plugin was not active, the user will not
@@ -483,8 +479,9 @@ class pw_new_user_approve {
 			$do_password_reset = false;
 		}
 
-		// if the password has already been reset, absolutely bypass
-		if ( ! empty( $last_password_reset ) ) {
+		// if user has signed in, don't reset password
+		$user_has_signed_in = get_user_meta( $user_id, 'pw_new_user_approve_has_signed_in' );
+		if ( $user_has_signed_in ) {
 			$do_password_reset = false;
 		}
 
@@ -713,7 +710,7 @@ class pw_new_user_approve {
 	/**
 	 * After a user successfully logs in, record in user meta. This will only be recorded
 	 * one time. The password will not be reset after a successful login.
-	 * 
+	 *
 	 * @uses wp_login
 	 * @param $user_login
 	 * @param $user
