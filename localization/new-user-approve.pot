@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: New User Approve\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
-"POT-Creation-Date: 2014-09-26 02:55-0700\n"
-"PO-Revision-Date: 2014-09-26 02:56-0700\n"
+"POT-Creation-Date: 2014-10-08 23:50-0700\n"
+"PO-Revision-Date: 2014-10-09 00:03-0700\n"
 "Last-Translator: Josh Harrison <josh@picklewagon.com>\n"
 "Language-Team: Picklewagon <josh@picklewagon.com>\n"
 "Language: English\n"
@@ -23,12 +23,12 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: ../includes\n"
 
-#: ../new-user-approve.php:97
+#: ../new-user-approve.php:98
 #, php-format
 msgid "New User Approve requires WordPress %s or newer."
 msgstr ""
 
-#: ../new-user-approve.php:139
+#: ../new-user-approve.php:145
 #, php-format
 msgid ""
 "The Membership setting must be turned on in order for the New User Approve "
@@ -36,46 +36,46 @@ msgid ""
 "\">Hide Notice</a>"
 msgstr ""
 
-#: ../new-user-approve.php:251
+#: ../new-user-approve.php:257
 msgid "<strong>ERROR</strong>: Your account is still pending approval."
 msgstr ""
 
-#: ../new-user-approve.php:254
+#: ../new-user-approve.php:260
 msgid ""
 "<strong>ERROR</strong>: Your account has been denied access to this site."
 msgstr ""
 
-#: ../new-user-approve.php:356
+#: ../new-user-approve.php:362
 msgid "Users"
 msgstr ""
 
-#: ../new-user-approve.php:386
+#: ../new-user-approve.php:392
 #, php-format
 msgid "[%s] User Approval"
 msgstr ""
 
-#: ../new-user-approve.php:441
+#: ../new-user-approve.php:454
 #, php-format
 msgid ""
 "<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a "
 "href=\"mailto:%s\">webmaster</a> !"
 msgstr ""
 
-#: ../new-user-approve.php:510
+#: ../new-user-approve.php:520
 #, php-format
 msgid "[%s] Registration Approved"
 msgstr ""
 
-#: ../new-user-approve.php:540
+#: ../new-user-approve.php:550
 #, php-format
 msgid "[%s] Registration Denied"
 msgstr ""
 
-#: ../new-user-approve.php:604
+#: ../new-user-approve.php:614
 msgid "Registration successful."
 msgstr ""
 
-#: ../new-user-approve.php:607
+#: ../new-user-approve.php:617
 msgid "Pending Approval"
 msgstr ""
 

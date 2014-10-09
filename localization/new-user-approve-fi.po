@@ -7,191 +7,314 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NUA\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
-"POT-Creation-Date: 2009-10-29 08:32+0000\n"
-"PO-Revision-Date: 2012-09-22 11:56+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2014-10-08 23:50-0700\n"
+"PO-Revision-Date: 2014-10-09 00:08-0700\n"
+"Last-Translator: Josh Harrison <josh@picklewagon.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
 
-#: new-user-approve.php:126
-msgid "Approve New Users"
-msgstr "Käyttäjien hyväksyntä"
+#: ../new-user-approve.php:98
+#, php-format
+msgid "New User Approve requires WordPress %s or newer."
+msgstr ""
 
-#: new-user-approve.php:140
-msgid "Settings"
-msgstr "Asetukset"
+#: ../new-user-approve.php:145
+#, php-format
+msgid ""
+"The Membership setting must be turned on in order for the New User Approve "
+"to work correctly. <a href=\"%1$s\">Update in settings</a>. | <a href=\"%2$s"
+"\">Hide Notice</a>"
+msgstr ""
 
-#: new-user-approve.php:183
+#: ../new-user-approve.php:257
+msgid "<strong>ERROR</strong>: Your account is still pending approval."
+msgstr ""
+
+#: ../new-user-approve.php:260
+msgid ""
+"<strong>ERROR</strong>: Your account has been denied access to this site."
+msgstr ""
+
+#: ../new-user-approve.php:362
 msgid "Users"
 msgstr "Käyttäjät"
 
-#: new-user-approve.php:219
-msgid "User successfully updated."
-msgstr "Käyttäjätiedot päivitetty"
-
-#: new-user-approve.php:223
-msgid "User Registration Approval"
-msgstr "Käyttäjien hyväksyntä"
-
-#: new-user-approve.php:225
-msgid "User Management"
-msgstr "Käyttäjät"
-
-#: new-user-approve.php:228
-msgid "Users Pending Approval"
-msgstr "Hyväksyntää odottavat käyttäjät"
-
-#: new-user-approve.php:229
-msgid "Approved Users"
-msgstr "Hyväksytyt käyttäjät"
-
-#: new-user-approve.php:230
-msgid "Denied Users"
-msgstr "Hylätyt käyttäjät"
-
-#: new-user-approve.php:255
-msgid "ID"
-msgstr "ID"
-
-#: new-user-approve.php:256
-msgid "Username"
-msgstr "Käyttäjänimi"
-
-#: new-user-approve.php:257
-msgid "Name"
-msgstr "Nimi"
-
-#: new-user-approve.php:258
-msgid "E-mail"
-msgstr "Sähköpostiosoite"
-
-#: new-user-approve.php:260
-#: new-user-approve.php:262
-msgid "Actions"
-msgstr "Toiminnot"
-
-#: new-user-approve.php:296
-msgid "email:"
-msgstr "Sähköpostiosoite:"
-
-#: new-user-approve.php:298
-msgid "Approve"
-msgstr "Hyväksy"
-
-#: new-user-approve.php:301
-msgid "Deny"
-msgstr "Hylkää"
-
-#: new-user-approve.php:313
-msgid "approved"
-msgstr "hyväksytty"
-
-#: new-user-approve.php:315
-msgid "denied"
-msgstr "hylätty"
-
-#: new-user-approve.php:317
-msgid "pending"
-msgstr "odottaa"
-
-#: new-user-approve.php:320
-#, php-format
-msgid "There are no users with a status of %s"
-msgstr "Käyttäjiä, joiden status on %s, ei löytynyt"
-
-#: new-user-approve.php:332
-msgid "User name already exists"
-msgstr "Käyttäjätunnus on jo olemassa"
-
-#: new-user-approve.php:335
-#, php-format
-msgid "%1$s (%2$s) has requested a username at %3$s"
-msgstr "%1$s (%2$s) pyytää käyttäjätunnusta sivustolle %3$s"
-
-#: new-user-approve.php:337
-#, php-format
-msgid "To approve or deny this user access to %s go to"
-msgstr "Salliaksesi tai estääksesi tämän käyttäjän pääsyn kohteeseen %s mene"
-
-#: new-user-approve.php:341
+#: ../new-user-approve.php:392
 #, php-format
 msgid "[%s] User Approval"
 msgstr "[%s] Käyttäjän hyväksyntä"
 
-#: new-user-approve.php:372
+#: ../new-user-approve.php:454
 #, php-format
-msgid "You have been approved to access %s"
-msgstr "Sinulle on annettu pääsy kohteeseen %s"
+msgid ""
+"<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a "
+"href=\"mailto:%s\">webmaster</a> !"
+msgstr ""
 
-#: new-user-approve.php:373
-#, php-format
-msgid "Username: %s"
-msgstr "Käyttäjätunnus: %s"
-
-#: new-user-approve.php:374
-#, php-format
-msgid "Password: %s"
-msgstr "Salasana: %s"
-
-#: new-user-approve.php:378
+#: ../new-user-approve.php:520
 #, php-format
 msgid "[%s] Registration Approved"
 msgstr "[%s] Käyttäjätunnuspyyntö hyväksytty"
 
-#: new-user-approve.php:397
-#, php-format
-msgid "You have been denied access to %s"
-msgstr "Pääsysi kohteeseen %s on estetty"
-
-#: new-user-approve.php:400
+#: ../new-user-approve.php:550
 #, php-format
 msgid "[%s] Registration Denied"
 msgstr "[%s] Käyttäjätunnuspyyntö hylätty"
 
-#: new-user-approve.php:413
-msgid "An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request."
-msgstr "Ylläpito tarkastaa tarkastaa lähettämäsi tiedot ja joko hylkää tai hyväksyy pyyntösi."
-
-#: new-user-approve.php:414
-msgid "You will receive an email with instructions on what you will need to do next. Thanks for your patience."
-msgstr "Saat ylläpidolta sähköpostitse jatko-ohjeet. Kiitos kärsivällisyydestäsi."
-
-#: new-user-approve.php:418
-msgid "Pending Approval"
-msgstr "Odottaa hyväksyntää"
-
-#: new-user-approve.php:418
+#: ../new-user-approve.php:614
 msgid "Registration successful."
 msgstr "Käyttäjätunnuksen rekisteröinti onnistui."
 
-#: new-user-approve.php:466
+#: ../new-user-approve.php:617
+msgid "Pending Approval"
+msgstr "Odottaa hyväksyntää"
+
+#: ../admin/templates/approve.php:6
+msgid "User successfully updated."
+msgstr "Käyttäjätiedot päivitetty"
+
+#: ../admin/templates/approve.php:11
+msgid "User Registration Approval"
+msgstr "Käyttäjien hyväksyntä"
+
+#: ../includes/admin-approve.php:50
+msgid "Approve New Users"
+msgstr "Käyttäjien hyväksyntä"
+
+#: ../includes/admin-approve.php:82
+msgid "Username"
+msgstr "Käyttäjänimi"
+
+#: ../includes/admin-approve.php:83
+msgid "Name"
+msgstr "Nimi"
+
+#: ../includes/admin-approve.php:84
+msgid "E-mail"
+msgstr "Sähköpostiosoite"
+
+#: ../includes/admin-approve.php:86 ../includes/admin-approve.php:88
+msgid "Actions"
+msgstr "Toiminnot"
+
+#: ../includes/admin-approve.php:129
+msgid "email:"
+msgstr "Sähköpostiosoite:"
+
+#: ../includes/admin-approve.php:133 ../includes/user-list.php:97
+#: ../includes/user-list.php:223 ../includes/user-list.php:224
+msgid "Approve"
+msgstr "Hyväksy"
+
+#: ../includes/admin-approve.php:138 ../includes/user-list.php:98
+#: ../includes/user-list.php:226 ../includes/user-list.php:227
+msgid "Deny"
+msgstr "Hylkää"
+
+#: ../includes/admin-approve.php:154
+msgid "approved"
+msgstr "hyväksytty"
+
+#: ../includes/admin-approve.php:156
+msgid "denied"
+msgstr "hylätty"
+
+#: ../includes/admin-approve.php:158
+msgid "pending"
+msgstr "odottaa"
+
+#: ../includes/admin-approve.php:161
 #, php-format
-msgid "Welcome to %s. This site is accessible to approved users only. To be approved, you must first register."
-msgstr "Tervetuloa sivustolle %s. Sivuston käyttö vaatii ylläpidon hyväksymän käyttäjätunnuksen. Aloita luomalla käyttäjätunnus."
+msgid "There are no users with a status of %s"
+msgstr "Käyttäjiä, joiden status on %s, ei löytynyt"
 
-#: new-user-approve.php:471
-msgid "After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions."
-msgstr "Rekisteröitymisesi välitetään ylläpidolle hyväksyntää varten. Saat sähköpostiisi tiedon, kun ylläpito on hyväksynyt käyttäjätunnuksesi."
-
-#. Plugin Name of an extension
-msgid "New User Approve"
+#: ../includes/admin-approve.php:197
+#, php-format
+msgid ""
+"You can now update user status on the <a href=\"%1$s\">users admin page</a>. "
+"| <a href=\"%2$s\">Hide Notice</a>"
 msgstr ""
 
-#. Plugin URI of an extension
-msgid "http://www.picklewagon.com/wordpress/new-user-approve"
+#: ../includes/admin-approve.php:220
+#, fuzzy
+msgid "Approve Users"
+msgstr "Hyväksytyt käyttäjät"
+
+#: ../includes/admin-approve.php:221
+msgid "Updates"
 msgstr ""
 
-#. Description of an extension
-msgid "This plugin allows administrators to approve users once they register. Only approved users will be allowed to access the blog."
-msgstr "Tämän lisäosan avulla ylläpitäjät voivat hyväksyä uusien käyttäjien rekisteröinnin."
-
-#. Author of an extension
-msgid "Josh Harrison"
+#: ../includes/admin-approve.php:222
+msgid "Support"
 msgstr ""
 
-#. Author URI of an extension
-msgid "http://www.picklewagon.com/"
+#: ../includes/admin-approve.php:223
+msgid "Feedback"
 msgstr ""
 
+#: ../includes/admin-approve.php:231
+msgid "Users Pending Approval"
+msgstr "Hyväksyntää odottavat käyttäjät"
+
+#: ../includes/admin-approve.php:233
+msgid "Approved Users"
+msgstr "Hyväksytyt käyttäjät"
+
+#: ../includes/admin-approve.php:235
+msgid "Denied Users"
+msgstr "Hylätyt käyttäjät"
+
+#: ../includes/email-tags.php:235
+msgid "The user's username on the site as well as the Username label"
+msgstr ""
+
+#: ../includes/email-tags.php:241
+msgid "The user's email address"
+msgstr ""
+
+#: ../includes/email-tags.php:247
+msgid "Your site name"
+msgstr ""
+
+#: ../includes/email-tags.php:253
+msgid "Your site URL"
+msgstr ""
+
+#: ../includes/email-tags.php:259
+msgid "The URL to approve/deny users"
+msgstr ""
+
+#: ../includes/email-tags.php:265
+msgid "The URL to login to the site"
+msgstr ""
+
+#: ../includes/email-tags.php:271
+msgid "Generates the password for the user to add to the email"
+msgstr ""
+
+#: ../includes/email-tags.php:299
+#, php-format
+msgid "Username: %s"
+msgstr "Käyttäjätunnus: %s"
+
+#: ../includes/email-tags.php:390
+#, php-format
+msgid "Password: %s"
+msgstr "Salasana: %s"
+
+#: ../includes/messages.php:9
+#, fuzzy
+msgid "You have been approved to access {sitename}"
+msgstr "Sinulle on annettu pääsy kohteeseen %s"
+
+#: ../includes/messages.php:25
+#, fuzzy
+msgid "You have been denied access to {sitename}."
+msgstr "Pääsysi kohteeseen %s on estetty"
+
+#: ../includes/messages.php:38
+msgid ""
+"An email has been sent to the site administrator. The administrator will "
+"review the information that has been submitted and either approve or deny "
+"your request."
+msgstr ""
+"Ylläpito tarkastaa tarkastaa lähettämäsi tiedot ja joko hylkää tai hyväksyy "
+"pyyntösi."
+
+#: ../includes/messages.php:40
+msgid ""
+"You will receive an email with instructions on what you will need to do "
+"next. Thanks for your patience."
+msgstr ""
+"Saat ylläpidolta sähköpostitse jatko-ohjeet. Kiitos kärsivällisyydestäsi."
+
+#: ../includes/messages.php:53
+#, fuzzy
+msgid ""
+"Welcome to {sitename}. This site is accessible to approved users only. To be "
+"approved, you must first register."
+msgstr ""
+"Tervetuloa sivustolle %s. Sivuston käyttö vaatii ylläpidon hyväksymän "
+"käyttäjätunnuksen. Aloita luomalla käyttäjätunnus."
+
+#: ../includes/messages.php:66
+#, fuzzy
+msgid "{username} ({user_email}) has requested a username at {sitename}"
+msgstr "%1$s (%2$s) pyytää käyttäjätunnusta sivustolle %3$s"
+
+#: ../includes/messages.php:68
+#, fuzzy
+msgid "To approve or deny this user access to {sitename} go to"
+msgstr "Salliaksesi tai estääksesi tämän käyttäjän pääsyn kohteeseen %s mene"
+
+#: ../includes/messages.php:83
+msgid ""
+"After you register, your request will be sent to the site administrator for "
+"approval. You will then receive an email with further instructions."
+msgstr ""
+"Rekisteröitymisesi välitetään ylläpidolle hyväksyntää varten. Saat "
+"sähköpostiisi tiedon, kun ylläpito on hyväksynyt käyttäjätunnuksesi."
+
+#: ../includes/user-list.php:120
+msgid "Status"
+msgstr ""
+
+#: ../includes/user-list.php:156
+msgid "Filter"
+msgstr ""
+
+#: ../includes/user-list.php:161 ../includes/user-list.php:163
+msgid "View all users"
+msgstr ""
+
+#: ../includes/user-list.php:320
+#, fuzzy, php-format
+msgid "User denied."
+msgid_plural "%s users denied."
+msgstr[0] "hylätty"
+msgstr[1] "hylätty"
+
+#: ../includes/user-list.php:325
+#, fuzzy, php-format
+msgid "User approved."
+msgid_plural "%s users approved."
+msgstr[0] "hyväksytty"
+msgstr[1] "hyväksytty"
+
+#: ../includes/user-list.php:349
+msgid "Access Status"
+msgstr ""
+
+#: ../includes/user-list.php:354
+msgid "-- Status --"
+msgstr ""
+
+#: ../includes/user-list.php:362
+msgid "If user has access to sign in or not."
+msgstr ""
+
+#: ../includes/user-list.php:365
+msgid "Current user status is <strong>pending</strong>."
+msgstr ""
+
+#~ msgid "Settings"
+#~ msgstr "Asetukset"
+
+#~ msgid "User Management"
+#~ msgstr "Käyttäjät"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "User name already exists"
+#~ msgstr "Käyttäjätunnus on jo olemassa"
+
+#~ msgid ""
+#~ "This plugin allows administrators to approve users once they register. "
+#~ "Only approved users will be allowed to access the blog."
+#~ msgstr ""
+#~ "Tämän lisäosan avulla ylläpitäjät voivat hyväksyä uusien käyttäjien "
+#~ "rekisteröinnin."

@@ -1,224 +1,343 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: New User Approve v1.3.4\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-09-17 17:53:03+0000\n"
-"Last-Translator: Alexey <4selin@gmail.com>\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
+"POT-Creation-Date: 2014-10-08 23:50-0700\n"
+"PO-Revision-Date: 2014-10-09 00:12-0700\n"
+"Last-Translator: Josh Harrison <josh@picklewagon.com>\n"
 "Language-Team: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Poedit-Language: Russian\n"
-"X-Poedit-Country: RUSSIA\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
 "X-Poedit-Basepath: ../\n"
-"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Textdomain-Support: yes"
 
-#: new-user-approve.php:74
+# @ new-user-approve
+#: ../new-user-approve.php:98
 #, php-format
-#@ new-user-approve
 msgid "New User Approve requires WordPress %s or newer."
 msgstr "Плагин New User Approve требует WordPress версии %s или более позднюю"
 
-#: new-user-approve.php:117
-#@ new-user-approve
-msgid "Users"
-msgstr "Пользователи"
-
-#: new-user-approve.php:129
-#@ new-user-approve
-msgid "User successfully updated."
-msgstr "Пользователь успешно обновлен."
-
-#: new-user-approve.php:133
-#@ new-user-approve
-msgid "User Registration Approval"
-msgstr "Одобрение регистрации пользователя"
-
-#: new-user-approve.php:135
-#@ new-user-approve
-msgid "User Management"
-msgstr "Управление пользователями"
-
-#: new-user-approve.php:138
-#@ new-user-approve
-msgid "Users Pending Approval"
-msgstr "Пользователи, ожидающие одобрения"
-
-#: new-user-approve.php:139
-#@ new-user-approve
-msgid "Approved Users"
-msgstr "Одобренные пользователи"
-
-#: new-user-approve.php:140
-#@ new-user-approve
-msgid "Denied Users"
-msgstr "Отклоненные пользователи"
-
-#: new-user-approve.php:190
-#@ new-user-approve
-msgid "Username"
-msgstr "Имя пользователя"
-
-#: new-user-approve.php:191
-#@ new-user-approve
-msgid "Name"
-msgstr "Имя"
-
-#: new-user-approve.php:192
-#@ new-user-approve
-msgid "E-mail"
-msgstr "E-mail"
-
-#: new-user-approve.php:194
-#: new-user-approve.php:196
-#@ new-user-approve
-msgid "Actions"
-msgstr "Действия"
-
-#: new-user-approve.php:229
-#@ new-user-approve
-msgid "email:"
-msgstr "email:"
-
-#: new-user-approve.php:231
-#@ new-user-approve
-msgid "Approve"
-msgstr "Одобрить"
-
-#: new-user-approve.php:234
-#@ new-user-approve
-msgid "Deny"
-msgstr "Отклонить"
-
-#: new-user-approve.php:246
-#@ new-user-approve
-msgid "approved"
-msgstr "одобренный"
-
-#: new-user-approve.php:248
-#@ new-user-approve
-msgid "denied"
-msgstr "отклоненный"
-
-#: new-user-approve.php:250
-#@ new-user-approve
-msgid "pending"
-msgstr "ожидает"
-
-#: new-user-approve.php:253
+#: ../new-user-approve.php:145
 #, php-format
-#@ new-user-approve
-msgid "There are no users with a status of %s"
-msgstr "Нет пользователей со статусом %s"
+msgid ""
+"The Membership setting must be turned on in order for the New User Approve "
+"to work correctly. <a href=\"%1$s\">Update in settings</a>. | <a href=\"%2$s"
+"\">Hide Notice</a>"
+msgstr ""
 
-#: new-user-approve.php:265
-#@ new-user-approve
-msgid "User name already exists"
-msgstr "Имя пользователя уже существует"
-
-#: new-user-approve.php:268
-#, php-format
-#@ new-user-approve
-msgid "%1$s (%2$s) has requested a username at %3$s"
-msgstr "%1$s (%2$s) запросил имя пользователя в %3$s"
-
-#: new-user-approve.php:270
-#, php-format
-#@ new-user-approve
-msgid "To approve or deny this user access to %s go to"
-msgstr "Чтобы одобрить или отклонить доступ пользователя к %s перейдите в"
-
-#: new-user-approve.php:274
-#, php-format
-#@ new-user-approve
-msgid "[%s] User Approval"
-msgstr "[%s] Пользователей одобрено"
-
-#: new-user-approve.php:311
-#, php-format
-#@ new-user-approve
-msgid "You have been approved to access %s"
-msgstr "Вам разрешен доступ к %s"
-
-#: new-user-approve.php:312
-#, php-format
-#@ new-user-approve
-msgid "Username: %s"
-msgstr "Имя пользователя: %s"
-
-#: new-user-approve.php:313
-#, php-format
-#@ new-user-approve
-msgid "Password: %s"
-msgstr "Пароль: %s"
-
-#: new-user-approve.php:317
-#, php-format
-#@ new-user-approve
-msgid "[%s] Registration Approved"
-msgstr "[%s] Регистрация одобрена"
-
-#: new-user-approve.php:334
-#, php-format
-#@ new-user-approve
-msgid "You have been denied access to %s"
-msgstr "Вам запрещен доступ к %s"
-
-#: new-user-approve.php:337
-#, php-format
-#@ new-user-approve
-msgid "[%s] Registration Denied"
-msgstr "[%s] Регистраций отклонено"
-
-#: new-user-approve.php:350
-#@ new-user-approve
-msgid "An email has been sent to the site administrator. The administrator will review the information that has been submitted and either approve or deny your request."
-msgstr "Запрос на регистрацию отправлен администратору сайта."
-
-#: new-user-approve.php:351
-#@ new-user-approve
-msgid "You will receive an email with instructions on what you will need to do next. Thanks for your patience."
-msgstr "На ваш адрес придет письмо с инструкциями о дальнейших действиях. Спасибо за ваше терпение."
-
-#: new-user-approve.php:356
-#@ new-user-approve
-msgid "Pending Approval"
-msgstr "Ожидает одобрения"
-
-#: new-user-approve.php:356
-#@ new-user-approve
-msgid "Registration successful."
-msgstr "Регистрация прошла успешно."
-
-#: new-user-approve.php:405
-#, php-format
-#@ new-user-approve
-msgid "Welcome to %s. This site is accessible to approved users only. To be approved, you must first register."
-msgstr "Добро пожаловать на %s. Этот сайт доступен только для одобренных пользователей. Для начала зарегистрируйтесь."
-
-#: new-user-approve.php:410
-#@ new-user-approve
-msgid "After you register, your request will be sent to the site administrator for approval. You will then receive an email with further instructions."
-msgstr "После регистрации ваш запрос будет отправлен администратору сайта на рассмотрение. После рассмотрения вы получите письмо с дальнейшими инструкциями."
-
-#: new-user-approve.php:426
-#@ new-user-approve
-msgid "Approve New Users"
-msgstr "Одобрить нового пользователя"
-
-#: new-user-approve.php:440
-#@ default
+# @ default
+#: ../new-user-approve.php:257
 msgid "<strong>ERROR</strong>: Your account is still pending approval."
 msgstr ""
 
-#: new-user-approve.php:443
-#@ default
-msgid "<strong>ERROR</strong>: Your account has been denied access to this site."
+# @ default
+#: ../new-user-approve.php:260
+msgid ""
+"<strong>ERROR</strong>: Your account has been denied access to this site."
 msgstr ""
 
+# @ new-user-approve
+#: ../new-user-approve.php:362
+msgid "Users"
+msgstr "Пользователи"
+
+# @ new-user-approve
+#: ../new-user-approve.php:392
+#, php-format
+msgid "[%s] User Approval"
+msgstr "[%s] Пользователей одобрено"
+
+#: ../new-user-approve.php:454
+#, php-format
+msgid ""
+"<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a "
+"href=\"mailto:%s\">webmaster</a> !"
+msgstr ""
+
+# @ new-user-approve
+#: ../new-user-approve.php:520
+#, php-format
+msgid "[%s] Registration Approved"
+msgstr "[%s] Регистрация одобрена"
+
+# @ new-user-approve
+#: ../new-user-approve.php:550
+#, php-format
+msgid "[%s] Registration Denied"
+msgstr "[%s] Регистраций отклонено"
+
+# @ new-user-approve
+#: ../new-user-approve.php:614
+msgid "Registration successful."
+msgstr "Регистрация прошла успешно."
+
+# @ new-user-approve
+#: ../new-user-approve.php:617
+msgid "Pending Approval"
+msgstr "Ожидает одобрения"
+
+# @ new-user-approve
+#: ../admin/templates/approve.php:6
+msgid "User successfully updated."
+msgstr "Пользователь успешно обновлен."
+
+# @ new-user-approve
+#: ../admin/templates/approve.php:11
+msgid "User Registration Approval"
+msgstr "Одобрение регистрации пользователя"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:50
+msgid "Approve New Users"
+msgstr "Одобрить нового пользователя"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:82
+msgid "Username"
+msgstr "Имя пользователя"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:83
+msgid "Name"
+msgstr "Имя"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:84
+msgid "E-mail"
+msgstr "E-mail"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:86 ../includes/admin-approve.php:88
+msgid "Actions"
+msgstr "Действия"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:129
+msgid "email:"
+msgstr "email:"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:133 ../includes/user-list.php:97
+#: ../includes/user-list.php:223 ../includes/user-list.php:224
+msgid "Approve"
+msgstr "Одобрить"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:138 ../includes/user-list.php:98
+#: ../includes/user-list.php:226 ../includes/user-list.php:227
+msgid "Deny"
+msgstr "Отклонить"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:154
+msgid "approved"
+msgstr "одобренный"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:156
+msgid "denied"
+msgstr "отклоненный"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:158
+msgid "pending"
+msgstr "ожидает"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:161
+#, php-format
+msgid "There are no users with a status of %s"
+msgstr "Нет пользователей со статусом %s"
+
+#: ../includes/admin-approve.php:197
+#, php-format
+msgid ""
+"You can now update user status on the <a href=\"%1$s\">users admin page</a>. "
+"| <a href=\"%2$s\">Hide Notice</a>"
+msgstr ""
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:220
+#, fuzzy
+msgid "Approve Users"
+msgstr "Одобренные пользователи"
+
+#: ../includes/admin-approve.php:221
+msgid "Updates"
+msgstr ""
+
+#: ../includes/admin-approve.php:222
+msgid "Support"
+msgstr ""
+
+#: ../includes/admin-approve.php:223
+msgid "Feedback"
+msgstr ""
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:231
+msgid "Users Pending Approval"
+msgstr "Пользователи, ожидающие одобрения"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:233
+msgid "Approved Users"
+msgstr "Одобренные пользователи"
+
+# @ new-user-approve
+#: ../includes/admin-approve.php:235
+msgid "Denied Users"
+msgstr "Отклоненные пользователи"
+
+#: ../includes/email-tags.php:235
+msgid "The user's username on the site as well as the Username label"
+msgstr ""
+
+#: ../includes/email-tags.php:241
+msgid "The user's email address"
+msgstr ""
+
+#: ../includes/email-tags.php:247
+msgid "Your site name"
+msgstr ""
+
+#: ../includes/email-tags.php:253
+msgid "Your site URL"
+msgstr ""
+
+#: ../includes/email-tags.php:259
+msgid "The URL to approve/deny users"
+msgstr ""
+
+#: ../includes/email-tags.php:265
+msgid "The URL to login to the site"
+msgstr ""
+
+#: ../includes/email-tags.php:271
+msgid "Generates the password for the user to add to the email"
+msgstr ""
+
+# @ new-user-approve
+#: ../includes/email-tags.php:299
+#, php-format
+msgid "Username: %s"
+msgstr "Имя пользователя: %s"
+
+# @ new-user-approve
+#: ../includes/email-tags.php:390
+#, php-format
+msgid "Password: %s"
+msgstr "Пароль: %s"
+
+# @ new-user-approve
+#: ../includes/messages.php:9
+#, fuzzy
+msgid "You have been approved to access {sitename}"
+msgstr "Вам разрешен доступ к %s"
+
+# @ new-user-approve
+#: ../includes/messages.php:25
+#, fuzzy
+msgid "You have been denied access to {sitename}."
+msgstr "Вам запрещен доступ к %s"
+
+# @ new-user-approve
+#: ../includes/messages.php:38
+msgid ""
+"An email has been sent to the site administrator. The administrator will "
+"review the information that has been submitted and either approve or deny "
+"your request."
+msgstr "Запрос на регистрацию отправлен администратору сайта."
+
+# @ new-user-approve
+#: ../includes/messages.php:40
+msgid ""
+"You will receive an email with instructions on what you will need to do "
+"next. Thanks for your patience."
+msgstr ""
+"На ваш адрес придет письмо с инструкциями о дальнейших действиях. Спасибо за "
+"ваше терпение."
+
+# @ new-user-approve
+#: ../includes/messages.php:53
+#, fuzzy
+msgid ""
+"Welcome to {sitename}. This site is accessible to approved users only. To be "
+"approved, you must first register."
+msgstr ""
+"Добро пожаловать на %s. Этот сайт доступен только для одобренных "
+"пользователей. Для начала зарегистрируйтесь."
+
+# @ new-user-approve
+#: ../includes/messages.php:66
+#, fuzzy
+msgid "{username} ({user_email}) has requested a username at {sitename}"
+msgstr "%1$s (%2$s) запросил имя пользователя в %3$s"
+
+# @ new-user-approve
+#: ../includes/messages.php:68
+#, fuzzy
+msgid "To approve or deny this user access to {sitename} go to"
+msgstr "Чтобы одобрить или отклонить доступ пользователя к %s перейдите в"
+
+# @ new-user-approve
+#: ../includes/messages.php:83
+msgid ""
+"After you register, your request will be sent to the site administrator for "
+"approval. You will then receive an email with further instructions."
+msgstr ""
+"После регистрации ваш запрос будет отправлен администратору сайта на "
+"рассмотрение. После рассмотрения вы получите письмо с дальнейшими "
+"инструкциями."
+
+#: ../includes/user-list.php:120
+msgid "Status"
+msgstr ""
+
+#: ../includes/user-list.php:156
+msgid "Filter"
+msgstr ""
+
+#: ../includes/user-list.php:161 ../includes/user-list.php:163
+msgid "View all users"
+msgstr ""
+
+# @ new-user-approve
+#: ../includes/user-list.php:320
+#, fuzzy, php-format
+msgid "User denied."
+msgid_plural "%s users denied."
+msgstr[0] "отклоненный"
+msgstr[1] "отклоненный"
+
+# @ new-user-approve
+#: ../includes/user-list.php:325
+#, fuzzy, php-format
+msgid "User approved."
+msgid_plural "%s users approved."
+msgstr[0] "одобренный"
+msgstr[1] "одобренный"
+
+#: ../includes/user-list.php:349
+msgid "Access Status"
+msgstr ""
+
+#: ../includes/user-list.php:354
+msgid "-- Status --"
+msgstr ""
+
+#: ../includes/user-list.php:362
+msgid "If user has access to sign in or not."
+msgstr ""
+
+#: ../includes/user-list.php:365
+msgid "Current user status is <strong>pending</strong>."
+msgstr ""

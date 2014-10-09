@@ -109,6 +109,7 @@ as they have their username and passwords.
 * fix code causing PHP notices
 * don't show admin notice for registration setting if S2Member plugin is active
 * fix issue causing empty password in approval email
+* update translation files
 
 = 1.7 =
 * email/message tags
