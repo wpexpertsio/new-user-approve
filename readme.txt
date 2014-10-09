@@ -106,9 +106,9 @@ as they have their username and passwords.
 == Changelog ==
 
 = 1.7.1 =
-* Remove PHP notices
-* Don't show admin notice for registration setting if S2Member plugin is active
-* Fix issue causing empty password in approval email
+* fix code causing PHP notices
+* don't show admin notice for registration setting if S2Member plugin is active
+* fix issue causing empty password in approval email
 
 = 1.7 =
 * email/message tags
