@@ -138,7 +138,15 @@ class pw_new_user_approve_user_list {
 	public function status_column( $val, $column_name, $user_id ) {
 		switch ( $column_name ) {
 			case 'pw_user_status' :
-				return pw_new_user_approve()->get_user_status( $user_id );
+				$status = pw_new_user_approve()->get_user_status( $user_id );
+				if ( $status == 'approved' ) {
+					$status_i18n = __( 'approved', 'new-user-approve' );
+				} else if ( $status == 'denied' ) {
+					$status_i18n = __( 'denied', 'new-user-approve' );
+				} else if ( $status == 'pending' ) {
+					$status_i18n = __( 'pending', 'new-user-approve' );
+				}
+				return $status_i18n;
 				break;
 
 			default:
