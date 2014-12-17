@@ -715,9 +715,11 @@ class pw_new_user_approve {
 	 * @param $user_login
 	 * @param $user
 	 */
-	public function login_user( $user_login, $user ) {
-		if ( ! get_user_meta( $user->ID, 'pw_new_user_approve_has_signed_in' ) ) {
-			add_user_meta( $user->ID, 'pw_new_user_approve_has_signed_in', time() );
+	public function login_user( $user_login, $user = null ) {
+		if ( $user != null && is_object( $user ) ) {
+			if ( ! get_user_meta( $user->ID, 'pw_new_user_approve_has_signed_in' ) ) {
+				add_user_meta( $user->ID, 'pw_new_user_approve_has_signed_in', time() );
+			}
 		}
 	}
 } // End Class
