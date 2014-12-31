@@ -108,6 +108,9 @@ as they have their username and passwords.
 = 1.7.2 =
 * tested with WordPress 4.1
 * fix translation bug
+* add bubble to user menu for pending users
+Courtesy of [howdy_mcgee](https://wordpress.org/support/profile/howdy_mcgee)
+https://wordpress.org/support/topic/get-number-of-pending-users#post-5920371
 
 = 1.7.1 =
 * fix code causing PHP notices
