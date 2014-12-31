@@ -3,7 +3,7 @@ Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration, sign up, user management, login
 Requires at least: 3.5.1
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -105,6 +105,9 @@ as they have their username and passwords.
 
 == Changelog ==
 
+= 1.7.2 =
+* tested with WordPress 4.1
+
 = 1.7.1 =
 * fix code causing PHP notices
 * don't show admin notice for registration setting if S2Member plugin is active
@@ -115,7 +118,7 @@ as they have their username and passwords.
 * email/message tags
 * refactor messages
 * send admin approval email after the user has been created
-* tested for WordPress 4.0
+* tested with WordPress 4.0
 * finish updates in preparation of option addon plugin
 
 = 1.6 =
@@ -129,7 +132,7 @@ as they have their username and passwords.
 * updated French translation
 
 = 1.5.8 =
-* tested for WordPress 3.9
+* tested with WordPress 3.9
 * fix bug preventing the notice from hiding on legacy page
 
 = 1.5.7 =
