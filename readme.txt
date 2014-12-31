@@ -3,8 +3,8 @@ Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration, sign up, user management, login
 Requires at least: 3.5.1
-Tested up to: 4.0
-Stable tag: 1.7.1
+Tested up to: 4.1
+Stable tag: 1.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,13 @@ as they have their username and passwords.
 
 == Changelog ==
 
+= 1.7.2 =
+* tested with WordPress 4.1
+* fix translation bug
+* add bubble to user menu for pending users
+ * Courtesy of [howdy_mcgee](https://wordpress.org/support/profile/howdy_mcgee)
+ * https://wordpress.org/support/topic/get-number-of-pending-users#post-5920371
+
 = 1.7.1 =
 * fix code causing PHP notices
 * don't show admin notice for registration setting if S2Member plugin is active
@@ -115,7 +122,7 @@ as they have their username and passwords.
 * email/message tags
 * refactor messages
 * send admin approval email after the user has been created
-* tested for WordPress 4.0
+* tested with WordPress 4.0
 * finish updates in preparation of option addon plugin
 
 = 1.6 =
@@ -129,7 +136,7 @@ as they have their username and passwords.
 * updated French translation
 
 = 1.5.8 =
-* tested for WordPress 3.9
+* tested with WordPress 3.9
 * fix bug preventing the notice from hiding on legacy page
 
 = 1.5.7 =
@@ -241,18 +248,18 @@ as they have their username and passwords.
 
 = 1.1.3 =
 * replace calls to esc_url() with clean_url() to make plugin compatible with versions less than 2.8
- 
+
 = 1.1.2 =
 * fix the admin ui tab interface for 2.8
 * add a link to the users profile in the admin interface
 * fix bug when using email address to retrieve lost password
 * show blog title correctly on login screen
 * use get_option() instead of get_settings()
- 
+
 = 1.1.1 =
 * fix approve/deny links
 * fix formatting issue with email to admin to approve user
- 
+
 = 1.1 =
 * correctly display error message if registration is empty
 * add a link to the options page from the plugin dashboard

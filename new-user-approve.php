@@ -4,7 +4,7 @@
  Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve/
  Description: Allow administrators to approve users once they register. Only approved users will be allowed to access the site. For support, please go to the <a href="http://wordpress.org/support/plugin/new-user-approve">support forums</a> on wordpress.org.
  Author: Josh Harrison
- Version: 1.7.1
+ Version: 1.7.2
  Author URI: http://picklewagon.com/
  */
 
@@ -715,9 +715,11 @@ class pw_new_user_approve {
 	 * @param $user_login
 	 * @param $user
 	 */
-	public function login_user( $user_login, $user ) {
-		if ( ! get_user_meta( $user->ID, 'pw_new_user_approve_has_signed_in' ) ) {
-			add_user_meta( $user->ID, 'pw_new_user_approve_has_signed_in', time() );
+	public function login_user( $user_login, $user = null ) {
+		if ( $user != null && is_object( $user ) ) {
+			if ( ! get_user_meta( $user->ID, 'pw_new_user_approve_has_signed_in' ) ) {
+				add_user_meta( $user->ID, 'pw_new_user_approve_has_signed_in', time() );
+			}
 		}
 	}
 } // End Class
