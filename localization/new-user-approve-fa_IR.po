@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: New User Approve 1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
-"POT-Creation-Date: 2014-10-08 23:50-0700\n"
-"PO-Revision-Date: 2014-10-09 00:08-0700\n"
+"POT-Creation-Date: 2014-12-31 00:55-0700\n"
+"PO-Revision-Date: 2014-12-31 00:55-0700\n"
 "Last-Translator: Josh Harrison <josh@picklewagon.com>\n"
 "Language-Team: Philippe Scoffoni <philippe@scoffoni.net>\n"
 "Language: fr\n"
@@ -108,25 +108,25 @@ msgstr "فعالیت ها"
 msgid "email:"
 msgstr "ایمیل:"
 
-#: ../includes/admin-approve.php:133 ../includes/user-list.php:97
-#: ../includes/user-list.php:223 ../includes/user-list.php:224
+#: ../includes/admin-approve.php:133 ../includes/user-list.php:98
+#: ../includes/user-list.php:232 ../includes/user-list.php:233
 msgid "Approve"
 msgstr "تأیید"
 
-#: ../includes/admin-approve.php:138 ../includes/user-list.php:98
-#: ../includes/user-list.php:226 ../includes/user-list.php:227
+#: ../includes/admin-approve.php:138 ../includes/user-list.php:99
+#: ../includes/user-list.php:235 ../includes/user-list.php:236
 msgid "Deny"
 msgstr "عدم تأیید"
 
-#: ../includes/admin-approve.php:154
+#: ../includes/admin-approve.php:154 ../includes/user-list.php:144
 msgid "approved"
 msgstr "تأیید شده"
 
-#: ../includes/admin-approve.php:156
+#: ../includes/admin-approve.php:156 ../includes/user-list.php:146
 msgid "denied"
 msgstr "رد شده"
 
-#: ../includes/admin-approve.php:158
+#: ../includes/admin-approve.php:158 ../includes/user-list.php:148
 msgid "pending"
 msgstr "در انتظار تأیید"
 
@@ -265,47 +265,45 @@ msgstr ""
 "پس از نام نویسی، درخواست شما به میز مدیریت فرستاده خواهد شد. در صورت تأیید، "
 "شما را از طریق ایمیل با خبر خواهیم ساخت."
 
-#: ../includes/user-list.php:120
+#: ../includes/user-list.php:121
 msgid "Status"
 msgstr "وضعیت"
 
-#: ../includes/user-list.php:156
+#: ../includes/user-list.php:165
 msgid "Filter"
 msgstr "فیلتر"
 
-#: ../includes/user-list.php:161 ../includes/user-list.php:163
+#: ../includes/user-list.php:170 ../includes/user-list.php:172
 msgid "View all users"
 msgstr "مشاهده تمام کاربران"
 
-#: ../includes/user-list.php:320
-#, fuzzy, php-format
-msgid "User denied."
-msgid_plural "%s users denied."
-msgstr[0] "رد شده"
-msgstr[1] "رد شده"
-
-#: ../includes/user-list.php:325
-#, fuzzy, php-format
-msgid "User approved."
-msgid_plural "%s users approved."
-msgstr[0] "تأیید شده"
-msgstr[1] "تأیید شده"
-
-#: ../includes/user-list.php:349
+#: ../includes/user-list.php:358
 msgid "Access Status"
 msgstr "وضعیت دسترسی"
 
-#: ../includes/user-list.php:354
+#: ../includes/user-list.php:363
 msgid "-- Status --"
 msgstr "-- وضعیت --"
 
-#: ../includes/user-list.php:362
+#: ../includes/user-list.php:371
 msgid "If user has access to sign in or not."
 msgstr "وضعیت کاربر جهت ورود و خروج"
 
-#: ../includes/user-list.php:365
+#: ../includes/user-list.php:374
 msgid "Current user status is <strong>pending</strong>."
 msgstr "وضعیت تأیید کاربر، هنوز <strong>معلق</strong> است."
+
+#, fuzzy
+#~ msgid "User denied."
+#~ msgid_plural "%s users denied."
+#~ msgstr[0] "رد شده"
+#~ msgstr[1] "رد شده"
+
+#, fuzzy
+#~ msgid "User approved."
+#~ msgid_plural "%s users approved."
+#~ msgstr[0] "تأیید شده"
+#~ msgstr[1] "تأیید شده"
 
 #~ msgid "Settings"
 #~ msgstr "تنظیمات"
