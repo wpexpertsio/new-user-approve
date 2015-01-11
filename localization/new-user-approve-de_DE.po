@@ -21,7 +21,7 @@ msgstr ""
 #: ../new-user-approve.php:98
 #, php-format
 msgid "New User Approve requires WordPress %s or newer."
-msgstr ""
+msgstr "New User Approve benötigt WordPress %s oder neuer."
 
 #: ../new-user-approve.php:145
 #, php-format
@@ -29,16 +29,18 @@ msgid ""
 "The Membership setting must be turned on in order for the New User Approve "
 "to work correctly. <a href=\"%1$s\">Update in settings</a>. | <a href=\"%2$s"
 "\">Hide Notice</a>"
-msgstr ""
+msgstr "Die Registrierung für Jedermann muss eingeschaltet sein damit dieses "
+"Plugin funktioniert. <a href=\"%1$s\">Einstellung ändern</a>. | <a href=\"%2$s"
+"\">Meldung verbergen</a>"
 
 #: ../new-user-approve.php:257
 msgid "<strong>ERROR</strong>: Your account is still pending approval."
-msgstr ""
+msgstr "<strong>FEHLER</strong>: Ihre Registrierung ist noch nicht freigschaltet."
 
 #: ../new-user-approve.php:260
 msgid ""
 "<strong>ERROR</strong>: Your account has been denied access to this site."
-msgstr ""
+msgstr "<strong>FEHLER</strong>: Ihre Registrierung auf dieser Seite wurde verweigert."
 
 #: ../new-user-approve.php:362
 msgid "Users"
@@ -55,6 +57,8 @@ msgid ""
 "<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a "
 "href=\"mailto:%s\">webmaster</a> !"
 msgstr ""
+"<strong>FEHLER</strong>: Konnte die Registrierung nicht vornehmen... Bitte kontaktieren Sie <a "
+"href=\"mailto:%s\">den Administrator</a>!"
 
 #: ../new-user-approve.php:520
 #, php-format
@@ -139,11 +143,13 @@ msgid ""
 "You can now update user status on the <a href=\"%1$s\">users admin page</a>. "
 "| <a href=\"%2$s\">Hide Notice</a>"
 msgstr ""
+"Sie können den Benutzerstatus bei den <a href=\"%1$s\">Benutzer-Einstellungen</a> ändern. "
+"| <a href=\"%2$s\">Meldung ausblenden</a>"
 
 #: ../includes/admin-approve.php:220
 #, fuzzy
 msgid "Approve Users"
-msgstr "Zugelassene Benutzer"
+msgstr "Benutzer zulassen"
 
 #: ../includes/admin-approve.php:221
 msgid "Updates"
@@ -171,31 +177,31 @@ msgstr "Abgelehnte Benutzer"
 
 #: ../includes/email-tags.php:235
 msgid "The user's username on the site as well as the Username label"
-msgstr ""
+msgstr "Der Benutzername auf der Website"
 
 #: ../includes/email-tags.php:241
 msgid "The user's email address"
-msgstr ""
+msgstr "Die E-Mail-Adresse des Benutzers"
 
 #: ../includes/email-tags.php:247
 msgid "Your site name"
-msgstr ""
+msgstr "Der Name Ihrer Website"
 
 #: ../includes/email-tags.php:253
 msgid "Your site URL"
-msgstr ""
+msgstr "Die URL Ihrer Website"
 
 #: ../includes/email-tags.php:259
 msgid "The URL to approve/deny users"
-msgstr ""
+msgstr "Die URL zum Freischalten/Ablehnen von Benutzern"
 
 #: ../includes/email-tags.php:265
 msgid "The URL to login to the site"
-msgstr ""
+msgstr "Die URL zum Login auf Ihrer Website"
 
 #: ../includes/email-tags.php:271
 msgid "Generates the password for the user to add to the email"
-msgstr ""
+msgstr "Erzeugt ein Passwort für den Benutzer um es der E-Mail hinzuzufügen"
 
 #: ../includes/email-tags.php:299
 #, php-format
@@ -272,7 +278,7 @@ msgstr ""
 
 #: ../includes/user-list.php:161 ../includes/user-list.php:163
 msgid "View all users"
-msgstr ""
+msgstr "Alle Benutzer anzeigen"
 
 #: ../includes/user-list.php:320
 #, fuzzy, php-format
@@ -290,7 +296,7 @@ msgstr[1] "Freischaltung eines neuen Benutzers"
 
 #: ../includes/user-list.php:349
 msgid "Access Status"
-msgstr ""
+msgstr "Zugriffs-Status"
 
 #: ../includes/user-list.php:354
 msgid "-- Status --"
@@ -298,11 +304,11 @@ msgstr ""
 
 #: ../includes/user-list.php:362
 msgid "If user has access to sign in or not."
-msgstr ""
+msgstr "Ob der Benutzer sich anmelden darf oder nicht."
 
 #: ../includes/user-list.php:365
 msgid "Current user status is <strong>pending</strong>."
-msgstr ""
+msgstr "Aktueller Benutzer-Status ist <strong>wartend</strong>."
 
 #~ msgid "Settings"
 #~ msgstr "Einstellungen"
