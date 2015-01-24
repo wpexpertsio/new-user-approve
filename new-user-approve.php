@@ -686,6 +686,8 @@ class pw_new_user_approve {
 	public function add_user_status( $user_id ) {
 		$status = 'pending';
 
+		$status = apply_filters( 'new_user_approve_default_status', $status, $user_id );
+
 		// This check needs to happen when a user is created in the admin
 		if ( isset( $_REQUEST['action'] ) && 'createuser' == $_REQUEST['action'] ) {
 			$status = 'approved';

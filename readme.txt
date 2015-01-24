@@ -105,6 +105,9 @@ as they have their username and passwords.
 
 == Changelog ==
 
+= 1.8 =
+* add filter to modify default status
+
 = 1.7.2 =
 * tested with WordPress 4.1
 * fix translation bug
