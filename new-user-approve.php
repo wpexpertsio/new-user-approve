@@ -65,6 +65,8 @@ class pw_new_user_approve {
 		add_filter( 'login_message', array( $this, 'welcome_user' ) );
 		add_filter( 'new_user_approve_validate_status_update', array( $this, 'validate_status_update' ), 10, 3 );
 		add_filter( 'shake_error_codes', array( $this, 'failure_shake' ) );
+		add_filter( 'pre_user_first_name', array( $this, 'save_first_name' ) );
+		add_filter( 'pre_user_last_name', array( $this, 'save_last_name' ) );
 	}
 
 	public function get_plugin_url() {
@@ -734,11 +736,6 @@ class pw_new_user_approve {
 	public function is_active_add_name_to_registration() {
 		$is_active = apply_filters( 'nua_add_name_to_registration', true );
 
-		if ( $is_active ) {
-			add_filter( 'pre_user_first_name', array( $this, 'save_first_name' ) );
-			add_filter( 'pre_user_last_name', array( $this, 'save_last_name' ) );
-		}
-
 		return $is_active;
 	}
 
@@ -768,12 +765,20 @@ class pw_new_user_approve {
 	<?php
 	}
 
-	public function save_first_name() {
-		return sanitize_text_field( $_POST['nua_first_name'] );
+	public function save_first_name( $first_name ) {
+		if ( $this->is_active_add_name_to_registration() ) {
+			$first_name = sanitize_text_field( $_POST['nua_first_name'] );
+		}
+
+		return $first_name;
 	}
 
-	public function save_last_name() {
-		return sanitize_text_field( $_POST['nua_last_name'] );
+	public function save_last_name( $last_name ) {
+		if ( $this->is_active_add_name_to_registration() ) {
+			$last_name = sanitize_text_field( $_POST['nua_last_name'] );
+		}
+
+		return $last_name;
 	}
 } // End Class
 
