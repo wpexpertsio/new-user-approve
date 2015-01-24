@@ -129,6 +129,11 @@ class pw_new_user_approve {
 	public function admin_notices() {
 		$user_id = get_current_user_id();
 
+		// if the user isn't an admin, definitely don't show the notice
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		// update the setting for the current user
 		if ( isset( $_GET['new-user-approve-settings-notice'] ) && '1' == $_GET['new-user-approve-settings-notice'] ) {
 			add_user_meta( $user_id, 'pw_new_user_approve_settings_notice', '1', true );
