@@ -731,7 +731,15 @@ class pw_new_user_approve {
 		}
 	}
 
+	public function is_active_add_name_to_registration() {
+		return false;
+	}
+
 	public function registration_fields() {
+		if ( ! $this->is_active_add_name_to_registration() ) {
+			return;
+		}
+
 		$http_post = ( 'POST' == $_SERVER['REQUEST_METHOD'] );
 
 		$nua_first_name = '';
