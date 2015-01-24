@@ -732,8 +732,15 @@ class pw_new_user_approve {
 	}
 
 	public function registration_fields() {
+		$http_post = ( 'POST' == $_SERVER['REQUEST_METHOD'] );
+
 		$nua_first_name = '';
 		$nua_last_name = '';
+
+		if ( $http_post ) {
+			$nua_first_name = $_POST['nua_first_name'];
+			$nua_last_name = $_POST['nua_last_name'];
+		}
 	?>
 		<p>
 			<label for="nua_first_name"><?php _e( 'First Name', 'new-user-approve' ) ?><br />
