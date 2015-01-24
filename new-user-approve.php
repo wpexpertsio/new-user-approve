@@ -732,7 +732,9 @@ class pw_new_user_approve {
 	}
 
 	public function is_active_add_name_to_registration() {
-		return false;
+		$is_active = apply_filters( 'nua_add_name_to_registration', true );
+
+		return $is_active;
 	}
 
 	public function registration_fields() {
