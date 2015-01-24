@@ -274,6 +274,21 @@ function nua_setup_email_tags() {
 		),
 	);
 
+	if ( pw_new_user_approve()->is_active_add_name_to_registration() ) {
+		$email_tags[] = array(
+			'tag'         => 'first_name',
+			'description' => __( 'The first name of the user if provided', 'new-user-approve' ),
+			'function'    => 'nua_email_tag_first_name',
+			'context'     => array( 'email' ),
+		);
+		$email_tags[] = array(
+			'tag'         => 'last_name',
+			'description' => __( 'The last name of the user if provided', 'new-user-approve' ),
+			'function'    => 'nua_email_tag_last_name',
+			'context'     => array( 'email' ),
+		);
+	}
+
 	// Apply nua_email_tags filter
 	$email_tags = apply_filters( 'nua_email_tags', $email_tags );
 
@@ -391,4 +406,14 @@ function nua_email_tag_password( $attributes ) {
 	} else {
 		return '';
 	}
+}
+
+function nua_email_tag_first_name( $attributes ) {
+	$user = $attributes['user'];
+	return get_user_meta( $user->ID, 'first_name', true );
+}
+
+function nua_email_tag_last_name( $attributes ) {
+	$user = $attributes['user'];
+	return get_user_meta( $user->ID, 'last_name', true );
 }
