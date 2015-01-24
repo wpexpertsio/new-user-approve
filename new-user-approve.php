@@ -734,6 +734,11 @@ class pw_new_user_approve {
 	public function is_active_add_name_to_registration() {
 		$is_active = apply_filters( 'nua_add_name_to_registration', true );
 
+		if ( $is_active ) {
+			add_filter( 'pre_user_first_name', array( $this, 'save_first_name' ) );
+			add_filter( 'pre_user_last_name', array( $this, 'save_last_name' ) );
+		}
+
 		return $is_active;
 	}
 
@@ -761,6 +766,14 @@ class pw_new_user_approve {
 			<input type="text" name="nua_last_name" id="nua_last_name" class="input" value="<?php echo esc_attr( wp_unslash( $nua_last_name ) ); ?>" size="25" /></label>
 		</p>
 	<?php
+	}
+
+	public function save_first_name() {
+		return sanitize_text_field( $_POST['nua_first_name'] );
+	}
+
+	public function save_last_name() {
+		return sanitize_text_field( $_POST['nua_last_name'] );
 	}
 } // End Class
 
