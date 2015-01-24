@@ -57,6 +57,7 @@ class pw_new_user_approve {
 		add_action( 'new_user_approve_deny_user', array( $this, 'update_deny_status' ) );
 		add_action( 'admin_init', array( $this, 'verify_settings' ) );
 		add_action( 'wp_login', array( $this, 'login_user' ), 10, 2 );
+		add_action( 'register_form', array( $this, 'registration_fields' ) );
 
 		// Filters
 		add_filter( 'wp_authenticate_user', array( $this, 'authenticate_user' ) );
@@ -728,6 +729,21 @@ class pw_new_user_approve {
 				add_user_meta( $user->ID, 'pw_new_user_approve_has_signed_in', time() );
 			}
 		}
+	}
+
+	public function registration_fields() {
+		$nua_first_name = '';
+		$nua_last_name = '';
+	?>
+		<p>
+			<label for="nua_first_name"><?php _e( 'First Name', 'new-user-approve' ) ?><br />
+			<input type="text" name="nua_first_name" id="nua_first_name" class="input" value="<?php echo esc_attr( wp_unslash( $nua_first_name ) ); ?>" size="25" /></label>
+		</p>
+		<p>
+			<label for="nua_last_name"><?php _e( 'Last Name', 'new-user-approve' ) ?><br />
+			<input type="text" name="nua_last_name" id="nua_last_name" class="input" value="<?php echo esc_attr( wp_unslash( $nua_last_name ) ); ?>" size="25" /></label>
+		</p>
+	<?php
 	}
 } // End Class
 
