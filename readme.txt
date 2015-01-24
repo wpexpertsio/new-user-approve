@@ -107,6 +107,7 @@ as they have their username and passwords.
 
 = 1.8 =
 * add filter to modify default status
+* add filter to show/hide membership admin notice
 
 = 1.7.2 =
 * tested with WordPress 4.1

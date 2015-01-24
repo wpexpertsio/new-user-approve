@@ -134,13 +134,13 @@ class pw_new_user_approve {
 			add_user_meta( $user_id, 'pw_new_user_approve_settings_notice', '1', true );
 		}
 
-		// Don't show the error if the s2member plugin is active
-		if ( class_exists( 'c_ws_plugin__s2member_constants' ) ) {
-			return;
-		}
+		$show_notice = get_user_meta( $user_id, 'pw_new_user_approve_settings_notice' );
+
+		// one last chance to show the update
+		$show_notice = apply_filters( 'new_user_approve_show_membership_notice', $show_notice, $user_id );
 
 		// Check that the user hasn't already clicked to ignore the message
-		if ( ! get_user_meta( $user_id, 'pw_new_user_approve_settings_notice' ) ) {
+		if ( ! $show_notice ) {
 			echo '<div class="error"><p>';
 			printf( __( 'The Membership setting must be turned on in order for the New User Approve to work correctly. <a href="%1$s">Update in settings</a>. | <a href="%2$s">Hide Notice</a>', 'new-user-approve' ), admin_url( 'options-general.php' ), add_query_arg( array( 'new-user-approve-settings-notice' => 1 ) ) );
 			echo "</p></div>";
