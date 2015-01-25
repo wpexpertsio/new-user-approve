@@ -109,6 +109,7 @@ as they have their username and passwords.
 * add filter to modify default status
 * add filter to show/hide membership admin notice
 * only show the membership admin notice if the current user is an admin
+* add first and last name fields to registration form
 
 = 1.7.2 =
 * tested with WordPress 4.1
