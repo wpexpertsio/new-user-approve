@@ -734,7 +734,7 @@ class pw_new_user_approve {
 	}
 
 	public function is_active_add_name_to_registration() {
-		$is_active = apply_filters( 'nua_add_name_to_registration', true );
+		$is_active = apply_filters( 'nua_add_name_to_registration', false );
 
 		return $is_active;
 	}
