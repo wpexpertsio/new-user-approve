@@ -63,7 +63,11 @@ function nua_default_welcome_message() {
  * @return string
  */
 function nua_default_notification_message() {
-	$message = __( '{username} ({user_email}) has requested a username at {sitename}', 'new-user-approve' ) . "\n\n";
+	if ( pw_new_user_approve()->is_active_add_name_to_registration() ) {
+		$message = __( '{first_name} {last_name} ({user_email}) has requested a username ({username}) at {sitename}', 'new-user-approve' ) . "\n\n";
+	} else {
+		$message = __( '{username} ({user_email}) has requested a username at {sitename}', 'new-user-approve' ) . "\n\n";
+	}
 	$message .= "{site_url}\n\n";
 	$message .= __( 'To approve or deny this user access to {sitename} go to', 'new-user-approve' ) . "\n\n";
 	$message .= "{admin_approve_url}\n\n";
