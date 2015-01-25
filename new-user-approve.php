@@ -733,12 +733,21 @@ class pw_new_user_approve {
 		}
 	}
 
+	/**
+	 * Determine if the name fields should be output to the registration form.
+	 *
+	 * @return boolean
+	 */
 	public function is_active_add_name_to_registration() {
 		$is_active = apply_filters( 'nua_add_name_to_registration', false );
 
 		return $is_active;
 	}
 
+	/**
+	 * Show the first and last name fields on the registration form.
+	 * The fields will only show if the feature is active.
+	 */
 	public function registration_fields() {
 		if ( ! $this->is_active_add_name_to_registration() ) {
 			return;
@@ -765,6 +774,12 @@ class pw_new_user_approve {
 	<?php
 	}
 
+	/**
+	 * Save the first name from the registration form to the database.
+	 *
+	 * @param $first_name
+	 * @return string $first_name
+	 */
 	public function save_first_name( $first_name ) {
 		if ( $this->is_active_add_name_to_registration() ) {
 			$first_name = sanitize_text_field( $_POST['nua_first_name'] );
@@ -773,6 +788,12 @@ class pw_new_user_approve {
 		return $first_name;
 	}
 
+	/**
+	 * Save the last name from the registration form to the database.
+	 *
+	 * @param $last_name
+	 * @return string $last_name
+	 */
 	public function save_last_name( $last_name ) {
 		if ( $this->is_active_add_name_to_registration() ) {
 			$last_name = sanitize_text_field( $_POST['nua_last_name'] );

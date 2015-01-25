@@ -408,11 +408,27 @@ function nua_email_tag_password( $attributes ) {
 	}
 }
 
+/**
+ * Email template tag: first_name
+ * Generates the first name for the user to add to the email
+ *
+ * @param array $attributes
+ *
+ * @return string first name
+ */
 function nua_email_tag_first_name( $attributes ) {
 	$user = $attributes['user'];
 	return get_user_meta( $user->ID, 'first_name', true );
 }
 
+/**
+ * Email template tag: last_name
+ * Generates the last name for the user to add to the email
+ *
+ * @param array $attributes
+ *
+ * @return string last name
+ */
 function nua_email_tag_last_name( $attributes ) {
 	$user = $attributes['user'];
 	return get_user_meta( $user->ID, 'last_name', true );
