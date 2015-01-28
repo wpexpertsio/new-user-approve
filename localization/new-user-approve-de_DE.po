@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: NUA\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
 "POT-Creation-Date: 2014-10-08 23:50-0700\n"
-"PO-Revision-Date: 2014-12-31 00:55-0700\n"
+"PO-Revision-Date: 2015-01-28 05:58+0100\n"
 "Last-Translator: Josh Harrison <josh@picklewagon.com>\n"
 "Language-Team: FatCow <zhr@tut.by>\n"
-"Language: be_BY\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: ../new-user-approve.php:98
 #, php-format
@@ -29,18 +29,22 @@ msgid ""
 "The Membership setting must be turned on in order for the New User Approve "
 "to work correctly. <a href=\"%1$s\">Update in settings</a>. | <a href=\"%2$s"
 "\">Hide Notice</a>"
-msgstr "Die Registrierung für Jedermann muss eingeschaltet sein damit dieses "
-"Plugin funktioniert. <a href=\"%1$s\">Einstellung ändern</a>. | <a href=\"%2$s"
+msgstr ""
+"Die Registrierung für Jedermann muss eingeschaltet sein damit dieses Plugin "
+"funktioniert. <a href=\"%1$s\">Einstellung ändern</a>. | <a href=\"%2$s"
 "\">Meldung verbergen</a>"
 
 #: ../new-user-approve.php:257
 msgid "<strong>ERROR</strong>: Your account is still pending approval."
-msgstr "<strong>FEHLER</strong>: Ihre Registrierung ist noch nicht freigschaltet."
+msgstr ""
+"<strong>FEHLER</strong>: Ihre Registrierung ist noch nicht freigschaltet."
 
 #: ../new-user-approve.php:260
 msgid ""
 "<strong>ERROR</strong>: Your account has been denied access to this site."
-msgstr "<strong>FEHLER</strong>: Ihre Registrierung auf dieser Seite wurde verweigert."
+msgstr ""
+"<strong>FEHLER</strong>: Ihre Registrierung auf dieser Seite wurde "
+"verweigert."
 
 #: ../new-user-approve.php:362
 msgid "Users"
@@ -57,8 +61,8 @@ msgid ""
 "<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a "
 "href=\"mailto:%s\">webmaster</a> !"
 msgstr ""
-"<strong>FEHLER</strong>: Konnte die Registrierung nicht vornehmen... Bitte kontaktieren Sie <a "
-"href=\"mailto:%s\">den Administrator</a>!"
+"<strong>FEHLER</strong>: Konnte die Registrierung nicht vornehmen... Bitte "
+"kontaktieren Sie <a href=\"mailto:%s\">den Administrator</a>!"
 
 #: ../new-user-approve.php:520
 #, php-format
@@ -143,8 +147,8 @@ msgid ""
 "You can now update user status on the <a href=\"%1$s\">users admin page</a>. "
 "| <a href=\"%2$s\">Hide Notice</a>"
 msgstr ""
-"Sie können den Benutzerstatus bei den <a href=\"%1$s\">Benutzer-Einstellungen</a> ändern. "
-"| <a href=\"%2$s\">Meldung ausblenden</a>"
+"Sie können den Benutzerstatus bei den <a href=\"%1$s\">Benutzer-"
+"Einstellungen</a> ändern. | <a href=\"%2$s\">Meldung ausblenden</a>"
 
 #: ../includes/admin-approve.php:220
 #, fuzzy
