@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: NUA\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
 "POT-Creation-Date: 2014-10-08 23:50-0700\n"
-"PO-Revision-Date: 2015-01-28 05:58+0100\n"
+"PO-Revision-Date: 2015-01-28 06:12+0100\n"
 "Last-Translator: Josh Harrison <josh@picklewagon.com>\n"
 "Language-Team: FatCow <zhr@tut.by>\n"
 "Language: de_DE\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: ../new-user-approve.php:98
 #, php-format
@@ -169,7 +170,7 @@ msgstr ""
 
 #: ../includes/admin-approve.php:231
 msgid "Users Pending Approval"
-msgstr "Ausstehende Genehmigung eines Benutzers"
+msgstr "Auf Freischaltung wartende Benutzer"
 
 #: ../includes/admin-approve.php:233
 msgid "Approved Users"
@@ -218,9 +219,8 @@ msgid "Password: %s"
 msgstr "Passwort: %s"
 
 #: ../includes/messages.php:9
-#, fuzzy
 msgid "You have been approved to access {sitename}"
-msgstr "Ihnen wurde der Zugang %s freigeschaltet"
+msgstr "Ihnen wurde der Zugang zu {sitename} freigeschaltet"
 
 #: ../includes/messages.php:25
 #, fuzzy
@@ -245,13 +245,12 @@ msgstr ""
 "Ihr Verständnis."
 
 #: ../includes/messages.php:53
-#, fuzzy
 msgid ""
 "Welcome to {sitename}. This site is accessible to approved users only. To be "
 "approved, you must first register."
 msgstr ""
-"Willkommen auf %s. Diese Seite ist nur registrierten Benutzern zugänglich. "
-"Für einen Zugriff müssen Sie sich zunächst registrieren."
+"Willkommen auf {sitename}. Diese Seite ist nur registrierten Benutzern "
+"zugänglich. Für einen Zugriff müssen Sie sich zunächst registrieren."
 
 #: ../includes/messages.php:66
 #, fuzzy
@@ -292,11 +291,11 @@ msgstr[0] "abgelehnt"
 msgstr[1] "abgelehnt"
 
 #: ../includes/user-list.php:325
-#, fuzzy, php-format
+#, php-format
 msgid "User approved."
 msgid_plural "%s users approved."
-msgstr[0] "Freischaltung eines neuen Benutzers"
-msgstr[1] "Freischaltung eines neuen Benutzers"
+msgstr[0] "Benutzer akzeptiert."
+msgstr[1] "%s Benutzer akzeptiert."
 
 #: ../includes/user-list.php:349
 msgid "Access Status"
