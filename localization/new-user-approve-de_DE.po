@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: NUA\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
 "POT-Creation-Date: 2014-10-08 23:50-0700\n"
-"PO-Revision-Date: 2015-03-09 16:09+0100\n"
+"PO-Revision-Date: 2015-03-12 10:30+0100\n"
 "Last-Translator: Till Sanders <tillsanders@googlemail.com>\n"
 "Language-Team: FatCow <zhr@tut.by>\n"
 "Language: de_DE\n"
@@ -17,8 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.6.9\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../new-user-approve.php:98
 #, php-format
@@ -111,7 +110,7 @@ msgstr "Aktionen"
 
 #: ../includes/admin-approve.php:129
 msgid "email:"
-msgstr "email:"
+msgstr "Email:"
 
 #: ../includes/admin-approve.php:133 ../includes/user-list.php:97
 #: ../includes/user-list.php:223 ../includes/user-list.php:224
@@ -125,7 +124,7 @@ msgstr "Ablehnen"
 
 #: ../includes/admin-approve.php:154
 msgid "approved"
-msgstr "freigeschalten"
+msgstr "freigeschaltet"
 
 #: ../includes/admin-approve.php:156
 msgid "denied"
@@ -218,11 +217,11 @@ msgstr "Passwort: %s"
 
 #: ../includes/messages.php:9
 msgid "You have been approved to access {sitename}"
-msgstr "Ihnen wurde der Zugang zu %s freigeschaltet"
+msgstr "Ihnen wurde der Zugang zu {sitename} freigeschaltet"
 
 #: ../includes/messages.php:25
 msgid "You have been denied access to {sitename}."
-msgstr "Ihr Zugang zu %s wurde abgelehnt."
+msgstr "Ihr Zugang zu {sitename} wurde abgelehnt."
 
 #: ../includes/messages.php:38
 msgid ""
@@ -246,16 +245,16 @@ msgid ""
 "Welcome to {sitename}. This site is accessible to approved users only. To be "
 "approved, you must first register."
 msgstr ""
-"Willkommen auf %s. Diese Seite ist nur registrierten Benutzern zugänglich. "
-"Für eine Freischaltung müssen Sie sich zunächst registrieren."
+"Willkommen auf {sitename}. Diese Seite ist nur registrierten Benutzern "
+"zugänglich. Für eine Freischaltung müssen Sie sich zunächst registrieren."
 
 #: ../includes/messages.php:66
 msgid "{username} ({user_email}) has requested a username at {sitename}"
-msgstr "%1$s (%2$s) hat einen Benutzernamen beantragt"
+msgstr "{username} ({user_email}) hat einen Benutzernamen beantragt"
 
 #: ../includes/messages.php:68
 msgid "To approve or deny this user access to {sitename} go to"
-msgstr "Um dem Benutzer Zugang zu %s zu gewähren"
+msgstr "Um dem Benutzer Zugang zu {sitename} zu gewähren"
 
 #: ../includes/messages.php:83
 msgid ""
@@ -282,17 +281,15 @@ msgstr "Zeige alle Benutzer"
 #, php-format
 msgid "User denied."
 msgid_plural "%s users denied."
-msgstr[0] "%s Benutzer abgelehnt."
+msgstr[0] "Benutzer abgelehnt."
 msgstr[1] "%s Benutzer abgelehnt."
-msgstr[2] "%s Benutzer abgelehnt."
 
 #: ../includes/user-list.php:325
 #, php-format
 msgid "User approved."
 msgid_plural "%s users approved."
-msgstr[0] "%s Benutzer freigeschaltet."
+msgstr[0] "Benutzer freigeschaltet."
 msgstr[1] "%s Benutzer freigeschaltet."
-msgstr[2] "%s Benutzer freigeschaltet."
 
 #: ../includes/user-list.php:349
 msgid "Access Status"
