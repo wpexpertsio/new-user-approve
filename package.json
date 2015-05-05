@@ -1,0 +1,27 @@
+{
+  "name": "new-user-approve",
+  "version": "1.7.2",
+  "description": "WordPress plugin to allow administrators to approve users once they register. Only approved users will be allowed to access the site.",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {},
+  "devDependencies": {
+      "gulp": "^3.8.11",
+      "phplint": "^1.5.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://picklewagon@github.com/picklewagon/new-user-approve.git"
+  },
+  "author": "Josh Harrison",
+  "license": "GPL v2",
+  "bugs": {
+    "url": "https://github.com/picklewagon/new-user-approve/issues"
+  },
+  "homepage": "https://github.com/picklewagon/new-user-approve"
+}
