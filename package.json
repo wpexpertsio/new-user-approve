@@ -12,7 +12,8 @@
       "phplint": "^1.5.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "phplint './**/*.php' '!./node_modules/**/*'",
+    "test": "phpunit"
   },
   "repository": {
     "type": "git",
