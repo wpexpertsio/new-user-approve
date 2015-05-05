@@ -1,0 +1,14 @@
+{
+    "name": "picklewagon/new-user-approve",
+    "description": "WordPress plugin to allow administrators to approve users once they register. Only approved users will be allowed to access the site.",
+    "require": {
+        "phpunit/phpunit": "^4.6"
+    },
+    "authors": [
+        {
+            "name": "Josh Harrison",
+            "email": "josh@picklewagon.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
