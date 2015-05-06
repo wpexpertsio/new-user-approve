@@ -8,8 +8,9 @@
   },
   "dependencies": {},
   "devDependencies": {
-      "gulp": "^3.8.11",
-      "phplint": "^1.5.0"
+    "gulp": "^3.8.11",
+    "gulp-phpunit": "^0.8.1",
+    "phplint": "^1.5.0"
   },
   "scripts": {
     "pretest": "phplint './**/*.php' '!./node_modules/**/*'",
