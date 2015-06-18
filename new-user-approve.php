@@ -618,11 +618,15 @@ class pw_new_user_approve {
 		$success_message = __( 'Registration successful.', 'new-user-approve' );
 		$success_message = apply_filters( 'new_user_approve_registration_message', $success_message );
 
-		login_header( __( 'Pending Approval', 'new-user-approve' ), '<p class="message register">' . $success_message . '</p>', $errors );
-		login_footer();
+		//if ( function_exists( 'login_header' ) ) {
+		//	login_header( __( 'Pending Approval', 'new-user-approve' ), '<p class="message register">' . $success_message . '</p>', $errors );
+		//	login_footer();
 
-		// an exit is necessary here so the normal process for user registration doesn't happen
-		exit();
+			// an exit is necessary here so the normal process for user registration doesn't happen
+		//	exit();
+		//} else {
+			return $errors;
+		//}
 	}
 
 	/**
