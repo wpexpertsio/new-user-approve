@@ -576,14 +576,18 @@ class pw_new_user_approve {
 	public function email_message_headers() {
 		$admin_email = get_option( 'admin_email' );
 		if ( empty( $admin_email ) ) {
-			$admin_email = 'support@' . $_SERVER['SERVER_NAME'];
+			$admin_email = 'support@' . preg_replace( '#^www\.#', '', strtolower( $_SERVER['SERVER_NAME'] ) );
 		}
 
 		$from_name = get_option( 'blogname' );
 
-		$headers = array(
-			"From: \"{$from_name}\" <{$admin_email}>\n",
-		);
+		if ( $from_name ) {
+			$headers = array(
+				"From: \"{$from_name}\" <{$admin_email}>\n",
+			);
+		} else {
+			$headers = array();
+		}
 
 		$headers = apply_filters( 'new_user_approve_email_header', $headers );
 
