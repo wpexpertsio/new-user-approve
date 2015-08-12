@@ -690,6 +690,7 @@ class pw_new_user_approve {
 		if ( isset( $_REQUEST['action'] ) && 'createuser' == $_REQUEST['action'] ) {
 			$status = 'approved';
 		}
+		$status = apply_filters( 'new_user_approve_add_user_status', $status);
 		update_user_meta( $user_id, 'pw_user_status', $status );
 	}
 
