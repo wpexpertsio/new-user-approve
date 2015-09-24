@@ -260,12 +260,14 @@ elseif ( $active_tab == 'denied_users' ) : ?>
 		<!-- Begin MailChimp Signup Form -->
 		<div id="mc_embed_signup">
 			<form id="mc-embedded-subscribe-form" class="validate" style="padding: 0;" action="//picklewagon.us2.list-manage.com/subscribe/post?u=a602ec75eeb3c876324a4c400&amp;id=11b386471b" method="post" name="mc-embedded-subscribe-form" novalidate="" target="_blank">
-				<input id="mce-EMAIL" class="email" style="width: 100%;" name="EMAIL" required="" type="email" value="" placeholder="email address" />
+				<div class="clear" style="margin-top: 10px;">
+					<input id="mce-EMAIL" class="email" style="width: 100%;" name="EMAIL" required="" type="email" value="" placeholder="email address" />
+				</div>
 				<input name="group[13117][4]" type="hidden" value="4" />
 				<div style="position: absolute; left: -5000px;">
 					<input tabindex="-1" name="b_a602ec75eeb3c876324a4c400_11b386471b" type="text" value="" />
 				</div>
-				<div class="clear">
+				<div class="clear" style="margin-top: 10px;">
 					<input id="mc-embedded-subscribe" class="button" name="subscribe" type="submit" value="Subscribe" />
 				</div>
 			</form>
