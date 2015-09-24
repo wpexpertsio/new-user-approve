@@ -281,7 +281,7 @@ elseif ( $active_tab == 'denied_users' ) : ?>
 
 	public function metabox_feedback() {
 ?>
-		<p>Please show your appreciation for New User Approve by giving it a positive <a href="https://wordpress.org/support/view/plugin-reviews/new-user-approve#postform" target="_blank">review</a> in the plugin repository!</p>
+		<p>Please show your appreciation for New User Approve by giving it a positive <a href="https://wordpress.org/support/view/plugin-reviews/new-user-approve#postform" target="_blank">review</a> in the plugin repository!</p>
 <?php
 	}
 
