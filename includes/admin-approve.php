@@ -218,9 +218,9 @@ class pw_new_user_approve_admin_approve {
 
 	public function add_meta_boxes() {
 		add_meta_box( 'nua-approve-admin', __( 'Approve Users', 'new-user-approve' ), array( $this, 'metabox_main' ), 'users_page_new-user-approve-admin', 'main', 'high' );
-		add_meta_box( 'nua-updates', __( 'Updates', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side', 'default', array( 'url' => 'http://newuserapprove.com/wp-json/posts/52' ) );
-		add_meta_box( 'nua-support', __( 'Support', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side', 'default', array( 'url' => 'http://newuserapprove.com/wp-json/posts/54' ) );
-		add_meta_box( 'nua-feedback', __( 'Feedback', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side', 'default', array( 'url' => 'http://newuserapprove.com/wp-json/posts/56' ) );
+		add_meta_box( 'nua-updates', __( 'Updates', 'new-user-approve' ), array( $this, 'metabox_updates' ), 'users_page_new-user-approve-admin', 'side', 'default' );
+		add_meta_box( 'nua-support', __( 'Support', 'new-user-approve' ), array( $this, 'metabox_support' ), 'users_page_new-user-approve-admin', 'side', 'default' );
+		add_meta_box( 'nua-feedback', __( 'Feedback', 'new-user-approve' ), array( $this, 'metabox_feedback' ), 'users_page_new-user-approve-admin', 'side', 'default' );
 	}
 
 	public function metabox_main() {
@@ -249,6 +249,40 @@ elseif ( $active_tab == 'denied_users' ) : ?>
 		<?php $this->user_table( 'denied' ); ?>
 	</div>
 <?php endif;
+	}
+
+	public function metabox_updates() {
+?>
+		<p>I have created a site to help with the support of this plugin. Check it out at <a title="newuserapprove.com" href="https://newuserapprove.com/" target="_blank">newuserapprove.com</a>.</p>
+		<p>Please signup for the mailing list to keep up to date.</p>
+
+		<!-- Begin MailChimp Signup Form -->
+		<div id="mc_embed_signup">
+			<form id="mc-embedded-subscribe-form" class="validate" style="padding: 0;" action="//picklewagon.us2.list-manage.com/subscribe/post?u=a602ec75eeb3c876324a4c400&amp;id=11b386471b" method="post" name="mc-embedded-subscribe-form" novalidate="" target="_blank">
+				<input id="mce-EMAIL" class="email" style="width: 100%;" name="EMAIL" required="" type="email" value="" placeholder="email address" />
+				<input name="group[13117][4]" type="hidden" value="4" />
+				<div style="position: absolute; left: -5000px;">
+					<input tabindex="-1" name="b_a602ec75eeb3c876324a4c400_11b386471b" type="text" value="" />
+				</div>
+				<div class="clear" style="margin-top: 10px;">
+					<input id="mc-embedded-subscribe" class="button" name="subscribe" type="submit" value="Subscribe" />
+				</div>
+			</form>
+		</div>
+<?php
+	}
+
+	public function metabox_support() {
+?>
+		<p>If you haven't already, check out the <a href="https://wordpress.org/plugins/new-user-approve/faq/" target="_blank">Frequently Asked Questions</a>.</p>
+		<p>Still not fixed? Please <a href="https://wordpress.org/support/plugin/new-user-approve" target="_blank">start a support topic</a> and I or someone from the community will be able to assist you.</p>
+<?php
+	}
+
+	public function metabox_feedback() {
+?>
+		<p>Please show your appreciation for New User Approve by giving it a positive <a href="https://wordpress.org/support/view/plugin-reviews/new-user-approve#postform" target="_blank">review</a> in the plugin repository!</p>
+<?php
 	}
 
 	public function metabox_ajax( $post, $metabox = array() ) {
