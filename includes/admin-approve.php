@@ -220,7 +220,7 @@ class pw_new_user_approve_admin_approve {
 		add_meta_box( 'nua-approve-admin', __( 'Approve Users', 'new-user-approve' ), array( $this, 'metabox_main' ), 'users_page_new-user-approve-admin', 'main', 'high' );
 		add_meta_box( 'nua-updates', __( 'Updates', 'new-user-approve' ), array( $this, 'metabox_updates' ), 'users_page_new-user-approve-admin', 'side', 'default' );
 		add_meta_box( 'nua-support', __( 'Support', 'new-user-approve' ), array( $this, 'metabox_support' ), 'users_page_new-user-approve-admin', 'side', 'default' );
-		add_meta_box( 'nua-feedback', __( 'Feedback', 'new-user-approve' ), array( $this, 'metabox_ajax' ), 'users_page_new-user-approve-admin', 'side', 'default', array( 'url' => 'http://newuserapprove.com/wp-json/posts/56' ) );
+		add_meta_box( 'nua-feedback', __( 'Feedback', 'new-user-approve' ), array( $this, 'metabox_feedback' ), 'users_page_new-user-approve-admin', 'side', 'default' );
 	}
 
 	public function metabox_main() {
@@ -280,6 +280,10 @@ elseif ( $active_tab == 'denied_users' ) : ?>
 <?php
 	}
 
+	public function metabox_feedback() {
+?>
+		<p>Please show your appreciation for New User Approve by giving it a positive <a href="https://wordpress.org/support/view/plugin-reviews/new-user-approve#postform" target="_blank">review</a> in the plugin repository!</p>
+<?php
 	}
 
 	public function metabox_ajax( $post, $metabox = array() ) {
