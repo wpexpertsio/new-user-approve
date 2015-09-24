@@ -105,6 +105,9 @@ as they have their username and passwords.
 
 == Changelog ==
 
+= 1.7.3 =
+* Place content in metaboxes in place of dynamically pulling from website
+
 = 1.7.2 =
 * tested with WordPress 4.1
 * fix translation bug
