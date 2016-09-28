@@ -272,6 +272,12 @@ function nua_setup_email_tags() {
 			'function'    => 'nua_email_tag_password',
 			'context'     => array( 'email' ),
 		),
+        array(
+            'tag'         => 'set_password_url',
+            'description' => __( 'The URL for users to set their password', 'new-user-approve' ),
+            'function'    => 'nua_email_tag_setpasswordurl',
+            'context'     => array( 'email' ),
+        ),
 	);
 
 	// Apply nua_email_tags filter
@@ -391,4 +397,17 @@ function nua_email_tag_password( $attributes ) {
 	} else {
 		return '';
 	}
+}
+
+/**
+ * Email template tag: set_password_url
+ * 
+ * Generates the URL for the user to set their password. This will go to the same
+ * URL that WordPress uses to reset passwords.
+ *
+ * @param array $attributes
+ * @return string url
+ */
+function nua_email_tag_setpasswordurl( $attributes ) {
+
 }
