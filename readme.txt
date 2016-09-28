@@ -105,6 +105,9 @@ as they have their username and passwords.
 
 == Changelog ==
 
+= Unreleased =
+* Fixed: Corrected erroneous SQL query when filtering users
+
 = 1.7.3 =
 * place content in metaboxes in place of dynamically pulling from website
 * tested with WordPress 4.3.1
