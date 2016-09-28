@@ -206,7 +206,7 @@ class pw_new_user_approve_user_list {
 		if ( isset( $_GET['new_user_approve_filter'] ) && $_GET['new_user_approve_filter'] != '' ) {
 			$filter = esc_attr( $_GET['new_user_approve_filter'] );
 
-			$query->query_from .= " INNER JOIN {$wpdb->usermeta} wp_usermeta ON ( {$wpdb->users}.ID = wp_usermeta.user_id )";
+			$query->query_from .= " INNER JOIN {$wpdb->usermeta} ON ( {$wpdb->users}.ID = wp_usermeta.user_id )";
 
 			if ( 'approved' == $filter ) {
 				$query->query_fields = "DISTINCT SQL_CALC_FOUND_ROWS {$wpdb->users}.ID";
