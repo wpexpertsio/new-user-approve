@@ -162,27 +162,56 @@ class pw_new_user_approve_user_list {
 	 * @uses restrict_manage_users
 	 */
 	public function status_filter() {
-		$filter_button = submit_button( __( 'Filter', 'new-user-approve' ), 'button', 'pw-status-query-submit', false, array( 'id' => 'pw-status-query-submit' ) );
-		$filtered_status = ( isset( $_GET['new_user_approve_filter'] ) ) ? esc_attr( $_GET['new_user_approve_filter'] ) : '';
 
-		?>
-		<label class="screen-reader-text"
-			   for="new_user_approve_filter"><?php _e( 'View all users', 'new-user-approve' ); ?></label>
-		<select id="new_user_approve_filter" name="new_user_approve_filter" style="float: none; margin: 0 0 0 15px;">
-			<option value=""><?php _e( 'View all users', 'new-user-approve' ); ?></option>
-			<?php foreach ( pw_new_user_approve()->get_valid_statuses() as $status ) : ?>
-				<option
-					value="<?php echo esc_attr( $status ); ?>"<?php selected( $status, $filtered_status ); ?>><?php echo esc_html( $status ); ?></option>
-			<?php endforeach; ?>
-		</select>
-		<?php echo apply_filters( 'new_user_approve_filter_button', $filter_button ); ?>
-		<style>
-			#pw-status-query-submit {
-				float: right;
-				margin: 2px 0 0 5px;
-			}
-		</style>
-	<?php
+		// Use a static variable to determine which instance (top or bottom) of the user table we're at
+		static $instance = 0;
+
+		// If it's the top instance, spit out the selection menu, otherwise do nothing.
+		if ( 1 > $instance ) {
+
+			$filter_button   = submit_button( __( 'Filter', 'new-user-approve' ), 'button', 'pw-status-query-submit', false, array ( 'id' => 'pw-status-query-submit' ) );
+			$filtered_status = $this->get_selected_approve_filter();
+
+			$instance_select_name = 'new_user_approve_filter_' . ++$instance;
+
+			?>
+			<label class="screen-reader-text"
+			       for="new_user_approve_filter"><?php _e( 'View all users', 'new-user-approve' ); ?></label>
+			<select id="<?php echo $instance_select_name ?>" name="<?php echo $instance_select_name ?>"
+			        style="float: none; margin: 0 0 0 15px;">
+				<option value=""><?php _e( 'View all users', 'new-user-approve' ); ?></option>
+				<?php foreach ( pw_new_user_approve()->get_valid_statuses() as $status ) : ?>
+					<option
+						value="<?php echo esc_attr( $status ); ?>"<?php selected( $status, $filtered_status ); ?>><?php echo esc_html( $status ); ?></option>
+				<?php endforeach; ?>
+			</select>
+			<?php echo apply_filters( 'new_user_approve_filter_button', $filter_button ); ?>
+			<style>
+				#pw-status-query-submit {
+					float: right;
+					margin: 2px 0 0 5px;
+				}
+			</style>
+			<?php
+		}
+
+	}
+
+	// If we did want to have multiple instances of the selection menu, this tells us which
+	// one has a value we can use. If the user were to set different values in both, we'd get
+	// confused, so that's why we're only using the top selection menu for now (see above).
+	function get_selected_approve_filter() {
+
+		$approve_filter = '';
+
+		foreach ( range ( 1, 2 ) as $selection_instance ) {
+			$approve_filter = ! empty ( $_GET['new_user_approve_filter_' . $selection_instance ] )
+				? esc_attr( $_GET['new_user_approve_filter_' . $selection_instance ] )
+				: $approve_filter ;
+		}
+
+		return $approve_filter;
+
 	}
 
 	/**
@@ -203,8 +232,8 @@ class pw_new_user_approve_user_list {
 			return;
 		}
 
-		if ( isset( $_GET['new_user_approve_filter'] ) && $_GET['new_user_approve_filter'] != '' ) {
-			$filter = esc_attr( $_GET['new_user_approve_filter'] );
+		$filter = $this->get_selected_approve_filter();
+		if ( $filter != '' ) {
 
 			$query->query_from .= " INNER JOIN {$wpdb->usermeta} ON ( {$wpdb->users}.ID = wp_usermeta.user_id )";
 
@@ -270,7 +299,7 @@ class pw_new_user_approve_user_list {
 				return;
 			}
 
-			$sendback = remove_query_arg( array( 'approved', 'denied', 'deleted', 'ids', 'new_user_approve_filter', 'pw-status-query-submit', 'new_role' ), wp_get_referer() );
+			$sendback = remove_query_arg( array( 'approved', 'denied', 'deleted', 'ids', 'new_user_approve_filter_1', 'new_user_approve_filter_2', 'pw-status-query-submit', 'new_role' ), wp_get_referer() );
 			if ( !$sendback ) {
 				$sendback = admin_url( 'users.php' );
 			}
