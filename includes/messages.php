@@ -7,8 +7,9 @@
  */
 function nua_default_approve_user_message() {
 	$message = __( 'You have been approved to access {sitename}', 'new-user-approve' ) . "\r\n\r\n";
-	$message .= "{username}\r\n";
-	$message .= "{password}\r\n\r\n";
+	$message .= "{username}\r\n\r\n";
+    $message .= "To set your password, visit the following address:\r\n";
+    $message .= "{set_password_url}\r\n\r\n";
 	$message .= "{login_url}";
 
 	$message = apply_filters( 'new_user_approve_approve_user_message_default', $message );
