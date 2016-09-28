@@ -401,7 +401,7 @@ function nua_email_tag_password( $attributes ) {
 
 /**
  * Email template tag: set_password_url
- * 
+ *
  * Generates the URL for the user to set their password. This will go to the same
  * URL that WordPress uses to reset passwords.
  *
@@ -409,5 +409,25 @@ function nua_email_tag_password( $attributes ) {
  * @return string url
  */
 function nua_email_tag_setpasswordurl( $attributes ) {
+    global $wpdb, $wp_hasher;
 
+    $username = $attributes['user_login'];
+
+    // Generate something random for a password reset key.
+    $key = wp_generate_password( 20, false );
+
+    /** This action is documented in user.php */
+    do_action( 'retrieve_password_key', $username, $key );
+
+    // Now insert the key, hashed, into the DB.
+    if ( empty( $wp_hasher ) ) {
+        require_once ABSPATH . WPINC . '/class-phpass.php';
+        $wp_hasher = new PasswordHash( 8, true );
+    }
+    $hashed = time() . ':' . $wp_hasher->HashPassword( $key );
+    $wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => $username ) );
+
+    $url = network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($username), 'login') . "\r\n\r\n";
+
+    return $url;
 }
