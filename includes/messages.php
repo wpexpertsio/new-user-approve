@@ -8,7 +8,8 @@
 function nua_default_approve_user_message() {
 	$message = __( 'You have been approved to access {sitename}', 'new-user-approve' ) . "\r\n\r\n";
 	$message .= "{username}\r\n\r\n";
-    $message .= "To set your password, visit the following address:\r\n";
+    // this is intentionally using the wp namespace for translations
+    $message .= __('To set your password, visit the following address:') . "\r\n\r\n";
     $message .= "{set_password_url}\r\n\r\n";
 	$message .= "{login_url}";
 
