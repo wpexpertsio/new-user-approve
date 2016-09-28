@@ -110,6 +110,9 @@ as they have their username and passwords.
 * add filter to show/hide membership admin notice
 * only show the membership admin notice if the current user is an admin
 
+= Unreleased =
+* Fixed: Corrected erroneous SQL query when filtering users
+
 = 1.7.3 =
 * place content in metaboxes in place of dynamically pulling from website
 * tested with WordPress 4.3.1
