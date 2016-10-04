@@ -107,6 +107,9 @@ as they have their username and passwords.
 
 = Unreleased =
 * Fixed: Corrected erroneous SQL query when filtering users
+* Fixed: User filters
+  * Courtesy of [julmuell](https://github.com/julmuell)
+  * https://github.com/picklewagon/new-user-approve/pull/44
 
 = 1.7.3 =
 * place content in metaboxes in place of dynamically pulling from website
