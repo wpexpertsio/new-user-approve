@@ -399,6 +399,14 @@ function nua_email_tag_password( $attributes ) {
 	}
 }
 
+/**
+ * Email template tag: reset_password_url
+ * Generates a link to set or reset the user's password
+ *
+ * @param array $attributes
+ *
+ * @return string reset password URL
+ */
 function nua_email_tag_reset_password_url( $attributes ) {
     global $wpdb;
 
