@@ -266,6 +266,12 @@ function nua_setup_email_tags() {
 			'function'    => 'nua_email_tag_loginurl',
 			'context'     => array( 'email' ),
 		),
+        array(
+            'tag'         => 'reset_password_url',
+            'description' => __( 'The URL for a user to set/reset their password', 'new-user-approve' ),
+            'function'    => 'nua_email_tag_reset_password_url',
+            'context'     => array( 'email' ),
+        ),
 		array(
 			'tag'         => 'password',
 			'description' => __( 'Generates the password for the user to add to the email', 'new-user-approve' ),
@@ -391,4 +397,36 @@ function nua_email_tag_password( $attributes ) {
 	} else {
 		return '';
 	}
+}
+
+/**
+ * Email template tag: reset_password_url
+ * Generates a link to set or reset the user's password
+ *
+ * @param array $attributes
+ *
+ * @return string reset password URL
+ */
+function nua_email_tag_reset_password_url( $attributes ) {
+    global $wpdb;
+
+    $username = $attributes['user_login'];
+
+    // Generate something random for a password reset key.
+    $key = wp_generate_password( 20, false );
+
+    /** This action is documented in wp-login.php */
+    do_action( 'retrieve_password_key', $username, $key );
+
+    // Now insert the key, hashed, into the DB.
+    if ( empty( $wp_hasher ) ) {
+        require_once ABSPATH . WPINC . '/class-phpass.php';
+        $wp_hasher = new PasswordHash( 8, true );
+    }
+    $hashed = time() . ':' . $wp_hasher->HashPassword( $key );
+    $wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => $username ) );
+
+    $url = network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($username), 'login');
+
+    return $url;
 }
