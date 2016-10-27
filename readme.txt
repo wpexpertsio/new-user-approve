@@ -50,7 +50,7 @@ WordPress registration process with New User Approve plugin activated:
 5. Email is sent to user. If approved, email will include login credentials.
 6. User logs in to site using login credentials.
 
-[Fork New User Approve on Github](https://github.com/picklewagon/new-user-approve)
+**[Follow New User Approve on Github](https://github.com/picklewagon/new-user-approve)**
 
 [newuserapprove.com](http://newuserapprove.com/)
 
