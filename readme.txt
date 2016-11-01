@@ -50,9 +50,17 @@ WordPress registration process with New User Approve plugin activated:
 5. Email is sent to user. If approved, email will include login credentials.
 6. User logs in to site using login credentials.
 
-[Fork New User Approve on Github](https://github.com/picklewagon/new-user-approve)
+**[Follow New User Approve on Github](https://github.com/picklewagon/new-user-approve)**
 
-[newuserapprove.com](http://newuserapprove.com/)
+Further support at [newuserapprove.com](http://newuserapprove.com/).
+
+**Customize**
+
+New User Approve allows for customizations by using custom actions and filters. You can
+find out more about these by browsing the source code.
+
+A commercial plugin that adds a config panel for customization is also available at
+[https://newuserapprove.com/products/options-addon/](https://newuserapprove.com/products/options-addon/).
 
 == Installation ==
 
@@ -77,17 +85,6 @@ your liking.
 
 * [wp mail from](http://wordpress.org/extend/plugins/wp-mailfrom/)
 * [Mail From](http://wordpress.org/extend/plugins/mail-from/)
-
-= Why is the password reset when approving a user? =
-
-The password is generated again because, by default, the user will not be aware
-of their password. By generating a new password, the email that notifies the
-user can also give them the new password just like the email does when receiving
-your password on a regular WordPress install. At approval time, it is impossible
-to retrieve the user's password.
-
-There is a filter available (new_user_approve_bypass_password_reset) to turn off
-this feature.
 
 = What happens to the user's status after the plugin is deactivated? =
 
