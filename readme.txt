@@ -4,7 +4,7 @@ Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration, sign up, user management, login
 Requires at least: 3.5.1
 Tested up to: 4.6.1
-Stable tag: 1.7.3
+Stable tag: 1.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,7 +102,7 @@ as they have their username and passwords.
 
 == Changelog ==
 
-= Unreleased =
+= 1.7.4 =
 * Fixed: Corrected erroneous SQL query when filtering users
 * Fixed: User filters
   * Courtesy of [julmuell](https://github.com/julmuell)
