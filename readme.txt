@@ -52,7 +52,15 @@ WordPress registration process with New User Approve plugin activated:
 
 **[Follow New User Approve on Github](https://github.com/picklewagon/new-user-approve)**
 
-[newuserapprove.com](http://newuserapprove.com/)
+Further support at [newuserapprove.com](http://newuserapprove.com/).
+
+**Customize**
+
+New User Approve allows for customizations by using custom actions and filters. You can
+find out more about these by browsing the source code.
+
+A commercial plugin that adds a config panel for customization is also available at
+[https://newuserapprove.com/products/options-addon/](https://newuserapprove.com/products/options-addon/).
 
 == Installation ==
 
