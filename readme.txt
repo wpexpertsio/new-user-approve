@@ -86,17 +86,6 @@ your liking.
 * [wp mail from](http://wordpress.org/extend/plugins/wp-mailfrom/)
 * [Mail From](http://wordpress.org/extend/plugins/mail-from/)
 
-= Why is the password reset when approving a user? =
-
-The password is generated again because, by default, the user will not be aware
-of their password. By generating a new password, the email that notifies the
-user can also give them the new password just like the email does when receiving
-your password on a regular WordPress install. At approval time, it is impossible
-to retrieve the user's password.
-
-There is a filter available (new_user_approve_bypass_password_reset) to turn off
-this feature.
-
 = What happens to the user's status after the plugin is deactivated? =
 
 If you deactivate the plugin, their status doesn't matter. The status that the
