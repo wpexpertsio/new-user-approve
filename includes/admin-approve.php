@@ -285,15 +285,6 @@ elseif ( $active_tab == 'denied_users' ) : ?>
 <?php
 	}
 
-	public function metabox_ajax( $post, $metabox = array() ) {
-		$response = wp_remote_get( $metabox['args']['url'] );
-		if ( wp_remote_retrieve_response_code( $response ) == 200 ) {
-			$body = wp_remote_retrieve_body( $response );
-			$details = json_decode( $body );
-			print $details->content;
-		}
-	}
-
 }
 
 function pw_new_user_approve_admin_approve() {
