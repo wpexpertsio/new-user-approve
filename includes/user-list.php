@@ -193,7 +193,7 @@ class pw_new_user_approve_user_list {
 	 * @uses pre_user_query
 	 * @param $query
 	 */
-	public function filter_by_status( $query ) {
+		public function filter_by_status( $query ) {
 		global $wpdb;
 
 		if ( !is_admin() ) {
@@ -208,14 +208,14 @@ class pw_new_user_approve_user_list {
 		if ( $this->selected_status() != null ) {
 			$filter = $this->selected_status();
 
-			$query->query_from .= " INNER JOIN {$wpdb->usermeta} ON ( {$wpdb->users}.ID = wp_usermeta.user_id )";
+			$query->query_from .= " INNER JOIN {$wpdb->usermeta} ON ( {$wpdb->users}.ID = $wpdb->usermeta.user_id )";
 
 			if ( 'approved' == $filter ) {
 				$query->query_fields = "DISTINCT SQL_CALC_FOUND_ROWS {$wpdb->users}.ID";
 				$query->query_from .= " LEFT JOIN {$wpdb->usermeta} AS mt1 ON ({$wpdb->users}.ID = mt1.user_id AND mt1.meta_key = 'pw_user_status')";
-				$query->query_where .= " AND ( ( wp_usermeta.meta_key = 'pw_user_status' AND CAST(wp_usermeta.meta_value AS CHAR) = 'approved' ) OR mt1.user_id IS NULL )";
+				$query->query_where .= " AND ( ( $wpdb->usermeta.meta_key = 'pw_user_status' AND CAST($wpdb->usermeta.meta_value AS CHAR) = 'approved' ) OR mt1.user_id IS NULL )";
 			} else {
-				$query->query_where .= " AND ( (wp_usermeta.meta_key = 'pw_user_status' AND CAST(wp_usermeta.meta_value AS CHAR) = '{$filter}') )";
+				$query->query_where .= " AND ( ($wpdb->usermeta.meta_key = 'pw_user_status' AND CAST($wpdb->usermeta.meta_value AS CHAR) = '{$filter}') )";
 			}
 		}
 	}
