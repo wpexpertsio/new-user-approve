@@ -107,6 +107,11 @@ as they have their username and passwords.
 * add filter to show/hide membership admin notice
 * only show the membership admin notice if the current user is an admin
 
+= 1.7.5 =
+* Fixed: User status filter in admin was not using database prefix
+  * Courtesy of [Oizopower](https://github.com/Oizopower)
+  * https://github.com/picklewagon/new-user-approve/pull/50
+
 = 1.7.4 =
 * Fixed: Corrected erroneous SQL query when filtering users
 * Fixed: User filters
