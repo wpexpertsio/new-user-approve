@@ -34,7 +34,7 @@ class pw_new_user_approve_admin_approve {
 		add_action( 'admin_init', array( $this, 'process_input' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
 		add_action( 'admin_init', array( $this, 'notice_ignore' ) );
-		add_action( 'admin_init', array( $this, 'add_meta_boxes' ) );
+		add_action( 'admin_init', array( $this, '_add_meta_boxes' ) );
 	}
 
 	/**
@@ -216,7 +216,7 @@ class pw_new_user_approve_admin_approve {
 		wp_enqueue_script( 'post' );
 	}
 
-	public function add_meta_boxes() {
+	public function _add_meta_boxes() {
 		add_meta_box( 'nua-approve-admin', __( 'Approve Users', 'new-user-approve' ), array( $this, 'metabox_main' ), 'users_page_new-user-approve-admin', 'main', 'high' );
 		add_meta_box( 'nua-updates', __( 'Updates', 'new-user-approve' ), array( $this, 'metabox_updates' ), 'users_page_new-user-approve-admin', 'side', 'default' );
 		add_meta_box( 'nua-support', __( 'Support', 'new-user-approve' ), array( $this, 'metabox_support' ), 'users_page_new-user-approve-admin', 'side', 'default' );
