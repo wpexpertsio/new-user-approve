@@ -51,7 +51,7 @@ class pw_new_user_approve {
 		add_action( 'register_post', array( $this, 'create_new_user' ), 10, 3 );
 		add_action( 'lostpassword_post', array( $this, 'lost_password' ) );
 		add_action( 'user_register', array( $this, 'add_user_status' ) );
-		add_action( 'user_register', array( $this, 'request_admin_approval_email_2' ) );
+		//add_action( 'user_register', array( $this, 'request_admin_approval_email_2' ) );
 		add_action( 'new_user_approve_approve_user', array( $this, 'approve_user' ) );
 		add_action( 'new_user_approve_deny_user', array( $this, 'deny_user' ) );
 		add_action( 'new_user_approve_deny_user', array( $this, 'update_deny_status' ) );
@@ -690,7 +690,11 @@ class pw_new_user_approve {
 		if ( isset( $_REQUEST['action'] ) && 'createuser' == $_REQUEST['action'] ) {
 			$status = 'approved';
 		}
+		$status = apply_filters( 'new_user_approve_add_user_status', $status);
 		update_user_meta( $user_id, 'pw_user_status', $status );
+		if ('pending' == $status) {
+			$this->request_admin_approval_email_2( $user_id )
+		}
 	}
 
 	/**
