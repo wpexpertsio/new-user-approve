@@ -24,7 +24,7 @@ class pw_new_user_approve_user_list {
 	private function __construct() {
 		// Actions
 		add_action( 'load-users.php', array( $this, 'update_action' ) );
-		add_action( 'restrict_manage_users', array( $this, 'status_filter' ) );
+		add_action( 'restrict_manage_users', array( $this, 'status_filter' ), 10, 1 );
 		add_action( 'pre_user_query', array( $this, 'filter_by_status' ) );
 		add_action( 'admin_footer-users.php', array( $this, 'admin_footer' ) );
 		add_action( 'load-users.php', array( $this, 'bulk_action' ) );
@@ -161,19 +161,21 @@ class pw_new_user_approve_user_list {
 	 *
 	 * @uses restrict_manage_users
 	 */
-	public function status_filter() {
+	public function status_filter( $which ) {
+		$id = 'new_user_approve_filter-' . $which;
+
 		$filter_button = submit_button( __( 'Filter', 'new-user-approve' ), 'button', 'pw-status-query-submit', false, array( 'id' => 'pw-status-query-submit' ) );
-		$filtered_status = ( isset( $_GET['new_user_approve_filter'] ) ) ? esc_attr( $_GET['new_user_approve_filter'] ) : '';
+		$filtered_status = $this->selected_status();
 
 		?>
-		<label class="screen-reader-text"
-			   for="new_user_approve_filter"><?php _e( 'View all users', 'new-user-approve' ); ?></label>
-		<select id="new_user_approve_filter" name="new_user_approve_filter" style="float: none; margin: 0 0 0 15px;">
+		<label class="screen-reader-text" for="<?php echo $id ?>"><?php _e( 'View all users', 'new-user-approve' ); ?></label>
+		<select id="<?php echo $id ?>" name="<?php echo $id ?>" style="float: none; margin: 0 0 0 15px;">
 			<option value=""><?php _e( 'View all users', 'new-user-approve' ); ?></option>
-			<?php foreach ( pw_new_user_approve()->get_valid_statuses() as $status ) : ?>
-				<option
-					value="<?php echo esc_attr( $status ); ?>"<?php selected( $status, $filtered_status ); ?>><?php echo esc_html( $status ); ?></option>
-			<?php endforeach; ?>
+		<?php foreach ( pw_new_user_approve()->get_user_statuses() as $status => $users ) : ?>
+			<?php if ( count( $users ) ) : ?>
+			<option value="<?php echo esc_attr( $status ); ?>"<?php selected( $status, $filtered_status ); ?>><?php echo esc_html( $status ); ?></option>
+			<?php endif; ?>
+		<?php endforeach; ?>
 		</select>
 		<?php echo apply_filters( 'new_user_approve_filter_button', $filter_button ); ?>
 		<style>
@@ -191,7 +193,7 @@ class pw_new_user_approve_user_list {
 	 * @uses pre_user_query
 	 * @param $query
 	 */
-	public function filter_by_status( $query ) {
+		public function filter_by_status( $query ) {
 		global $wpdb;
 
 		if ( !is_admin() ) {
@@ -203,19 +205,27 @@ class pw_new_user_approve_user_list {
 			return;
 		}
 
-		if ( isset( $_GET['new_user_approve_filter'] ) && $_GET['new_user_approve_filter'] != '' ) {
-			$filter = esc_attr( $_GET['new_user_approve_filter'] );
+		if ( $this->selected_status() != null ) {
+			$filter = $this->selected_status();
 
-			$query->query_from .= " INNER JOIN {$wpdb->usermeta} wp_usermeta ON ( {$wpdb->users}.ID = wp_usermeta.user_id )";
+			$query->query_from .= " INNER JOIN {$wpdb->usermeta} ON ( {$wpdb->users}.ID = $wpdb->usermeta.user_id )";
 
 			if ( 'approved' == $filter ) {
 				$query->query_fields = "DISTINCT SQL_CALC_FOUND_ROWS {$wpdb->users}.ID";
 				$query->query_from .= " LEFT JOIN {$wpdb->usermeta} AS mt1 ON ({$wpdb->users}.ID = mt1.user_id AND mt1.meta_key = 'pw_user_status')";
-				$query->query_where .= " AND ( ( wp_usermeta.meta_key = 'pw_user_status' AND CAST(wp_usermeta.meta_value AS CHAR) = 'approved' ) OR mt1.user_id IS NULL )";
+				$query->query_where .= " AND ( ( $wpdb->usermeta.meta_key = 'pw_user_status' AND CAST($wpdb->usermeta.meta_value AS CHAR) = 'approved' ) OR mt1.user_id IS NULL )";
 			} else {
-				$query->query_where .= " AND ( (wp_usermeta.meta_key = 'pw_user_status' AND CAST(wp_usermeta.meta_value AS CHAR) = '{$filter}') )";
+				$query->query_where .= " AND ( ($wpdb->usermeta.meta_key = 'pw_user_status' AND CAST($wpdb->usermeta.meta_value AS CHAR) = '{$filter}') )";
 			}
 		}
+	}
+
+	private function selected_status() {
+		if ( ! empty( $_REQUEST['new_user_approve_filter-top'] ) || ! empty( $_REQUEST['new_user_approve_filter-bottom'] ) ) {
+			return esc_attr( ( ! empty( $_REQUEST['new_user_approve_filter-top'] ) ) ? $_REQUEST['new_user_approve_filter-top'] : $_REQUEST['new_user_approve_filter-bottom'] );
+		}
+
+		return null;
 	}
 
 	/**
@@ -270,7 +280,7 @@ class pw_new_user_approve_user_list {
 				return;
 			}
 
-			$sendback = remove_query_arg( array( 'approved', 'denied', 'deleted', 'ids', 'new_user_approve_filter', 'pw-status-query-submit', 'new_role' ), wp_get_referer() );
+			$sendback = remove_query_arg( array( 'approved', 'denied', 'deleted', 'ids', 'new_user_approve_filter', 'new_user_approve_filter2', 'pw-status-query-submit', 'new_role' ), wp_get_referer() );
 			if ( !$sendback ) {
 				$sendback = admin_url( 'users.php' );
 			}

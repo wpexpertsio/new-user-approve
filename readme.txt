@@ -1,10 +1,10 @@
-=== Plugin Name ===
+=== New User Approve ===
 Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration, sign up, user management, login
 Requires at least: 3.5.1
-Tested up to: 4.3.1
-Stable tag: 1.7.3
+Tested up to: 4.6.1
+Stable tag: 1.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,15 +14,15 @@ are able to login to the site.
 == Description ==
 
 On a normal WordPress site, once a new user registers, the user is created in
-the database. Then an email is sent to the new user with their login 
+the database. Then an email is sent to the new user with their login
 credentials. Very simple. As it should be.
 
-The New User Approve plugin modifies the registration process. When a user 
+The New User Approve plugin modifies the registration process. When a user
 registers for the site, the user gets created and then an email gets sent to
-the administrators of the site. An administrator then is expected to either 
-approve or deny the registration request. An email is then sent to the user 
+the administrators of the site. An administrator then is expected to either
+approve or deny the registration request. An email is then sent to the user
 indicating whether they were approved or denied. If the user has been approved,
-the email will include the login credentials. Until a user is approved, the 
+the email will include the login credentials. Until a user is approved, the
 user will not be able to login to the site.
 
 Only approved users will be allowed to login to site. Users waiting for approval
@@ -50,9 +50,17 @@ WordPress registration process with New User Approve plugin activated:
 5. Email is sent to user. If approved, email will include login credentials.
 6. User logs in to site using login credentials.
 
-[Fork New User Approve on Github](https://github.com/picklewagon/new-user-approve)
+**[Follow New User Approve on Github](https://github.com/picklewagon/new-user-approve)**
 
-[newuserapprove.com](http://newuserapprove.com/)
+Further support at [newuserapprove.com](http://newuserapprove.com/).
+
+**Customize**
+
+New User Approve allows for customizations by using custom actions and filters. You can
+find out more about these by browsing the source code.
+
+A commercial plugin that adds a config panel for customization is also available at
+[https://newuserapprove.com/products/options-addon/](https://newuserapprove.com/products/options-addon/).
 
 == Installation ==
 
@@ -72,22 +80,11 @@ email. Make sure your host is setup correctly to send email if this happens.
 
 This is not a function of the plugin but of WordPress. WordPress provides the
 *wp_mail_from* and *wp_mail_from_name* filters to allow you to customize this.
-There are also a number of plugins that provide a setting to change this to 
+There are also a number of plugins that provide a setting to change this to
 your liking.
 
 * [wp mail from](http://wordpress.org/extend/plugins/wp-mailfrom/)
 * [Mail From](http://wordpress.org/extend/plugins/mail-from/)
-
-= Why is the password reset when approving a user? =
-
-The password is generated again because, by default, the user will not be aware
-of their password. By generating a new password, the email that notifies the
-user can also give them the new password just like the email does when receiving
-your password on a regular WordPress install. At approval time, it is impossible
-to retrieve the user's password.
-
-There is a filter available (new_user_approve_bypass_password_reset) to turn off
-this feature.
 
 = What happens to the user's status after the plugin is deactivated? =
 
@@ -104,6 +101,18 @@ as they have their username and passwords.
 5. Custom messages on the login screen.
 
 == Changelog ==
+
+= 1.7.5 =
+* Fixed: User status filter in admin was not using database prefix
+  * Courtesy of [Oizopower](https://github.com/Oizopower)
+  * https://github.com/picklewagon/new-user-approve/pull/50
+
+= 1.7.4 =
+* Fixed: Corrected erroneous SQL query when filtering users
+* Fixed: User filters
+  * Courtesy of [julmuell](https://github.com/julmuell)
+  * https://github.com/picklewagon/new-user-approve/pull/44
+* Fixed: Show a user status in the filters only if at least one user has that status
 
 = 1.7.3 =
 * place content in metaboxes in place of dynamically pulling from website
