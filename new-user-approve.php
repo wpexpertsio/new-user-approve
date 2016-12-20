@@ -502,26 +502,31 @@ class pw_new_user_approve {
 		wp_cache_delete( $user->ID, 'users' );
 		wp_cache_delete( $user->data->user_login, 'userlogins' );
 
-		// send email to user telling of approval
-		$user_login = stripslashes( $user->data->user_login );
-		$user_email = stripslashes( $user->data->user_email );
+		// get option from admin 
+		$prevent_approval_email = get_option('prevent_approval_email');
 
-		// format the message
-		$message = nua_default_approve_user_message();
+		if ( isset( $prevent_approval_email) && !$prevent_approval_email) {
+			// send email to user telling of approval
+			$user_login = stripslashes( $user->data->user_login );
+			$user_email = stripslashes( $user->data->user_email );
 
-		$message = nua_do_email_tags( $message, array(
-			'context' => 'approve_user',
-			'user' => $user,
-			'user_login' => $user_login,
-			'user_email' => $user_email,
-		) );
-		$message = apply_filters( 'new_user_approve_approve_user_message', $message, $user );
+			// format the message
+			$message = nua_default_approve_user_message();
 
-		$subject = sprintf( __( '[%s] Registration Approved', 'new-user-approve' ), get_option( 'blogname' ) );
-		$subject = apply_filters( 'new_user_approve_approve_user_subject', $subject );
+			$message = nua_do_email_tags( $message, array(
+				'context' => 'approve_user',
+				'user' => $user,
+				'user_login' => $user_login,
+				'user_email' => $user_email,
+			) );
+			$message = apply_filters( 'new_user_approve_approve_user_message', $message, $user );
 
-		// send the mail
-		wp_mail( $user_email, $subject, $message, $this->email_message_headers() );
+			$subject = sprintf( __( '[%s] Registration Approved', 'new-user-approve' ), get_option( 'blogname' ) );
+			$subject = apply_filters( 'new_user_approve_approve_user_subject', $subject );
+
+			// send the mail
+			wp_mail( $user_email, $subject, $message, $this->email_message_headers() );
+		}
 
 		// change usermeta tag in database to approved
 		update_user_meta( $user->ID, 'pw_user_status', 'approved' );

@@ -217,10 +217,15 @@ class pw_new_user_approve_admin_approve {
 	}
 
 	public function _add_meta_boxes() {
+		add_meta_box( 'nua-settings-admin', __( 'New User Approve Options', 'new-user-approve' ), array( $this, 'metabox_settings' ), 'users_page_new-user-approve-admin', 'main', 'high' );
 		add_meta_box( 'nua-approve-admin', __( 'Approve Users', 'new-user-approve' ), array( $this, 'metabox_main' ), 'users_page_new-user-approve-admin', 'main', 'high' );
 		add_meta_box( 'nua-updates', __( 'Updates', 'new-user-approve' ), array( $this, 'metabox_updates' ), 'users_page_new-user-approve-admin', 'side', 'default' );
 		add_meta_box( 'nua-support', __( 'Support', 'new-user-approve' ), array( $this, 'metabox_support' ), 'users_page_new-user-approve-admin', 'side', 'default' );
 		add_meta_box( 'nua-feedback', __( 'Feedback', 'new-user-approve' ), array( $this, 'metabox_feedback' ), 'users_page_new-user-approve-admin', 'side', 'default' );
+	}
+	
+	public function metabox_settings() {
+		require_once( pw_new_user_approve()->get_plugin_dir() . 'admin/templates/options.php' );
 	}
 
 	public function metabox_main() {
