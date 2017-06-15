@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: new user approve v1.2.6\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
 "POT-Creation-Date: 2014-10-08 23:50-0700\n"
-"PO-Revision-Date: 2014-12-31 00:55-0700\n"
+"PO-Revision-Date: 2017-06-15 12:36+0200\n"
 "Last-Translator: Josh Harrison <josh@picklewagon.com>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -16,12 +16,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.8.12\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../new-user-approve.php:98
 #, php-format
 msgid "New User Approve requires WordPress %s or newer."
-msgstr ""
+msgstr "New User Approve verwacht WordPress %s of nieuwer."
 
 #: ../new-user-approve.php:145
 #, php-format
@@ -30,15 +31,18 @@ msgid ""
 "to work correctly. <a href=\"%1$s\">Update in settings</a>. | <a href=\"%2$s"
 "\">Hide Notice</a>"
 msgstr ""
+"De Lidmaatschap instelling moet aan staan zodat New User Approve correct kan "
+"werken. <a href=\"%1$s\">Aanpassen in instellingen</a>. | <a href=\"%2$s"
+"\">Bericht verbergen</a>"
 
 #: ../new-user-approve.php:257
 msgid "<strong>ERROR</strong>: Your account is still pending approval."
-msgstr ""
+msgstr "<strong>FOUT</strong>: Je account wacht nog op goedkeuring."
 
 #: ../new-user-approve.php:260
 msgid ""
 "<strong>ERROR</strong>: Your account has been denied access to this site."
-msgstr ""
+msgstr "<strong>FOUT</strong>: Je account is geweigerd."
 
 #: ../new-user-approve.php:362
 msgid "Users"
@@ -55,6 +59,8 @@ msgid ""
 "<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a "
 "href=\"mailto:%s\">webmaster</a> !"
 msgstr ""
+"<strong>FOUT</strong>: Kon je niet registreren... neem contact op met de <a "
+"href=\"mailto:%s\">webmaster</a> !"
 
 #: ../new-user-approve.php:520
 #, php-format
@@ -139,23 +145,24 @@ msgid ""
 "You can now update user status on the <a href=\"%1$s\">users admin page</a>. "
 "| <a href=\"%2$s\">Hide Notice</a>"
 msgstr ""
+"Je kan nu de status van de gebruiker aanpassen op de <a href=\"%1$s"
+"\">gebruikers beheer pagina</a>. | <a href=\"%2$s\">Bericht verbergen</a>"
 
 #: ../includes/admin-approve.php:220
-#, fuzzy
 msgid "Approve Users"
 msgstr "Goedgekeurde gebruikers"
 
 #: ../includes/admin-approve.php:221
 msgid "Updates"
-msgstr ""
+msgstr "Updates"
 
 #: ../includes/admin-approve.php:222
 msgid "Support"
-msgstr ""
+msgstr "Ondersteuning"
 
 #: ../includes/admin-approve.php:223
 msgid "Feedback"
-msgstr ""
+msgstr "Feedback"
 
 #: ../includes/admin-approve.php:231
 msgid "Users Pending Approval"
@@ -171,31 +178,32 @@ msgstr "Geweigerde gebruikers"
 
 #: ../includes/email-tags.php:235
 msgid "The user's username on the site as well as the Username label"
-msgstr ""
+msgstr "De naam van de gebruiker op de site alsook het Username-label"
 
 #: ../includes/email-tags.php:241
 msgid "The user's email address"
-msgstr ""
+msgstr "Het email-adres van de gebruiker"
 
 #: ../includes/email-tags.php:247
 msgid "Your site name"
-msgstr ""
+msgstr "De naam van je site"
 
 #: ../includes/email-tags.php:253
 msgid "Your site URL"
-msgstr ""
+msgstr "De URL van je site"
 
 #: ../includes/email-tags.php:259
 msgid "The URL to approve/deny users"
-msgstr ""
+msgstr "De URL om gebruikers goed te keuren of te weigeren"
 
 #: ../includes/email-tags.php:265
 msgid "The URL to login to the site"
-msgstr ""
+msgstr "De URL om in te loggen in de site"
 
 #: ../includes/email-tags.php:271
 msgid "Generates the password for the user to add to the email"
 msgstr ""
+"Genereert het wachtwoord voor de gebruiker om toe te voegen aan de email"
 
 #: ../includes/email-tags.php:299
 #, php-format
@@ -208,12 +216,10 @@ msgid "Password: %s"
 msgstr "Wachtwoord: %s"
 
 #: ../includes/messages.php:9
-#, fuzzy
 msgid "You have been approved to access {sitename}"
 msgstr "Uw aanvraag voor toegang tot %s is goedgekeurd"
 
 #: ../includes/messages.php:25
-#, fuzzy
 msgid "You have been denied access to {sitename}."
 msgstr "Uw aanvraag voor toegang tot %s is geweigerd"
 
@@ -233,21 +239,18 @@ msgid ""
 msgstr "U ontvangt een email met verdere instructies. Dank u voor uw geduld."
 
 #: ../includes/messages.php:53
-#, fuzzy
 msgid ""
 "Welcome to {sitename}. This site is accessible to approved users only. To be "
 "approved, you must first register."
 msgstr ""
-"Welkom op %s. Deze website is alleen toegankelijk voor goedgekeurde "
+"Welkom op {sitename}. Deze website is alleen toegankelijk voor goedgekeurde "
 "gebruikers. Om goedgekeurd te worden moet u uwzelf eerst registreren."
 
 #: ../includes/messages.php:66
-#, fuzzy
 msgid "{username} ({user_email}) has requested a username at {sitename}"
 msgstr "%1$s (%2$s) heeft een gebruikersnaam aangevraagd om %3$s"
 
 #: ../includes/messages.php:68
-#, fuzzy
 msgid "To approve or deny this user access to {sitename} go to"
 msgstr "Om deze gebruiker wel of geen toegang te geven tot %s gaat u naar"
 
@@ -261,45 +264,45 @@ msgstr ""
 
 #: ../includes/user-list.php:120
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: ../includes/user-list.php:156
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #: ../includes/user-list.php:161 ../includes/user-list.php:163
 msgid "View all users"
-msgstr ""
+msgstr "Bekijk alle gebruikers"
 
 #: ../includes/user-list.php:320
-#, fuzzy, php-format
+#, php-format
 msgid "User denied."
 msgid_plural "%s users denied."
-msgstr[0] "geweigerd"
-msgstr[1] "geweigerd"
+msgstr[0] "Gebruiker geweigerd"
+msgstr[1] "%s gebruikers geweigerd"
 
 #: ../includes/user-list.php:325
-#, fuzzy, php-format
+#, php-format
 msgid "User approved."
 msgid_plural "%s users approved."
-msgstr[0] "Goedkeuring nieuwe gebruiker"
-msgstr[1] "Goedkeuring nieuwe gebruiker"
+msgstr[0] "Gebruiker goedgekeurd."
+msgstr[1] "%s gebruikers goedgekeurd."
 
 #: ../includes/user-list.php:349
 msgid "Access Status"
-msgstr ""
+msgstr "Toegangs-status"
 
 #: ../includes/user-list.php:354
 msgid "-- Status --"
-msgstr ""
+msgstr "-- Status --"
 
 #: ../includes/user-list.php:362
 msgid "If user has access to sign in or not."
-msgstr ""
+msgstr "Of een gebruiker recht heeft om in te loggen of niet."
 
 #: ../includes/user-list.php:365
 msgid "Current user status is <strong>pending</strong>."
-msgstr ""
+msgstr "Huidge gebruikers status is <strong>in behandeling</strong>."
 
 #~ msgid "Settings"
 #~ msgstr "Instellingen"
