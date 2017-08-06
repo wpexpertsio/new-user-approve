@@ -323,6 +323,7 @@ class pw_new_user_approve {
 
 		return $statuses;
 	}
+
 	/**
 	 * Get a status of all the users and save them using a transient
 	 */

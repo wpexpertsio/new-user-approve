@@ -106,11 +106,12 @@ as they have their username and passwords.
 * Fixed: User status filter in admin was not using database prefix
   * Courtesy of [Oizopower](https://github.com/Oizopower)
   * https://github.com/picklewagon/new-user-approve/pull/50
-* Updated Polish translations
+* Fixed: Optimize user status list so it can be used with many users
+* Updated: Polish translations
   * Courtesy of [pik256](http://wordpress.org/support/profile/1271256)
-* Added missing string to translation file
+* Added: Missing string to translation file
   * Courtesy of [spaszs](https://profiles.wordpress.org/spaszs/)
-* Added Bulgarian translation
+* Added: Bulgarian translation
   * Courtesy of [spaszs](https://profiles.wordpress.org/spaszs/)
 
 = 1.7.4 =
