@@ -303,35 +303,75 @@ class pw_new_user_approve {
 		return $message;
 	}
 
-	public function _get_user_statuses() {
+	public function _get_user_statuses($count = true) {
 		$statuses = array();
 
 		foreach ( $this->get_valid_statuses() as $status ) {
 			// Query the users table
 			if ( $status != 'approved' ) {
 				// Query the users table
-				$query = array( 'meta_key' => 'pw_user_status', 'meta_value' => $status, );
-				$wp_user_search = new WP_User_Query( $query );
-			} else {
-				// get all approved users and any user without a status
-				$query = array( 'meta_query' => array( 'relation' => 'OR', array( 'key' => 'pw_user_status', 'value' => 'approved', 'compare' => '=' ), array( 'key' => 'pw_user_status', 'value' => '', 'compare' => 'NOT EXISTS' ), ), );
-				$wp_user_search = new WP_User_Query( $query );
-			}
+				$query = array(
+                    'meta_key' => 'pw_user_status',
+                    'meta_value' => $status,
+                    'count_total' => true,
+                    'number' => 1,
+                );
+            } else {
+                // get all approved users and any user without a status
+                $query = array(
+                    'meta_query' => array(
+                        'relation' => 'OR',
+                        array(
+                            'key' => 'pw_user_status',
+                            'value' => 'approved',
+                            'compare' => '=',
+                        ),
+                        array(
+                            'key' => 'pw_user_status',
+                            'value' => '',
+                            'compare' => 'NOT EXISTS',
+                        ),
+                    ),
+                    'count_total' => true,
+                    'number' => 1,
+                );
+            }
 
-			$statuses[$status] = $wp_user_search->get_results();
+            if ($count === false) {
+                unset($query['count_total']);
+                unset($query['number']);
+            }
+            $wp_user_search = new WP_User_Query( $query );
+
+            if ($count === true) {
+                $statuses[$status] = $wp_user_search->get_total();
+            } else {
+                $statuses[$status] = $wp_user_search->get_results();
+            }
 		}
 
 		return $statuses;
 	}
 
-	/**
-	 * Get a status of all the users and save them using a transient
-	 */
+    /**
+     * Get a list of statuses with a count of users with that status and save them using a transient
+     */
+    public function get_count_of_user_statuses() {
+        $user_statuses = get_transient( 'new_user_approve_user_statuses_count' );
+
+        if ( false === $user_statuses ) {
+            $user_statuses = $this->_get_user_statuses();
+            set_transient( 'new_user_approve_user_statuses_count', $user_statuses );
+        }
+
+        return $user_statuses;
+    }
+
 	public function get_user_statuses() {
 		$user_statuses = get_transient( 'new_user_approve_user_statuses' );
 
 		if ( false === $user_statuses ) {
-			$user_statuses = $this->_get_user_statuses();
+			$user_statuses = $this->_get_user_statuses(false);
 			set_transient( 'new_user_approve_user_statuses', $user_statuses );
 		}
 
@@ -361,7 +401,7 @@ class pw_new_user_approve {
 	 * @uses rightnow_end
 	 */
 	public function dashboard_stats() {
-		$user_status = $this->get_user_statuses();
+		$user_status = $this->get_count_of_user_statuses();
 		?>
 		<div>
 			<p><span style="font-weight:bold;"><a

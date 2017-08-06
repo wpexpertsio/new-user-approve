@@ -418,10 +418,10 @@ class pw_new_user_approve_user_list {
 	public function pending_users_bubble() {
 		global $menu;
 
-		$users = pw_new_user_approve()->get_user_statuses();
+		$users = pw_new_user_approve()->get_count_of_user_statuses();
 
-		// Count Number of Pending Members
-		$pending_users = count( $users['pending'] );
+		// Get the number of pending users
+		$pending_users = $users['pending'];
 
 		// Make sure there are pending members
 		if ( $pending_users > 0 ) {
