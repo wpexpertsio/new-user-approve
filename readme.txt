@@ -108,6 +108,7 @@ as they have their username and passwords.
   * https://github.com/picklewagon/new-user-approve/pull/50
 * Fixed: Optimize user status list so it can be used with many users
 * Fixed: Updated transient to populate with user counts instead of user list
+* Updated: Modify output of user counts on dashboard
 * Updated: Polish translations
   * Courtesy of [pik256](http://wordpress.org/support/profile/1271256)
 * Added: Missing string to translation file
