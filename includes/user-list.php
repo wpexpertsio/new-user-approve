@@ -193,7 +193,7 @@ class pw_new_user_approve_user_list {
 	 * @uses pre_user_query
 	 * @param $query
 	 */
-		public function filter_by_status( $query ) {
+    public function filter_by_status( $query ) {
 		global $wpdb;
 
 		if ( !is_admin() ) {
