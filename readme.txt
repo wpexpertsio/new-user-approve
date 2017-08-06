@@ -108,6 +108,8 @@ as they have their username and passwords.
   * https://github.com/picklewagon/new-user-approve/pull/50
 * Updated Polish translations
   * Courtesy of [pik256](http://wordpress.org/support/profile/1271256)
+* Added missing string to translation file
+  * Courtesy of [spaszs](https://profiles.wordpress.org/spaszs/)
 
 = 1.7.4 =
 * Fixed: Corrected erroneous SQL query when filtering users

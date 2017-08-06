@@ -215,6 +215,10 @@ msgstr ""
 msgid "You have been approved to access {sitename}"
 msgstr ""
 
+#: ../includes/messages.php:12
+msgid "To set or reset your password, visit the following address:"
+msgstr ""
+
 #: ../includes/messages.php:25
 msgid "You have been denied access to {sitename}."
 msgstr ""
