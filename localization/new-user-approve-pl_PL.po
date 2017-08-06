@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
-"POT-Creation-Date: 2014-10-08 23:50-0700\n"
-"PO-Revision-Date: 2014-12-31 00:55-0700\n"
+"POT-Creation-Date: 2017-06-12 14:39+0200\n"
+"PO-Revision-Date: 2017-06-12 15:00+0200\n"
 "Last-Translator: Josh Harrison <josh@picklewagon.com>\n"
 "Language-Team: Piotr Kubala <pik256@gmail.com>\n"
 "Language: pl_PL\n"
@@ -16,12 +16,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 2.0.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
 
 #: ../new-user-approve.php:98
 #, php-format
 msgid "New User Approve requires WordPress %s or newer."
-msgstr ""
+msgstr "Wtyczka New User Approve wymaga WordPressa %s lub nowszego."
 
 #: ../new-user-approve.php:145
 #, php-format
@@ -30,15 +32,22 @@ msgid ""
 "to work correctly. <a href=\"%1$s\">Update in settings</a>. | <a href=\"%2$s"
 "\">Hide Notice</a>"
 msgstr ""
+"Ustawienie \"każdy może się zarejestrować\" musi zostać włączone aby wtyczka "
+"New User Approve działała poprawnie. <a href=\"%1$s\">zaktualizuj</a>. | <a "
+"href=\"%2$s\">Ukryj powiadomienie</a>"
 
 #: ../new-user-approve.php:257
 msgid "<strong>ERROR</strong>: Your account is still pending approval."
 msgstr ""
+"<strong>BŁĄD</strong>: Twoje konto wciąż oczekuje na przyjęcie do logowania "
+"się na tej witrynie."
 
 #: ../new-user-approve.php:260
 msgid ""
 "<strong>ERROR</strong>: Your account has been denied access to this site."
 msgstr ""
+"<strong>BŁĄD</strong>: Twoje konto nie uzyskało akceptacji do logowania się "
+"na tej witrynie."
 
 #: ../new-user-approve.php:362
 msgid "Users"
@@ -55,6 +64,8 @@ msgid ""
 "<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a "
 "href=\"mailto:%s\">webmaster</a> !"
 msgstr ""
+"<strong>BŁĄD</strong>: Nie można Cię zarejestrować... skontaktuj się z <a "
+"href=\"mailto:%s\">webmasterem</a> !"
 
 #: ../new-user-approve.php:520
 #, php-format
@@ -84,7 +95,7 @@ msgstr "Przyjmowanie rejestracji"
 
 #: ../includes/admin-approve.php:50
 msgid "Approve New Users"
-msgstr "Zatwierdanie użytkowników"
+msgstr "Zatwierdzanie użytkowników"
 
 #: ../includes/admin-approve.php:82
 msgid "Username"
@@ -139,23 +150,24 @@ msgid ""
 "You can now update user status on the <a href=\"%1$s\">users admin page</a>. "
 "| <a href=\"%2$s\">Hide Notice</a>"
 msgstr ""
+"Możesz teraz aktualizować status użytkowników na <a href=\"%1$s\">stronie "
+"użytkowników</a>. | <a href=\"%2$s\">Ukryj to powiadomienie</a>"
 
 #: ../includes/admin-approve.php:220
-#, fuzzy
 msgid "Approve Users"
-msgstr "Użytkownicy przyjęci"
+msgstr "Zatwierdź użytkowników"
 
 #: ../includes/admin-approve.php:221
 msgid "Updates"
-msgstr ""
+msgstr "Aktualizacje"
 
 #: ../includes/admin-approve.php:222
 msgid "Support"
-msgstr ""
+msgstr "Wsparcie"
 
 #: ../includes/admin-approve.php:223
 msgid "Feedback"
-msgstr ""
+msgstr "Informacja zwrotna"
 
 #: ../includes/admin-approve.php:231
 msgid "Users Pending Approval"
@@ -171,31 +183,31 @@ msgstr "Użytkownicy odrzuceni"
 
 #: ../includes/email-tags.php:235
 msgid "The user's username on the site as well as the Username label"
-msgstr ""
+msgstr "Nazwa użytkownika na witrynie oraz jego widoczna etykietka"
 
 #: ../includes/email-tags.php:241
 msgid "The user's email address"
-msgstr ""
+msgstr "Adres email użytkownika"
 
 #: ../includes/email-tags.php:247
 msgid "Your site name"
-msgstr ""
+msgstr "Nazwa twojej strony"
 
 #: ../includes/email-tags.php:253
 msgid "Your site URL"
-msgstr ""
+msgstr "Twój adres URL"
 
 #: ../includes/email-tags.php:259
 msgid "The URL to approve/deny users"
-msgstr ""
+msgstr "Adres URL do przyjmowania/odrzucania użytkowników"
 
 #: ../includes/email-tags.php:265
 msgid "The URL to login to the site"
-msgstr ""
+msgstr "Adres URL do logowania się do witryny"
 
 #: ../includes/email-tags.php:271
 msgid "Generates the password for the user to add to the email"
-msgstr ""
+msgstr "Generuje hasło dla użytkownika w celu dodania do emaila"
 
 #: ../includes/email-tags.php:299
 #, php-format
@@ -208,16 +220,14 @@ msgid "Password: %s"
 msgstr "Hasło: %s"
 
 #: ../includes/messages.php:9
-#, fuzzy
 msgid "You have been approved to access {sitename}"
-msgstr "Zostałeś przyjęty na %s"
+msgstr "Zostałeś przyjęty na {sitename}"
 
 #: ../includes/messages.php:25
-#, fuzzy
 msgid "You have been denied access to {sitename}."
 msgstr ""
-"Twoja rejestracja na %s została odrzucona. Przepraszamy: być może podałeś "
-"błędne lub niepełne informacje w trakcie rejestracji."
+"Twoja rejestracja na {sitename} została odrzucona. Przepraszamy: być może "
+"podałeś błędne lub niepełne informacje w trakcie rejestracji."
 
 #: ../includes/messages.php:38
 msgid ""
@@ -236,23 +246,21 @@ msgstr ""
 "Oczekuj emaila z instrukcjami, co robić dalej. Dziękujemy za cierpliwość."
 
 #: ../includes/messages.php:53
-#, fuzzy
 msgid ""
 "Welcome to {sitename}. This site is accessible to approved users only. To be "
 "approved, you must first register."
 msgstr ""
-"Witaj na %s. Część tej witryny dostępna jest tylko dla zaakceptowanych "
-"użytkowników. Aby zostać zaakceptowanym, musisz wpierw się zarejestrować."
+"Witaj na {sitename}. Część tej witryny dostępna jest tylko dla "
+"zaakceptowanych użytkowników. Aby zostać zaakceptowanym, musisz najpierw się "
+"zarejestrować."
 
 #: ../includes/messages.php:66
-#, fuzzy
 msgid "{username} ({user_email}) has requested a username at {sitename}"
-msgstr "%1$s (%2$s) zażądał konta na %3$s"
+msgstr "{username} ({user_email}) zażądał konta na {sitename}"
 
 #: ../includes/messages.php:68
-#, fuzzy
 msgid "To approve or deny this user access to {sitename} go to"
-msgstr "Aby zaakceptować lub odrzucić to żądanie na %s przejdź do"
+msgstr "Aby zaakceptować lub odrzucić dostęp do {sitename}, przejdź do"
 
 #: ../includes/messages.php:83
 msgid ""
@@ -264,33 +272,35 @@ msgstr ""
 
 #: ../includes/user-list.php:120
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: ../includes/user-list.php:156
 msgid "Filter"
-msgstr ""
+msgstr "Filtruj"
 
 #: ../includes/user-list.php:161 ../includes/user-list.php:163
 msgid "View all users"
-msgstr ""
+msgstr "Zobacz wszystkich użytkowników"
 
 #: ../includes/user-list.php:320
-#, fuzzy, php-format
+#, php-format
 msgid "User denied."
 msgid_plural "%s users denied."
-msgstr[0] "odrzucony"
-msgstr[1] "odrzucony"
+msgstr[0] "Użytkownik odrzucony."
+msgstr[1] "%s użytkownicy odrzuceni."
+msgstr[2] "%s użytkowników odrzuconych."
 
 #: ../includes/user-list.php:325
-#, fuzzy, php-format
+#, php-format
 msgid "User approved."
 msgid_plural "%s users approved."
-msgstr[0] "Akceptacja nowego użytkownika"
-msgstr[1] "Akceptacja nowego użytkownika"
+msgstr[0] "Użytkownik został zaakceptowany."
+msgstr[1] "% użytkownicy zaakceptowani."
+msgstr[2] "% użytkowników zaakceptowanych."
 
 #: ../includes/user-list.php:349
 msgid "Access Status"
-msgstr ""
+msgstr "Status dostępu"
 
 #: ../includes/user-list.php:354
 msgid "-- Status --"
@@ -298,11 +308,11 @@ msgstr ""
 
 #: ../includes/user-list.php:362
 msgid "If user has access to sign in or not."
-msgstr ""
+msgstr "Czy użytkownik może się zalogować, czy nie"
 
 #: ../includes/user-list.php:365
 msgid "Current user status is <strong>pending</strong>."
-msgstr ""
+msgstr "Aktualny status: <strong>oczekuje na akceptację</strong>."
 
 #~ msgid "Settings"
 #~ msgstr "Ustawienia"

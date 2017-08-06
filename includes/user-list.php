@@ -171,10 +171,8 @@ class pw_new_user_approve_user_list {
 		<label class="screen-reader-text" for="<?php echo $id ?>"><?php _e( 'View all users', 'new-user-approve' ); ?></label>
 		<select id="<?php echo $id ?>" name="<?php echo $id ?>" style="float: none; margin: 0 0 0 15px;">
 			<option value=""><?php _e( 'View all users', 'new-user-approve' ); ?></option>
-		<?php foreach ( pw_new_user_approve()->get_user_statuses() as $status => $users ) : ?>
-			<?php if ( count( $users ) ) : ?>
+		<?php foreach ( pw_new_user_approve()->get_valid_statuses() as $status ) : ?>
 			<option value="<?php echo esc_attr( $status ); ?>"<?php selected( $status, $filtered_status ); ?>><?php echo esc_html( $status ); ?></option>
-			<?php endif; ?>
 		<?php endforeach; ?>
 		</select>
 		<?php echo apply_filters( 'new_user_approve_filter_button', $filter_button ); ?>
@@ -193,7 +191,7 @@ class pw_new_user_approve_user_list {
 	 * @uses pre_user_query
 	 * @param $query
 	 */
-		public function filter_by_status( $query ) {
+    public function filter_by_status( $query ) {
 		global $wpdb;
 
 		if ( !is_admin() ) {
@@ -420,10 +418,10 @@ class pw_new_user_approve_user_list {
 	public function pending_users_bubble() {
 		global $menu;
 
-		$users = pw_new_user_approve()->get_user_statuses();
+		$users = pw_new_user_approve()->get_count_of_user_statuses();
 
-		// Count Number of Pending Members
-		$pending_users = count( $users['pending'] );
+		// Get the number of pending users
+		$pending_users = $users['pending'];
 
 		// Make sure there are pending members
 		if ( $pending_users > 0 ) {
