@@ -3,8 +3,8 @@ Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration, sign up, user management, login
 Requires at least: 3.5.1
-Tested up to: 4.6.1
-Stable tag: 1.7.4
+Tested up to: 4.8.1
+Stable tag: 1.7.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -106,6 +106,15 @@ as they have their username and passwords.
 * Fixed: User status filter in admin was not using database prefix
   * Courtesy of [Oizopower](https://github.com/Oizopower)
   * https://github.com/picklewagon/new-user-approve/pull/50
+* Fixed: Optimize user status list so it can be used with many users
+* Fixed: Updated transient to populate with user counts instead of user list
+* Updated: Modify output of user counts on dashboard
+* Updated: Polish translations
+  * Courtesy of [pik256](http://wordpress.org/support/profile/1271256)
+* Added: Missing string to translation file
+  * Courtesy of [spaszs](https://profiles.wordpress.org/spaszs/)
+* Added: Bulgarian translation
+  * Courtesy of [spaszs](https://profiles.wordpress.org/spaszs/)
 
 = 1.7.4 =
 * Fixed: Corrected erroneous SQL query when filtering users
@@ -333,6 +342,7 @@ When sending me your translation files, please send me your wordpress.org userna
 
 * Belarussian translation by [Fat Cow](http://www.fatcow.com/)
 * Brazilian Portuguese translation by [leogermani](http://profiles.wordpress.org/leogermani/)
+* Bulgarian translation by [spaszs](https://profiles.wordpress.org/spaszs/)
 * Catalan translation by [xoanet](http://profiles.wordpress.org/xoanet/)
 * Croatian translation by Nik
 * Czech translation by [GazikT](http://profiles.wordpress.org/gazikt/)

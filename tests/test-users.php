@@ -66,7 +66,7 @@ class NewUserApproveUserTest extends WP_UnitTestCase {
 		$statuses = pw_new_user_approve()->_get_user_statuses();
 
 		$this->assertTrue( is_array( $statuses ) );
-		$this->assertEquals( count($statuses), count( $valids ) );
+		$this->assertEquals( $statuses, count( $valids ) );
 	}
 }
 
