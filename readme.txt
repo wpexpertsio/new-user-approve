@@ -110,6 +110,8 @@ as they have their username and passwords.
   * Courtesy of [pik256](http://wordpress.org/support/profile/1271256)
 * Added missing string to translation file
   * Courtesy of [spaszs](https://profiles.wordpress.org/spaszs/)
+* Added Bulgarian translation
+  * Courtesy of [spaszs](https://profiles.wordpress.org/spaszs/)
 
 = 1.7.4 =
 * Fixed: Corrected erroneous SQL query when filtering users
@@ -337,6 +339,7 @@ When sending me your translation files, please send me your wordpress.org userna
 
 * Belarussian translation by [Fat Cow](http://www.fatcow.com/)
 * Brazilian Portuguese translation by [leogermani](http://profiles.wordpress.org/leogermani/)
+* Bulgarian translation by [spaszs](https://profiles.wordpress.org/spaszs/)
 * Catalan translation by [xoanet](http://profiles.wordpress.org/xoanet/)
 * Croatian translation by Nik
 * Czech translation by [GazikT](http://profiles.wordpress.org/gazikt/)
