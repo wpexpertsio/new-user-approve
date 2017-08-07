@@ -1,22 +1,25 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: aprove\n"
+"Project-Id-Version: New User Approve\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/new-user-approve\n"
 "POT-Creation-Date: 2014-10-08 23:50-0700\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Josh Harrison <josh@picklewagon.com>\n"
+"Last-Translator: Anyssa Ferreira <anyssa@hastedesign.com.br>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
 
 #: ../new-user-approve.php:98
 #, php-format
 msgid "New User Approve requires WordPress %s or newer."
-msgstr ""
+msgstr "New User Approve requer WordPress %s or mais novo."
 
 #: ../new-user-approve.php:145
 #, php-format
@@ -25,15 +28,18 @@ msgid ""
 "to work correctly. <a href=\"%1$s\">Update in settings</a>. | <a href=\"%2$s"
 "\">Hide Notice</a>"
 msgstr ""
+"As configurações dos membros deve estar ativa para que o New User Approve "
+"funcione corretamente. <a href=\"%1$s\">Atualizar configurações</a>. | <a "
+"href=\"%2$s\">Esconder</a>"
 
 #: ../new-user-approve.php:257
 msgid "<strong>ERROR</strong>: Your account is still pending approval."
-msgstr ""
+msgstr "<strong>ERRO</strong>: A sua conta ainda está pendente de aprovação."
 
 #: ../new-user-approve.php:260
 msgid ""
 "<strong>ERROR</strong>: Your account has been denied access to this site."
-msgstr ""
+msgstr "<strong>ERRO</strong>: Sua conta foi bloqueada para acessar este site."
 
 #: ../new-user-approve.php:362
 msgid "Users"
@@ -50,6 +56,8 @@ msgid ""
 "<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a "
 "href=\"mailto:%s\">webmaster</a> !"
 msgstr ""
+"<strong>ERRO</strong>: Não foi possível registrá-lo... por favor, entre em "
+"contato com o<a href=\"mailto:%s\"> webmaster</a>!"
 
 #: ../new-user-approve.php:520
 #, php-format
@@ -71,11 +79,11 @@ msgstr "Aprovação pendente"
 
 #: ../admin/templates/approve.php:6
 msgid "User successfully updated."
-msgstr "Usuário atualizado com sucesso!"
+msgstr "Usuário atualizado com sucesso."
 
 #: ../admin/templates/approve.php:11
 msgid "User Registration Approval"
-msgstr "Aprovação de registro de usuários"
+msgstr "Aprovação de registro de usuário"
 
 #: ../includes/admin-approve.php:50
 msgid "Approve New Users"
@@ -91,7 +99,7 @@ msgstr "Nome"
 
 #: ../includes/admin-approve.php:84
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: ../includes/admin-approve.php:86 ../includes/admin-approve.php:88
 msgid "Actions"
@@ -99,7 +107,7 @@ msgstr "Ações"
 
 #: ../includes/admin-approve.php:129
 msgid "email:"
-msgstr ""
+msgstr "email:"
 
 #: ../includes/admin-approve.php:133 ../includes/user-list.php:97
 #: ../includes/user-list.php:223 ../includes/user-list.php:224
@@ -134,23 +142,24 @@ msgid ""
 "You can now update user status on the <a href=\"%1$s\">users admin page</a>. "
 "| <a href=\"%2$s\">Hide Notice</a>"
 msgstr ""
+"Você pode agora atualizar o seu status de usuário na <a href=\"%1$s\">página "
+"de administração de usuários</a>. | <a href=\"%2$s\">Esconder</a>"
 
 #: ../includes/admin-approve.php:220
-#, fuzzy
 msgid "Approve Users"
-msgstr "Usuários aprovados"
+msgstr "Aprovar Usuários"
 
 #: ../includes/admin-approve.php:221
 msgid "Updates"
-msgstr ""
+msgstr "Atualizações"
 
 #: ../includes/admin-approve.php:222
 msgid "Support"
-msgstr ""
+msgstr "Suporte"
 
 #: ../includes/admin-approve.php:223
 msgid "Feedback"
-msgstr ""
+msgstr "Feddback"
 
 #: ../includes/admin-approve.php:231
 msgid "Users Pending Approval"
@@ -166,31 +175,31 @@ msgstr "Usuários negados"
 
 #: ../includes/email-tags.php:235
 msgid "The user's username on the site as well as the Username label"
-msgstr ""
+msgstr "O username do usuário no site é o mesmo que a etiqueta do username"
 
 #: ../includes/email-tags.php:241
 msgid "The user's email address"
-msgstr ""
+msgstr "Endereço de email do usuário"
 
 #: ../includes/email-tags.php:247
 msgid "Your site name"
-msgstr ""
+msgstr "Nome do seu site"
 
 #: ../includes/email-tags.php:253
 msgid "Your site URL"
-msgstr ""
+msgstr "URL do seu site"
 
 #: ../includes/email-tags.php:259
 msgid "The URL to approve/deny users"
-msgstr ""
+msgstr "A URL para aprovar/negar usuários"
 
 #: ../includes/email-tags.php:265
 msgid "The URL to login to the site"
-msgstr ""
+msgstr "A URL para acessar o site"
 
 #: ../includes/email-tags.php:271
 msgid "Generates the password for the user to add to the email"
-msgstr ""
+msgstr "Gerar a senhar para o usuário para adicionar ao email"
 
 #: ../includes/email-tags.php:299
 #, php-format
@@ -203,14 +212,12 @@ msgid "Password: %s"
 msgstr "Senha: %s"
 
 #: ../includes/messages.php:9
-#, fuzzy
 msgid "You have been approved to access {sitename}"
-msgstr "Seu acesso a %s foi aprovado"
+msgstr "Seu acesso a {sitename} foi aprovado"
 
 #: ../includes/messages.php:25
-#, fuzzy
 msgid "You have been denied access to {sitename}."
-msgstr "Seu acesso a %s foi negado"
+msgstr "Você foi proibido de acessar {sitename}."
 
 #: ../includes/messages.php:38
 msgid ""
@@ -219,34 +226,31 @@ msgid ""
 "your request."
 msgstr ""
 "Um e-mail foi enviado ao administrador do site. Ele(a) irá revisar suas "
-"informações e então aprovar ou não o seu pedido."
+"informações enviadas e então irá aprovar ou não o seu pedido."
 
 #: ../includes/messages.php:40
 msgid ""
 "You will receive an email with instructions on what you will need to do "
 "next. Thanks for your patience."
 msgstr ""
-"Você receberá um e-mail com instruções do que fazer em seguida. Obrigado "
-"pela paciência."
+"Você receberá um e-mail com instruções sobre o que fazer em seguida. "
+"Obrigado pela paciência."
 
 #: ../includes/messages.php:53
-#, fuzzy
 msgid ""
 "Welcome to {sitename}. This site is accessible to approved users only. To be "
 "approved, you must first register."
 msgstr ""
-"Benvindo a %s. Este site é acessível apenas a usuários aprovados. Para ser "
+"Bem vindo a %s. Este site é acessível apenas a usuários aprovados. Para ser "
 "aprovado, você precisa primeiro se registrar."
 
 #: ../includes/messages.php:66
-#, fuzzy
 msgid "{username} ({user_email}) has requested a username at {sitename}"
-msgstr "%1$s (%2$s) requisitou um nome de usuário em %3$s"
+msgstr "{username} ({user_email}) requisitou participar de {sitename}"
 
 #: ../includes/messages.php:68
-#, fuzzy
 msgid "To approve or deny this user access to {sitename} go to"
-msgstr "Para aprovar ou negar o acesso deste usuário a %s vá para"
+msgstr "Para aprovar ou negar o acesso deste usuário a {sitename} vá para"
 
 #: ../includes/messages.php:83
 msgid ""
@@ -258,45 +262,45 @@ msgstr ""
 
 #: ../includes/user-list.php:120
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: ../includes/user-list.php:156
 msgid "Filter"
-msgstr ""
+msgstr "Filtro"
 
 #: ../includes/user-list.php:161 ../includes/user-list.php:163
 msgid "View all users"
-msgstr ""
+msgstr "Ver todos usuários"
 
 #: ../includes/user-list.php:320
-#, fuzzy, php-format
+#, php-format
 msgid "User denied."
 msgid_plural "%s users denied."
-msgstr[0] "negado"
-msgstr[1] "negado"
+msgstr[0] "Usuário negado."
+msgstr[1] "%s usuários negados."
 
 #: ../includes/user-list.php:325
-#, fuzzy, php-format
+#, php-format
 msgid "User approved."
 msgid_plural "%s users approved."
-msgstr[0] "Έγκριση Νέου Χρήστη"
-msgstr[1] "Έγκριση Νέου Χρήστη"
+msgstr[0] "Usuário aprovado."
+msgstr[1] "%s usuários aprovados."
 
 #: ../includes/user-list.php:349
 msgid "Access Status"
-msgstr ""
+msgstr "Status de Acesso"
 
 #: ../includes/user-list.php:354
 msgid "-- Status --"
-msgstr ""
+msgstr "-- Status --"
 
 #: ../includes/user-list.php:362
 msgid "If user has access to sign in or not."
-msgstr ""
+msgstr "Se o usuário possuir acesso para acessar ou não."
 
 #: ../includes/user-list.php:365
 msgid "Current user status is <strong>pending</strong>."
-msgstr ""
+msgstr "O status atual do usuário é <strong> pendente </strong>."
 
 #~ msgid "Settings"
 #~ msgstr "Configurações"
