@@ -6,6 +6,7 @@
  Author: Josh Harrison
  Version: 1.7.5
  Author URI: http://picklewagon.com/
+ Text Domain: new-user-approve
  */
 
 class pw_new_user_approve {
