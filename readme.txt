@@ -73,6 +73,12 @@ This is not a function of the plugin but of WordPress. WordPress provides the *w
 
 If you deactivate the plugin, their status doesn't matter. The status that the plugin uses is only used by the plugin. All users will be allowed to login as long as they have their username and passwords.
 
+= Are there any known issues with the New User Approve plugin? =
+
+We are aware of a few issues with multisite
+1. The status filters on users.php do not work correctly
+2. The bubble that shows next to the users link to show the number of pending users does not show
+
 == Screenshots ==
 
 1. The backend to manage approving and denying users. This is an alternative to approving users.
