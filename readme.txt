@@ -89,6 +89,11 @@ We are aware of a few issues with multisite
 
 == Changelog ==
 
+= 1.7.6 =
+* Update: Swedish translations
+  * Courtesy of [adevade](https://github.com/adevade)
+  * https://github.com/picklewagon/new-user-approve/pull/59
+
 = 1.7.5 =
 * Fixed: User status filter in admin was not using database prefix
   * Courtesy of [Oizopower](https://github.com/Oizopower)
