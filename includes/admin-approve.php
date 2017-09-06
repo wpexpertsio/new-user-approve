@@ -83,9 +83,9 @@ class pw_new_user_approve_admin_approve {
 					<th><?php _e( 'Name', 'new-user-approve' ); ?></th>
 					<th><?php _e( 'E-mail', 'new-user-approve' ); ?></th>
 					<?php if ( 'pending' == $status ) { ?>
-						<th colspan="2" style="text-align: center"><?php _e( 'Actions', 'new-user-approve' ); ?></th>
+						<th colspan="2"><?php _e( 'Actions', 'new-user-approve' ); ?></th>
 					<?php } else { ?>
-						<th style="text-align: center"><?php _e( 'Actions', 'new-user-approve' ); ?></th>
+						<th><?php _e( 'Actions', 'new-user-approve' ); ?></th>
 					<?php } ?>
 				</tr>
 				</thead>
@@ -116,9 +116,9 @@ class pw_new_user_approve_admin_approve {
 						} else {
 							$edit_link = add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER['REQUEST_URI'] ) ) ), "user-edit.php?user_id=$user->ID" );
 						}
-						$edit = '<strong><a href="' . esc_url( $edit_link ) . '">' . esc_html( $user->user_login ) . '</a></strong>';
+						$edit = '<strong style="position: relative; top: -17px; left: 6px;"><a href="' . esc_url( $edit_link ) . '">' . esc_html( $user->user_login ) . '</a></strong>';
 					} else {
-						$edit = '<strong>' . esc_html( $user->user_login ) . '</strong>';
+						$edit = '<strong style="position: relative; top: -17px; left: 6px;">' . esc_html( $user->user_login ) . '</strong>';
 					}
 
 					?>
@@ -129,12 +129,12 @@ class pw_new_user_approve_admin_approve {
 						   title="<?php _e( 'email:', 'new-user-approve' ) ?> <?php echo $user->user_email; ?>"><?php echo $user->user_email; ?></a>
 					</td>
 					<?php if ( $approve && $user->ID != get_current_user_id() ) { ?>
-						<td align="center"><a href="<?php echo esc_url( $approve_link ); ?>"
+						<td><a class="button-primary" href="<?php echo esc_url( $approve_link ); ?>"
 											  title="<?php _e( 'Approve', 'new-user-approve' ); ?> <?php echo $user->user_login; ?>"><?php _e( 'Approve', 'new-user-approve' ); ?></a>
 						</td>
 					<?php } ?>
 					<?php if ( $deny && $user->ID != get_current_user_id() ) { ?>
-						<td align="center"><a href="<?php echo esc_url( $deny_link ); ?>"
+						<td><a class="button" href="<?php echo esc_url( $deny_link ); ?>"
 											  title="<?php _e( 'Deny', 'new-user-approve' ); ?> <?php echo $user->user_login; ?>"><?php _e( 'Deny', 'new-user-approve' ); ?></a>
 						</td>
 					<?php } ?>
