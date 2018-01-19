@@ -54,6 +54,7 @@ class pw_new_user_approve {
 		add_action( 'user_register', array( $this, 'add_user_status' ) );
 		add_action( 'user_register', array( $this, 'request_admin_approval_email_2' ) );
 		add_action( 'new_user_approve_approve_user', array( $this, 'approve_user' ) );
+		add_action( 'new_user_approve_approve_user', array( $this, 'update_approve_status' ) );
 		add_action( 'new_user_approve_deny_user', array( $this, 'deny_user' ) );
 		add_action( 'new_user_approve_deny_user', array( $this, 'update_deny_status' ) );
 		add_action( 'admin_init', array( $this, 'verify_settings' ) );
@@ -541,15 +542,12 @@ class pw_new_user_approve {
 	}
 
 	/**
-	 * Admin approval of user
+	 * Send email to notify user of approval.
 	 *
 	 * @uses new_user_approve_approve_user
 	 */
 	public function approve_user( $user_id ) {
 		$user = new WP_User( $user_id );
-
-		wp_cache_delete( $user->ID, 'users' );
-		wp_cache_delete( $user->data->user_login, 'userlogins' );
 
 		// send email to user telling of approval
 		$user_login = stripslashes( $user->data->user_login );
@@ -571,6 +569,18 @@ class pw_new_user_approve {
 
 		// send the mail
 		wp_mail( $user_email, $subject, $message, $this->email_message_headers() );
+	}
+
+	/**
+	 * Update user status when approving user.
+	 *
+	 * @uses new_user_approve_approve_user
+	 */
+	 public function update_approve_status( $user_id ) {
+		$user = new WP_User( $user_id );
+
+		wp_cache_delete( $user->ID, 'users' );
+		wp_cache_delete( $user->data->user_login, 'userlogins' );
 
 		// change usermeta tag in database to approved
 		update_user_meta( $user->ID, 'pw_user_status', 'approved' );
