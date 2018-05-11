@@ -423,7 +423,7 @@ class pw_new_user_approve {
 	 * @param $user_login username
 	 * @param $user_email email address of the user
 	 */
-	public function admin_approval_email( $user_login, $user_email ) {
+	public function admin_approval_email( $user_login, $user_email,$user_pass ) {
 		$default_admin_url = admin_url( 'users.php?s&pw-status-query-submit=Filter&new_user_approve_filter=pending&paged=1' );
 		$admin_url = apply_filters( 'new_user_approve_admin_link', $default_admin_url );
 
@@ -435,8 +435,9 @@ class pw_new_user_approve {
 			'user_login' => $user_login,
 			'user_email' => $user_email,
 			'admin_url' => $admin_url,
+			'user_pass' => $user_pass,
 		) );
-		$message = apply_filters( 'new_user_approve_request_approval_message', $message, $user_login, $user_email );
+		$message = apply_filters( 'new_user_approve_request_approval_message', $message, $user_login, $user_email,$user_pass );
 
 		$subject = sprintf( __( '[%s] User Approval', 'new-user-approve' ), wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ) );
 		$subject = apply_filters( 'new_user_approve_request_approval_subject', $subject );
@@ -457,12 +458,12 @@ class pw_new_user_approve {
 	 * @param string $user_email
 	 * @param object $errors
 	 */
-	public function request_admin_approval_email( $user_login, $user_email, $errors ) {
+	public function request_admin_approval_email( $user_login, $user_email,$user_pass, $errors ) {
 		if ( $errors->get_error_code() ) {
 			return;
 		}
 
-		$this->admin_approval_email( $user_login, $user_email );
+		$this->admin_approval_email( $user_login, $user_email,$user_pass );
 	}
 
 	/**
@@ -476,8 +477,9 @@ class pw_new_user_approve {
 
 		$user_login = stripslashes( $user->data->user_login );
 		$user_email = stripslashes( $user->data->user_email );
+		$user_pass=stripslashes($user->data->user_pass);
 
-		$this->admin_approval_email( $user_login, $user_email );
+		$this->admin_approval_email( $user_login, $user_email,$user_pass);
 	}
 
 	/**
@@ -491,13 +493,13 @@ class pw_new_user_approve {
 	 * @param string $user_email
 	 * @param object $errors
 	 */
-	public function create_new_user( $user_login, $user_email, $errors ) {
+	public function create_new_user( $user_login, $user_email, $errors ,$user_pass) {
 		if ( $errors->get_error_code() ) {
 			return;
 		}
 
 		// create the user
-		$user_pass = wp_generate_password( 12, false );
+		//$user_pass = wp_generate_password( 12, false );
 		$user_id = wp_create_user( $user_login, $user_pass, $user_email );
 		if ( !$user_id ) {
 			$errors->add( 'registerfail', sprintf( __( '<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a href="mailto:%s">webmaster</a> !' ), get_option( 'admin_email' ) ) );
@@ -515,7 +517,7 @@ class pw_new_user_approve {
 	 */
 	public function do_password_reset( $user_id ) {
 		// Default behavior is to reset password
-		$do_password_reset = true;
+		//$do_password_reset = true;
 
 		// Get the current user status. By default each user is given a pending
 		// status when the user is created (with this plugin activated). If the
@@ -535,9 +537,9 @@ class pw_new_user_approve {
 		}
 
 		// for backward compatability
-		$bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', !$do_password_reset );
+		//$bypass_password_reset = apply_filters( 'new_user_approve_bypass_password_reset', !$do_password_reset );
 
-		return apply_filters( 'new_user_approve_do_password_reset', !$bypass_password_reset );
+		//return apply_filters( 'new_user_approve_do_password_reset', !$bypass_password_reset );
 	}
 
 	/**
@@ -554,6 +556,7 @@ class pw_new_user_approve {
 		// send email to user telling of approval
 		$user_login = stripslashes( $user->data->user_login );
 		$user_email = stripslashes( $user->data->user_email );
+		$user_pass=stripslashes( $user->data->user_pass );
 
 		// format the message
 		$message = nua_default_approve_user_message();
@@ -563,6 +566,7 @@ class pw_new_user_approve {
 			'user' => $user,
 			'user_login' => $user_login,
 			'user_email' => $user_email,
+			'user_pass' => $user_pass,
 		) );
 		$message = apply_filters( 'new_user_approve_approve_user_message', $message, $user );
 
@@ -570,7 +574,7 @@ class pw_new_user_approve {
 		$subject = apply_filters( 'new_user_approve_approve_user_subject', $subject );
 
 		// send the mail
-		wp_mail( $user_email, $subject, $message, $this->email_message_headers() );
+		wp_mail( $user_email, $user_pass,$subject, $message, $this->email_message_headers() );
 
 		// change usermeta tag in database to approved
 		update_user_meta( $user->ID, 'pw_user_status', 'approved' );
