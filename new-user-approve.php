@@ -597,7 +597,7 @@ class pw_new_user_approve {
 		$user = new WP_User( $user_id );
 
 		// send email to user telling of denial
-		$user_email = stripslashes( $user->user_email );
+		$user_email = stripslashes( $user->data->user_email );
 
 		// format the message
 		$message = nua_default_deny_user_message();
