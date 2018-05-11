@@ -82,8 +82,13 @@ class pw_new_user_approve_user_list {
 	 * @return array
 	 */
 	public function user_table_actions( $actions, $user ) {
-		if ( $user->ID == get_current_user_id() )
+		if ( $user->ID == get_current_user_id() ) {
 			return $actions;
+		}
+
+		if ( is_super_admin( $user->ID ) ) {
+			return $actions;
+		}
 
 		$user_status = pw_new_user_approve()->get_user_status( $user->ID );
 
