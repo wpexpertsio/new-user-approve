@@ -684,7 +684,7 @@ class pw_new_user_approve {
 	 *
 	 * @uses lostpassword_post
 	 */
-	public function lost_password() {
+	public function lost_password($errors) {
 		$is_email = strpos( $_POST['user_login'], '@' );
 		if ( $is_email === false ) {
 			$username = sanitize_user( $_POST['user_login'] );
@@ -695,9 +695,10 @@ class pw_new_user_approve {
 		}
 
 		if ( $user_data->pw_user_status && $user_data->pw_user_status != 'approved' ) {
-			wp_redirect( 'wp-login.php' );
-			exit();
+			$errors->add( 'unapproved_user', __( '<strong>ERROR</strong>: User has not been approved.', 'new-user-approve' ) );
 		}
+
+		return $errors;
 	}
 
 	/**
