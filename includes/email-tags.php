@@ -200,7 +200,7 @@ function nua_get_emails_tags_list( $context = 'email' ) {
  * Search content for email tags and filter email tags through their hooks
  *
  * @param string $content Content to search for email tags
- * @param int $attributes Attributes to customize email messages
+ * @param array $attributes Attributes to customize email messages
  *
  * @return string Content with email tags filtered out.
  */
