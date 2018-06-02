@@ -96,12 +96,13 @@ We are aware of a few issues with multisite
 * Updated: Updates to admin approval screen
   * Courtesy of [adevade](https://github.com/adevade)
   * https://github.com/picklewagon/new-user-approve/pull/60
-* Fixed: Formatting of readme.txt had line breaks where they should have been
 * Added: Don't allow a super admin to be denied or approved
   * https://github.com/picklewagon/new-user-approve/pull/19
+* Fixed: Formatting of readme.txt had line breaks where they should have been
 * Fixed: Fix how deny_user() gets user_email
   * Courtesy of [jrequiroso](https://github.com/jrequiroso)
   * https://github.com/picklewagon/new-user-approve/pull/22
+* Fixed: Show unapproved user error message when the user attempts to reset password
 
 = 1.7.5 =
 * Fixed: User status filter in admin was not using database prefix
