@@ -1,7 +1,7 @@
 <?php
 /**
  * Contains all functionality to make the New User Approve plugin
- * compatible with all plugins.
+ * compatible with other plugins.
  */
 
 /*
