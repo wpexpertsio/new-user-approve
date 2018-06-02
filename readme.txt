@@ -98,6 +98,7 @@ We are aware of a few issues with multisite
   * https://github.com/picklewagon/new-user-approve/pull/60
 * Added: Don't allow a super admin to be denied or approved
   * https://github.com/picklewagon/new-user-approve/pull/19
+* Added: readme.md to show content in github
 * Fixed: Formatting of readme.txt had line breaks where they should have been
 * Fixed: Fix how deny_user() gets user_email
   * Courtesy of [jrequiroso](https://github.com/jrequiroso)
