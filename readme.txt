@@ -90,6 +90,11 @@ We are aware of a few issues with multisite
 == Changelog ==
 
 = 1.7.6 =
+* Fixed: Formatting of readme.txt had line breaks where they should have been
+* Fixed: Fix how deny_user() gets user_email
+  * Courtesy of [jrequiroso](https://github.com/jrequiroso)
+  * https://github.com/picklewagon/new-user-approve/pull/22
+* Fixed: Show unapproved user error message when the user attempts to reset password
 * Updated: Swedish translations
   * Courtesy of [adevade](https://github.com/adevade)
   * https://github.com/picklewagon/new-user-approve/pull/59
@@ -99,11 +104,6 @@ We are aware of a few issues with multisite
 * Added: Don't allow a super admin to be denied or approved
   * https://github.com/picklewagon/new-user-approve/pull/19
 * Added: readme.md to show content in github
-* Fixed: Formatting of readme.txt had line breaks where they should have been
-* Fixed: Fix how deny_user() gets user_email
-  * Courtesy of [jrequiroso](https://github.com/jrequiroso)
-  * https://github.com/picklewagon/new-user-approve/pull/22
-* Fixed: Show unapproved user error message when the user attempts to reset password
 
 = 1.7.5 =
 * Fixed: User status filter in admin was not using database prefix
