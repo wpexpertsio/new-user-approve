@@ -684,7 +684,7 @@ class pw_new_user_approve {
 			$user_data = get_user_by( 'email', $email );
 		}
 
-		if ( $user_data->pw_user_status && $user_data->pw_user_status != 'approved' ) {
+		if ( $user_data && $user_data->pw_user_status && $user_data->pw_user_status != 'approved' ) {
 			$errors->add( 'unapproved_user', __( '<strong>ERROR</strong>: User has not been approved.', 'new-user-approve' ) );
 		}
 
