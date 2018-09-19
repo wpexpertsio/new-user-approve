@@ -393,6 +393,7 @@ class pw_new_user_approve {
 	 */
 	public function delete_new_user_approve_transient() {
 		delete_transient( 'new_user_approve_user_statuses' );
+		delete_transient( 'new_user_approve_user_statuses_count' );
 	}
 
 	/**
