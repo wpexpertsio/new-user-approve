@@ -54,6 +54,18 @@ msgstr ""
 msgid "[%s] User Approval"
 msgstr ""
 
+#: ../new-user-approve.php:413
+msgid "Pending"
+msgstr ""
+
+#: ../new-user-approve.php:413
+msgid "Approved"
+msgstr ""
+
+#: ../new-user-approve.php:413
+msgid "Denied"
+msgstr ""
+
 #: ../new-user-approve.php:454
 #, php-format
 msgid ""
