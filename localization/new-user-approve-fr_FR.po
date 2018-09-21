@@ -145,7 +145,6 @@ msgstr ""
 "\">Masquer cette note</a>"
 
 #: ../includes/admin-approve.php:220
-#, fuzzy
 msgid "Approve Users"
 msgstr "Utilisateurs approuvés"
 
@@ -212,14 +211,16 @@ msgid "Password: %s"
 msgstr "Mot de passe : %s"
 
 #: ../includes/messages.php:9
-#, fuzzy
 msgid "You have been approved to access {sitename}"
-msgstr "Votre inscription a été acceptée pour accéder au site %s"
+msgstr "Votre inscription a été acceptée pour accéder au site {sitename}"
+
+#: ../includes/messages.php:12
+msgid "To set or reset your password, visit the following address:"
+msgstr "Pour créer ou re-créer votre mot de passe, cliquez sur ce lien :"
 
 #: ../includes/messages.php:25
-#, fuzzy
 msgid "You have been denied access to {sitename}."
-msgstr "Désolé, votre inscription pour accéder au site « %s » a été refusée."
+msgstr "Désolé, votre inscription pour accéder au site « {sitename} » a été refusée."
 
 #: ../includes/messages.php:38
 msgid ""
@@ -240,7 +241,6 @@ msgstr ""
 "faire ensuite. Merci de votre patience."
 
 #: ../includes/messages.php:53
-#, fuzzy
 msgid ""
 "Welcome to {sitename}. This site is accessible to approved users only. To be "
 "approved, you must first register."
@@ -249,14 +249,12 @@ msgstr ""
 "Pour être approuvé, vous devez d'abord vous inscrire."
 
 #: ../includes/messages.php:66
-#, fuzzy
 msgid "{username} ({user_email}) has requested a username at {sitename}"
-msgstr "%1$s (%2$s) a demandé l'approbation d'un compte sur %3$s"
+msgstr "{username} ({user_email}) a demandé l'approbation d'un compte sur {sitename}"
 
 #: ../includes/messages.php:68
-#, fuzzy
 msgid "To approve or deny this user access to {sitename} go to"
-msgstr "Pour approuver ou refuser cet utilisateur, aller sur le site %s"
+msgstr "Pour approuver ou refuser cet utilisateur, aller sur le site {sitename}"
 
 #: ../includes/messages.php:83
 msgid ""
