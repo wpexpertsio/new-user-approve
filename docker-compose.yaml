@@ -4,9 +4,11 @@ services:
 
     wordpress:
         image: wordpress
-        restart: always
-        depends_on:
-            - db
+        volumes:
+            - ./new-user-approve.php:/var/www/html/wp-content/plugins/new-user-approve/new-user-approve.php
+            - ./admin:/var/www/html/wp-content/plugins/new-user-approve/admin
+            - ./includes:/var/www/html/wp-content/plugins/new-user-approve/includes
+            - ./localization:/var/www/html/wp-content/plugins/new-user-approve/localization
         ports:
             - 8061:80
         environment:
@@ -15,6 +17,9 @@ services:
             WORDPRESS_DB_PASSWORD: password
             WORDPRESS_DB_NAME: sandbox
             WORDPRESS_DEBUG: "true"
+        restart: always
+        depends_on:
+            - db
 
     db:
         image: mysql:5.7
