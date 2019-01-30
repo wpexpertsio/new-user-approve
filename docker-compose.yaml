@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+
+    wordpress:
+        image: wordpress
+        restart: always
+        depends_on:
+            - db
+        ports:
+            - 8061:80
+        environment:
+            WORDPRESS_DB_HOST: db
+            WORDPRESS_DB_USER: wpuser
+            WORDPRESS_DB_PASSWORD: password
+            WORDPRESS_DB_NAME: sandbox
+            WORDPRESS_DEBUG: "true"
+
+    db:
+        image: mysql:5.7
+        restart: always
+        volumes:
+            - ./.docker/storage/wordpress:/var/lib/mysql
+        ports:
+            - 23302:3306
+        environment:
+            MYSQL_DATABASE: sandbox
+            MYSQL_USER: wpuser
+            MYSQL_PASSWORD: password
+            MYSQL_RANDOM_ROOT_PASSWORD: '1'
