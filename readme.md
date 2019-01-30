@@ -18,3 +18,11 @@ If you find an issue, let us know [on the issues page](https://github.com/pickle
 
 ## Support ##
 This is a developer's portal for New User Approve and should _not_ be used for support. Please visit the [support page](https://newuserapprove.com/support) to find out any information for the New User Approve plugin.
+
+## Development Environment ##
+To initialize the docker environment enter the following command:
+```bash
+docker-compose up
+```
+
+Go to `localhost:8061` in your browser.
