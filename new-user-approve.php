@@ -59,12 +59,15 @@ class pw_new_user_approve {
 		add_action( 'admin_init', array( $this, 'verify_settings' ) );
 		add_action( 'wp_login', array( $this, 'login_user' ), 10, 2 );
 
+		add_action( 'new_user_approve_deactivate', array($this, 'delete_email_situation') );
+
 		// Filters
 		add_filter( 'wp_authenticate_user', array( $this, 'authenticate_user' ) );
 		add_filter( 'registration_errors', array( $this, 'show_user_pending_message' ) );
 		add_filter( 'login_message', array( $this, 'welcome_user' ) );
 		add_filter( 'new_user_approve_validate_status_update', array( $this, 'validate_status_update' ), 10, 3 );
 		add_filter( 'shake_error_codes', array( $this, 'failure_shake' ) );
+
 	}
 
 	public function get_plugin_url() {
@@ -101,6 +104,8 @@ class pw_new_user_approve {
 			exit( $exit_msg );
 		}
 
+		add_option('Nua_Activated_Plugin','nua-activated');
+
 		// since the right version of WordPress is being used, run a hook
 		do_action( 'new_user_approve_activate' );
 	}
@@ -121,6 +126,12 @@ class pw_new_user_approve {
 		// make sure the membership setting is turned on
 		if ( get_option( 'users_can_register' ) != 1 ) {
 			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+		}
+
+		if ( is_admin() && get_option('Nua_Activated_Plugin')=='nua-activated' ) {
+			delete_option('Nua_Activated_Plugin');
+			/* do some stuff once right after activation */
+			$this->add_email_situation();
 		}
 	}
 
@@ -445,7 +456,87 @@ class pw_new_user_approve {
 		$to = array_unique( $to );
 
 		// send the mail
-		wp_mail( $to, $subject, $message, $this->email_message_headers() );
+		$this->send_email( $to, $subject, $message, $this->email_message_headers() );
+	}
+
+	/**
+	 * Send an email either buddypress email or wordpress
+	 *
+	 * @param string $to
+	 * @param string $subject
+	 * @param string $message
+	 * @param string $header
+	 */
+	public function send_email( $to, $subject, $message, $header ) {
+		$do_bp_email = true === function_exists( 'bp_send_email' ) && true === ! apply_filters( 'bp_email_use_wp_mail', false);
+		if ( $do_bp_email ) {
+			$bp_email_args = array(
+				'tokens' => array(
+				'nua.subject'           => $subject,
+				'nua.content' 		=> $message,
+				'recipient.name'	=> $to,
+				),
+			);
+			bp_send_email( 'new-user-approval', $to, $bp_email_args );
+		} else {
+			wp_mail( $to, $subject, $message, $this->email_message_headers() );
+		}
+	}
+
+	/**
+	 *  New User Approval plugin -- adding new mail type
+	 *    - Need New User Approval plugin and buddypress 2.5+
+	 *  iljun.lee
+	 */
+	public function add_email_situation() {
+		// Do not create if it already exists and is not in the trash
+		$post_exists = post_exists( '{{{nua.subject}}}' );
+		if ( $post_exists != 0 && get_post_status( $post_exists ) == 'publish' )
+			return;
+
+		// Create post object
+		$email = array(
+			'post_title'    => __( '{{{nua.subject}}}', 'new-user-approval' ),
+			'post_content'  => __( '{{{nua.content}}}', 'new-user-approval' ),  // HTML email content.
+			'post_excerpt'  => __( '{{{nua.content}}}', 'new-user-approval' ),  // Plain text email content.
+		);
+
+		$defaults = array(
+			'post_status'   => 'publish',
+			'post_type' => bp_get_email_post_type(), // this is the post type for emails
+		);
+
+		$id = 'new-user-approval';
+
+		$situation_desc = "When admin approve/deny the new user. (New User Approval)";
+
+		// Insert the email post into the database
+		$post_id = wp_insert_post( bp_parse_args( $email, $defaults, 'install_email_' . $id) );
+
+		// Save the situation.
+		if ( ! is_wp_error( $post_id ) ) {
+			$tt_ids = wp_set_object_terms( $post_id, $id, bp_get_email_tax_type() );
+
+			// Situation description.
+			if ( ! is_wp_error( $tt_ids ) ) {
+				$term = get_term_by( 'term_taxonomy_id', (int) $tt_ids[0], bp_get_email_tax_type() );
+				wp_update_term( (int) $term->term_id, bp_get_email_tax_type(), array(
+					'description' => $situation_desc,
+				) );
+			}
+		}
+	}
+
+	/**
+	 *  New User Approval plugin -- deleting new mail type
+	 *    - Need New User Approval plugin and buddypress 2.5+
+	 *  iljun.lee
+	 */
+	public function delete_email_situation() {
+		// Do not create if it already exists and is not in the trash
+		$post_exists = post_exists( '{{{nua.subject}}}' );
+		if ( $post_exists != 0 && get_post_status( $post_exists ) == 'publish' )
+			wp_delete_post($post_exists, true);
 	}
 
 	/**
@@ -570,7 +661,7 @@ class pw_new_user_approve {
 		$subject = apply_filters( 'new_user_approve_approve_user_subject', $subject );
 
 		// send the mail
-		wp_mail( $user_email, $subject, $message, $this->email_message_headers() );
+		$this->send_email( $user_email, $subject, $message, $this->email_message_headers() );
 
 		// change usermeta tag in database to approved
 		update_user_meta( $user->ID, 'pw_user_status', 'approved' );
@@ -600,7 +691,7 @@ class pw_new_user_approve {
 		$subject = apply_filters( 'new_user_approve_deny_user_subject', $subject );
 
 		// send the mail
-		wp_mail( $user_email, $subject, $message, $this->email_message_headers() );
+		$this->send_email( $user_email, $subject, $message, $this->email_message_headers() );
 	}
 
 	/**
