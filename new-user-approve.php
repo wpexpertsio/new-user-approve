@@ -497,7 +497,7 @@ class pw_new_user_approve {
 		}
 
 		// create the user
-		$user_pass = wp_generate_password( 12, false );
+		$user_pass = apply_filters( 'new_user_approve_generate_password', wp_generate_password( 12, false ) );
 		$user_id = wp_create_user( $user_login, $user_pass, $user_email );
 		if ( !$user_id ) {
 			$errors->add( 'registerfail', sprintf( __( '<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a href="mailto:%s">webmaster</a> !' ), get_option( 'admin_email' ) ) );
