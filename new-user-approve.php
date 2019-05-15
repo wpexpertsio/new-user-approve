@@ -4,8 +4,9 @@
  Plugin URI: http://www.picklewagon.com/wordpress/new-user-approve/
  Description: Allow administrators to approve users once they register. Only approved users will be allowed to access the site. For support, please go to the <a href="http://wordpress.org/support/plugin/new-user-approve">support forums</a> on wordpress.org.
  Author: Josh Harrison
- Version: 1.7.4
+ Version: 1.7.6
  Author URI: http://picklewagon.com/
+ Text Domain: new-user-approve
  */
 
 class pw_new_user_approve {
@@ -129,18 +130,23 @@ class pw_new_user_approve {
 	public function admin_notices() {
 		$user_id = get_current_user_id();
 
+		// if the user isn't an admin, definitely don't show the notice
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		// update the setting for the current user
 		if ( isset( $_GET['new-user-approve-settings-notice'] ) && '1' == $_GET['new-user-approve-settings-notice'] ) {
 			add_user_meta( $user_id, 'pw_new_user_approve_settings_notice', '1', true );
 		}
 
-		// Don't show the error if the s2member plugin is active
-		if ( class_exists( 'c_ws_plugin__s2member_constants' ) ) {
-			return;
-		}
+		$show_notice = get_user_meta( $user_id, 'pw_new_user_approve_settings_notice' );
+
+		// one last chance to show the update
+		$show_notice = apply_filters( 'new_user_approve_show_membership_notice', $show_notice, $user_id );
 
 		// Check that the user hasn't already clicked to ignore the message
-		if ( ! get_user_meta( $user_id, 'pw_new_user_approve_settings_notice' ) ) {
+		if ( ! $show_notice ) {
 			echo '<div class="error"><p>';
 			printf( __( 'The Membership setting must be turned on in order for the New User Approve to work correctly. <a href="%1$s">Update in settings</a>. | <a href="%2$s">Hide Notice</a>', 'new-user-approve' ), admin_url( 'options-general.php' ), add_query_arg( array( 'new-user-approve-settings-notice' => 1 ) ) );
 			echo "</p></div>";
@@ -298,34 +304,75 @@ class pw_new_user_approve {
 		return $message;
 	}
 
-	public function _get_user_statuses() {
+	public function _get_user_statuses($count = true) {
 		$statuses = array();
 
 		foreach ( $this->get_valid_statuses() as $status ) {
 			// Query the users table
 			if ( $status != 'approved' ) {
 				// Query the users table
-				$query = array( 'meta_key' => 'pw_user_status', 'meta_value' => $status, );
-				$wp_user_search = new WP_User_Query( $query );
-			} else {
-				// get all approved users and any user without a status
-				$query = array( 'meta_query' => array( 'relation' => 'OR', array( 'key' => 'pw_user_status', 'value' => 'approved', 'compare' => '=' ), array( 'key' => 'pw_user_status', 'value' => '', 'compare' => 'NOT EXISTS' ), ), );
-				$wp_user_search = new WP_User_Query( $query );
-			}
+				$query = array(
+                    'meta_key' => 'pw_user_status',
+                    'meta_value' => $status,
+                    'count_total' => true,
+                    'number' => 1,
+                );
+            } else {
+                // get all approved users and any user without a status
+                $query = array(
+                    'meta_query' => array(
+                        'relation' => 'OR',
+                        array(
+                            'key' => 'pw_user_status',
+                            'value' => 'approved',
+                            'compare' => '=',
+                        ),
+                        array(
+                            'key' => 'pw_user_status',
+                            'value' => '',
+                            'compare' => 'NOT EXISTS',
+                        ),
+                    ),
+                    'count_total' => true,
+                    'number' => 1,
+                );
+            }
 
-			$statuses[$status] = $wp_user_search->get_results();
+            if ($count === false) {
+                unset($query['count_total']);
+                unset($query['number']);
+            }
+            $wp_user_search = new WP_User_Query( $query );
+
+            if ($count === true) {
+                $statuses[$status] = $wp_user_search->get_total();
+            } else {
+                $statuses[$status] = $wp_user_search->get_results();
+            }
 		}
 
 		return $statuses;
 	}
-	/**
-	 * Get a status of all the users and save them using a transient
-	 */
+
+    /**
+     * Get a list of statuses with a count of users with that status and save them using a transient
+     */
+    public function get_count_of_user_statuses() {
+        $user_statuses = get_transient( 'new_user_approve_user_statuses_count' );
+
+        if ( false === $user_statuses ) {
+            $user_statuses = $this->_get_user_statuses();
+            set_transient( 'new_user_approve_user_statuses_count', $user_statuses );
+        }
+
+        return $user_statuses;
+    }
+
 	public function get_user_statuses() {
 		$user_statuses = get_transient( 'new_user_approve_user_statuses' );
 
 		if ( false === $user_statuses ) {
-			$user_statuses = $this->_get_user_statuses();
+			$user_statuses = $this->_get_user_statuses(false);
 			set_transient( 'new_user_approve_user_statuses', $user_statuses );
 		}
 
@@ -355,13 +402,15 @@ class pw_new_user_approve {
 	 * @uses rightnow_end
 	 */
 	public function dashboard_stats() {
-		$user_status = $this->get_user_statuses();
+		$user_status = $this->get_count_of_user_statuses();
 		?>
 		<div>
-			<p><span style="font-weight:bold;"><a
-						href="<?php echo apply_filters( 'new_user_approve_dashboard_link', 'users.php' ); ?>"><?php _e( 'Users', 'new-user-approve' ); ?></a></span>:
-				<?php foreach ( $user_status as $status => $users ) :
-					print count( $users ) . " " . __( $status, 'new-user-approve' ) . "&nbsp;&nbsp;&nbsp;";
+			<p>
+                <span style="font-weight:bold;">
+                    <a href="<?php echo apply_filters( 'new_user_approve_dashboard_link', 'users.php' ); ?>"><?php _e( 'Users', 'new-user-approve' ); ?></a>
+                </span>:
+				<?php foreach ( $user_status as $status => $count ) :
+					print __( ucwords($status), 'new-user-approve' ) . "(" .$count . ")&nbsp;&nbsp;&nbsp;";
 				endforeach; ?>
 			</p>
 		</div>
@@ -539,7 +588,7 @@ class pw_new_user_approve {
 		$user = new WP_User( $user_id );
 
 		// send email to user telling of denial
-		$user_email = stripslashes( $user->user_email );
+		$user_email = stripslashes( $user->data->user_email );
 
 		// format the message
 		$message = nua_default_deny_user_message();
@@ -579,7 +628,6 @@ class pw_new_user_approve {
 
 		$headers = array(
 			"From: \"{$from_name}\" <{$admin_email}>\n",
-			"Content-Type: text/plain; charset=\"" . get_option( 'blog_charset' ) . "\"\n",
 		);
 
 		$headers = apply_filters( 'new_user_approve_email_header', $headers );
@@ -629,7 +677,7 @@ class pw_new_user_approve {
 	 *
 	 * @uses lostpassword_post
 	 */
-	public function lost_password() {
+	public function lost_password($errors) {
 		$is_email = strpos( $_POST['user_login'], '@' );
 		if ( $is_email === false ) {
 			$username = sanitize_user( $_POST['user_login'] );
@@ -640,9 +688,10 @@ class pw_new_user_approve {
 		}
 
 		if ( $user_data->pw_user_status && $user_data->pw_user_status != 'approved' ) {
-			wp_redirect( 'wp-login.php' );
-			exit();
+			$errors->add( 'unapproved_user', __( '<strong>ERROR</strong>: User has not been approved.', 'new-user-approve' ) );
 		}
+
+		return $errors;
 	}
 
 	/**
@@ -693,6 +742,9 @@ class pw_new_user_approve {
 		if ( isset( $_REQUEST['action'] ) && 'createuser' == $_REQUEST['action'] ) {
 			$status = 'approved';
 		}
+
+		$status = apply_filters( 'new_user_approve_default_status', $status, $user_id );
+
 		update_user_meta( $user_id, 'pw_user_status', $status );
 	}
 
