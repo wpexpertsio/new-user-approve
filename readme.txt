@@ -129,6 +129,7 @@ We are aware of a few issues with multisite
 = 1.7.3 =
 * place content in metaboxes in place of dynamically pulling from website
 * tested with WordPress 4.3.1
+* (HS) changed code to allow coexistence with other registration plugins
 
 = 1.7.2 =
 * tested with WordPress 4.1

@@ -49,7 +49,7 @@ class pw_new_user_approve {
 		add_action( 'new_user_approve_deny_user', array( $this, 'delete_new_user_approve_transient' ), 11 );
 		add_action( 'deleted_user', array( $this, 'delete_new_user_approve_transient' ) );
 		//add_action( 'register_post', array( $this, 'request_admin_approval_email' ), 10, 3 );
-		add_action( 'register_post', array( $this, 'create_new_user' ), 10, 3 );
+		//add_action( 'register_post', array( $this, 'create_new_user' ), 10, 3 );
 		add_action( 'lostpassword_post', array( $this, 'lost_password' ) );
 		add_action( 'user_register', array( $this, 'add_user_status' ) );
 		add_action( 'user_register', array( $this, 'request_admin_approval_email_2' ) );
@@ -61,7 +61,7 @@ class pw_new_user_approve {
 
 		// Filters
 		add_filter( 'wp_authenticate_user', array( $this, 'authenticate_user' ) );
-		add_filter( 'registration_errors', array( $this, 'show_user_pending_message' ) );
+		add_filter( 'registration_errors', array( $this, 'show_user_pending_message' ), 9999, 3 );
 		add_filter( 'login_message', array( $this, 'welcome_user' ) );
 		add_filter( 'new_user_approve_validate_status_update', array( $this, 'validate_status_update' ), 10, 3 );
 		add_filter( 'shake_error_codes', array( $this, 'failure_shake' ) );
@@ -491,9 +491,9 @@ class pw_new_user_approve {
 	 * @param string $user_email
 	 * @param object $errors
 	 */
-	public function create_new_user( $user_login, $user_email, $errors ) {
+	public function create_new_user( $errors, $user_login, $user_email ) {
 		if ( $errors->get_error_code() ) {
-			return;
+			return $errors;
 		}
 
 		// create the user
@@ -502,6 +502,7 @@ class pw_new_user_approve {
 		if ( !$user_id ) {
 			$errors->add( 'registerfail', sprintf( __( '<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a href="mailto:%s">webmaster</a> !' ), get_option( 'admin_email' ) ) );
 		}
+	return $errors;
 	}
 
 	/**
@@ -639,12 +640,14 @@ class pw_new_user_approve {
 	 *
 	 * @uses registration_errors
 	 */
-	public function show_user_pending_message( $errors ) {
+	public function show_user_pending_message( $errors, $user_login, $user_email ) {
 		if ( !empty( $_POST['redirect_to'] ) ) {
 			// if a redirect_to is set, honor it
 			wp_safe_redirect( $_POST['redirect_to'] );
 			exit();
 		}
+
+		$errors = $this->create_new_user( $errors, $user_login, $user_email );
 
 		// if there is an error already, let it do it's thing
 		if ( $errors->get_error_code() ) {
