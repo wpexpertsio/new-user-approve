@@ -218,7 +218,6 @@ class pw_new_user_approve_admin_approve {
 
 	public function _add_meta_boxes() {
 		add_meta_box( 'nua-approve-admin', __( 'Approve Users', 'new-user-approve' ), array( $this, 'metabox_main' ), 'users_page_new-user-approve-admin', 'main', 'high' );
-		add_meta_box( 'nua-updates', __( 'Updates', 'new-user-approve' ), array( $this, 'metabox_updates' ), 'users_page_new-user-approve-admin', 'side', 'default' );
 		add_meta_box( 'nua-support', __( 'Support', 'new-user-approve' ), array( $this, 'metabox_support' ), 'users_page_new-user-approve-admin', 'side', 'default' );
 		add_meta_box( 'nua-feedback', __( 'Feedback', 'new-user-approve' ), array( $this, 'metabox_feedback' ), 'users_page_new-user-approve-admin', 'side', 'default' );
 	}
@@ -233,6 +232,8 @@ class pw_new_user_approve_admin_approve {
 			   class="nav-tab<?php echo $active_tab == 'approved_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Approved Users', 'new-user-approve' ); ?></span></a>
 			<a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=denied_users' ) ); ?>"
 			   class="nav-tab<?php echo $active_tab == 'denied_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Denied Users', 'new-user-approve' ); ?></span></a>
+			<a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=pro_features' ) ); ?>"
+			   class="nav-tab<?php echo $active_tab == 'pro_features' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Pro Features', 'new-user-approve' ); ?></span></a>
 		</h3>
 
 <?php if ( $active_tab == 'pending_users' ) : ?>
@@ -248,29 +249,40 @@ elseif ( $active_tab == 'denied_users' ) : ?>
 	<div id="pw_denied_users">
 		<?php $this->user_table( 'denied' ); ?>
 	</div>
+	<?php
+elseif ( $active_tab == 'pro_features' ) : ?>
+	<div id="pw_pro_features">
+		<?php $this->pro_features(); ?>
+	</div>
 <?php endif;
 	}
 
-	public function metabox_updates() {
-?>
-		<p>I have created a site to help with the support of this plugin. Check it out at <a title="newuserapprove.com" href="https://newuserapprove.com/" target="_blank">newuserapprove.com</a>.</p>
-		<p>Please signup for the mailing list to keep up to date.</p>
+	public function pro_features(){
+		?>
+		<h3>Premium Features</h3>
+		<ul style="padding-left: 30px; list-style-type: disc;">
+			<li>Provides Ability To remove plugin stats from admin dashboard.</li>
+			<li>Remove the admin panel specifically added to update a user's status, from wordpress dashboard.</li>
+			<li>Customize the welcome message displayed above wordpress login form.</li>
+			<li>Customize the 'Pending error message' displayed when user tries to login but his account is still pending approval.</li>
+			<li>Customize the 'Denied error message' displayed when user tries to login but his account is denied approval.</li>
+			<li>Customize the welcome message displayed above wordpress Registration form.</li>
+			<li>Customize the Registration complete message displayed after user submits Registration form for approval.</li>
+			<li>Provide Ability To Send Approval notification emails to all admins</li>
+			<li>Notify admins when a user's status is updated</li>
+			<li>Disable notification emails to current site admin</li>
+			<li>Customize the email sent to admin when a user registers for the site</li>
+			<li>Customize the email sent to user when his profile is approved.</li>
+			<li>Customize the email sent to user when his profile is denied.</li>
+			<li>Suppress denial email notification</li>
+			<li>Provides option to send all email notifications as html.</li>
+			<li>It Provides you Different template tags which can be used in Notification Emails and Other messages on site.</li>
+		</ul>
 
-		<!-- Begin MailChimp Signup Form -->
-		<div id="mc_embed_signup">
-			<form id="mc-embedded-subscribe-form" class="validate" style="padding: 0;" action="//picklewagon.us2.list-manage.com/subscribe/post?u=a602ec75eeb3c876324a4c400&amp;id=11b386471b" method="post" name="mc-embedded-subscribe-form" novalidate="" target="_blank">
-				<input id="mce-EMAIL" class="email" style="width: 100%;" name="EMAIL" required="" type="email" value="" placeholder="email address" />
-				<input name="group[13117][4]" type="hidden" value="4" />
-				<div style="position: absolute; left: -5000px;">
-					<input tabindex="-1" name="b_a602ec75eeb3c876324a4c400_11b386471b" type="text" value="" />
-				</div>
-				<div class="clear" style="margin-top: 10px;">
-					<input id="mc-embedded-subscribe" class="button" name="subscribe" type="submit" value="Subscribe" />
-				</div>
-			</form>
-		</div>
-<?php
+		<p>Please Visit this link For <a class="button" href="https://newuserapprove.com/options-addon" target="_blank" >Premium Plugin </a> </p>
+		<?php
 	}
+
 
 	public function metabox_support() {
 ?>

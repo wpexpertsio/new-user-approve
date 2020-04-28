@@ -54,7 +54,7 @@ msgid ""
 "<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a "
 "href=\"mailto:%s\">webmaster</a> !"
 msgstr ""
-"<strong>ERRO</strong>: Não é possível se registar ... entre em contato com o "
+"<strong>ERROR</strong>: Não é possível se registar ... entre em contato com o "
 "<a href=\"mailto:%s\">webmaster</a> !"
 
 #: ../new-user-approve.php:520
@@ -144,6 +144,7 @@ msgstr ""
 "administração de usuários</a>. | <a href=\"%2$s\">Ocultar Aviso</a>"
 
 #: ../includes/admin-approve.php:220
+#, fuzzy
 msgid "Approve Users"
 msgstr "Aprovar Usuários"
 
@@ -211,10 +212,12 @@ msgid "Password: %s"
 msgstr "Senha: %s"
 
 #: ../includes/messages.php:9
+#, fuzzy
 msgid "You have been approved to access {sitename}"
 msgstr "Você foi aprovado para acessar {sitename}"
 
 #: ../includes/messages.php:25
+#, fuzzy
 msgid "You have been denied access to {sitename}."
 msgstr "Você teve o acesso negado a {sitename}."
 
@@ -236,6 +239,7 @@ msgstr ""
 "pela paciência."
 
 #: ../includes/messages.php:53
+#, fuzzy
 msgid ""
 "Welcome to {sitename}. This site is accessible to approved users only. To be "
 "approved, you must first register."
@@ -244,10 +248,12 @@ msgstr ""
 "aprovados. Para ser aprovado, você deve primeiro se registrar."
 
 #: ../includes/messages.php:66
+#, fuzzy
 msgid "{username} ({user_email}) has requested a username at {sitename}"
 msgstr "{Username} ({user_email}) solicitou um nome de usuário em {sitename}"
 
 #: ../includes/messages.php:68
+#, fuzzy
 msgid "To approve or deny this user access to {sitename} go to"
 msgstr "Para aprovar ou negar esse acesso de usuário a {sitename}, "
 

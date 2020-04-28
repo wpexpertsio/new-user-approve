@@ -1,10 +1,10 @@
 === New User Approve ===
-Contributors: picklewagon
-Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
+Contributors: wpexpertsio
+Donate link: https://newuserapprove.com
 Tags: users, registration, sign up, user management, login
 Requires at least: 3.5.1
-Tested up to: 4.9.6
-Stable tag: 1.7.6
+Tested up to: 5.4
+Stable tag: 1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,7 +23,7 @@ A user's status can be updated even after the initial approval/denial.
 
 Each user that exists before New User Approve has been activated will be treated as an approved user.
 
-Default WordPress registration process:
+**Default WordPress registration process:** 
 
 1. User registers.
 2. User is shown message to check email.
@@ -31,7 +31,7 @@ Default WordPress registration process:
 4. User logs in to site using login credentials.
 5. Admin is notified of new user sign up via email.
 
-WordPress registration process with New User Approve plugin activated:
+**WordPress registration process with New User Approve plugin activated:**
 
 1. User registers for access to site.
 2. User is shown message to wait for approval.
@@ -48,7 +48,7 @@ Further support at [newuserapprove.com](http://newuserapprove.com/).
 
 New User Approve allows for customizations by using custom actions and filters. You can find out more about these by browsing the source code.
 
-A commercial plugin that adds a config panel for customization is also available at [https://newuserapprove.com/products/options-addon/](https://newuserapprove.com/products/options-addon/).
+A commercial plugin that adds a config panel for customization is also available at [https://newuserapprove.com/options-addon/](https://newuserapprove.com/options-addon/).
 
 == Installation ==
 
@@ -88,6 +88,10 @@ We are aware of a few issues with multisite
 5. Custom messages on the login screen.
 
 == Changelog ==
+
+= 1.8 =
+* Tested with WordPress 5.4
+* Code Optimization
 
 = 1.7.6 =
 * Fixed: Formatting of readme.txt had line breaks where they should have been
@@ -337,6 +341,27 @@ The code for this plugin is also available at Github - https://github.com/pickle
 * *new_user_approve_user_denied* - after the user has been denied
 * *new_user_approve_approve_user* - when the user has been approved
 * *new_user_approve_deny_user* - when the user has been denied
+
+= Premium Features =
+
+* Provide Ability To remove plugin stats from admin dashboard
+* Remove the admin panel specifically added to update a user's status, from wordpress dashboard.
+* Customize the welcome message displayed above wordpress login form.
+* Customize the 'Pending error message' displayed when user tries to login but his account is still pending approval.
+* Customize the 'Denied error message' displayed when user tries to login but his account is denied approval.
+* Customize the welcome message displayed above wordpress Registration form.
+* Customize the Registration complete message displayed after user submits Registration form for approval.
+* Provide Ability To Send notification emails to all admins
+* Notify admins when a user's status is updated
+* Disable notification emails to current site admin
+* Customize the email sent to admin when a user registers for the site
+* Customize the email sent to user when his profile is approved.
+* Customize the email sent to user when his profile is denied.
+* Suppress denial notification
+* Provides option to send all notification as html.
+* It Provides you Different template tags which can be used in Notification Emails and Other messages on site.
+
+[Download Premium from here](https://newuserapprove.com/options-addon)
 
 = Translations =
 The plugin has been prepared to be translated. If you want to help to translate the plugin to your language, please have a look at the localization/new-user-approve.pot file which contains all definitions and may be used with a gettext editor like Poedit (Windows). More information can be found on the [Codex](http://codex.wordpress.org/Translating_WordPress).
